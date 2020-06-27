@@ -1,9 +1,0 @@
-spring:
-  datasource:
-    url: jdbc:mariadb://${PCMR_MYSQL_HOST}:${MYSQL_DB_PORT}/${PCMR_MYSQL_DATABASE}
-    username: ${PCMR_MYSQL_USER}
-    password: ${PCMR_MYSQL_PASSWORD}
-    driver-class-name: org.mariadb.jdbc.Driver
-  jpa:
-    hibernate:
-      ddl-auto: validate
