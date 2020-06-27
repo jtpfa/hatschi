@@ -5,13 +5,20 @@
   "main": "index.html",
   "scripts": {
     "dev": "gulp",
-    "build": "gulp build --prod"
+    "build": "gulp build --prod",
+    "lint:script": "eslint --ext .js --color --cache --cache-location tmp/.eslintcache --ignore-path ../.gitignore .",
+    "lint:scriptfix": "npm run lint:script -- --fix",
+    "format": "prettier --write \"${FOLDER:-*}/**/*.*\""
   },
   "keywords": [
     "shop"
   ],
   "author": "Aleksander Vuk Jovanovic, Fynn Lohse, Jonas Pfannkuche, Tayfun Gülbasi, Vera Meermeier",
-  "dependencies": {},
+  "dependencies": {
+    "bootstrap": "^4.5.0",
+    "jquery": "^3.5.1",
+    "popper.js": "^1.16.1"
+  },
   "devDependencies": {
     "@babel/core": "^7.10.2",
     "@babel/preset-env": "^7.10.2",
@@ -19,6 +26,11 @@
     "autoprefixer": "^9.8.0",
     "babel-loader": "^8.1.0",
     "del": "^5.1.0",
+    "eslint": "^7.3.1",
+    "eslint-config-airbnb-base": "^14.2.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-prettier": "^3.1.4",
     "gulp": "^4.0.2",
     "gulp-clean-css": "^4.3.0",
     "gulp-file-include": "^2.2.2",
@@ -28,6 +40,7 @@
     "gulp-postcss": "^8.0.0",
     "gulp-sass": "^4.1.0",
     "gulp-sourcemaps": "^2.6.5",
+    "prettier": "^2.0.5",
     "vinyl-named": "^1.1.0",
     "webpack-stream": "^5.2.1",
     "yargs": "^15.3.1"
