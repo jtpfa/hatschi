@@ -7,3 +7,11 @@ spring:
   jpa:
     hibernate:
       ddl-auto: validate
+keycloak:
+  realm: ${PCMR_KEYCLOAK_REALM}
+  auth-server-url: ${PCMR_AUTH_SERVER_URL}
+  resource: ${PCMR_RESOURCE}
+  bearer-only: true
+
+
+
