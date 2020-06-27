@@ -6,8 +6,12 @@
   "scripts": {
     "dev": "gulp",
     "build": "gulp build --prod",
+    "lint": "npm run lint:script && npm run lint:style",
+    "lint:fix": "npm run lint:scriptfix && npm run lint:stylefix",
     "lint:script": "eslint --ext .js --color --cache --cache-location tmp/.eslintcache --ignore-path ../.gitignore .",
     "lint:scriptfix": "npm run lint:script -- --fix",
+    "lint:style": "stylelint \"**/*.{css,sass,scss}\" --ignore-path ../.gitignore --max-warnings 0",
+    "lint:stylefix": "npm run lint:style -- --fix",
     "format": "prettier --write \"${FOLDER:-*}/**/*.*\""
   },
   "keywords": [
@@ -40,9 +44,35 @@
     "gulp-postcss": "^8.0.0",
     "gulp-sass": "^4.1.0",
     "gulp-sourcemaps": "^2.6.5",
+    "husky": "^4.2.5",
+    "lint-staged": "^10.2.11",
     "prettier": "^2.0.5",
+    "stylelint": "^13.6.1",
+    "stylelint-config-hudochenkov": "^5.0.0",
+    "stylelint-config-prettier": "^8.0.2",
+    "stylelint-config-sass-guidelines": "^7.0.0",
+    "stylelint-config-standard": "^20.0.0",
+    "stylelint-order": "^4.1.0",
+    "stylelint-prettier": "^1.1.2",
+    "stylelint-scss": "^3.18.0",
     "vinyl-named": "^1.1.0",
     "webpack-stream": "^5.2.1",
     "yargs": "^15.3.1"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.*": [
+      "npm run format"
+    ],
+    "*.{js}": [
+      "npm run lint:scriptfix"
+    ],
+    "*.{css,sass,scss}": [
+      "npm run lint:stylefix"
+    ]
   }
 }

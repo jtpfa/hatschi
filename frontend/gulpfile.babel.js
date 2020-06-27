@@ -29,7 +29,7 @@ const paths = {
 }
 
 export const styles = () => {
-    return src(`${paths.src.style}style.scss`)
+    return src(`${paths.src.style}main.scss`)
         .pipe(gulpif(!PROD, sourcemaps.init()))
         .pipe(sass().on('error', sass.logError))
         .pipe(gulpif(PROD, postcss([autoprefixer])))
