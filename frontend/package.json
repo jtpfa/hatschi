@@ -8,9 +8,9 @@
     "build": "gulp build --prod",
     "lint": "npm run lint:script && npm run lint:style",
     "lint:fix": "npm run lint:scriptfix && npm run lint:stylefix",
-    "lint:script": "eslint --ext .js --color --cache --cache-location tmp/.eslintcache --ignore-path ../.gitignore .",
+    "lint:script": "eslint --ext .js --color --cache --cache-location tmp/.eslintcache --ignore-path .gitignore .",
     "lint:scriptfix": "npm run lint:script -- --fix",
-    "lint:style": "stylelint \"**/*.{css,sass,scss}\" --ignore-path ../.gitignore --max-warnings 0",
+    "lint:style": "stylelint \"**/*.{css,sass,scss}\" --ignore-path .gitignore --max-warnings 0",
     "lint:stylefix": "npm run lint:style -- --fix",
     "format": "prettier --write \"${FOLDER:-*}/**/*.*\""
   },
