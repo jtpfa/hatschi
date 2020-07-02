@@ -12,7 +12,7 @@
     "lint:scriptfix": "npm run lint:script -- --fix",
     "lint:style": "stylelint \"**/*.{css,sass,scss}\" --ignore-path .gitignore --max-warnings 0",
     "lint:stylefix": "npm run lint:style -- --fix",
-    "format": "prettier --write \"${FOLDER:-*}/**/*.*\""
+    "format": "prettier --write \"**/*.*\""
   },
   "keywords": [
     "shop"
