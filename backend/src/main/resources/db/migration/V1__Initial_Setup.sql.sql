@@ -1,0 +1,1 @@
+create table pcmr_customers (id bigint not null auto_increment, created datetime(6), created_by varchar(255), last_modified_by varchar(255), updated datetime(6), email varchar(255), first_name varchar(255), last_name varchar(255), primary key (id)) engine=InnoDB
