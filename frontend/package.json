@@ -69,7 +69,7 @@
     "*.*": [
       "npm run format"
     ],
-    "*.{js}": [
+    "*.js": [
       "npm run lint:scriptfix"
     ],
     "*.{css,sass,scss}": [

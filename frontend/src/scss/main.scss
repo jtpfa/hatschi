@@ -1,5 +1,7 @@
+// import variables before bootstrap to override defaults
+@import 'settings/variables';
+
+// import bootstrap before other components to use bootstrap stuff in own components
 @import '../../node_modules/bootstrap/scss/bootstrap';
 
-* {
-    background-color: #0000ff;
-}
+@import 'components/form';

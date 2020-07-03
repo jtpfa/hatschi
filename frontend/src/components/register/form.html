@@ -1,0 +1,48 @@
+<form class="needs-validation" novalidate>
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label for="surname">Vorname<span class="mandatory">*</span></label>
+            <input type="text" class="form-control" id="surname" placeholder="Vorname"
+                   autocomplete="given-name" required>
+            <div class="invalid-feedback">
+                Bitte gib deinen Vornamen an.
+            </div>
+        </div>
+        <div class="form-group col-md-6">
+            <label for="name">Nachname<span class="mandatory">*</span></label>
+            <input type="text" class="form-control" id="name" placeholder="Nachname"
+                   autocomplete="family-name" required>
+            <div class="invalid-feedback">
+                Bitte gib deinen Nachnamen an.
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="email">E-Mail<span class="mandatory">*</span></label>
+        <input type="email" class="form-control" id="email" placeholder="E-Mail" autocomplete="email"
+               required>
+        <div class="invalid-feedback">
+            Bitte gib eine gültige E-Mail Adresse an.
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label for="password">Passwort<span class="mandatory">*</span></label>
+            <input type="text" id="password" class="form-control" aria-describedby="passwordHelp" placeholder="Passwort" autocomplete="new-password" pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[+@$%&/#_])[A-Za-z\d+@$%&/#_]{6,}$" required>
+            <small id="passwordHelp" class="form-text text-muted">
+                Das Passwort muss mindestens aus 6 Zeichen, 1 Buchstaben, 1 Zahl und 1 Sonderzeichen bestehen.
+            </small>
+            <div class="invalid-feedback">
+                Das Passwort entspricht nicht den Sicherheitsbestimmungen.
+            </div>
+        </div>
+        <div class="form-group col-md-6">
+            <label for="password-confirm">Passwort bestätigen<span class="mandatory">*</span></label>
+            <input type="password" id="password-confirm" class="form-control" placeholder="Passwort bestätigen" autocomplete="new-password" required>
+            <div class="invalid-feedback">
+                Die Passwörter stimmen nicht überein.
+            </div>
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary float-right">Registrieren</button>
+</form>

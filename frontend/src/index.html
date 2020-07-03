@@ -1,2 +1,7 @@
-@include('./template-parts/head.html', { 'title': 'PC Zubehör', 'sample': 'Lorem ipsum' })
-@include('./template-parts/footer.html')
+@include('./components/template-parts/head.html', { 'title': 'PC Zubehör'})
+
+<div class="container">
+    @include('./components/register/form.html')
+</div>
+
+@include('./components/template-parts/footer.html')

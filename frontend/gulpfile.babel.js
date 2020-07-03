@@ -122,7 +122,7 @@ export const htmlfileinclude = () => {
 
 export const cleanup = () => del(['dist/**/*'], { force: true })
 
-export const cleanuphtml = () => del(['dist/template-parts'], { force: true })
+export const cleanuphtml = () => del(['dist/components'], { force: true })
 
 export const watchChanges = () => {
     watch(`${paths.src.style}**/*.scss`, styles)
