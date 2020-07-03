@@ -8,11 +8,11 @@
     "build": "gulp build --prod",
     "lint": "npm run lint:script && npm run lint:style",
     "lint:fix": "npm run lint:scriptfix && npm run lint:stylefix",
-    "lint:script": "eslint --ext .js --color --cache --cache-location tmp/.eslintcache --ignore-path ../.gitignore .",
+    "lint:script": "eslint --ext .js --color --cache --cache-location tmp/.eslintcache --ignore-path .gitignore .",
     "lint:scriptfix": "npm run lint:script -- --fix",
-    "lint:style": "stylelint \"**/*.{css,sass,scss}\" --ignore-path ../.gitignore --max-warnings 0",
+    "lint:style": "stylelint \"**/*.{css,sass,scss}\" --ignore-path .gitignore --max-warnings 0",
     "lint:stylefix": "npm run lint:style -- --fix",
-    "format": "prettier --write \"${FOLDER:-*}/**/*.*\""
+    "format": "prettier --write \"**/*.*\""
   },
   "keywords": [
     "shop"
@@ -24,11 +24,12 @@
     "popper.js": "^1.16.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.10.2",
-    "@babel/preset-env": "^7.10.2",
-    "@babel/register": "^7.10.1",
+    "@babel/core": "^7.10.4",
+    "@babel/preset-env": "^7.10.4",
+    "@babel/register": "^7.10.4",
     "autoprefixer": "^9.8.0",
     "babel-loader": "^8.1.0",
+    "browser-sync": "^2.26.7",
     "del": "^5.1.0",
     "eslint": "^7.3.1",
     "eslint-config-airbnb-base": "^14.2.0",
@@ -57,7 +58,7 @@
     "stylelint-scss": "^3.18.0",
     "vinyl-named": "^1.1.0",
     "webpack-stream": "^5.2.1",
-    "yargs": "^15.3.1"
+    "yargs": "^15.4.0"
   },
   "husky": {
     "hooks": {

@@ -1,4 +1,5 @@
 import autoprefixer from 'autoprefixer'
+import browsersync from 'browser-sync'
 import del from 'del'
 import { dest, parallel, series, src, watch } from 'gulp'
 import cleancss from 'gulp-clean-css'
@@ -14,6 +15,7 @@ import webpack from 'webpack-stream'
 import yargs from 'yargs'
 
 const PROD = yargs.argv.prod
+const server = browsersync.create()
 
 const paths = {
     dist: {
@@ -28,6 +30,15 @@ const paths = {
     },
 }
 
+export const serve = done => {
+    server.init({
+        server: {
+            baseDir: 'dist',
+        },
+    })
+    done()
+}
+
 export const styles = () => {
     return src(`${paths.src.style}main.scss`)
         .pipe(gulpif(!PROD, sourcemaps.init()))
@@ -37,6 +48,7 @@ export const styles = () => {
         .pipe(gulpif(PROD, cleancss({ compatibility: 'ie11' })))
         .pipe(gulpif(!PROD, sourcemaps.write()))
         .pipe(dest(paths.dist.style))
+        .pipe(server.stream())
 }
 
 export const scripts = () => {
@@ -65,6 +77,7 @@ export const scripts = () => {
             })
         )
         .pipe(dest(paths.dist.js))
+        .pipe(server.stream())
 }
 
 export const images = () => {
@@ -88,10 +101,11 @@ export const images = () => {
             )
         )
         .pipe(dest(paths.dist.img))
+        .pipe(server.stream())
 }
 
 export const copy = () => {
-    return src(['src/**/*', '!src/{img,js,scss}', '!src/{img,js,scss}/**/*']).pipe(dest('dist'))
+    return src(['src/**/*', '!src/{img,js,scss}', '!src/{img,js,scss}/**/*']).pipe(dest('dist')).pipe(server.stream())
 }
 
 export const htmlfileinclude = () => {
@@ -103,6 +117,7 @@ export const htmlfileinclude = () => {
             })
         )
         .pipe(dest('dist'))
+        .pipe(server.stream())
 }
 
 export const cleanup = () => del(['dist/**/*'], { force: true })
@@ -119,6 +134,7 @@ export const watchChanges = () => {
 export const dev = series(
     cleanup,
     parallel(styles, scripts, images, series(copy, htmlfileinclude, cleanuphtml)),
+    serve,
     watchChanges
 )
 
