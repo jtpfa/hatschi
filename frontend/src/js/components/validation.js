@@ -32,8 +32,12 @@ $(document).ready(() => {
 
         // Extend the html5 form validation with a custom password confirmation validator if the password fields exist
         if (password && passwordConfirmation) {
-            password.onchange = isPasswordConfirmed(password, passwordConfirmation)
-            passwordConfirmation.onkeyup = isPasswordConfirmed(password, passwordConfirmation)
+            password.onchange = () => {
+                isPasswordConfirmed(password, passwordConfirmation)
+            }
+            passwordConfirmation.onkeyup = () => {
+                isPasswordConfirmed(password, passwordConfirmation)
+            }
 
             form.addEventListener(
                 'submit',
