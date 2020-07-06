@@ -31,6 +31,9 @@ services:
       DB_PASSWORD: ${KEYCLOAK_MYSQL_PASSWORD}
       KEYCLOAK_USER: ${KEYCLOAK_USER}
       KEYCLOAK_PASSWORD: ${KEYCLOAK_PASSWORD}
+      KEYCLOAK_IMPORT: /tmp/pcmr-realm.json
+    volumes:
+    - ./src/main/resources/keycloak/pcmr-realm.json:/tmp/pcmr-realm.json
     depends_on:
       - db
 

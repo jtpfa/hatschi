@@ -21,7 +21,7 @@ public class CustomerEntity extends AbstractEntity {
     private String lastName;
 
     @Transient
-    private char[] password;
+    private String password;
 
     public String getEmail() {
         return email;
@@ -47,11 +47,11 @@ public class CustomerEntity extends AbstractEntity {
         this.lastName = lastName;
     }
 
-    public char[] getPassword() {
+    public String getPassword() {
         return password;
     }
 
-    public void setPassword(char[] password) {
+    public void setPassword(String password) {
         this.password = password;
     }
 }
