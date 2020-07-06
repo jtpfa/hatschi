@@ -12,8 +12,21 @@ const isPasswordConfirmed = (password, passwordConfirmation) => {
         return false
     }
 
+    const errorMessage = $($(passwordConfirmation).next())[0]
+
     if (password.value !== passwordConfirmation.value) {
         passwordConfirmation.setCustomValidity('Passwords do not match.')
+        $(errorMessage).text('Prüfe, ob deine Passwörter übereinstimmen.')
+        return false
+    }
+
+    if (
+        !/^(?=.*[A-Za-z])(?=.*\d)(?=.*[!§$%&/()=?|\\{}[\]+#;:.,@€_-])[A-Za-z\d!§$%&/()=?|\\{}[\]+#;:.,@€_-]{6,}$/.test(
+            passwordConfirmation.value
+        )
+    ) {
+        passwordConfirmation.setCustomValidity('Password does not match criteria.')
+        $(errorMessage).text('Wähle ein Passwort, das den Sicherheitsbestimmungen entspricht.')
         return false
     }
 
@@ -27,12 +40,12 @@ $(document).ready(() => {
     // Loop over them and prevent submission
     Array.prototype.filter.call(forms, form => {
         // Look for password fields
-        const password = $('form #password')[0]
-        const passwordConfirmation = $('form #password-confirm')[0]
+        const password = $($(form)[0]).find('#password')[0]
+        const passwordConfirmation = $($(form)[0]).find('#password-confirm')[0]
 
         // Extend the html5 form validation with a custom password confirmation validator if the password fields exist
         if (password && passwordConfirmation) {
-            password.onchange = () => {
+            password.onkeyup = () => {
                 isPasswordConfirmed(password, passwordConfirmation)
             }
             passwordConfirmation.onkeyup = () => {

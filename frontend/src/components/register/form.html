@@ -28,19 +28,19 @@
     <div class="form-row">
         <div class="form-group col-md-6">
             <label for="password">Passwort<span class="mandatory">*</span></label>
-            <input type="password" id="password" class="form-control" aria-describedby="passwordHelp" placeholder="Passwort" autocomplete="new-password" pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[!§$%&/()=?|\\{}\[\]+#;:.,@€_-])[A-Za-z\d!§$%&/()=?|\\{}\[\]+#;:.,@€_-]{6,}$" required>
+            <input type="password" id="password" class="form-control" aria-describedby="passwordHelp" placeholder="Passwort" autocomplete="new-password" pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[!§$%&/()=?|\\{}[\]+#;:.,@€_-])[A-Za-z\d!§$%&/()=?|\\{}[\]+#;:.,@€_-]{6,}$" required>
             <small id="passwordHelp" class="form-text text-muted">
                 Das Passwort muss mindestens aus 6 Zeichen, bestehend aus Buchstaben, Zahlen und Sonderzeichen (<kbd>!§$%&/()=?|{}[]+#;:.,@€_-</kbd>).
             </small>
             <div class="invalid-feedback">
-                Das Passwort entspricht nicht den Sicherheitsbestimmungen.
+                Wähle ein Passwort, das den Sicherheitsbestimmungen entspricht.
             </div>
         </div>
         <div class="form-group col-md-6">
             <label for="password-confirm">Passwort bestätigen<span class="mandatory">*</span></label>
-            <input type="password" id="password-confirm" class="form-control" placeholder="Passwort bestätigen" autocomplete="new-password" pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[!§$%&/()=?|\\{}\[\]+#;:.,@€_-])[A-Za-z\d!§$%&/()=?|\\{}\[\]+#;:.,@€_-]{6,}$" required>
+            <input type="password" id="password-confirm" class="form-control" placeholder="Passwort bestätigen" autocomplete="new-password" required>
             <div class="invalid-feedback">
-                Die Passwörter stimmen nicht überein.
+                Bitte bestätige das Passwort.
             </div>
         </div>
     </div>
