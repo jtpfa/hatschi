@@ -81,7 +81,7 @@ export const scripts = () => {
 }
 
 export const images = () => {
-    return src(`${paths.src.img}**/*.{jpg,jpeg,png,svg,gif}`)
+    return src(`${paths.src.img}**/*.{jpg,jpeg,png,svg,gif,ico}`)
         .pipe(
             gulpif(
                 PROD,
@@ -127,7 +127,7 @@ export const cleanuphtml = () => del(['dist/components'], { force: true })
 export const watchChanges = () => {
     watch(`${paths.src.style}**/*.scss`, styles)
     watch(`${paths.src.js}**/*.js`, scripts)
-    watch(`${paths.src.img}**/*{jpg, jpeg, png, svg, gif}`, images)
+    watch(`${paths.src.img}**/*.{jpg,jpeg,png,svg,gif,ico}`, images)
     watch(['src/**/*', '!src/{img,js,scss}', '!src/{img,js,scss}/**/*'], series(copy, htmlfileinclude, cleanuphtml))
 }
 
