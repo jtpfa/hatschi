@@ -18,6 +18,8 @@ services:
       PCMR_KEYCLOAK_REALM: ${PCMR_KEYCLOAK_REALM}
       PCMR_AUTH_SERVER_URL: ${PCMR_AUTH_SERVER_URL}
       PCMR_RESOURCE: ${PCMR_RESOURCE}
+      PCMR_KEYCLOAK_REGISTRATION_USER: ${PCMR_KEYCLOAK_REGISTRATION_USER}
+      PCMR_KEYCLOAK_REGISTRATION_PASSWORD: ${PCMR_KEYCLOAK_REGISTRATION_PASSWORD}
     depends_on:
       - db
       - keycloak
@@ -54,7 +56,7 @@ services:
       KEYCLOAK_PASSWORD: ${KEYCLOAK_PASSWORD}
       KEYCLOAK_IMPORT: /tmp/pcmr-realm.json
     volumes:
-      - ./src/main/resources/keycloak/pcmr-realm.json:/tmp/pcmr-realm.json
+      - ./src/main/resources/keycloak/:/tmp/
     depends_on:
       - db
 

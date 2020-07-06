@@ -7,7 +7,7 @@ import javax.validation.constraints.Size;
 
 public class CustomerDTO {
 
-    private static final String PASSWORD_REGEX = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[!§$%&/()=?|\\\\\\{}\\[\\]+#;:.,@€_-])[A-Za-z\\d!§$%&/()=?|\\\\\\{}\\[\\]+#;:.,@€_-]{6,}$";
+    private static final String PASSWORD_REGEX = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[!§$%&/()=?|\\\\{}\\[\\]+#;:.,@€_-])[A-Za-z\\d!§$%&/()=?|\\\\{}\\[\\]+#;:.,@€_-]{6,}$";
 
     @NotNull(message = "Keine Email angegeben")
     @Size(min = 4, max = 100, message = "Email muss zwischen {min} und {max} Zeichen lang sein")
