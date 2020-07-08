@@ -6,9 +6,9 @@ import de.pcmr.shop.domain.CustomerEntity;
 public class CustomerDtoCustomerEntityMapper {
     public static CustomerEntity mapCustomerDtoToCustomerEntity(CustomerDTO customerDTO) {
         CustomerEntity customerEntity = new CustomerEntity();
-        customerEntity.setEmail(customerDTO.getEmail());
-        customerEntity.setFirstName(customerDTO.getFirstName());
-        customerEntity.setLastName(customerDTO.getLastName());
+        customerEntity.setEmail(customerDTO.getEmail().trim());
+        customerEntity.setFirstName(customerDTO.getFirstName().trim());
+        customerEntity.setLastName(customerDTO.getLastName().trim());
         customerEntity.setPassword(customerDTO.getPassword());
 
         return customerEntity;
