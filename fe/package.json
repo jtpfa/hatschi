@@ -1,0 +1,46 @@
+{
+  "name": "pcmr",
+  "version": "1.0.0",
+  "description": "PC Masterrace",
+  "author": "Aleksandar Vuk Jovanovic, Fynn Lohse, Jonas Pfannkuche, Tayfun Gülbasi, Vera Meermeier",
+  "private": true,
+  "scripts": {
+    "dev": "NUXT_SERVER_IP=0.0.0.0 nuxt",
+    "build": "nuxt build",
+    "start": "nuxt start",
+    "generate": "nuxt generate",
+    "lint:script": "eslint --ext .js,.vue --color --cache --cache-location tmp/.eslintcache --ignore-path .gitignore .",
+    "lint:scriptfix": "npm run lint:script -- --fix"
+  },
+  "lint-staged": {
+    "*.{js,vue}": [
+      "npm run lint:scriptfix"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "dependencies": {
+    "@nuxtjs/pwa": "^2.6.0",
+    "bootstrap": "^4.5.0",
+    "bootstrap-vue": "^2.15.0",
+    "nuxt": "^2.13.3"
+  },
+  "devDependencies": {
+    "@nuxtjs/eslint-config": "^3.0.0",
+    "@nuxtjs/eslint-module": "^2.0.0",
+    "@nuxtjs/style-resources": "^1.0.0",
+    "babel-eslint": "^10.1.0",
+    "eslint": "^7.4.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-nuxt": "^1.0.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "husky": "^4.2.5",
+    "lint-staged": "^10.2.11",
+    "node-sass": "^4.14.1",
+    "prettier": "^2.0.5",
+    "sass-loader": "^9.0.2"
+  }
+}
