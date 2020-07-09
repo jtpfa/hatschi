@@ -4,6 +4,9 @@ export default {
    ** Headers of the page
    */
   head: {
+    htmlAttrs: {
+      lang: 'de-DE'
+    },
     title: process.env.npm_package_name || '',
     meta: [
       { charset: 'utf-8' },
@@ -40,7 +43,6 @@ export default {
     '@nuxtjs/style-resources',
     // Doc: https://bootstrap-vue.js.org/docs/
     'bootstrap-vue/nuxt',
-    '@nuxtjs/pwa'
   ],
   /*
      ** Bootstrap Vue module configuration
@@ -53,7 +55,7 @@ export default {
      ** Style Resources module configuration
      */
   styleResources: {
-    scss: ['~assets/scss/settings/variables.scss' ],
+    scss: ['~assets/scss/settings/variables.scss'],
   },
   /*
    ** Build configuration

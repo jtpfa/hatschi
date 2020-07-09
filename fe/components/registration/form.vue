@@ -1,5 +1,5 @@
 <template>
-    <b-form @submit="onSubmit" validated>
+    <b-form @submit="onSubmit" novalidate ref="form">
         <b-form-row>
             <div class="col-md-6" role="group">
                 <label for="firstname">Vorname<span class="mandatory">*</span></label>
@@ -122,8 +122,12 @@
       }
     },
     methods: {
-      onSubmit(){
-        this.isPasswordConfirmed()
+      onSubmit(event){
+        if (!this.$refs.form.checkValidity() || !this.isPasswordConfirmed()) {
+          event.preventDefault();
+          event.stopPropagation();
+        }
+        this.$refs.form.classList.add('was-validated');
       },
       isPasswordConfirmed() {
         if (this.password !== this.passwordConfirmation) {
