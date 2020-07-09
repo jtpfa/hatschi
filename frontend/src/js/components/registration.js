@@ -43,38 +43,23 @@ $(document).ready(() => {
         const password = $($(form)[0]).find('#password')[0]
         const passwordConfirmation = $($(form)[0]).find('#password-confirm')[0]
 
-        // Extend the html5 form validation with a custom password confirmation validator if the password fields exist
-        if (password && passwordConfirmation) {
-            password.onkeyup = () => {
-                isPasswordConfirmed(password, passwordConfirmation)
-            }
-            passwordConfirmation.onkeyup = () => {
-                isPasswordConfirmed(password, passwordConfirmation)
-            }
-
-            form.addEventListener(
-                'submit',
-                event => {
-                    if (!form.checkValidity() || !isPasswordConfirmed(password, passwordConfirmation)) {
-                        event.preventDefault()
-                        event.stopPropagation()
-                    }
-                    form.classList.add('was-validated')
-                },
-                false
-            )
-        } else {
-            form.addEventListener(
-                'submit',
-                event => {
-                    if (!form.checkValidity()) {
-                        event.preventDefault()
-                        event.stopPropagation()
-                    }
-                    form.classList.add('was-validated')
-                },
-                false
-            )
+        password.onkeyup = () => {
+            isPasswordConfirmed(password, passwordConfirmation)
         }
+        passwordConfirmation.onkeyup = () => {
+            isPasswordConfirmed(password, passwordConfirmation)
+        }
+
+        form.addEventListener(
+            'submit',
+            event => {
+                if (!form.checkValidity() || !isPasswordConfirmed(password, passwordConfirmation)) {
+                    event.preventDefault()
+                    event.stopPropagation()
+                }
+                form.classList.add('was-validated')
+            },
+            false
+        )
     })
 }, false)

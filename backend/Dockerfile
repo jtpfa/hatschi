@@ -5,7 +5,7 @@ WORKDIR $APP_HOME
 COPY build.gradle gradlew gradlew.bat $APP_HOME
 COPY gradle $APP_HOME/gradle
 COPY . .
-RUN ./gradlew build
+RUN ./gradlew build -x test
 
 FROM openjdk:11
 WORKDIR /root/

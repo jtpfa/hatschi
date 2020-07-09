@@ -8,7 +8,7 @@ public final class CustomerEntityBuilder {
     private String email;
     private String firstName;
     private String lastName;
-    private char[] password;
+    private String password;
     private long id;
     private Date created;
     private Date updated;
@@ -37,7 +37,7 @@ public final class CustomerEntityBuilder {
         return this;
     }
 
-    public CustomerEntityBuilder withPassword(char[] password) {
+    public CustomerEntityBuilder withPassword(String password) {
         this.password = password;
         return this;
     }
