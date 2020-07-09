@@ -1,5 +1,7 @@
 <template>
-    <b-form ref="form" novalidate @submit="onSubmit">
+    <b-form ref="form" novalidate @submit.prevent="onSubmit">
+        <b-alert class="my-3" :show="success.length > 0" variant="success">{{ success }}</b-alert>
+
         <b-form-row>
             <div class="col-md-6" role="group">
                 <label for="firstname">
@@ -120,7 +122,11 @@
                 </b-form-invalid-feedback>
             </div>
         </b-form-row>
-        <b-button type="submit" variant="primary">
+
+        <b-alert class="mt-3" :show="error.length > 0" variant="danger">{{ error }}</b-alert>
+
+        <b-button class="mt-3" :disabled="loading" type="submit" variant="primary">
+            <b-spinner v-if="loading" small></b-spinner>
             Registrieren
         </b-button>
     </b-form>
@@ -137,14 +143,36 @@ export default {
             password: '',
             passwordConfirmation: '',
             passwordConfirmationErrorMessage: '',
+            success: '',
+            error: '',
+            loading: false,
         }
     },
     methods: {
+        async register() {
+            try {
+                await this.$api.SignUp({
+                    firstName: this.firstName,
+                    lastName: this.lastName,
+                    email: this.email,
+                    password: this.password,
+                })
+                this.success = 'Dein Benutzer wurde erfolgreich angelegt.'
+            } catch (err) {
+                this.error = 'Leider gab es ein Problem. Bitte versuch es später erneut.'
+            }
+        },
         onSubmit(event) {
+            this.loading = true
+            this.success = ''
+            this.error = ''
             if (!this.$refs.form.checkValidity() || !this.isPasswordConfirmed()) {
                 event.preventDefault()
                 event.stopPropagation()
+            } else {
+                this.register()
             }
+            this.loading = false
             this.$refs.form.classList.add('was-validated')
         },
         isPasswordConfirmed() {
