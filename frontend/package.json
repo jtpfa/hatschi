@@ -8,7 +8,8 @@
     "dev": "NUXT_SERVER_IP=0.0.0.0 nuxt",
     "build": "nuxt build",
     "start": "nuxt start",
-    "generate": "nuxt generate",
+    "serve": "nuxt serve",
+    "generate": "nuxt build --target static && nuxt export",
     "lint:script": "eslint --ext .js,.vue --color --cache --cache-location tmp/.eslintcache --ignore-path .gitignore .",
     "lint:scriptfix": "npm run lint:script -- --fix",
     "format": "prettier --write \"${FOLDER:-*}/**/*.*\""
