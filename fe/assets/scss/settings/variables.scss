@@ -12,18 +12,18 @@ $grid-lg: 992px;
 $grid-xl: 1280px;
 
 $grid-breakpoints: (
-        xs: $grid-xs,
-        sm: $grid-sm,
-        md: $grid-md,
-        lg: $grid-lg,
-        xl: $grid-xl,
+    xs: $grid-xs,
+    sm: $grid-sm,
+    md: $grid-md,
+    lg: $grid-lg,
+    xl: $grid-xl,
 );
 
 $container-max-widths: (
-        sm: $grid-sm,
-        md: $grid-md,
-        lg: $grid-lg,
-        xl: $grid-xl,
+    sm: $grid-sm,
+    md: $grid-md,
+    lg: $grid-lg,
+    xl: $grid-xl,
 );
 
 // Spacing
@@ -31,23 +31,23 @@ $container-max-widths: (
 $spacer: 0.9375rem; // 15px
 $spacers: ();
 $spacers: map-merge(
-                (
-                        0: 0,
-                        1: (
-                                $spacer / 3,
-                        ),
-                        2: (
-                                $spacer / 1.5,
-                        ),
-                        3: $spacer,
-                        4: (
-                                $spacer * 1.3333333,
-                        ),
-                        5: (
-                                $spacer * 2,
-                        ),
-                ),
-                $spacers
+    (
+        0: 0,
+        1: (
+            $spacer / 3,
+        ),
+        2: (
+            $spacer / 1.5,
+        ),
+        3: $spacer,
+        4: (
+            $spacer * 1.3333333,
+        ),
+        5: (
+            $spacer * 2,
+        ),
+    ),
+    $spacers
 );
 
 // Color system
@@ -83,18 +83,18 @@ $success: #42ab7d;
 $theme-colors: ();
 
 $theme-colors: map-merge(
-                (
-                        'primary': $primary,
-                        'primary-50': $primary-50,
-                        'secondary': $secondary,
-                        'info': $info,
-                        'warning': $warning,
-                        'danger': $danger,
-                        'success': $success,
-                        'light': $light,
-                        'dark': $dark,
-                ),
-                $theme-colors
+    (
+        'primary': $primary,
+        'primary-50': $primary-50,
+        'secondary': $secondary,
+        'info': $info,
+        'warning': $warning,
+        'danger': $danger,
+        'success': $success,
+        'light': $light,
+        'dark': $dark,
+    ),
+    $theme-colors
 );
 
 // Bootstrap options
@@ -104,4 +104,3 @@ $enable-gradients: true;
 $enable-responsive-font-sizes: true;
 
 // Custom variables
-

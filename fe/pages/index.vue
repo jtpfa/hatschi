@@ -1,20 +1,17 @@
 <template>
     <b-container>
-        <registration-form/>
+        <registration-form />
     </b-container>
 </template>
 
 <script>
+import RegistrationForm from '../components/registration/form'
 
-  import RegistrationForm from '../components/registration/form'
-
-  export default {
+export default {
     components: {
-      RegistrationForm
-    }
-  }
+        RegistrationForm,
+    },
+}
 </script>
 
-<style>
-
-</style>
+<style></style>

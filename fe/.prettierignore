@@ -1,0 +1,16 @@
+coverage/
+dist/
+static/
+tmp/
+
+*.*
+
+!*.vue
+!*.ts
+!*.js
+!*.tsx
+!*.jsx
+
+!*.scss
+!*.sass
+!*.css
