@@ -7,11 +7,28 @@ spring:
   jpa:
     hibernate:
       ddl-auto: validate
+    properties:
+      hibernate:
+        hbm2ddl:
+          delimiter: ';'
+      javax:
+        persistence:
+          schema-generation:
+            create-source: metadata
+            scripts:
+              action: create
+              create-target: ./build/schema/schema.sql
+server:
+  error:
+    include-message: always
+
 keycloak:
   realm: ${PCMR_KEYCLOAK_REALM}
   auth-server-url: ${PCMR_AUTH_SERVER_URL}
   resource: ${PCMR_RESOURCE}
   bearer-only: true
+
+
 
 
 

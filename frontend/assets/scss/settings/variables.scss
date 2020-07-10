@@ -1,0 +1,107 @@
+// Variables
+//
+// These variables overwrite the bootstrap variables.
+// node_modules/bootstrap/scss/_variables.scss
+
+// Breakpoints
+
+$grid-xs: 0;
+$grid-sm: 576px;
+$grid-md: 768px;
+$grid-lg: 992px;
+$grid-xl: 1280px;
+
+$grid-breakpoints: (
+        xs: $grid-xs,
+        sm: $grid-sm,
+        md: $grid-md,
+        lg: $grid-lg,
+        xl: $grid-xl,
+);
+
+$container-max-widths: (
+        sm: $grid-sm,
+        md: $grid-md,
+        lg: $grid-lg,
+        xl: $grid-xl,
+);
+
+// Spacing
+
+$spacer: 0.9375rem; // 15px
+$spacers: ();
+$spacers: map-merge(
+                (
+                        0: 0,
+                        1: (
+                                $spacer / 3,
+                        ),
+                        2: (
+                                $spacer / 1.5,
+                        ),
+                        3: $spacer,
+                        4: (
+                                $spacer * 1.3333333,
+                        ),
+                        5: (
+                                $spacer * 2,
+                        ),
+                ),
+                $spacers
+);
+
+// Color system
+
+$primary: #2196f3;
+$primary-50: #688eaa;
+$secondary: #b13b59;
+
+$white: #ffffff;
+$gray-100: #f3f3f3;
+$gray-200: #e9ecef;
+$gray-300: #dee2e6;
+$gray-400: #d8d8d8;
+$gray-500: #adb5bd;
+$gray: #999999;
+$gray-600: #6c757d;
+$gray-700: #565656;
+$gray-800: #343a40;
+$gray-900: #212529;
+$black: #000000;
+
+$light: #f8f7f7;
+$dark: #23202a;
+
+// Create higher contrast for ligth backgrounds
+$yiq-text-dark: $black;
+
+$info: $dark;
+$warning: #fca808;
+$danger: #f44336;
+$success: #42ab7d;
+
+$theme-colors: ();
+
+$theme-colors: map-merge(
+                (
+                        'primary': $primary,
+                        'primary-50': $primary-50,
+                        'secondary': $secondary,
+                        'info': $info,
+                        'warning': $warning,
+                        'danger': $danger,
+                        'success': $success,
+                        'light': $light,
+                        'dark': $dark,
+                ),
+                $theme-colors
+);
+
+// Bootstrap options
+
+$enable-shadows: true;
+$enable-gradients: true;
+$enable-responsive-font-sizes: true;
+
+// Custom variables
+
