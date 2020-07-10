@@ -3,13 +3,13 @@ export class RestApi {
         this.baseUrl = baseUrl
     }
 
-    SignUp(data) {
+    signUp(userAttributes) {
         return fetch(`${this.baseUrl}registration`, {
             method: 'POST',
             headers: {
                 'Content-type': 'application/json; charset=UTF-8',
             },
-            body: JSON.stringify(data),
+            body: JSON.stringify(userAttributes),
         }).then(response => (response.ok ? Promise.resolve(response) : Promise.reject(response)))
     }
 }
