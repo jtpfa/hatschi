@@ -1,6 +1,6 @@
 <template>
-    <b-form-row>
-        <div class="col-md-6" role="group">
+    <b-form-row class="mb-md-4">
+        <div class="col-md-6 mb-4 mb-md-0" role="group">
             <label for="password">
                 Passwort
                 <span class="mandatory">*</span>
@@ -29,7 +29,7 @@
             </b-form-invalid-feedback>
         </div>
 
-        <div class="col-md-6" role="group">
+        <div class="col-md-6 mb-4 mb-md-0" role="group">
             <label for="password-confirm">
                 Passwort bestätigen
                 <span class="mandatory">*</span>

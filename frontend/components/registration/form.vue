@@ -2,8 +2,8 @@
     <b-form ref="form" novalidate @submit.prevent="onSubmit">
         <b-alert class="my-3" :show="success.length > 0" variant="success">{{ success }}</b-alert>
 
-        <b-form-row>
-            <div class="col-md-6" role="group">
+        <b-form-row class="mb-md-4">
+            <div class="col-md-6 mb-4 mb-md-0" role="group">
                 <label for="firstname">
                     Vorname
                     <span class="mandatory">*</span>
@@ -23,7 +23,7 @@
                     Bitte gib deinen Vornamen an.
                 </b-form-invalid-feedback>
             </div>
-            <div class="col-md-6" role="group">
+            <div class="col-md-6 mb-4 mb-md-0" role="group">
                 <label for="name">
                     Nachname
                     <span class="mandatory">*</span>
@@ -45,7 +45,7 @@
             </div>
         </b-form-row>
 
-        <div role="group">
+        <div class="mb-4" role="group">
             <label for="email">
                 E-Mail
                 <span class="mandatory">*</span>
@@ -71,10 +71,12 @@
 
         <b-alert class="mt-3" :show="error.length > 0" variant="danger">{{ error }}</b-alert>
 
-        <b-button class="mt-3" :disabled="loading" type="submit" variant="primary">
-            <b-spinner v-if="loading" small></b-spinner>
-            Registrieren
-        </b-button>
+        <div class="button-container">
+            <b-button :disabled="loading" type="submit" variant="primary">
+                <b-spinner v-if="loading" small></b-spinner>
+                Registrieren
+            </b-button>
+        </div>
     </b-form>
 </template>
 
@@ -125,4 +127,30 @@ export default {
 }
 </script>
 
-<style scoped></style>
+<style lang="scss" scoped>
+.button-container {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column-reverse;
+
+    @media (min-width: $grid-sm) {
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-end;
+    }
+
+    .btn {
+        font-size: 1.2rem;
+    }
+
+    > * {
+        width: 100%;
+        margin: 1rem 0 0 0;
+
+        @media (min-width: $grid-sm) {
+            width: auto;
+            margin: 0 0 0 1rem;
+        }
+    }
+}
+</style>
