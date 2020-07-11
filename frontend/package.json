@@ -8,11 +8,16 @@
     "dev": "HOST=0.0.0.0 nuxt",
     "build": "nuxt build",
     "start": "nuxt start",
-    "generate": "nuxt generate",
+    "serve": "nuxt serve",
+    "generate": "nuxt build --target static && nuxt export",
     "lint:script": "eslint --ext .js,.vue --color --cache --cache-location tmp/.eslintcache --ignore-path .gitignore .",
-    "lint:scriptfix": "npm run lint:script -- --fix"
+    "lint:scriptfix": "npm run lint:script -- --fix",
+    "format": "prettier --write \"${FOLDER:-*}/**/*.*\""
   },
   "lint-staged": {
+    "*.*": [
+      "npm run format"
+    ],
     "*.{js,vue}": [
       "npm run lint:scriptfix"
     ]
@@ -28,15 +33,20 @@
     "nuxt": "^2.13.3"
   },
   "devDependencies": {
-    "@nuxtjs/eslint-config": "^3.0.0",
-    "@nuxtjs/eslint-module": "^2.0.0",
     "@nuxtjs/style-resources": "^1.0.0",
     "babel-eslint": "^10.1.0",
     "eslint": "^7.4.0",
-    "eslint-plugin-nuxt": "^1.0.0",
+    "eslint-config-airbnb-base": "^14.2.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-import-resolver-nuxt": "^1.0.1",
+    "eslint-loader": "^4.0.2",
+    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "eslint-plugin-vue": "^6.2.2",
     "husky": "^4.2.5",
     "lint-staged": "^10.2.11",
     "node-sass": "^4.14.1",
+    "prettier": "^2.0.5",
     "sass-loader": "^9.0.2"
   }
 }
