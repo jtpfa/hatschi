@@ -1,7 +1,7 @@
-import { RestApi } from "~/helpers/RestApi";
+import { RestApi } from '~/helpers/RestApi'
 
 export default (context, inject) => {
-  const api = new RestApi("http://localhost:8080/api/");
+    const api = new RestApi('http://localhost:8080/api/')
 
-  inject("api", api);
-};
+    inject('api', api)
+}
