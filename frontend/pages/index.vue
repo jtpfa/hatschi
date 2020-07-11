@@ -6,10 +6,12 @@
 
 <script>
 
+  import LoginForm from '../components/login/form'
   import RegistrationForm from '../components/registration/form'
 
   export default {
     components: {
+      LoginForm,
       RegistrationForm
     }
   }
