@@ -5,7 +5,7 @@
   "author": "Aleksandar Vuk Jovanovic, Fynn Lohse, Jonas Pfannkuche, Tayfun Gülbasi, Vera Meermeier",
   "private": true,
   "scripts": {
-    "dev": "NUXT_SERVER_IP=0.0.0.0 nuxt",
+    "dev": "HOST=0.0.0.0 nuxt",
     "build": "nuxt build",
     "start": "nuxt start",
     "generate": "nuxt generate",
