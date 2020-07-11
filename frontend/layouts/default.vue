@@ -1,18 +1,25 @@
 <template>
-    <div>
+    <div class="d-flex flex-column page">
         <page-header />
-        <nuxt />
+        <nuxt class="mb-5" />
+        <page-footer />
     </div>
 </template>
 
 <script>
+import PageFooter from '~/components/layout/footer'
 import pageHeader from '../components/layout/header'
 
 export default {
     components: {
+        PageFooter,
         pageHeader,
     },
 }
 </script>
 
-<style></style>
+<style lang="scss" scoped>
+.page {
+    height: 100vh;
+}
+</style>

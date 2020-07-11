@@ -1,19 +1,7 @@
 <template>
     <div>
         <b-navbar toggleable="md" type="light">
-            <div class="d-flex justify-content-center align-items-center">
-                <b-navbar-brand href="/">
-                    <icon-logo />
-                </b-navbar-brand>
-                <span class="big-noodle description text-dark">
-                    Dein Online-
-                    <br />
-                    Shop Für
-                    <br />
-                    PC-Equipment
-                    <br />
-                </span>
-            </div>
+            <page-logo />
 
             <b-navbar-toggle target="nav-collapse" />
 
@@ -33,34 +21,16 @@
 </template>
 
 <script>
-import IconLogo from '../icons/logo'
+import PageLogo from '~/components/layout/logo'
 import LoginForm from '../login/form'
 
 export default {
     name: 'LayoutHeader',
-    components: { LoginForm, IconLogo },
+    components: { PageLogo, LoginForm },
 }
 </script>
 
 <style lang="scss" scoped>
-.navbar-brand {
-    svg {
-        width: 5rem;
-        height: auto;
-        transition: all 0.3s ease-in-out;
-    }
-
-    &:hover {
-        svg {
-            transform: scale(1.05);
-        }
-    }
-}
-
-.description {
-    line-height: 1.25;
-}
-
 .login {
     transition: opacity 0.3s ease-in-out;
 
