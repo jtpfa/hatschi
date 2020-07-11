@@ -11,8 +11,9 @@
                 <!-- Right aligned nav items -->
                 <b-navbar-nav class="ml-auto">
                     <b-nav-item href="#">Warenkorb</b-nav-item>
-                    <span v-b-modal.modal-center>
-                        <b-avatar variant="primary"/>
+                    <span class="d-flex align-items-center flex-md-column login" v-b-modal.modal-center>
+                        <b-avatar variant="primary" class="mr-2 mr-md-0"/>
+                        Login
                     </span>
                 </b-navbar-nav>
             </b-collapse>
@@ -36,6 +37,14 @@
         svg {
             width: 5rem;
             height: auto;
+        }
+    }
+
+    .login {
+        transition: opacity 0.3s ease-in-out;
+        
+        &:hover {
+            opacity: 0.8;
         }
     }
 </style>
