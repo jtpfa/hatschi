@@ -1,6 +1,6 @@
 <template>
     <div class="grid">
-        <template :v-for="i in 10">
+        <template v-for="i in 10">
             <b-card>
                 <b-card-img-lazy alt="Image" src="https://picsum.photos/300/300/?image=41" top />
                 <h2>Feinste Ware</h2>
