@@ -33,7 +33,7 @@ services:
       KEYCLOAK_PASSWORD: ${KEYCLOAK_PASSWORD}
       KEYCLOAK_IMPORT: /tmp/pcmr-realm.json
     volumes:
-    - ./src/main/resources/keycloak/pcmr-realm.json:/tmp/pcmr-realm.json
+      - ./src/main/resources/keycloak/:/tmp/
     depends_on:
       - db
 
