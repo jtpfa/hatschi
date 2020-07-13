@@ -3,11 +3,7 @@
 </template>
 
 <script>
-    export default {
-        name: 'warenkorb',
-    }
+export default {}
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

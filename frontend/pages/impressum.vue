@@ -3,9 +3,7 @@
 </template>
 
 <script>
-export default {
-    name: 'Impressum',
-}
+export default {}
 </script>
 
 <style scoped></style>

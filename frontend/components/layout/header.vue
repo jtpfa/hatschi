@@ -8,13 +8,19 @@
             <b-collapse id="nav-collapse" is-nav>
                 <!-- Right aligned nav items -->
                 <b-navbar-nav class="ml-auto">
-                    <b-link to="warenkorb" class="d-flex align-items-center flex-md-column nav-icon big-noodle mr-0 mr-md-4 my-3 my-md-0">
+                    <b-link
+                        to="warenkorb"
+                        class="d-flex align-items-center flex-md-column nav-icon big-noodle mr-0 mr-md-4 my-3 my-md-0"
+                    >
                         <div class="bg-primary rounded-circle shopping-cart b-avatar badge-primary mr-2 mr-md-0">
                             <icon-shopping-cart />
                         </div>
                         Warenkorb
                     </b-link>
-                    <span v-b-modal.modal-center class="d-flex align-items-center flex-md-column nav-icon big-noodle text-primary">
+                    <span
+                        v-b-modal.modal-center
+                        class="d-flex align-items-center flex-md-column nav-icon big-noodle text-primary"
+                    >
                         <b-avatar class="mr-2 mr-md-0" variant="primary" />
                         Login
                     </span>
@@ -47,14 +53,14 @@ export default {
     }
 }
 
-    .shopping-cart {
-        width: 2.5em;
-        height: 2.5em;
+.shopping-cart {
+    width: 2.5em;
+    height: 2.5em;
 
-        svg {
-            fill: $white;
-            width: 1.25em;
-            height: 1.25em;
-        }
+    svg {
+        fill: $white;
+        width: 1.25em;
+        height: 1.25em;
     }
+}
 </style>
