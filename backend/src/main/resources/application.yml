@@ -27,6 +27,7 @@ keycloak:
   auth-server-url: ${PCMR_AUTH_SERVER_URL}
   resource: ${PCMR_RESOURCE}
   bearer-only: true
+  principal-attribute: preferred_username
 
 
 
