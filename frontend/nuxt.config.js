@@ -30,7 +30,9 @@ export default {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: [],
+  plugins: [
+      { src: '~/plugins/api.js' }
+  ],
   /*
    ** Nuxt.js dev-modules
    */
@@ -43,6 +45,8 @@ export default {
     "@nuxtjs/style-resources",
     // Doc: https://bootstrap-vue.js.org/docs/
     "bootstrap-vue/nuxt",
+    '@nuxtjs/axios',
+    '@nuxtjs/auth',
   ],
   /*
    ** Bootstrap Vue module configuration
@@ -67,5 +71,40 @@ export default {
     /* eslint-disable no-unused-vars */
     extend(config, ctx) {},
     /* eslint-enable no-unused-vars */
+    transpile: ['@nuxtjs/auth']
+  },
+  auth: {
+    strategies: {
+      keycloak: {
+        _scheme: '~/schemes/keycloak',
+        access_token_endpoint: 'http://localhost:8090/auth/realms/pcmr/protocol/openid-connect/token',
+        token_type: 'Bearer',
+        token_key: 'access_token',
+        grant_type: 'password',
+        client_id: 'pcmr',
+        token: {
+          property: 'access_token',
+          maxAge: 300
+        },
+        refreshToken: {
+          property: 'refresh_token'
+        },
+        autoRefresh: {
+          enable: true
+        },
+        endpoints: {
+          login: { url: 'http://localhost:8090/auth/realms/pcmr/protocol/openid-connect/token', method: 'post', propertyName: 'access_token' },
+          logout: { url: '/', method: 'post' },
+          refresh: { url: 'http://localhost:8090/auth/realms/pcmr/protocol/openid-connect/token', method: 'post', propertyName: 'refresh_token' },
+          user: { url: 'http://localhost:8080/api/customer', method: 'get'},
+        },
+      }
+    },
+    redirect: {
+      login: '/login',
+      logout: '/login',
+      callback: '/auth/login',
+      home: '/'
+    }
   },
 };
