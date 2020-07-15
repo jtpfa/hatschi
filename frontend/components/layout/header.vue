@@ -1,6 +1,6 @@
 <template>
     <div>
-        <b-navbar toggleable="md" type="light">
+        <b-navbar toggleable="md" type="light" class="bg-white header-nav">
             <page-logo />
 
             <b-navbar-toggle target="nav-collapse" />
@@ -43,6 +43,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.header-nav {
+    box-shadow: 0 4px 7px 0 rgba(0, 0, 0, 0.16);
+}
+
 .nav-icon {
     text-decoration: none;
     transition: opacity 0.3s ease-in-out;

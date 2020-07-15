@@ -2,7 +2,7 @@
     <b-card class="article">
         <b-card-img-lazy alt="Image" :src="imageSrc" class="mb-4" top />
         <h2 class="article-title font-weight-bold mb-4">{{ name }}</h2>
-        <b-card-text class="article-description font-weight-bold mb-4">
+        <b-card-text class="article-description mb-4">
             {{ cropText }}
         </b-card-text>
         <b-card-text class="article-price font-weight-bold text-primary big-noodle">{{ price }} €</b-card-text>
@@ -50,8 +50,14 @@ export default {
 
 <style lang="scss" scoped>
 .article {
-    border-color: $gray;
     border-radius: 0.75rem;
+    border: none;
+    box-shadow: 0 0 7px 1px rgba(0, 0, 11, 0.16);
+    transition: all 0.3s ease-in-out;
+
+    &:hover {
+        box-shadow: 0 0 7px 1px $primary;
+    }
 
     img {
         display: block;
