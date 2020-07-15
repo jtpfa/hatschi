@@ -7,7 +7,7 @@
 
             <b-collapse id="nav-collapse" is-nav>
                 <!-- Right aligned nav items -->
-                <b-navbar-nav class="ml-auto">
+                <b-navbar-nav class="ml-auto mb-3 mb-md-0">
                     <b-link
                         to="warenkorb"
                         class="d-flex align-items-center flex-md-column nav-icon big-noodle mr-0 mr-md-4 my-3 my-md-0"
