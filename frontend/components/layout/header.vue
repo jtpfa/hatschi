@@ -1,55 +1,66 @@
 <template>
-  <div>
-    <b-navbar toggleable="md" type="light">
-      <b-navbar-brand href="/">
-        <icon-logo />
-      </b-navbar-brand>
+    <div>
+        <b-navbar toggleable="md" type="light">
+            <page-logo />
 
-      <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
+            <b-navbar-toggle target="nav-collapse" />
 
-      <b-navbar-toggle target="nav-collapse" />
-
-      <b-collapse id="nav-collapse" is-nav>
-        <!-- Right aligned nav items -->
-        <b-navbar-nav class="ml-auto">
-          <b-nav-item href="#">Warenkorb</b-nav-item>
-          <span
-            v-b-modal.modal-center
-            class="d-flex align-items-center flex-md-column login"
-          >
-            <b-avatar class="mr-2 mr-md-0" variant="primary" />
-            Login
-          </span>
-        </b-navbar-nav>
-      </b-collapse>
-    </b-navbar>
-    <login-form modal-id="modal-center" />
-  </div>
+            <b-collapse id="nav-collapse" is-nav>
+                <!-- Right aligned nav items -->
+                <b-navbar-nav class="ml-auto">
+                    <b-link
+                        to="warenkorb"
+                        class="d-flex align-items-center flex-md-column nav-icon big-noodle mr-0 mr-md-4 my-3 my-md-0"
+                    >
+                        <div class="bg-primary rounded-circle shopping-cart b-avatar badge-primary mr-2 mr-md-0">
+                            <icon-shopping-cart />
+                        </div>
+                        Warenkorb
+                    </b-link>
+                    <span
+                        v-b-modal.modal-center
+                        class="d-flex align-items-center flex-md-column nav-icon big-noodle text-primary"
+                    >
+                        <b-avatar class="mr-2 mr-md-0" variant="primary" />
+                        Login
+                    </span>
+                </b-navbar-nav>
+            </b-collapse>
+        </b-navbar>
+        <login-form modal-id="modal-center" />
+    </div>
 </template>
 
 <script>
-import IconLogo from "../icons/logo";
-import LoginForm from "../login/form";
+import IconShoppingCart from '~/components/icons/shoppingCart'
+import PageLogo from '~/components/layout/logo'
+import LoginForm from '../login/form'
 
 export default {
-  name: "LayoutHeader",
-  components: { LoginForm, IconLogo },
-};
+    name: 'LayoutHeader',
+    components: { IconShoppingCart, PageLogo, LoginForm },
+}
 </script>
 
 <style lang="scss" scoped>
-.navbar-brand {
-  svg {
-    width: 5rem;
-    height: auto;
-  }
+.nav-icon {
+    text-decoration: none;
+    transition: opacity 0.3s ease-in-out;
+
+    &:hover {
+        color: $primary;
+        opacity: 0.8;
+    }
 }
 
-.login {
-  transition: opacity 0.3s ease-in-out;
+.shopping-cart {
+    width: 2.5em;
+    height: 2.5em;
 
-  &:hover {
-    opacity: 0.8;
-  }
+    svg {
+        fill: $white;
+        width: 1.25em;
+        height: 1.25em;
+    }
 }
 </style>

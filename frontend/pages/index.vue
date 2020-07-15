@@ -1,17 +1,23 @@
 <template>
-  <b-container>
-    <registration-form />
-  </b-container>
+    <b-container>
+        <home-stage />
+
+        <h3>Aktuelle Top-Seller</h3>
+
+        <home-article-overview />
+    </b-container>
 </template>
 
 <script>
-import RegistrationForm from "../components/registration/form";
+import HomeArticleOverview from '~/components/home/articleOverview'
+import HomeStage from '~/components/home/stage'
 
 export default {
-  components: {
-    RegistrationForm,
-  },
-};
+    components: {
+        HomeStage,
+        HomeArticleOverview,
+    },
+}
 </script>
 
 <style></style>
