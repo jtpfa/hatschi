@@ -2,7 +2,7 @@
     <b-container>
         <home-stage />
 
-        <h3>Aktuelle Top-Seller</h3>
+        <p class="h3">Aktuelle Top-Seller</p>
 
         <home-article-overview />
     </b-container>
