@@ -1,6 +1,9 @@
 <template>
     <b-container>
         <home-stage />
+
+        <h3>Aktuelle Top-Seller</h3>
+
         <home-article-overview />
     </b-container>
 </template>

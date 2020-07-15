@@ -5,9 +5,7 @@
         <b-card-text class="article-description font-weight-bold mb-4">
             {{ cropText }}
         </b-card-text>
-        <b-card-text class="article-price font-weight-bold text-primary big-noodle">
-            {{ price }} €
-        </b-card-text>
+        <b-card-text class="article-price font-weight-bold text-primary big-noodle">{{ price }} €</b-card-text>
     </b-card>
 </template>
 
@@ -30,7 +28,7 @@ export default {
         imageSrc: {
             type: String,
             required: true,
-        }
+        },
     },
     computed: {
         // Get 50 characters of the description text and append '...'
