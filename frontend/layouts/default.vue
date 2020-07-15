@@ -1,18 +1,18 @@
 <template>
-  <div>
-    <page-header />
-    <nuxt />
-  </div>
+    <div>
+        <page-header />
+        <nuxt />
+    </div>
 </template>
 
 <script>
-import pageHeader from "../components/layout/header";
+import pageHeader from '../components/layout/header'
 
 export default {
-  components: {
-    pageHeader,
-  },
-};
+    components: {
+        pageHeader,
+    },
+}
 </script>
 
 <style></style>

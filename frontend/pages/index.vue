@@ -1,34 +1,23 @@
 <template>
-  <b-container>
-    <registration-form />
-    <b-button @click="submit" />
-    <h2>{{ status }}</h2>
-  </b-container>
+    <b-container>
+        <registration-form />
+        <h1>{{ status }}</h1>
+    </b-container>
 </template>
 
 <script>
-import RegistrationForm from "../components/registration/form";
+import RegistrationForm from '../components/registration/form'
 
 export default {
-  components: {
-    RegistrationForm,
-  },
-  methods: {
-    async submit() {
-      try {
-        let response = await this.$auth.loginWith("keycloak", { data: "1234" });
-        console.log(response)
-      } catch (err) {
-        console.log(err)
-      }
+    components: {
+        RegistrationForm,
     },
-  },
-  computed: {
-    status() {
-      return this.$auth.user;
+    computed: {
+        status() {
+            return this.$auth.user
+        },
     },
-  },
-};
+}
 </script>
 
 <style></style>
