@@ -2,11 +2,11 @@
     <div class="grid">
         <template v-for="i in 10">
             <home-article
+                image-src="/img/sample.png"
                 name="Feinste Ware"
+                :price="299.99"
                 text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
             dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip"
-                :price="299.99"
-                image-src="/img/sample.png"
             />
         </template>
     </div>
@@ -14,8 +14,9 @@
 
 <script>
 import HomeArticle from '~/components/home/article'
+
 export default {
-    name: 'homeArticleOverview',
+    name: 'HomeArticleOverview',
     components: { HomeArticle },
 }
 </script>

@@ -8,7 +8,7 @@
 
 <script>
 export default {
-    name: 'iconShoppingCart',
+    name: 'IconShoppingCart',
 }
 </script>
 

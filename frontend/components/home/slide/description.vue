@@ -7,7 +7,7 @@
                 der 4K Auflösung jedes Detail sichtbar.
             </p>
         </div>
-        <b-button variant="primary" class="w-100">
+        <b-button class="w-100" variant="primary">
             Zum Produkt
         </b-button>
     </div>
@@ -15,12 +15,12 @@
 
 <script>
 export default {
-    name: 'homeSlideDescription',
+    name: 'HomeSlideDescription',
 }
 </script>
 
 <style lang="scss" scoped>
-    button {
-        font-size: 1.25rem;
-    }
+button {
+    font-size: 1.25rem;
+}
 </style>

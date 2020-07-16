@@ -1,6 +1,6 @@
 <template>
     <b-card class="article">
-        <b-card-img-lazy alt="Image" :src="imageSrc" class="mb-4" top />
+        <b-card-img-lazy alt="Image" class="mb-4" :src="imageSrc" top />
         <h2 class="article-title font-weight-bold mb-4">{{ name }}</h2>
         <b-card-text class="article-description mb-4">
             {{ cropText }}
@@ -11,7 +11,7 @@
 
 <script>
 export default {
-    name: 'homeArticle',
+    name: 'HomeArticle',
     props: {
         name: {
             type: String,

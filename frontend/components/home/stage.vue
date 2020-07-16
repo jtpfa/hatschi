@@ -10,6 +10,7 @@
 <script>
 import HomeSlideDescription from '~/components/home/slide/description'
 import HomeSlideFacts from '~/components/home/slide/facts'
+
 export default {
     name: 'HomeStage',
     components: { HomeSlideFacts, HomeSlideDescription },

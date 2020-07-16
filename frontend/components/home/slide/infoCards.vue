@@ -18,7 +18,7 @@
 
 <script>
 export default {
-    name: 'homeSlideInfoCards',
+    name: 'HomeSlideInfoCards',
 }
 </script>
 

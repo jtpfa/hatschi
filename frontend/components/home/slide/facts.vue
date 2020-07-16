@@ -19,8 +19,9 @@
 <script>
 import HomeSlideBackgroundShape from '~/components/home/slide/backgroundShape'
 import HomeSlideInfoCards from '~/components/home/slide/infoCards'
+
 export default {
-    name: 'homeSlideFacts',
+    name: 'HomeSlideFacts',
     components: { HomeSlideBackgroundShape, HomeSlideInfoCards },
 }
 </script>

@@ -10,7 +10,7 @@
 
 <script>
 export default {
-    name: 'homeSlideBackgroundShape',
+    name: 'HomeSlideBackgroundShape',
 }
 </script>
 
