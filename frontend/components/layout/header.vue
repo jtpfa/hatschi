@@ -18,12 +18,17 @@
                         Warenkorb
                     </b-link>
                     <span
-                        v-b-modal.modal-center
+                        v-if="!this.$auth.loggedIn"v-b-modal.modal-center
                         class="d-flex align-items-center flex-md-column nav-icon big-noodle text-primary"
                     >
                         <b-avatar class="mr-2 mr-md-0" variant="primary" />
                         Login
-                    </span>
+                    </span><nuxt-link v-else to="profil" class="nav-icon">
+                        <span>
+                            <b-avatar class="mr-2 mr-md-0" variant="primary" />
+                            Profil
+                        </span>
+                    </nuxt-link>
                 </b-navbar-nav>
             </b-collapse>
         </b-navbar>
@@ -44,7 +49,7 @@ export default {
 
 <style lang="scss" scoped>
 .header-nav {
-    box-shadow: 0 4px 7px 0 rgba(0, 0, 0, 0.16);
+        box-shadow: 0 4px 7px 0 rgba(0, 0, 0, 0.16);
 }
 
 .nav-icon {
@@ -53,6 +58,7 @@ export default {
 
     &:hover {
         color: $primary;
+        text-decoration: none;
         opacity: 0.8;
     }
 }

@@ -13,7 +13,7 @@
                     v-model="firstName"
                     aria-describedby="input-live-feedback"
                     autocomplete="given-name"
-                    pattern="^.{2,50}$"
+                    pattern="^.{1,50}$"
                     placeholder="Vorname"
                     required
                     trim
@@ -33,7 +33,7 @@
                     v-model="lastName"
                     aria-describedby="input-live-feedback"
                     autocomplete="family-name"
-                    pattern="^.{2,50}$"
+                    pattern="^.{1,50}$"
                     placeholder="Nachname"
                     required
                     trim

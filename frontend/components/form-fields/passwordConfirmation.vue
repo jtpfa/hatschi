@@ -95,8 +95,4 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-.text-muted {
-    letter-spacing: 0.01em;
-}
-</style>
+<style scoped></style>

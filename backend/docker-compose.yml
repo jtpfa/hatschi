@@ -7,7 +7,7 @@ services:
       dockerfile: ./Dockerfile
     restart: always
     ports:
-      - 8080:8080
+      - 8090:8080
     environment:
       PCMR_MYSQL_HOST: ${PCMR_MYSQL_HOST_DOCKER}
       MYSQL_DB_PORT: ${MYSQL_DB_PORT}
@@ -22,6 +22,8 @@ services:
     depends_on:
       - db
       - keycloak
+    networks:
+      - pcmr-net
 
   db:
     image: mariadb
@@ -38,12 +40,14 @@ services:
       KEYCLOAK_MYSQL_PASSWORD: ${KEYCLOAK_MYSQL_PASSWORD}
     volumes:
       - ./src/main/resources/db/init:/docker-entrypoint-initdb.d/
+    networks:
+      - pcmr-net
   
   keycloak:
     image: jboss/keycloak
     restart: always
     ports:
-      - 8090:8080
+      - 8080:8080
     environment: 
       DB_VENDOR: mariadb
       DB_ADDR: ${KEYCLOAK_DB_ADDR}
@@ -58,4 +62,9 @@ services:
       - ./src/main/resources/keycloak/:/tmp/
     depends_on:
       - db
-
+    networks:
+      pcmr-net:
+        aliases:
+          - auth.pcmr.de
+networks:
+  pcmr-net:
