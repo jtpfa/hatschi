@@ -3,6 +3,7 @@ package de.pcmr.shop.service;
 import de.pcmr.shop.domain.CustomerEntity;
 import de.pcmr.shop.exception.CustomerAlreadyExistsException;
 import de.pcmr.shop.exception.keycloak.KeycloakEndpointNotFoundException;
+import de.pcmr.shop.exception.keycloak.KeycloakUnknownErrorException;
 import de.pcmr.shop.exception.keycloak.KeycloakUserAlreadyExistsException;
 import de.pcmr.shop.exception.keycloak.KeycloakUserIsNotAuthorizedException;
 import de.pcmr.shop.repository.customer.CustomerRepository;
@@ -17,13 +18,17 @@ import org.keycloak.representations.idm.UserRepresentation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
 
+import javax.validation.ConstraintViolationException;
+import javax.validation.Valid;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
 import java.util.Arrays;
 import java.util.Collections;
 
 @Service
+@Validated
 public class RegistrationServiceImpl implements RegistrationServiceI {
 
     private final Environment env;
@@ -58,7 +63,7 @@ public class RegistrationServiceImpl implements RegistrationServiceI {
     }
 
     @Override
-    public void registerCustomer(CustomerEntity customerEntity) throws KeycloakUserAlreadyExistsException, KeycloakUserIsNotAuthorizedException, CustomerAlreadyExistsException, KeycloakEndpointNotFoundException {
+    public void registerCustomer(@Valid CustomerEntity customerEntity) throws KeycloakUserAlreadyExistsException, KeycloakUserIsNotAuthorizedException, CustomerAlreadyExistsException, KeycloakEndpointNotFoundException, KeycloakUnknownErrorException {
         try {
             UserRepresentation user = createKeycloakUserFromCustomer(customerEntity);
 
@@ -79,7 +84,7 @@ public class RegistrationServiceImpl implements RegistrationServiceI {
         }
     }
 
-    private void handleWebApplicationException(WebApplicationException ex) throws KeycloakUserIsNotAuthorizedException, KeycloakUserAlreadyExistsException, KeycloakEndpointNotFoundException {
+    private void handleWebApplicationException(WebApplicationException ex) throws KeycloakUserIsNotAuthorizedException, KeycloakUserAlreadyExistsException, KeycloakEndpointNotFoundException, KeycloakUnknownErrorException {
         switch (ex.getResponse().getStatus()) {
             case 401:
                 throw new KeycloakUserIsNotAuthorizedException(ex);
@@ -87,6 +92,8 @@ public class RegistrationServiceImpl implements RegistrationServiceI {
                 throw new KeycloakEndpointNotFoundException(ex);
             case 409:
                 throw new KeycloakUserAlreadyExistsException(ex);
+            case 400:
+                throw new KeycloakUnknownErrorException();
             default:
                 ex.printStackTrace();
         }
