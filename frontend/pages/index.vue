@@ -14,7 +14,7 @@ export default {
     },
     computed: {
         status() {
-            return this.$auth.user
+            return this.$auth.loggedIn ? this.$auth.user : 'No user logged in'
         },
     },
 }

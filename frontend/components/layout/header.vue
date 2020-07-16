@@ -19,10 +19,12 @@
                         <b-avatar class="mr-2 mr-md-0" variant="primary" />
                         Login
                     </span>
-                    <span v-else>
-                        <b-avatar class="mr-2 mr-md-0" variant="primary" />
-                        Profil
-                    </span>
+                    <nuxt-link v-else to="profil">
+                        <span class="profile">
+                            <b-avatar class="mr-2 mr-md-0" variant="primary" />
+                            Profil
+                        </span>
+                    </nuxt-link>
                 </b-navbar-nav>
             </b-collapse>
         </b-navbar>
@@ -48,11 +50,17 @@ export default {
     }
 }
 
-.login {
+.login,
+.profile {
     transition: opacity 0.3s ease-in-out;
 
     &:hover {
         opacity: 0.8;
     }
+}
+
+a:hover {
+    color: $primary;
+    text-decoration: none;
 }
 </style>

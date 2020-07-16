@@ -1,5 +1,17 @@
 <template>
-    <b-modal :id="modalId" centered footer-class="login-footer" lazy ok-only scrollable title="Login">
+    <b-modal
+        :id="modalId"
+        centered
+        footer-class="login-footer"
+        :hide-header-close="loginPage"
+        lazy
+        :no-close-on-backdrop="loginPage"
+        :no-close-on-esc="loginPage"
+        :no-fade="loginPage"
+        ok-only
+        scrollable
+        title="Login"
+    >
         <b-form ref="form" novalidate>
             <div class="mb-3" role="group">
                 <label for="email">
@@ -63,6 +75,10 @@ export default {
             type: String,
             default: '',
         },
+        loginPage: {
+            type: Boolean,
+            defaults: false,
+        },
     },
     data() {
         return {
@@ -74,6 +90,8 @@ export default {
     },
     methods: {
         async onSubmit(event) {
+            this.$refs.email.setCustomValidity('')
+            this.$refs.password.setCustomValidity('')
             this.loading = true
             if (!this.$refs.form.checkValidity()) {
                 event.preventDefault()

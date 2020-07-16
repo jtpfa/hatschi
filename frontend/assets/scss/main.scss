@@ -1,10 +1,10 @@
 // import fonts before variables to use fonts in variables
-@import "settings/fonts";
+@import 'settings/fonts';
 // import variables before bootstrap to override defaults
-@import "settings/variables";
+@import 'settings/variables';
 
 // import bootstrap before other components to use bootstrap stuff in own components
-@import "node_modules/bootstrap/scss/bootstrap";
-@import "node_modules/bootstrap-vue/src/index.scss";
+@import 'node_modules/bootstrap/scss/bootstrap';
+@import 'node_modules/bootstrap-vue/src/index.scss';
 
-@import "components/form";
+@import 'components/form';

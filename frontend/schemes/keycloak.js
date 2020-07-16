@@ -71,6 +71,8 @@ export default class KeyCloakScheme {
 
             this.$auth.setToken(this.name, token)
             this._setToken(token)
+
+            this.$auth.setRefreshToken('keycloak', response.data.refresh_token)
         }
 
         if (this.options.autoFetchUser) {

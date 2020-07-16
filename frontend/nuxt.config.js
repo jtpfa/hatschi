@@ -107,8 +107,8 @@ export default {
             },
         },
         redirect: {
-            login: '/login',
-            logout: '/login',
+            login: '/auth/login',
+            logout: '/',
             callback: '/auth/login',
             home: '/',
         },
