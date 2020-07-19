@@ -11,7 +11,7 @@
 
 <script>
 export default {
-    name: 'HomeArticle',
+    name: 'ArticleCard',
     props: {
         name: {
             type: String,

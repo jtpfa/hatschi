@@ -52,6 +52,9 @@ module.exports = {
         'import/prefer-default-export': 0,
         'no-underscore-dangle': 'off',
         'consistent-return': 'off',
+        // @todo: remove these when articles are included dynamically
+        'vue/no-unused-vars': 0,
+        'vue/valid-v-for': 0,
     },
     settings: {
         'import/resolver': {
