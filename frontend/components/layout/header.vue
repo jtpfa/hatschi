@@ -15,7 +15,7 @@
                         <div class="bg-primary rounded-circle shopping-cart b-avatar badge-primary mr-2 mr-md-0">
                             <icon-shopping-cart />
                         </div>
-                        Warenkorb
+                        Warenkorb {{ cartElements }}
                     </b-link>
                     <span
                         v-if="!this.$auth.loggedIn"
@@ -39,6 +39,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import IconShoppingCart from '~/components/icons/shoppingCart'
 import PageLogo from '~/components/layout/logo'
 import LoginForm from '../login/form'
@@ -46,6 +47,9 @@ import LoginForm from '../login/form'
 export default {
     name: 'LayoutHeader',
     components: { IconShoppingCart, PageLogo, LoginForm },
+    computed: {
+        ...mapGetters(['cartElements']),
+    },
 }
 </script>
 

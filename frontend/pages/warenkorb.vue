@@ -1,9 +1,16 @@
 <template>
-    <h1>Warenkorb</h1>
+    <div>
+        <add-to-cart name="artikel1" />
+        <add-to-cart name="artikel2" />
+    </div>
 </template>
 
 <script>
-export default {}
+import AddToCart from '~/components/cart/addToCart'
+
+export default {
+    components: { AddToCart },
+}
 </script>
 
 <style scoped></style>
