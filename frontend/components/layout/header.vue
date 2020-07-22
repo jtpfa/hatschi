@@ -1,44 +1,46 @@
 <template>
-    <div>
-        <b-navbar class="bg-white header-nav" toggleable="md" type="light">
-            <page-logo />
+    <client-only>
+        <div>
+            <b-navbar class="bg-white header-nav" toggleable="md" type="light">
+                <page-logo />
 
-            <b-navbar-toggle target="nav-collapse" />
+                <b-navbar-toggle target="nav-collapse" />
 
-            <b-collapse id="nav-collapse" is-nav>
-                <!-- Right aligned nav items -->
-                <b-navbar-nav class="ml-auto mb-3 mb-md-0">
-                    <b-link
-                        class="d-flex align-items-center flex-md-column nav-icon big-noodle mr-0 mr-md-4 my-3 my-md-0"
-                        to="warenkorb"
-                    >
-                        <div class="bg-primary rounded-circle shopping-cart b-avatar badge-primary mr-2 mr-md-0">
-                            <icon-shopping-cart :items="cartElements" />
-                            <span v-if="cartElements > 0" class="cart-elements b-avatar-badge badge-dark">
-                                {{ cartElements }}
-                            </span>
-                        </div>
-                        Warenkorb
-                    </b-link>
-                    <span
-                        v-if="!this.$auth.loggedIn"
-                        v-b-modal.modal-center
-                        class="d-flex align-items-center flex-md-column nav-icon big-noodle text-primary"
-                    >
-                        <b-avatar class="mr-2 mr-md-0" variant="primary" />
-                        Login
-                    </span>
-                    <b-link v-else class="nav-icon" to="profil">
-                        <span class="d-flex align-items-center flex-md-column big-noodle">
+                <b-collapse id="nav-collapse" is-nav>
+                    <!-- Right aligned nav items -->
+                    <b-navbar-nav class="ml-auto mb-3 mb-md-0">
+                        <b-link
+                            class="d-flex align-items-center flex-md-column nav-icon big-noodle mr-0 mr-md-4 my-3 my-md-0"
+                            to="warenkorb"
+                        >
+                            <div class="bg-primary rounded-circle shopping-cart b-avatar badge-primary mr-2 mr-md-0">
+                                <icon-shopping-cart :items="cartElements" />
+                                <span v-if="cartElements > 0" class="cart-elements b-avatar-badge badge-dark">
+                                    {{ cartElements }}
+                                </span>
+                            </div>
+                            Warenkorb
+                        </b-link>
+                        <span
+                            v-if="!this.$auth.loggedIn"
+                            v-b-modal.modal-center
+                            class="d-flex align-items-center flex-md-column nav-icon big-noodle text-primary"
+                        >
                             <b-avatar class="mr-2 mr-md-0" variant="primary" />
-                            Profil
+                            Login
                         </span>
-                    </b-link>
-                </b-navbar-nav>
-            </b-collapse>
-        </b-navbar>
-        <login-form modal-id="modal-center" />
-    </div>
+                        <b-link v-else class="nav-icon" to="profil">
+                            <span class="d-flex align-items-center flex-md-column big-noodle">
+                                <b-avatar class="mr-2 mr-md-0" variant="primary" />
+                                Profil
+                            </span>
+                        </b-link>
+                    </b-navbar-nav>
+                </b-collapse>
+            </b-navbar>
+            <login-form modal-id="modal-center" />
+        </div>
+    </client-only>
 </template>
 
 <script>

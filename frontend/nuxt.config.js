@@ -30,7 +30,10 @@ export default {
     /*
      ** Plugins to load before mounting the App
      */
-    plugins: [{ src: '~/plugins/api.js' }],
+    plugins: [
+        { src: '~/plugins/api.js', ssr: false },
+        { src: '~/plugins/vuex-persist', ssr: false },
+    ],
     /*
      ** Nuxt.js dev-modules
      */
