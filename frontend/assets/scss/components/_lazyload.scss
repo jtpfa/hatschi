@@ -1,0 +1,3 @@
+img:not([width='1']):not([height='1']) + .orbit-spinner {
+    display: none;
+}

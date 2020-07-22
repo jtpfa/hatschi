@@ -1,6 +1,10 @@
 <template>
     <b-card class="article">
-        <b-card-img-lazy alt="Image" class="mb-4" :src="imageSrc" top />
+        <div class="image">
+            <b-card-img-lazy alt="Image" class="mb-4" :src="imageSrc" top />
+            <spinner />
+        </div>
+
         <h2 class="article-title font-weight-bold mb-4">{{ name }}</h2>
         <b-card-text class="article-description mb-4">
             {{ cropText }}
@@ -10,8 +14,11 @@
 </template>
 
 <script>
+import Spinner from '~/components/layout/spinner'
+
 export default {
     name: 'ArticleCard',
+    components: { Spinner },
     props: {
         name: {
             type: String,
@@ -59,17 +66,26 @@ export default {
         box-shadow: 0 0 7px 1px $primary;
     }
 
-    img {
-        display: block;
-        max-width: 35%;
-        margin: 0 auto;
+    .image {
+        position: relative;
+        flex-shrink: 0;
+        width: 100%;
+        min-height: 8rem;
+        max-height: 100%;
+        overflow: hidden;
 
-        @media (min-width: $grid-sm) {
-            max-width: 45%;
-        }
+        img {
+            display: block;
+            max-width: 35%;
+            margin: 0 auto;
 
-        @media (min-width: $grid-xl) {
-            max-width: 55%;
+            @media (min-width: $grid-sm) {
+                max-width: 45%;
+            }
+
+            @media (min-width: $grid-xl) {
+                max-width: 55%;
+            }
         }
     }
 
