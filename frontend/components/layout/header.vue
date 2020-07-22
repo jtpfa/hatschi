@@ -13,9 +13,12 @@
                         to="warenkorb"
                     >
                         <div class="bg-primary rounded-circle shopping-cart b-avatar badge-primary mr-2 mr-md-0">
-                            <icon-shopping-cart />
+                            <icon-shopping-cart :items="cartElements" />
+                            <span v-if="cartElements > 0" class="cart-elements b-avatar-badge badge-dark">
+                                {{ cartElements }}
+                            </span>
                         </div>
-                        Warenkorb {{ cartElements }}
+                        Warenkorb
                     </b-link>
                     <span
                         v-if="!this.$auth.loggedIn"
@@ -77,6 +80,13 @@ export default {
         fill: $white;
         width: 1.25em;
         height: 1.25em;
+    }
+
+    .cart-elements {
+        top: 0;
+        right: 0;
+        font-family: $font-family-sans-serif;
+        font-size: 77.7%;
     }
 }
 </style>
