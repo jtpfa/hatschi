@@ -1,5 +1,5 @@
 <template>
-    <login-form :login-page="true" modal-id="modal-center" />
+    <login-form :login-page="true" :modal-id="modalId" />
 </template>
 
 <script>
@@ -9,8 +9,13 @@ export default {
     name: 'AuthLogin',
     components: { LoginForm },
     layout: 'blank',
+    data() {
+        return {
+            modalId: 'modal-login',
+        }
+    },
     mounted() {
-        this.$bvModal.show('modal-center')
+        this.$bvModal.show(this.modalId)
     },
 }
 </script>

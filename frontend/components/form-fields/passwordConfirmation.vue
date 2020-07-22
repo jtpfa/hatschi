@@ -1,6 +1,6 @@
 <template>
-    <b-form-row class="mb-md-4">
-        <div class="col-md-6 mb-4 mb-md-0" role="group">
+    <fieldset>
+        <div class="mb-4" role="group">
             <label for="password">
                 Passwort
                 <span class="mandatory">*</span>
@@ -8,7 +8,7 @@
             <b-form-input
                 id="password"
                 v-model="password"
-                aria-describedby="input-live-help input-live-feedback"
+                aria-describedby="input-live-help"
                 autocomplete="new-password"
                 pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[!§$%&/()=?|\\{}[\]+#;:.,@€_-])[A-Za-z\d!§$%&/()=?|\\{}[\]+#;:.,@€_-]{6,120}$"
                 placeholder="Passwort"
@@ -18,18 +18,12 @@
                 @input="isPasswordConfirmed"
             />
 
-            <b-form-text id="input-live-help">
-                Das Passwort muss mindestens 6 Zeichen lang sein, bestehend aus Buchstaben, Zahlen und Sonderzeichen (
-                <kbd>!§$%&/()=?|{}[]+#;:.,@€_-</kbd>
-                ).
+            <b-form-text id="input-live-help" class="mt-0">
+                <form-field-password-strength :password="password" />
             </b-form-text>
-
-            <b-form-invalid-feedback id="input-live-feedback">
-                Wähle ein Passwort, das den Sicherheitsbestimmungen entspricht.
-            </b-form-invalid-feedback>
         </div>
 
-        <div class="col-md-6 mb-4 mb-md-0" role="group">
+        <div class="mb-4" role="group">
             <label for="password-confirm">
                 Passwort bestätigen
                 <span class="mandatory">*</span>
@@ -56,12 +50,15 @@
                 </template>
             </b-form-invalid-feedback>
         </div>
-    </b-form-row>
+    </fieldset>
 </template>
 
 <script>
+import FormFieldPasswordStrength from '~/components/form-fields/passwordStrength'
+
 export default {
     name: 'FormFieldPasswordConfirmation',
+    components: { FormFieldPasswordStrength },
     data() {
         return {
             password: '',
@@ -95,4 +92,15 @@ export default {
 }
 </script>
 
-<style scoped></style>
+<style lang="scss" scoped>
+input#password ~ #input-live-help {
+    display: none;
+}
+
+input#password:focus,
+.was-validated input#password:invalid {
+    ~ #input-live-help {
+        display: block;
+    }
+}
+</style>

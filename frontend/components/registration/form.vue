@@ -2,48 +2,46 @@
     <b-form ref="form" novalidate @submit.prevent="onSubmit">
         <b-alert class="my-3" :show="success.length > 0" variant="success">{{ success }}</b-alert>
 
-        <b-form-row class="mb-md-4">
-            <div class="col-md-6 mb-4 mb-md-0" role="group">
-                <label for="firstname">
-                    Vorname
-                    <span class="mandatory">*</span>
-                </label>
-                <b-form-input
-                    id="firstname"
-                    v-model="firstName"
-                    aria-describedby="input-live-feedback"
-                    autocomplete="given-name"
-                    pattern="^.{1,50}$"
-                    placeholder="Vorname"
-                    required
-                    trim
-                />
+        <div class="mb-4" role="group">
+            <label for="firstname">
+                Vorname
+                <span class="mandatory">*</span>
+            </label>
+            <b-form-input
+                id="firstname"
+                v-model="firstName"
+                aria-describedby="input-live-feedback"
+                autocomplete="given-name"
+                pattern="^.{1,50}$"
+                placeholder="Vorname"
+                required
+                trim
+            />
 
-                <b-form-invalid-feedback id="input-live-feedback">
-                    Bitte gib deinen Vornamen an.
-                </b-form-invalid-feedback>
-            </div>
-            <div class="col-md-6 mb-4 mb-md-0" role="group">
-                <label for="name">
-                    Nachname
-                    <span class="mandatory">*</span>
-                </label>
-                <b-form-input
-                    id="name"
-                    v-model="lastName"
-                    aria-describedby="input-live-feedback"
-                    autocomplete="family-name"
-                    pattern="^.{1,50}$"
-                    placeholder="Nachname"
-                    required
-                    trim
-                />
+            <b-form-invalid-feedback id="input-live-feedback">
+                Bitte gib deinen Vornamen an.
+            </b-form-invalid-feedback>
+        </div>
+        <div class="mb-4" role="group">
+            <label for="name">
+                Nachname
+                <span class="mandatory">*</span>
+            </label>
+            <b-form-input
+                id="name"
+                v-model="lastName"
+                aria-describedby="input-live-feedback"
+                autocomplete="family-name"
+                pattern="^.{1,50}$"
+                placeholder="Nachname"
+                required
+                trim
+            />
 
-                <b-form-invalid-feedback id="input-live-feedback">
-                    Bitte gib deinen Nachnamen an.
-                </b-form-invalid-feedback>
-            </div>
-        </b-form-row>
+            <b-form-invalid-feedback id="input-live-feedback">
+                Bitte gib deinen Nachnamen an.
+            </b-form-invalid-feedback>
+        </div>
 
         <div class="mb-4" role="group">
             <label for="email">
