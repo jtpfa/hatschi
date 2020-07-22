@@ -7,8 +7,10 @@ services:
       dockerfile: ./Dockerfile
     restart: always
     ports:
-      - 8090:8090
+      - 8090:8080
     environment:
+      VIRTUAL_HOST: api.pc-mr.de
+      VIRTUAL_PORT: 8090
       PCMR_SERVER_PORT: ${PCMR_SERVER_PORT}
       PCMR_MYSQL_HOST: ${PCMR_MYSQL_HOST_DOCKER}
       MYSQL_DB_PORT: ${MYSQL_DB_PORT}
@@ -16,7 +18,7 @@ services:
       PCMR_MYSQL_USER: ${PCMR_MYSQL_USER}
       PCMR_MYSQL_PASSWORD: ${PCMR_MYSQL_PASSWORD}
       PCMR_KEYCLOAK_REALM: ${PCMR_KEYCLOAK_REALM}
-      PCMR_AUTH_SERVER_URL: ${PCMR_AUTH_SERVER_URL_DOCKER}
+      PCMR_AUTH_SERVER_URL: ${PCMR_AUTH_SERVER_URL_DOCKER_PROD}
       PCMR_RESOURCE: ${PCMR_RESOURCE}
       PCMR_KEYCLOAK_REGISTRATION_USER: ${PCMR_KEYCLOAK_REGISTRATION_USER}
       PCMR_KEYCLOAK_REGISTRATION_PASSWORD: ${PCMR_KEYCLOAK_REGISTRATION_PASSWORD}
@@ -24,7 +26,9 @@ services:
       - db
       - keycloak
     networks:
-      - pcmr-net
+      pcmr-net:
+        aliases:
+          - api.pcmr.de
 
   db:
     image: mariadb
@@ -49,7 +53,9 @@ services:
     restart: always
     ports:
       - 8080:8080
-    environment: 
+    environment:
+      VIRTUAL_HOST: auth.pc-mr.de
+      VIRTUAL_PORT: 80
       DB_VENDOR: mariadb
       DB_ADDR: ${KEYCLOAK_DB_ADDR}
       DB_PORT: ${MYSQL_DB_PORT}
@@ -67,5 +73,14 @@ services:
       pcmr-net:
         aliases:
           - auth.pcmr.de
+  nginx-proxy:
+    image: jwilder/nginx-proxy
+    ports:
+      - 80:80
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock
+    networks:
+      - pcmr-net
+
 networks:
   pcmr-net:
