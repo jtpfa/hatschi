@@ -8,23 +8,17 @@ import de.pcmr.shop.exception.keycloak.KeycloakUnknownErrorException;
 import de.pcmr.shop.exception.keycloak.KeycloakUserAlreadyExistsException;
 import de.pcmr.shop.exception.keycloak.KeycloakUserIsNotAuthorizedException;
 import de.pcmr.shop.repository.customer.CustomerRepository;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.keycloak.admin.client.Keycloak;
-import org.keycloak.admin.client.KeycloakBuilder;
-import org.keycloak.admin.client.resource.RealmResource;
 import org.keycloak.admin.client.resource.UsersResource;
 import org.keycloak.representations.idm.UserRepresentation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.core.env.Environment;
 
 import javax.validation.ConstraintViolationException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@SpringBootTest
-public class RegistrationServiceTest {
+public class RegistrationServiceTest extends AbstractServiceTest {
     private final RegistrationServiceI registrationService;
     private final CustomerRepository customerRepository;
 
@@ -38,63 +32,20 @@ public class RegistrationServiceTest {
     private final static String CUSTOMER_INVALID_FIRSTNAME = "";
     private final static String CUSTOMER_INVALID_LASTNAME = "";
 
-    private final Environment env;
-
-    private final String KEYCLOAK_URL;
-    private final String KEYCLOAK_REALM;
-    private final String KEYCLOAK_CLIENT;
-    private final String KEYCLOAK_REGISTRATION_USER;
-    private final String KEYCLOAK_REGISTRATION_PASSWORD;
-
-    private CustomerEntity customer;
+    private CustomerEntity customerEntity;
 
     private final Given given = new Given();
     private final When when = new When();
     private final Then then = new Then();
 
-    private final Keycloak keycloak;
     private UsersResource usersResource;
 
     @Autowired
-    public RegistrationServiceTest(RegistrationServiceI registrationService, CustomerRepository customerRepository, Environment env) {
-        this.env = env;
-        KEYCLOAK_URL = this.env.getProperty("PCMR_AUTH_SERVER_URL");
-        KEYCLOAK_REALM = this.env.getProperty("PCMR_KEYCLOAK_REALM");
-        KEYCLOAK_CLIENT = this.env.getProperty("PCMR_RESOURCE");
-        KEYCLOAK_REGISTRATION_USER = this.env.getProperty("PCMR_KEYCLOAK_REGISTRATION_USER");
-        KEYCLOAK_REGISTRATION_PASSWORD = this.env.getProperty("PCMR_KEYCLOAK_REGISTRATION_PASSWORD");
-
+    public RegistrationServiceTest(RegistrationServiceI registrationService, CustomerRepository customerRepository, Environment environment) {
+        super(environment, customerRepository);
         this.registrationService = registrationService;
         this.customerRepository = customerRepository;
-
-        keycloak = KeycloakBuilder.builder()
-                .serverUrl(KEYCLOAK_URL)
-                .realm(KEYCLOAK_REALM)
-                .clientId(KEYCLOAK_CLIENT)
-                .username(KEYCLOAK_REGISTRATION_USER)
-                .password(KEYCLOAK_REGISTRATION_PASSWORD)
-                .build();
-
-        RealmResource realmResource = keycloak.realm(KEYCLOAK_REALM);
-        usersResource = realmResource.users();
-    }
-
-    @BeforeEach
-    public void cleanUp() {
-        cleanUpDatabase();
-        cleanUpKeycloak();
-    }
-
-    public void cleanUpDatabase() {
-        customerRepository.deleteAll();
-    }
-
-    public void cleanUpKeycloak() {
-        for (UserRepresentation user : usersResource.list()) {
-            if (!user.getUsername().equals(KEYCLOAK_REGISTRATION_USER)) {
-                usersResource.delete(user.getId());
-            }
-        }
+        this.usersResource = super.getUsersResource();
     }
 
     @Test
@@ -172,7 +123,7 @@ public class RegistrationServiceTest {
 
     class Given {
         public void aCustomerEntityWith(String email, String firstname, String lastname, String password) {
-            customer = CustomerEntityBuilder.aCustomerEntity()
+            customerEntity = CustomerEntityBuilder.aCustomerEntity()
                     .withEmail(email)
                     .withFirstName(firstname)
                     .withLastName(lastname)
@@ -183,7 +134,7 @@ public class RegistrationServiceTest {
 
     class When {
         public void aCustomerIsRegistered() throws KeycloakEndpointNotFoundException, KeycloakUserAlreadyExistsException, KeycloakUserIsNotAuthorizedException, CustomerAlreadyExistsException, KeycloakUnknownErrorException {
-            registrationService.registerCustomer(customer);
+            registrationService.registerCustomer(customerEntity);
         }
     }
 

@@ -21,6 +21,7 @@ spring:
 server:
   error:
     include-message: always
+  port: ${PCMR_SERVER_PORT}
 
 keycloak:
   realm: ${PCMR_KEYCLOAK_REALM}
