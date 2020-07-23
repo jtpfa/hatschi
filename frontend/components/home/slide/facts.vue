@@ -2,7 +2,7 @@
     <div class="col-12 col-md-8 order-md-1 mb-5 mb-md-0">
         <home-slide-background-shape>
             <div class="col-12 col-sm-5 mt-2 mt-sm-0">
-                <div class="image d-flex justify-content-center align-items-center">
+                <div class="lazy-image d-flex justify-content-center align-items-center">
                     <b-img-lazy src="/img/stage-sample.png" />
                     <spinner color="white" :size="6" />
                 </div>
@@ -31,7 +31,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.image {
+.lazy-image {
     position: relative;
     flex-shrink: 0;
     width: 100%;

@@ -1,7 +1,10 @@
 <template>
     <div class="row">
         <div class="col-12 col-md-5 d-flex justify-content-center align-items-center mb-5 mb-md-0">
-            <b-img-lazy alt="Image" src="/img/sample.png" />
+            <div class="lazy-image d-flex justify-content-center align-items-center">
+                <b-img-lazy alt="Image" src="/img/sample.png" />
+                <spinner />
+            </div>
         </div>
 
         <div class="col-12 col-md-7">
@@ -35,10 +38,11 @@
 
 <script>
 import IconShoppingCart from '~/components/icons/shoppingCart'
+import Spinner from '~/components/layout/spinner'
 
 export default {
     name: 'ArticleShortDescription',
-    components: { IconShoppingCart },
+    components: { Spinner, IconShoppingCart },
     props: {
         article: {
             type: Object,
@@ -49,8 +53,17 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-img {
-    width: 50%;
+.lazy-image {
+    position: relative;
+    flex-shrink: 0;
+    width: 100%;
+    min-height: 8rem;
+    max-height: 100%;
+    overflow: hidden;
+
+    img {
+        width: 50%;
+    }
 }
 .delivery-time {
     margin-top: -0.5rem;

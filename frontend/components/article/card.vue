@@ -1,6 +1,6 @@
 <template>
     <b-card class="article">
-        <div class="image">
+        <div class="lazy-image">
             <b-card-img-lazy alt="Image" class="mb-4" :src="imageSrc" top />
             <spinner />
         </div>
@@ -72,7 +72,7 @@ export default {
         box-shadow: 0 0 7px 1px $primary;
     }
 
-    .image {
+    .lazy-image {
         position: relative;
         flex-shrink: 0;
         width: 100%;
