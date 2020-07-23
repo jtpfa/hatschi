@@ -27,22 +27,19 @@
                     <span class="text-muted">zzgl. Versandkosten</span>
                 </div>
 
-                <b-button class="d-flex justify-content-center align-items-center px-5 py-1" variant="primary">
-                    <icon-shopping-cart class="mr-3" />
-                    In den Warenkorb
-                </b-button>
+                <add-to-cart name="2" />
             </div>
         </div>
     </div>
 </template>
 
 <script>
-import IconShoppingCart from '~/components/icons/shoppingCart'
+import AddToCart from '~/components/cart/addToCart'
 import Spinner from '~/components/layout/spinner'
 
 export default {
     name: 'ProductShortDescription',
-    components: { Spinner, IconShoppingCart },
+    components: { AddToCart, Spinner },
     props: {
         product: {
             type: Object,
@@ -81,22 +78,6 @@ export default {
 
     span:not(.price) {
         font-size: 0.8rem;
-    }
-}
-
-button {
-    width: 100%;
-    font-size: 1.25rem;
-
-    @media (min-width: $grid-sm) {
-        width: auto;
-        font-size: 2rem;
-    }
-
-    svg {
-        width: 2rem;
-        height: auto;
-        fill: $white;
     }
 }
 </style>

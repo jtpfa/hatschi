@@ -3,8 +3,8 @@
         <p class="h5">Produktdetails</p>
 
         <p>
-            Highlights: 16: 9 Gaming Monitor mit einer Auflösung von 1920x1080, DisplayHDR 400, Fast LC 1ms (G2G),
-            G-Sync Kompatibel. G-Sync Kompatibel sind Freesync (Adaptive Sync) Monitore, die sich vergleichbar wie Gsync
+            Highlights: 16:9 Gaming Monitor mit einer Auflösung von 1920x1080, DisplayHDR 400, Fast LC 1ms (G2G), G-Sync
+            Kompatibel. G-Sync Kompatibel sind Freesync (Adaptive Sync) Monitore, die sich vergleichbar wie Gsync
             Monitore verhalten und somit ruckelfreie, flüssige Spielesessions ermöglichen. Zero-Frame-Monitore zeichnen
             sich durch minimale Rahmen aus. Bilder erscheinen auf dem Monitor größer und Übergänge bei
             Multi-Monitor-Setups sind nahezu nahtlos. HDR ist eine Technologie um Farben und Kontraste kräftiger zum
