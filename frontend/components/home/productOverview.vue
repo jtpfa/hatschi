@@ -1,7 +1,7 @@
 <template>
     <div class="grid">
         <template v-for="i in 10">
-            <article-card
+            <product-card
                 image-src="/img/sample.png"
                 name="Feinste Ware"
                 :price="299.99"
@@ -13,11 +13,11 @@
 </template>
 
 <script>
-import ArticleCard from '~/components/article/card'
+import ProductCard from '~/components/product/card'
 
 export default {
-    name: 'HomeArticleOverview',
-    components: { ArticleCard },
+    name: 'HomeProductOverview',
+    components: { ProductCard },
 }
 </script>
 

@@ -1,15 +1,15 @@
 <template>
-    <b-card class="article">
+    <b-card class="product">
         <div class="lazy-image">
             <b-card-img-lazy alt="Image" class="mb-4" :src="imageSrc" top />
             <spinner />
         </div>
 
-        <h2 class="article-title font-weight-bold mb-4">{{ name }}</h2>
-        <b-card-text class="article-description mb-4">
+        <h2 class="product-title font-weight-bold mb-4">{{ name }}</h2>
+        <b-card-text class="product-description mb-4">
             {{ cropText }}
         </b-card-text>
-        <b-card-text class="article-price font-weight-bold text-primary big-noodle">{{ price }} €</b-card-text>
+        <b-card-text class="product-price font-weight-bold text-primary big-noodle">{{ price }} €</b-card-text>
         <b-link class="stretched-link" target="_blank" :to="`/artikel/${id}`" @click="id++"></b-link>
     </b-card>
 </template>
@@ -18,7 +18,7 @@
 import Spinner from '~/components/layout/spinner'
 
 export default {
-    name: 'ArticleCard',
+    name: 'ProductCard',
     components: { Spinner },
     props: {
         name: {
@@ -62,7 +62,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.article {
+.product {
     border-radius: 0.75rem;
     border: none;
     box-shadow: 0 0 7px 1px rgba(0, 0, 11, 0.16);
@@ -95,7 +95,7 @@ export default {
         }
     }
 
-    .article-title {
+    .product-title {
         font-size: 1.5rem;
         font-family: $font-family-base;
         color: $secondary;
@@ -105,11 +105,11 @@ export default {
         }
     }
 
-    .article-description {
+    .product-description {
         color: $secondary;
     }
 
-    .article-price {
+    .product-price {
         font-size: 2rem;
 
         @media (min-width: $grid-md) {

@@ -41,10 +41,10 @@ import IconShoppingCart from '~/components/icons/shoppingCart'
 import Spinner from '~/components/layout/spinner'
 
 export default {
-    name: 'ArticleShortDescription',
+    name: 'ProductShortDescription',
     components: { Spinner, IconShoppingCart },
     props: {
-        article: {
+        product: {
             type: Object,
             required: true,
         },

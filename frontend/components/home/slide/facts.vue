@@ -10,7 +10,7 @@
             <div class="col-12 col-sm-6 d-flex flex-column justify-content-between">
                 <home-slide-info-cards />
                 <div
-                    class="article-price font-weight-bold text-white big-noodle align-self-end mr-5 mr-sm-0 mb-3 mb-sm-0"
+                    class="product-price font-weight-bold text-white big-noodle align-self-end mr-5 mr-sm-0 mb-3 mb-sm-0"
                 >
                     299.99 €
                 </div>
@@ -60,7 +60,7 @@ export default {
     }
 }
 
-.article-price {
+.product-price {
     font-size: 2.5rem;
     font-style: oblique;
 }
