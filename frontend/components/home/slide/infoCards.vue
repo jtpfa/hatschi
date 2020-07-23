@@ -1,7 +1,7 @@
 <template>
     <div class="big-noodle mt-3 mt-sm-5 mb-4 mb-sm-5">
         <div class="info-cards">
-            <span class="article-name d-block bg-white text-primary text-center px-3 py-1 mb-3">
+            <span class="product-name d-block bg-white text-primary text-center px-3 py-1 mb-3">
                 Acer-Predator
             </span>
             <div class="features d-block text-center">
@@ -23,7 +23,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.article-name,
+.product-name,
 .features {
     width: 75%;
     margin: auto;
@@ -33,7 +33,7 @@ export default {
     }
 }
 
-.article-name,
+.product-name,
 span[class*='feature-'] {
     border: 0.2rem solid $white;
     font-size: 1.5rem;

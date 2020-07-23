@@ -52,7 +52,7 @@ module.exports = {
         'import/prefer-default-export': 0,
         'no-underscore-dangle': 'off',
         'consistent-return': 'off',
-        // @todo: remove these when articles are included dynamically
+        // @todo: remove these when products are included dynamically
         'vue/no-unused-vars': 0,
         'vue/valid-v-for': 0,
         'no-shadow': 0,

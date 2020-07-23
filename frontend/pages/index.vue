@@ -4,19 +4,19 @@
 
         <p class="h3">Aktuelle Top-Seller</p>
 
-        <home-article-overview />
+        <home-product-overview />
         <h1>{{ status }}</h1>
     </b-container>
 </template>
 
 <script>
-import HomeArticleOverview from '~/components/home/articleOverview'
+import HomeProductOverview from '~/components/home/productOverview'
 import HomeStage from '~/components/home/stage'
 
 export default {
     components: {
         HomeStage,
-        HomeArticleOverview,
+        HomeProductOverview,
     },
     computed: {
         status() {

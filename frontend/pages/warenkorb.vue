@@ -1,7 +1,7 @@
 <template>
     <div>
-        <add-to-cart name="artikel1" />
-        <add-to-cart name="artikel2" />
+        <add-to-cart name="produkt1" />
+        <add-to-cart name="produkt2" />
     </div>
 </template>
 

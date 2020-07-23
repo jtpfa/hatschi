@@ -1,7 +1,10 @@
 <template>
     <div class="row">
         <div class="col-12 col-md-5 d-flex justify-content-center align-items-center mb-5 mb-md-0">
-            <b-img-lazy alt="Image" src="/img/sample.png" />
+            <div class="lazy-image d-flex justify-content-center align-items-center">
+                <b-img-lazy alt="Image" src="/img/sample.png" />
+                <spinner />
+            </div>
         </div>
 
         <div class="col-12 col-md-7">
@@ -24,23 +27,21 @@
                     <span class="text-muted">zzgl. Versandkosten</span>
                 </div>
 
-                <b-button class="d-flex justify-content-center align-items-center px-5 py-1" variant="primary">
-                    <icon-shopping-cart class="mr-3" />
-                    In den Warenkorb
-                </b-button>
+                <add-to-cart name="2" />
             </div>
         </div>
     </div>
 </template>
 
 <script>
-import IconShoppingCart from '~/components/icons/shoppingCart'
+import AddToCart from '~/components/cart/addToCart'
+import Spinner from '~/components/layout/spinner'
 
 export default {
-    name: 'ArticleShortDescription',
-    components: { IconShoppingCart },
+    name: 'ProductShortDescription',
+    components: { AddToCart, Spinner },
     props: {
-        article: {
+        product: {
             type: Object,
             required: true,
         },
@@ -49,8 +50,17 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-img {
-    width: 50%;
+.lazy-image {
+    position: relative;
+    flex-shrink: 0;
+    width: 100%;
+    min-height: 8rem;
+    max-height: 100%;
+    overflow: hidden;
+
+    img {
+        width: 50%;
+    }
 }
 .delivery-time {
     margin-top: -0.5rem;
@@ -68,22 +78,6 @@ img {
 
     span:not(.price) {
         font-size: 0.8rem;
-    }
-}
-
-button {
-    width: 100%;
-    font-size: 1.25rem;
-
-    @media (min-width: $grid-sm) {
-        width: auto;
-        font-size: 2rem;
-    }
-
-    svg {
-        width: 2rem;
-        height: auto;
-        fill: $white;
     }
 }
 </style>

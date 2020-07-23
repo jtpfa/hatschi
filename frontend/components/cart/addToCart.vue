@@ -1,27 +1,21 @@
 <template>
-    <div>
-        <p class="quantity">
-            <button class="update-num" @click="quantity > 0 ? quantity-- : (quantity = 0)">-</button>
-            <input v-model="quantity" type="number" />
-            <button class="update-num" @click="quantity++">+</button>
-        </p>
-        <button class="button purchase" @click="addToCart">Add to Cart</button>
-    </div>
+    <b-button class="d-flex justify-content-center align-items-center px-5 py-1" variant="primary" @click="addToCart">
+        <icon-shopping-cart class="mr-3" />
+        In den Warenkorb
+    </b-button>
 </template>
 
 <script>
+import IconShoppingCart from '~/components/icons/shoppingCart'
+
 export default {
     name: 'AddToCart',
+    components: { IconShoppingCart },
     props: {
         name: {
             type: String,
             default: '',
         },
-    },
-    data() {
-        return {
-            quantity: 1,
-        }
     },
     methods: {
         addToCart() {
@@ -29,7 +23,7 @@ export default {
             item = {
                 ...item,
                 id: this.name,
-                quantity: this.quantity,
+                quantity: 1,
             }
             this.$store.commit('addToCart', { ...item })
         },
@@ -37,4 +31,20 @@ export default {
 }
 </script>
 
-<style scoped></style>
+<style lang="scss" scoped>
+button {
+    width: 100%;
+    font-size: 1.25rem;
+
+    @media (min-width: $grid-sm) {
+        width: auto;
+        font-size: 2rem;
+    }
+
+    svg {
+        width: 2rem;
+        height: auto;
+        fill: $white;
+    }
+}
+</style>

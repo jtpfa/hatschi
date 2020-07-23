@@ -11,7 +11,7 @@
                     <b-navbar-nav class="ml-auto mb-3 mb-md-0">
                         <b-link
                             class="d-flex align-items-center flex-md-column nav-icon big-noodle mr-0 mr-md-4 my-3 my-md-0"
-                            to="warenkorb"
+                            to="/warenkorb"
                         >
                             <div class="bg-primary rounded-circle shopping-cart b-avatar badge-primary mr-2 mr-md-0">
                                 <icon-shopping-cart :items="cartElements" />

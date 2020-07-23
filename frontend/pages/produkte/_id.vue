@@ -1,15 +1,15 @@
 <template>
     <b-container class="my-5">
         <h1>{{ id }}</h1>
-        <article-short-description :article="{}" class="my-5" />
+        <product-short-description class="my-5" :product="{}" />
 
-        <article-details class="my-5" />
+        <product-details class="my-5" />
 
         <p class="h5">Ähnliche Produkte</p>
 
         <div class="grid">
             <template v-for="i in 5">
-                <article-card
+                <product-card
                     image-src="/img/sample.png"
                     name="Feinste Ware"
                     :price="299.99"
@@ -22,13 +22,13 @@
 </template>
 
 <script>
-import ArticleCard from '~/components/article/card'
-import ArticleDetails from '~/components/article/details'
-import ArticleShortDescription from '~/components/article/shortDescription'
+import productCard from '~/components/product/card'
+import productDetails from '~/components/product/details'
+import productShortDescription from '~/components/product/shortDescription'
 
 export default {
-    name: 'Article',
-    components: { ArticleCard, ArticleDetails, ArticleShortDescription },
+    name: 'Product',
+    components: { productCard, productDetails, productShortDescription },
     data() {
         return {
             id: this.$route.params.id,
