@@ -39,6 +39,12 @@ import IconShoppingCart from '~/components/icons/shoppingCart'
 export default {
     name: 'ArticleShortDescription',
     components: { IconShoppingCart },
+    props: {
+        article: {
+            type: Object,
+            required: true,
+        },
+    },
 }
 </script>
 
