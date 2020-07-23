@@ -1,6 +1,7 @@
 <template>
     <b-container class="my-5">
-        <article-short-description class="my-5" />
+        <h1>{{ id }}</h1>
+        <article-short-description :article="{}" class="my-5" />
 
         <article-details class="my-5" />
 
@@ -26,8 +27,13 @@ import ArticleDetails from '~/components/article/details'
 import ArticleShortDescription from '~/components/article/shortDescription'
 
 export default {
-    name: 'Artikel',
-    components: { ArticleDetails, ArticleShortDescription, ArticleCard },
+    name: 'Article',
+    components: { ArticleCard, ArticleDetails, ArticleShortDescription },
+    data() {
+        return {
+            id: this.$route.params.id,
+        }
+    },
 }
 </script>
 

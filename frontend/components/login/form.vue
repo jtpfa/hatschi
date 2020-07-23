@@ -51,14 +51,12 @@
         <b-alert class="mt-5 mb-0" :show="error.length > 0" variant="danger">{{ error }}</b-alert>
 
         <template v-slot:modal-footer>
-            <div class="w-100">
-                <b-button
-                    class="float-right"
-                    :disabled="loading"
-                    type="submit"
-                    variant="primary"
-                    @click.prevent="onSubmit"
-                >
+            <div class="d-flex justify-content-between align-items-center w-100">
+                <div class="big-noodle">
+                    Noch kein Konto?
+                    <b-link to="/auth/registrierung" @click="closeModal">Jetzt registrieren</b-link>
+                </div>
+                <b-button :disabled="loading" type="submit" variant="primary" @click.prevent="onSubmit">
                     <b-spinner v-if="loading" small></b-spinner>
                     Login
                 </b-button>
@@ -111,6 +109,9 @@ export default {
                 this.error = 'Es ist ein Fehler passiert. Bitter später erneut versuchen.'
             }
             this.loading = false
+        },
+        closeModal() {
+            this.$bvModal.hide(this.modalId)
         },
     },
 }

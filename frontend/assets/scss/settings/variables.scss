@@ -69,7 +69,6 @@ $light: $gray-100;
 $dark: $gray-600;
 
 $primary: #2196f3;
-$primary-50: #688eaa;
 
 $secondary: $gray-600;
 
@@ -86,7 +85,6 @@ $theme-colors: ();
 $theme-colors: map-merge(
     (
         'primary': $primary,
-        'primary-50': $primary-50,
         'secondary': $secondary,
         'info': $info,
         'warning': $warning,
