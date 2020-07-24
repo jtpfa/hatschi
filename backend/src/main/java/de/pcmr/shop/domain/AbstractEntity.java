@@ -23,9 +23,11 @@ public abstract class AbstractEntity {
     @UpdateTimestamp
     private Date updated;
 
+    @Column(length = 100)
     @CreatedBy
     private String createdBy;
 
+    @Column(length = 100)
     @LastModifiedBy
     private String lastModifiedBy;
 
