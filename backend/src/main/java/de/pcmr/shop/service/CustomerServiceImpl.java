@@ -2,7 +2,7 @@ package de.pcmr.shop.service;
 
 import de.pcmr.shop.domain.CustomerEntity;
 import de.pcmr.shop.exception.NoCustomerFoundException;
-import de.pcmr.shop.repository.customer.CustomerRepository;
+import de.pcmr.shop.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

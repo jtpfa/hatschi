@@ -1,4 +1,4 @@
-package de.pcmr.shop.api.controller.registration;
+package de.pcmr.shop.api.controller;
 
 import de.pcmr.shop.api.model.CustomerRegistrationDTO;
 import de.pcmr.shop.exception.CustomerAlreadyExistsException;

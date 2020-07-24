@@ -1,6 +1,6 @@
 package de.pcmr.shop.service;
 
-import de.pcmr.shop.repository.customer.CustomerRepository;
+import de.pcmr.shop.repository.CustomerRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.keycloak.admin.client.Keycloak;
 import org.keycloak.admin.client.KeycloakBuilder;
