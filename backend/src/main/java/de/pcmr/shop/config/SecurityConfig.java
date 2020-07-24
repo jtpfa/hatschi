@@ -49,7 +49,7 @@ class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
         super.configure(http);
         http.authorizeRequests()
                 .antMatchers("/registration/**").permitAll()
-                .antMatchers("/api/customer/**").authenticated();
+                .antMatchers("/api/customer/**").hasRole("customer");
         http.csrf().disable();
         http.cors();
     }
