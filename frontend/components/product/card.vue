@@ -10,7 +10,7 @@
             {{ cropText }}
         </b-card-text>
         <b-card-text class="product-price font-weight-bold text-primary big-noodle">{{ price }} €</b-card-text>
-        <b-link class="stretched-link" target="_blank" :to="`/produkte/${productId}`"></b-link>
+        <b-link class="stretched-link" :to="`/produkte/${productId}`"></b-link>
     </b-card>
 </template>
 
