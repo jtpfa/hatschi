@@ -17,7 +17,7 @@
                 />
 
                 <b-form-invalid-feedback id="input-live-feedback">
-                    Bitte gib einen Vornamen an.
+                    Bitte Vornamen angeben.
                 </b-form-invalid-feedback>
             </div>
             <div class="mb-4" role="group">
@@ -36,7 +36,7 @@
                 />
 
                 <b-form-invalid-feedback id="input-live-feedback">
-                    Bitte gib einen Nachnamen an.
+                    Bitte Nachnamen angeben.
                 </b-form-invalid-feedback>
             </div>
         </b-form>
@@ -66,8 +66,21 @@ export default {
             default: '',
         },
     },
+    data() {
+        return {
+            loading: false,
+        }
+    },
     methods: {
-        onSubmit() {},
+        onSubmit(event) {
+            this.loading = true
+            if (!this.$refs.form.checkValidity()) {
+                event.preventDefault()
+                event.stopPropagation()
+            }
+            this.loading = false
+            this.$refs.form.classList.add('was-validated')
+        },
     },
 }
 </script>

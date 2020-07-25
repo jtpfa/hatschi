@@ -1,5 +1,5 @@
 <template>
-    <h1>Test</h1>
+    <h1>{{ 3000 | currency }}</h1>
 </template>
 
 <script>

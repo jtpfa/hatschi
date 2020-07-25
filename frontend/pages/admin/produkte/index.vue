@@ -3,7 +3,14 @@
         :fields="[
             { key: 'name', label: 'Artikelbezeichnung', sortable: true },
             { key: 'description', label: 'Beschreibung', sortable: true },
-            { key: 'price', label: 'Preis', sortable: true },
+            {
+                key: 'price',
+                label: 'Preis',
+                formatter: price => {
+                    return $options.filters.currency(price)
+                },
+                sortable: true,
+            },
             { key: 'stock', label: 'Lagerbestand', sortable: true },
             { key: 'actions', label: '', sortable: false },
         ]"

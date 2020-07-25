@@ -11,6 +11,7 @@
         ok-only
         scrollable
         title="Login"
+        :visible="loginPage"
     >
         <b-form ref="form" novalidate>
             <div class="mb-3" role="group">
@@ -88,9 +89,9 @@ export default {
     },
     methods: {
         async onSubmit(event) {
+            this.loading = true
             this.$refs.email.setCustomValidity('')
             this.$refs.password.setCustomValidity('')
-            this.loading = true
             if (!this.$refs.form.checkValidity()) {
                 event.preventDefault()
                 event.stopPropagation()

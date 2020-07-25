@@ -2,41 +2,75 @@
     <b-modal :id="modalId" centered lazy scrollable title="Produktdaten bearbeiten" @ok.prevent="onSubmit">
         <b-form ref="form" novalidate>
             <div class="mb-4" role="group">
-                <label for="firstname">
-                    Vorname
-                    <span class="mandatory">*</span>
-                </label>
-                <b-form-input
-                    id="firstname"
-                    v-model="product.firstName"
-                    aria-describedby="input-live-feedback"
-                    pattern="^.{1,50}$"
-                    placeholder="Vorname"
-                    required
-                    trim
-                />
-
-                <b-form-invalid-feedback id="input-live-feedback">
-                    Bitte gib einen Vornamen an.
-                </b-form-invalid-feedback>
-            </div>
-            <div class="mb-4" role="group">
                 <label for="name">
-                    Nachname
+                    Artikelbezeichnung
                     <span class="mandatory">*</span>
                 </label>
                 <b-form-input
                     id="name"
-                    v-model="product.lastName"
+                    v-model="product.name"
                     aria-describedby="input-live-feedback"
-                    pattern="^.{1,50}$"
-                    placeholder="Nachname"
+                    placeholder="Artikelbezeichnung"
                     required
                     trim
                 />
 
                 <b-form-invalid-feedback id="input-live-feedback">
-                    Bitte gib einen Nachnamen an.
+                    Bitte Artikelbezeichnung angeben.
+                </b-form-invalid-feedback>
+            </div>
+            <div class="mb-4" role="group">
+                <label for="description">
+                    Beschreibung
+                    <span class="mandatory">*</span>
+                </label>
+                <b-form-input
+                    id="description"
+                    v-model="product.description"
+                    aria-describedby="input-live-feedback"
+                    placeholder="Beschreibung"
+                    required
+                    trim
+                />
+
+                <b-form-invalid-feedback id="input-live-feedback">
+                    Bitte Beschreibung angeben.
+                </b-form-invalid-feedback>
+            </div>
+            <div class="mb-4" role="group">
+                <label for="price">
+                    Preis
+                    <span class="mandatory">*</span>
+                </label>
+                <b-form-input
+                    id="price"
+                    v-model="product.price"
+                    aria-describedby="input-live-feedback"
+                    placeholder="Preis"
+                    required
+                    trim
+                />
+
+                <b-form-invalid-feedback id="input-live-feedback">
+                    Bitte Preis angeben.
+                </b-form-invalid-feedback>
+            </div>
+            <div class="mb-4" role="group">
+                <label for="stock">
+                    Menge
+                    <span class="mandatory">*</span>
+                </label>
+                <b-form-input
+                    id="stock"
+                    v-model="product.stock"
+                    aria-describedby="input-live-feedback"
+                    placeholder="Menge"
+                    required
+                    trim
+                />
+
+                <b-form-invalid-feedback id="input-live-feedback">
+                    Bitte Preis angeben.
                 </b-form-invalid-feedback>
             </div>
         </b-form>

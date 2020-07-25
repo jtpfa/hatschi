@@ -29,7 +29,7 @@
                             <b-avatar class="mr-2 mr-md-0" variant="primary" />
                             Login
                         </span>
-                        <b-link v-else class="nav-icon" to="profil">
+                        <b-link v-else class="nav-icon" to="/profil">
                             <span class="d-flex align-items-center flex-md-column big-noodle">
                                 <b-avatar class="mr-2 mr-md-0" variant="primary" />
                                 Profil

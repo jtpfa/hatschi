@@ -1,3 +1,5 @@
+import jwtDecode from 'jwt-decode'
+
 const DEFAULTS = {
     tokenRequired: true,
     tokenType: 'Bearer',
@@ -25,6 +27,21 @@ export default class KeyCloakScheme {
         if (this.options.globalToken) {
             // Clear Authorization token for all axios requests
             this.$auth.ctx.app.$axios.setHeader(this.options.tokenName, false)
+        }
+    }
+
+    setScope(jwtToken) {
+        const decoded = jwtDecode(jwtToken)
+        const realmAccessRoles = decoded.realm_access.roles
+
+        for (let i = 0; i < realmAccessRoles.length; i += 1) {
+            if (
+                realmAccessRoles[i] === 'customer' ||
+                realmAccessRoles[i] === 'employee' ||
+                realmAccessRoles[i] === 'admin'
+            ) {
+                this.$auth.scope = realmAccessRoles[i]
+            }
         }
     }
 
@@ -66,13 +83,15 @@ export default class KeyCloakScheme {
 
         const { response, result } = await this.$auth.request(xhrData, this.options.endpoints.login, true)
 
+        this.setScope(result)
+
         if (this.options.tokenRequired) {
             const token = this.options.tokenType ? `${this.options.tokenType} ${result}` : result
 
             this.$auth.setToken(this.name, token)
             this._setToken(token)
 
-            this.$auth.setRefreshToken('keycloak', response.data.refresh_token)
+            this.$auth.setRefreshToken(this.name, response.data.refresh_token)
         }
 
         if (this.options.autoFetchUser) {
