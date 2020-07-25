@@ -114,9 +114,15 @@ export default {
             this.currentItem = item
         },
         showMsgBoxConfirmDeletion() {
+            let groupType = ''
+            if (this.type === 'customer') {
+                groupType = 'Kunde'
+            } else if (this.type === 'product') {
+                groupType = 'Artikel'
+            }
             this.deletionConfirmed = ''
             this.$bvModal
-                .msgBoxConfirm('Soll der Kunde wirklich gelöscht werden?', {
+                .msgBoxConfirm(`Soll der ${groupType} wirklich gelöscht werden?`, {
                     title: 'Löschen bestätigen',
                     size: 'sm',
                     buttonSize: 'sm',
