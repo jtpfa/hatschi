@@ -8,12 +8,12 @@
 
 <script>
 import PageFooter from '~/components/layout/footer'
-import pageHeader from '../components/layout/header'
+import PageHeader from '~/components/layout/header'
 
 export default {
     components: {
         PageFooter,
-        pageHeader,
+        PageHeader,
     },
 }
 </script>
