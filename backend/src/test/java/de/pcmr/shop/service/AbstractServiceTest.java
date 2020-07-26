@@ -1,5 +1,6 @@
 package de.pcmr.shop.service;
 
+import de.pcmr.shop.repository.ArticleRepository;
 import de.pcmr.shop.repository.CustomerRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.keycloak.admin.client.Keycloak;
@@ -12,29 +13,24 @@ import org.springframework.core.env.Environment;
 
 @SpringBootTest
 public abstract class AbstractServiceTest {
-    private final Environment environment;
 
-    private final String KEYCLOAK_URL;
-    private final String KEYCLOAK_REALM;
-    private final String KEYCLOAK_CLIENT;
     private final String KEYCLOAK_REGISTRATION_USER;
-    private final String KEYCLOAK_REGISTRATION_PASSWORD;
 
-    private final Keycloak keycloak;
     private final CustomerRepository customerRepository;
-    private UsersResource usersResource;
+    private final ArticleRepository articleRepository;
+    private final UsersResource usersResource;
 
-    public AbstractServiceTest(Environment environment, CustomerRepository customerRepository) {
-        this.environment = environment;
-        KEYCLOAK_URL = this.environment.getProperty("PCMR_AUTH_SERVER_URL");
-        KEYCLOAK_REALM = this.environment.getProperty("PCMR_KEYCLOAK_REALM");
-        KEYCLOAK_CLIENT = this.environment.getProperty("PCMR_RESOURCE");
-        KEYCLOAK_REGISTRATION_USER = this.environment.getProperty("PCMR_KEYCLOAK_REGISTRATION_USER");
-        KEYCLOAK_REGISTRATION_PASSWORD = this.environment.getProperty("PCMR_KEYCLOAK_REGISTRATION_PASSWORD");
+    public AbstractServiceTest(Environment environment, CustomerRepository customerRepository, ArticleRepository articleRepository) {
+        this.articleRepository = articleRepository;
+        String KEYCLOAK_URL = environment.getProperty("PCMR_AUTH_SERVER_URL");
+        String KEYCLOAK_REALM = environment.getProperty("PCMR_KEYCLOAK_REALM");
+        String KEYCLOAK_CLIENT = environment.getProperty("PCMR_RESOURCE");
+        KEYCLOAK_REGISTRATION_USER = environment.getProperty("PCMR_KEYCLOAK_REGISTRATION_USER");
+        String KEYCLOAK_REGISTRATION_PASSWORD = environment.getProperty("PCMR_KEYCLOAK_REGISTRATION_PASSWORD");
 
         this.customerRepository = customerRepository;
 
-        keycloak = KeycloakBuilder.builder()
+        Keycloak keycloak = KeycloakBuilder.builder()
                 .serverUrl(KEYCLOAK_URL)
                 .realm(KEYCLOAK_REALM)
                 .clientId(KEYCLOAK_CLIENT)
@@ -53,6 +49,7 @@ public abstract class AbstractServiceTest {
     }
 
     private void cleanUpDatabase() {
+        articleRepository.deleteAll();
         customerRepository.deleteAll();
     }
 

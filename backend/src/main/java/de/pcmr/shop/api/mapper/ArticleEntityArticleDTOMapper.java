@@ -1,12 +1,11 @@
 package de.pcmr.shop.api.mapper;
 
-import de.pcmr.shop.api.model.ArticleDTO;
 import de.pcmr.shop.domain.ArticleEntity;
 import de.pcmr.shop.util.SanitizationUtils;
 
 public class ArticleEntityArticleDTOMapper {
-    public static ArticleDTO mapArticleEntityToArticleDTO(ArticleEntity articleEntity) {
-        ArticleDTO articleDTO = new ArticleDTO();
+    public static de.pcmr.shop.api.model.ArticleDTO mapArticleEntityToArticleDTO(ArticleEntity articleEntity) {
+        de.pcmr.shop.api.model.ArticleDTO articleDTO = new de.pcmr.shop.api.model.ArticleDTO();
         articleDTO.setId(articleEntity.getId());
         articleDTO.setName(articleEntity.getName());
         articleDTO.setDescription(SanitizationUtils.sanitizeHtml(articleEntity.getDescription()));

@@ -7,6 +7,7 @@ import de.pcmr.shop.exception.keycloak.KeycloakEndpointNotFoundException;
 import de.pcmr.shop.exception.keycloak.KeycloakUnknownErrorException;
 import de.pcmr.shop.exception.keycloak.KeycloakUserAlreadyExistsException;
 import de.pcmr.shop.exception.keycloak.KeycloakUserIsNotAuthorizedException;
+import de.pcmr.shop.repository.ArticleRepository;
 import de.pcmr.shop.repository.CustomerRepository;
 import org.junit.jupiter.api.Test;
 import org.keycloak.admin.client.resource.UsersResource;
@@ -38,11 +39,11 @@ public class RegistrationServiceTest extends AbstractServiceTest {
     private final When when = new When();
     private final Then then = new Then();
 
-    private UsersResource usersResource;
+    private final UsersResource usersResource;
 
     @Autowired
-    public RegistrationServiceTest(RegistrationServiceI registrationService, CustomerRepository customerRepository, Environment environment) {
-        super(environment, customerRepository);
+    public RegistrationServiceTest(RegistrationServiceI registrationService, CustomerRepository customerRepository, Environment environment, ArticleRepository articleRepository) {
+        super(environment, customerRepository, articleRepository);
         this.registrationService = registrationService;
         this.customerRepository = customerRepository;
         this.usersResource = super.getUsersResource();
@@ -65,10 +66,10 @@ public class RegistrationServiceTest extends AbstractServiceTest {
     }
 
     @Test
-    public void testRegisterNewCustomerWithInvalidEmail() throws KeycloakUnknownErrorException, KeycloakUserAlreadyExistsException, CustomerAlreadyExistsException, KeycloakEndpointNotFoundException, KeycloakUserIsNotAuthorizedException {
+    public void testRegisterNewCustomerWithInvalidEmail() {
         given.aCustomerEntityWith(CUSTOMER_INVALID_EMAIL, CUSTOMER_FIRSTNAME, CUSTOMER_LASTNAME, CUSTOMER_PASSWORD);
 
-        assertThrows(ConstraintViolationException.class, () -> when.aCustomerIsRegistered());
+        assertThrows(ConstraintViolationException.class, when::aCustomerIsRegistered);
 
         then.numberOfCustomersInTheDatabaseAre(0);
         then.numberOfKeycloakUsersAre(1);
@@ -78,7 +79,7 @@ public class RegistrationServiceTest extends AbstractServiceTest {
     public void testRegisterNewCustomerWithInvalidPassword() {
         given.aCustomerEntityWith(CUSTOMER_EMAIL, CUSTOMER_FIRSTNAME, CUSTOMER_LASTNAME, CUSTOMER_INVALID_PASSWORD);
 
-        assertThrows(ConstraintViolationException.class, () -> when.aCustomerIsRegistered());
+        assertThrows(ConstraintViolationException.class, when::aCustomerIsRegistered);
 
         then.numberOfCustomersInTheDatabaseAre(0);
         then.numberOfKeycloakUsersAre(1);
@@ -89,7 +90,7 @@ public class RegistrationServiceTest extends AbstractServiceTest {
         given.aCustomerEntityWith(CUSTOMER_EMAIL, CUSTOMER_FIRSTNAME, CUSTOMER_LASTNAME, CUSTOMER_PASSWORD);
 
         when.aCustomerIsRegistered();
-        assertThrows(KeycloakUserAlreadyExistsException.class, () -> when.aCustomerIsRegistered());
+        assertThrows(KeycloakUserAlreadyExistsException.class, when::aCustomerIsRegistered);
 
         then.numberOfCustomersInTheDatabaseAre(1);
         then.technicalAttributesShouldNotBeNull();
@@ -105,7 +106,7 @@ public class RegistrationServiceTest extends AbstractServiceTest {
     public void testRegisterNewCustomerWithInvalidFirstname() {
         given.aCustomerEntityWith(CUSTOMER_EMAIL, CUSTOMER_INVALID_FIRSTNAME, CUSTOMER_LASTNAME, CUSTOMER_PASSWORD);
 
-        assertThrows(ConstraintViolationException.class, () -> when.aCustomerIsRegistered());
+        assertThrows(ConstraintViolationException.class, when::aCustomerIsRegistered);
 
         then.numberOfCustomersInTheDatabaseAre(0);
         then.numberOfKeycloakUsersAre(1);
@@ -115,7 +116,7 @@ public class RegistrationServiceTest extends AbstractServiceTest {
     public void testRegisterNewCustomerWithInvalidLastname() {
         given.aCustomerEntityWith(CUSTOMER_EMAIL, CUSTOMER_FIRSTNAME, CUSTOMER_INVALID_LASTNAME, CUSTOMER_PASSWORD);
 
-        assertThrows(ConstraintViolationException.class, () -> when.aCustomerIsRegistered());
+        assertThrows(ConstraintViolationException.class, when::aCustomerIsRegistered);
 
         then.numberOfCustomersInTheDatabaseAre(0);
         then.numberOfKeycloakUsersAre(1);

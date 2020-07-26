@@ -23,20 +23,13 @@ import org.springframework.validation.annotation.Validated;
 import javax.validation.Valid;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
-import java.util.Arrays;
 import java.util.Collections;
 
 @Service
 @Validated
 public class RegistrationServiceImpl implements RegistrationServiceI {
 
-    private final Environment env;
-
-    private final String KEYCLOAK_URL;
     private final String KEYCLOAK_REALM;
-    private final String KEYCLOAK_CLIENT;
-    private final String KEYCLOAK_REGISTRATION_USER;
-    private final String KEYCLOAK_REGISTRATION_PASSWORD;
 
     private final CustomerRepository customerRepository;
 
@@ -44,12 +37,11 @@ public class RegistrationServiceImpl implements RegistrationServiceI {
 
     @Autowired
     public RegistrationServiceImpl(Environment env, CustomerRepository customerRepository) {
-        this.env = env;
-        KEYCLOAK_URL = env.getProperty("PCMR_AUTH_SERVER_URL");
+        String KEYCLOAK_URL = env.getProperty("PCMR_AUTH_SERVER_URL");
         KEYCLOAK_REALM = env.getProperty("PCMR_KEYCLOAK_REALM");
-        KEYCLOAK_CLIENT = env.getProperty("PCMR_RESOURCE");
-        KEYCLOAK_REGISTRATION_USER = env.getProperty("PCMR_KEYCLOAK_REGISTRATION_USER");
-        KEYCLOAK_REGISTRATION_PASSWORD = env.getProperty("PCMR_KEYCLOAK_REGISTRATION_PASSWORD");
+        String KEYCLOAK_CLIENT = env.getProperty("PCMR_RESOURCE");
+        String KEYCLOAK_REGISTRATION_USER = env.getProperty("PCMR_KEYCLOAK_REGISTRATION_USER");
+        String KEYCLOAK_REGISTRATION_PASSWORD = env.getProperty("PCMR_KEYCLOAK_REGISTRATION_PASSWORD");
         this.customerRepository = customerRepository;
 
         keycloak = KeycloakBuilder.builder()
@@ -112,7 +104,7 @@ public class RegistrationServiceImpl implements RegistrationServiceI {
         user.setFirstName(customerEntity.getFirstName());
         user.setLastName(customerEntity.getLastName());
         user.setUsername(customerEntity.getEmail());
-        user.setAttributes(Collections.singletonMap("origin", Arrays.asList("pcmr_application")));
+        user.setAttributes(Collections.singletonMap("origin", Collections.singletonList("pcmr_application")));
         user.setEnabled(true);
 
         return user;

@@ -19,6 +19,6 @@ public class ArticleEntityArticleShortDTOMapper {
     }
 
     public static List<ArticleShortDTO> mapListOfArticleEntityToListOfArticleShortDTO(List<ArticleEntity> articleEntities) {
-        return articleEntities.stream().map(e -> mapArticleEntityToArticleShortDTO(e)).collect(Collectors.toList());
+        return articleEntities.stream().map(ArticleEntityArticleShortDTOMapper::mapArticleEntityToArticleShortDTO).collect(Collectors.toList());
     }
 }
