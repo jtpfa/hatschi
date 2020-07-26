@@ -1,7 +1,7 @@
 <template>
     <div class="d-flex flex-column page">
         <page-header />
-        <nuxt class="mb-5" />
+        <nuxt class="mb-5" keep-alive />
         <page-footer />
     </div>
 </template>

@@ -23,4 +23,11 @@ export class RestApi {
             body: JSON.stringify(productAttributes),
         }).then(response => (response.ok ? Promise.resolve(response) : Promise.reject(response)))
     }
+
+    getAllProducts() {
+        return fetch(`${this.baseUrl}article`, { method: 'get' })
+            .then(response => response.json())
+            .then(result => result)
+        // @todo error handling
+    }
 }

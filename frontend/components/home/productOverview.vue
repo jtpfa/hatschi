@@ -1,14 +1,13 @@
 <template>
     <div class="grid">
-        <template v-for="i in 10">
-            <product-card
-                image-src="/img/sample.png"
-                name="Feinste Ware"
-                :price="299.99"
-                text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip"
-            />
-        </template>
+        <product-card
+            v-for="item in products"
+            :key="item.id"
+            image-src="/img/sample.png"
+            :name="item.name"
+            :price="item.price"
+            :text="item.description"
+        />
     </div>
 </template>
 
@@ -18,6 +17,19 @@ import ProductCard from '~/components/product/card'
 export default {
     name: 'HomeProductOverview',
     components: { ProductCard },
+    async fetch() {
+        try {
+            this.products = await this.$api.getAllProducts()
+        } catch (e) {
+            // @todo error hadnling
+        }
+    },
+    data() {
+        return {
+            products: [],
+        }
+    },
+    fetchOnServer: false,
 }
 </script>
 

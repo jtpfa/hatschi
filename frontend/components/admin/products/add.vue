@@ -12,6 +12,7 @@
                     id="name"
                     v-model="name"
                     aria-describedby="input-live-feedback"
+                    pattern="^.{4,255}$"
                     placeholder="Artikelbezeichnung"
                     required
                     trim
@@ -30,6 +31,7 @@
                     id="name"
                     v-model="description"
                     aria-describedby="input-live-feedback"
+                    pattern="^.{4,4096}$"
                     placeholder="Beschreibung"
                     required
                     trim
@@ -37,6 +39,26 @@
 
                 <b-form-invalid-feedback id="input-live-feedback">
                     Beschreibung angeben.
+                </b-form-invalid-feedback>
+            </div>
+
+            <div class="mb-4" role="group">
+                <label for="details">
+                    Details
+                    <span class="mandatory">*</span>
+                </label>
+                <b-form-input
+                    id="details"
+                    v-model="details"
+                    aria-describedby="input-live-feedback"
+                    pattern="^.{4,32768}$"
+                    placeholder="Details"
+                    required
+                    trim
+                />
+
+                <b-form-invalid-feedback id="input-live-feedback">
+                    Details angeben.
                 </b-form-invalid-feedback>
             </div>
 
@@ -109,6 +131,7 @@ export default {
         return {
             name: '',
             description: '',
+            details: '',
             priceEur: 0,
             priceCt: 0,
             stock: 0,
@@ -124,8 +147,9 @@ export default {
                     {
                         name: this.name,
                         description: this.description,
+                        details: this.details,
                         price: +(this.priceEur + this.priceCt),
-                        stock: this.stock,
+                        stock: +this.stock,
                     },
                     this.$auth.getToken('keycloak')
                 )
