@@ -1,4 +1,4 @@
-package de.pcmr.shop.repository.customer;
+package de.pcmr.shop.repository;
 
 public interface CustomerJpaRepository extends CustomerRepository {
 }

@@ -8,14 +8,14 @@ import de.pcmr.shop.exception.keycloak.KeycloakEndpointNotFoundException;
 import de.pcmr.shop.exception.keycloak.KeycloakUnknownErrorException;
 import de.pcmr.shop.exception.keycloak.KeycloakUserAlreadyExistsException;
 import de.pcmr.shop.exception.keycloak.KeycloakUserIsNotAuthorizedException;
-import de.pcmr.shop.repository.customer.CustomerRepository;
+import de.pcmr.shop.repository.ArticleRepository;
+import de.pcmr.shop.repository.CustomerRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.core.env.Environment;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 
@@ -49,8 +49,8 @@ public class CustomerServiceTest extends AbstractServiceTest {
     private CustomerEntity customerEntityB;
 
     @Autowired
-    public CustomerServiceTest(RegistrationServiceI registrationService, CustomerServiceI customerService, CustomerRepository customerRepository, Environment environment) {
-        super(environment, customerRepository);
+    public CustomerServiceTest(RegistrationServiceI registrationService, CustomerServiceI customerService, CustomerRepository customerRepository, Environment environment, ArticleRepository articleRepository) {
+        super(environment, customerRepository, articleRepository);
         this.registrationService = registrationService;
         this.customerService = customerService;
     }
@@ -105,7 +105,7 @@ public class CustomerServiceTest extends AbstractServiceTest {
         }
 
         public void aRegistredCustomerIsAuthenticated(String email, String password) {
-            Authentication auth = new UsernamePasswordAuthenticationToken(email, password, new ArrayList<GrantedAuthority>());
+            Authentication auth = new UsernamePasswordAuthenticationToken(email, password, new ArrayList<>());
             SecurityContext securityContext = SecurityContextHolder.getContext();
             securityContext.setAuthentication(auth);
         }
