@@ -30,9 +30,11 @@ export default class KeyCloakScheme {
         }
     }
 
-    setScope(jwtToken) {
+    setRoles(jwtToken) {
         const decoded = jwtDecode(jwtToken)
         const realmAccessRoles = decoded.realm_access.roles
+
+        let roles = ''
 
         for (let i = 0; i < realmAccessRoles.length; i += 1) {
             if (
@@ -40,9 +42,11 @@ export default class KeyCloakScheme {
                 realmAccessRoles[i] === 'employee' ||
                 realmAccessRoles[i] === 'admin'
             ) {
-                this.$auth.scope = realmAccessRoles[i]
+                roles += `${realmAccessRoles[i]} `
             }
         }
+
+        this.$auth.$storage.setState('roles', roles)
     }
 
     mounted() {
@@ -83,7 +87,7 @@ export default class KeyCloakScheme {
 
         const { response, result } = await this.$auth.request(xhrData, this.options.endpoints.login, true)
 
-        this.setScope(result)
+        this.setRoles(result)
 
         if (this.options.tokenRequired) {
             const token = this.options.tokenType ? `${this.options.tokenType} ${result}` : result

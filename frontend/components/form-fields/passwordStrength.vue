@@ -11,7 +11,7 @@
             :key="criteria.text"
             class="d-flex justify-content-between align-items-center"
         >
-            {{ criteria.text }}
+            <span v-html="criteria.text"></span>
 
             <b-badge v-if="criteria.fulfilled" pill variant="success">&#10003;</b-badge>
             <b-badge v-else pill variant="danger">&#10007;</b-badge>
@@ -35,7 +35,7 @@ export default {
                 { text: 'Mind. 6 Zeichen', fulfilled: false },
                 { text: 'Mind. einen Buchstaben', fulfilled: false },
                 { text: 'Mind. eine Ziffer (0-9)', fulfilled: false },
-                { text: 'Mind. ein Sonderzeichen (!§$%&/()=?|{}[]+#;:.,@€_-)', fulfilled: false },
+                { text: 'Mind. ein Sonderzeichen <kbd>!§$%&/()=?|{}[]+#;:.,@€_-</kbd>', fulfilled: false },
             ],
         }
     },
