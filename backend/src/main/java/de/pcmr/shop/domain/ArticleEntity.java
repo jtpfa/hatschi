@@ -33,9 +33,6 @@ public class ArticleEntity extends AbstractEntity {
     private int price;
 
     @Column(nullable = false)
-    private ArticleStatusEnum status;
-
-    @Column(nullable = false)
     @Range(min = 0, max = 999999, message = "Der Lagerbestand muss zwischen {min} und {max} liegen")
     private int stock;
 
@@ -69,14 +66,6 @@ public class ArticleEntity extends AbstractEntity {
 
     public void setPrice(int price) {
         this.price = price;
-    }
-
-    public ArticleStatusEnum getStatus() {
-        return status;
-    }
-
-    public void setStatus(ArticleStatusEnum status) {
-        this.status = status;
     }
 
     public int getStock() {

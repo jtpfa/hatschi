@@ -1,4 +1,4 @@
-package de.pcmr.shop.repository.customer;
+package de.pcmr.shop.repository;
 
 import de.pcmr.shop.domain.CustomerEntity;
 import org.springframework.data.repository.CrudRepository;

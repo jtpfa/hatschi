@@ -1,4 +1,4 @@
-package de.pcmr.shop.api.controller.customer;
+package de.pcmr.shop.api.controller;
 
 import de.pcmr.shop.api.mapper.CustomerEntityCustomerDetailsDtoMapper;
 import de.pcmr.shop.api.model.CustomerDetailsDTO;
