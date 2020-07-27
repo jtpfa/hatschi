@@ -33,3 +33,6 @@ out/
 
 ### Keycloak performance data ###
 /src/main/resources/keycloak/hsperfdata_jboss/
+
+## Media Files ##
+media/
