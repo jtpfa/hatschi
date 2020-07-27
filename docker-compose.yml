@@ -51,6 +51,8 @@ services:
     ports:
       - 3306:3306
     environment:
+      VIRTUAL_HOST: pc-mr.de
+      VIRTUAL_PORT: 80
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       PCMR_MYSQL_DATABASE: ${PCMR_MYSQL_DATABASE}
       PCMR_MYSQL_USER: ${PCMR_MYSQL_USER}
