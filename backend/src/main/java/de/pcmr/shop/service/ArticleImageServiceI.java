@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.util.List;
 
 public interface ArticleImageServiceI {
-    public static final List<String> ALLOWED_FILE_EXTENSIONS = List.of("png", "jpg");
+    List<String> ALLOWED_FILE_EXTENSIONS = List.of("png", "jpg");
     void processAndSaveArticleImage(long articleId, MultipartFile imageFile) throws IOException, UploadedImageResolutionTooLowException, NoArticleFoundException;
+    void deleteArticleImages(long articleId) throws NoArticleFoundException;
 }

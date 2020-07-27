@@ -16,10 +16,12 @@ import java.util.Optional;
 public class ArticleServiceImpl implements ArticleServiceI {
 
     private final ArticleRepository articleRepository;
+    private final ArticleImageServiceI articleImageService;
 
     @Autowired
-    public ArticleServiceImpl(ArticleRepository articleRepository) {
+    public ArticleServiceImpl(ArticleRepository articleRepository, ArticleImageServiceI articleImageService) {
         this.articleRepository = articleRepository;
+        this.articleImageService = articleImageService;
     }
 
     @Override
@@ -55,6 +57,7 @@ public class ArticleServiceImpl implements ArticleServiceI {
     @Override
     public void deleteArticle(long articleId) throws NoArticleFoundException {
         if (articleRepository.existsById(articleId)) {
+            articleImageService.deleteArticleImages(articleId);
             articleRepository.deleteById(articleId);
         } else {
             throw new NoArticleFoundException();

@@ -16,15 +16,16 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Objects;
 
 @Service
 public class ArticleImageServiceImpl implements ArticleImageServiceI {
 
     private static final String IMAGE_PATH = "./media/article/";
-    private static final int MIN_UPLOAD_IMAGE_HEIGHT = 256;
     private static final int SCALE_IMAGE_HEIGHT_LOW = 256;
     private static final int SCALE_IMAGE_HEIGHT_MID = 512;
     private static final int SCALE_IMAGE_HEIGHT_HIGH = 1024;
+    private static final int MIN_UPLOAD_IMAGE_HEIGHT = SCALE_IMAGE_HEIGHT_MID;
     private static final String PNG = "png";
 
     private final ArticleRepository articleRepository;
@@ -48,6 +49,11 @@ public class ArticleImageServiceImpl implements ArticleImageServiceI {
         resizeAndWriteImageToFilesystem(articleId, bufferedImage, articleImagePath, fileExtension, SCALE_IMAGE_HEIGHT_HIGH);
         resizeAndWriteImageToFilesystem(articleId, bufferedImage, articleImagePath, fileExtension, SCALE_IMAGE_HEIGHT_MID);
         resizeAndWriteImageToFilesystem(articleId, bufferedImage, articleImagePath, fileExtension, SCALE_IMAGE_HEIGHT_LOW);
+    }
+
+    @Override
+    public void deleteArticleImages(long articleId) throws NoArticleFoundException {
+        deleteExistingArticleImages(articleId);
     }
 
     private void resizeAndWriteImageToFilesystem(long articleId, BufferedImage bufferedImage, Path articleImagePath , String fileExtension, int height) throws UploadedImageResolutionTooLowException, IOException {
@@ -96,7 +102,7 @@ public class ArticleImageServiceImpl implements ArticleImageServiceI {
     }
 
     private void deleteExistingArticleImages(long articleId) {
-        for (File file : new File(IMAGE_PATH).listFiles()) {
+        for (File file : Objects.requireNonNull(new File(IMAGE_PATH).listFiles())) {
             if (file.getName().startsWith(articleId + "_")) {
                 file.delete();
             }
