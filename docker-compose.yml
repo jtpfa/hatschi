@@ -7,7 +7,7 @@ services:
       dockerfile: ./Dockerfile
     restart: always
     ports:
-      - 8090:8090
+      - 8090
     environment:
       VIRTUAL_HOST: api.pc-mr.de
       VIRTUAL_PORT: 8090
@@ -38,7 +38,10 @@ services:
       dockerfile: ./Dockerfile
     restart: always
     ports:
-      - 3000:3000
+      - 3000
+    environment:
+      VIRTUAL_HOST: pc-mr.de
+      VIRTUAL_PORT: 3000
     depends_on:
       - pcmr-backend
     networks:
@@ -49,10 +52,8 @@ services:
     image: mariadb
     restart: always
     ports:
-      - 3306:3306
+      - 3306
     environment:
-      VIRTUAL_HOST: pc-mr.de
-      VIRTUAL_PORT: 80
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       PCMR_MYSQL_DATABASE: ${PCMR_MYSQL_DATABASE}
       PCMR_MYSQL_USER: ${PCMR_MYSQL_USER}
@@ -69,18 +70,18 @@ services:
     image: jboss/keycloak
     restart: always
     ports:
-      - 8080:8080
+      - 8080
     environment:
       VIRTUAL_HOST: auth.pc-mr.de
-      VIRTUAL_PORT: 80
+      VIRTUAL_PORT: 8080
       DB_VENDOR: mariadb
       DB_ADDR: ${KEYCLOAK_DB_ADDR}
       DB_PORT: ${MYSQL_DB_PORT}
       DB_DATABASE: ${KEYCLOAK_MYSQL_DATABASE}
       DB_USER: ${KEYCLOAK_MYSQL_USER}
       DB_PASSWORD: ${KEYCLOAK_MYSQL_PASSWORD}
-      #KEYCLOAK_USER: ${KEYCLOAK_USER}
-      #KEYCLOAK_PASSWORD: ${KEYCLOAK_PASSWORD}
+      KEYCLOAK_USER: ${KEYCLOAK_USER}
+      KEYCLOAK_PASSWORD: ${KEYCLOAK_PASSWORD}
       KEYCLOAK_IMPORT: /tmp/pcmr-realm.json
     volumes:
       - ./backend/src/main/resources/keycloak/:/tmp/
@@ -95,6 +96,7 @@ services:
     ports:
       - 80:80
     volumes:
+      - ./htpasswd:/etc/nginx/htpasswd
       - /var/run/docker.sock:/tmp/docker.sock
     networks:
       - pcmr-net
