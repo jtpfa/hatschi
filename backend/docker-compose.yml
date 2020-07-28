@@ -25,6 +25,8 @@ services:
       - keycloak
     networks:
       - pcmr-net
+    volumes:
+    - ./media:/root/media
 
   db:
     image: mariadb

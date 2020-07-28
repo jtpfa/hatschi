@@ -24,7 +24,6 @@ import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@SpringBootTest
 public class CustomerServiceTest extends AbstractServiceTest {
 
     private final static String CUSTOMER_EMAIL_A = "test@userA.de";

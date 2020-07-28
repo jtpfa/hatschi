@@ -25,6 +25,8 @@ services:
     depends_on:
       - db
       - keycloak
+    volumes:
+      - ./media:/root/media
     networks:
       pcmr-net:
         aliases:
