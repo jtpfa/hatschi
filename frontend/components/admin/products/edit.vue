@@ -42,14 +42,17 @@
                     Preis
                     <span class="mandatory">*</span>
                 </label>
-                <b-form-input
-                    id="price"
-                    v-model="product.price"
-                    aria-describedby="input-live-feedback"
-                    placeholder="Preis"
-                    required
-                    trim
-                />
+                <b-input-group id="price" append="ct">
+                    <b-form-input
+                        v-model="product.price"
+                        aria-describedby="input-live-feedback"
+                        min="0"
+                        placeholder="Preis"
+                        required
+                        trim
+                        type="number"
+                    />
+                </b-input-group>
 
                 <b-form-invalid-feedback id="input-live-feedback">
                     Bitte Preis angeben.
@@ -57,20 +60,22 @@
             </div>
             <div class="mb-4" role="group">
                 <label for="stock">
-                    Menge
+                    Lagerbestand
                     <span class="mandatory">*</span>
                 </label>
                 <b-form-input
                     id="stock"
                     v-model="product.stock"
                     aria-describedby="input-live-feedback"
+                    min="0"
                     placeholder="Menge"
                     required
                     trim
+                    type="number"
                 />
 
                 <b-form-invalid-feedback id="input-live-feedback">
-                    Bitte Preis angeben.
+                    Bitte Bestand angeben.
                 </b-form-invalid-feedback>
             </div>
         </b-form>
@@ -101,7 +106,21 @@ export default {
         },
     },
     methods: {
-        onSubmit() {},
+        async editProduct() {
+            try {
+                await this.$api.editProduct(this.product, this.$auth.getToken('keycloak'))
+            } catch (e) {
+                // @todo error handling
+            }
+        },
+        onSubmit(event) {
+            if (!this.$refs.form.checkValidity()) {
+                event.preventDefault()
+            } else {
+                this.editProduct()
+            }
+            this.$refs.form.classList.add('was-validated')
+        },
     },
 }
 </script>

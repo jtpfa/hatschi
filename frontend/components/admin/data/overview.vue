@@ -2,6 +2,7 @@
     <div>
         <b-table
             id="data-table"
+            :busy="$fetchState.pending"
             :current-page="currentPage"
             :fields="fields"
             head-variant="primary"
@@ -45,7 +46,7 @@
             </template>
 
             <template v-slot:empty="scope">
-                <h4 class="text-center text-info">Es gibt noch keine Kunden.</h4>
+                <h4 class="text-center text-info">Keine Daten vorhanden. Bitte neuen Datensatz erstellen.</h4>
             </template>
         </b-table>
         <b-pagination
@@ -83,10 +84,6 @@ export default {
             type: Array,
             required: true,
         },
-        items: {
-            type: Array,
-            required: true,
-        },
         sortBy: {
             type: String,
             default: '',
@@ -96,12 +93,27 @@ export default {
             default: '',
         },
     },
+    async fetch() {
+        try {
+            if (this.type === 'product') {
+                this.items = await this.$api.getAllProducts()
+            } else if (this.type === 'customer') {
+                // @todo getAllCustomers
+            } else {
+                this.items = []
+            }
+        } catch (e) {
+            // @todo error hadnling
+        }
+    },
+    fetchOnServer: false,
     data() {
         return {
             perPage: 2,
             currentPage: 1,
             currentItem: {},
             deletionConfirmed: '',
+            items: [],
         }
     },
     computed: {
@@ -114,15 +126,8 @@ export default {
             this.currentItem = item
         },
         showMsgBoxConfirmDeletion() {
-            let groupType = ''
-            if (this.type === 'customer') {
-                groupType = 'Kunde'
-            } else if (this.type === 'product') {
-                groupType = 'Artikel'
-            }
-            this.deletionConfirmed = ''
             this.$bvModal
-                .msgBoxConfirm(`Soll der ${groupType} wirklich gelöscht werden?`, {
+                .msgBoxConfirm(`Soll der Datensatz wirklich gelöscht werden?`, {
                     title: 'Löschen bestätigen',
                     size: 'sm',
                     buttonSize: 'sm',
@@ -134,11 +139,26 @@ export default {
                     centered: true,
                 })
                 .then(value => {
-                    this.deletionConfirmed = value
+                    if (value) {
+                        this.deleteData()
+                    }
                 })
                 .catch(err => {
                     this.deletionConfirmed = err
                 })
+        },
+        async deleteData() {
+            if (this.type === 'product') {
+                try {
+                    await this.$api.deleteProduct(this.currentItem.id, this.$auth.getToken('keycloak'))
+                } catch (e) {
+                    // @todo error handling
+                }
+            } else if (this.type === 'customer') {
+                // @todo
+            } else {
+                // @todo
+            }
         },
     },
 }

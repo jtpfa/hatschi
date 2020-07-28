@@ -103,7 +103,7 @@
                     id="stock"
                     v-model="stock"
                     aria-describedby="input-live-feedback"
-                    placeholder="0"
+                    placeholder="Menge"
                     required
                     trim
                     type="number"

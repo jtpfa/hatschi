@@ -4,7 +4,7 @@
         <div class="d-flex">
             <admin-sidebar />
             <b-container class="my-5 mx-3">
-                <nuxt />
+                <nuxt keep-alive />
             </b-container>
         </div>
     </div>

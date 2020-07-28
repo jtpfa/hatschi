@@ -1,5 +1,6 @@
 <template>
-    <div class="grid">
+    <fetch-content v-if="$fetchState.pending" :size="6" />
+    <div v-else class="grid">
         <product-card
             v-for="item in products"
             :key="item.id"
@@ -12,11 +13,12 @@
 </template>
 
 <script>
+import FetchContent from '~/components/layout/fetchContent'
 import ProductCard from '~/components/product/card'
 
 export default {
     name: 'HomeProductOverview',
-    components: { ProductCard },
+    components: { FetchContent, ProductCard },
     async fetch() {
         try {
             this.products = await this.$api.getAllProducts()

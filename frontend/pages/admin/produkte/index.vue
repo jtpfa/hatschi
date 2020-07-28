@@ -1,6 +1,6 @@
 <template>
     <div>
-        <data-overview :fields="fields" :items="items" type="product"></data-overview>
+        <data-overview :fields="fields" type="product"></data-overview>
         <b-button class="float-right" to="/admin/produkte/anlegen" variant="primary">Produkt hinzufügen</b-button>
     </div>
 </template>
@@ -26,29 +26,6 @@ export default {
                 },
                 { key: 'stock', label: 'Lagerbestand', sortable: true },
                 { key: 'actions', label: '', sortable: false },
-            ],
-            items: [
-                {
-                    id: 1,
-                    name: 'Testartikel1',
-                    description: 'Lorem ipsum dolor sit erat dies das ananas',
-                    price: 5000,
-                    stock: 10,
-                },
-                {
-                    id: 2,
-                    name: 'Testartikel2',
-                    description: 'Lorem ipsum dolor sit erat dies das ananas',
-                    price: 10000,
-                    stock: 3,
-                },
-                {
-                    id: 3,
-                    name: 'Testartikel3',
-                    description: 'Lorem ipsum dolor sit erat dies das ananas',
-                    price: 15000,
-                    stock: 4,
-                },
             ],
         }
     },
