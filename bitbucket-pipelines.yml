@@ -13,8 +13,7 @@ pipelines:
           - docker
         script:
           - apt-get update
-          - apt-get install docker -y
-          - apt-get install docker-compose -y
+          - apt-get install docker.io docker-compose -y
           - apt-get install openjdk-11-jdk -y
           
           - cd ./backend
