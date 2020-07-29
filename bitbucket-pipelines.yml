@@ -9,6 +9,7 @@ pipelines:
   default:
     - step:
         image: openjdk:11-jdk-buster
+        name: Build and Test Backend
         services:
           - docker
         script:
@@ -19,3 +20,13 @@ pipelines:
           - if [ -f .env ]; then export $(cat .env | grep -v '#' | awk '/=/ {print $1}'); fi
           - docker-compose -f docker-compose.dev.yml up -d
           - ./gradlew build
+        artifacts:
+          - ./backend/build/**
+    - step:
+        image: atlassian/default-image:2
+        name: Build and Push Backend Docker Image
+        services:
+          - docker
+        script:
+          - cd ./backend
+          - docker build .
