@@ -29,4 +29,4 @@ pipelines:
           - docker
         script:
           - cd ./backend
-          - docker build .
+          - docker build . -f FromJar.Dockerfile
