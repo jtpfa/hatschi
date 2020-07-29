@@ -8,14 +8,10 @@ image: atlassian/default-image:2
 pipelines:
   default:
     - step:
-        image: ubuntu:latest
+        image: openjdk:11.0.8-jdk
         services:
           - docker
         script:
-          - apt-get update
-          - apt-get install docker.io docker-compose -y
-          - apt-get install openjdk-11-jdk -y
-          
           - cd ./backend
           - docker-compose -f docker-compose.dev.yml up -d
           - ./gradlew build
