@@ -16,7 +16,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Objects;
 
 @Service
 public class ArticleImageServiceImpl implements ArticleImageServiceI {
@@ -43,7 +42,7 @@ public class ArticleImageServiceImpl implements ArticleImageServiceI {
         Path articleImagePath = Paths.get(IMAGE_PATH);
 
         createPathIfNotExists(articleImagePath);
-        deleteExistingArticleImages(articleId);
+        deleteExistingArticleImagesIfExisting(articleId);
 
         BufferedImage bufferedImage = ImageIO.read(imageFile.getInputStream());
         resizeAndWriteImageToFilesystem(articleId, bufferedImage, articleImagePath, fileExtension, SCALE_IMAGE_HEIGHT_HIGH);
@@ -53,7 +52,7 @@ public class ArticleImageServiceImpl implements ArticleImageServiceI {
 
     @Override
     public void deleteArticleImages(long articleId) throws NoArticleFoundException {
-        deleteExistingArticleImages(articleId);
+        deleteExistingArticleImagesIfExisting(articleId);
     }
 
     private void resizeAndWriteImageToFilesystem(long articleId, BufferedImage bufferedImage, Path articleImagePath , String fileExtension, int height) throws UploadedImageResolutionTooLowException, IOException {
@@ -101,8 +100,15 @@ public class ArticleImageServiceImpl implements ArticleImageServiceI {
         }
     }
 
-    private void deleteExistingArticleImages(long articleId) {
-        for (File file : Objects.requireNonNull(new File(IMAGE_PATH).listFiles())) {
+    private void deleteExistingArticleImagesIfExisting(long articleId) {
+        File imagePathFile = new File(IMAGE_PATH);
+        if (imagePathFile.listFiles() != null) {
+            deleteExistingArticleImages(imagePathFile, articleId);
+        }
+    }
+
+    private void deleteExistingArticleImages(File imagePathFile, long articleId) {
+        for (File file : imagePathFile.listFiles()) {
             if (file.getName().startsWith(articleId + "_")) {
                 file.delete();
             }
