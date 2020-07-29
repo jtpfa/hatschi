@@ -8,7 +8,7 @@ image: atlassian/default-image:2
 pipelines:
   default:
     - step:
-        image: openjdk:11-alpine
+        image: openjdk:11-jdk-slim
         services:
           - docker
         script:
