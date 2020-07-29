@@ -6,27 +6,28 @@
 image: atlassian/default-image:2
 
 pipelines:
-  default:
-    - step:
-        image: openjdk:11-jdk-buster
-        name: Build and Test Backend
-        services:
-          - docker
-        script:
-          - curl -L https://github.com/docker/compose/releases/download/1.26.2/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
-          - chmod +x /usr/local/bin/docker-compose
-          - docker-compose --version
-          - cd ./backend
-          - if [ -f .env ]; then export $(cat .env | grep -v '#' | awk '/=/ {print $1}'); fi
-          - docker-compose -f docker-compose.dev.yml up -d
-          - ./gradlew build
-        artifacts:
-          - backend/build/libs/*.jar
-    - step:
-        image: atlassian/default-image:2
-        name: Build and Push Backend Docker Image
-        services:
-          - docker
-        script:
-          - cd ./backend
-          - docker build . -f FromJar.Dockerfile
+  branches: 
+    '{master, develop}':
+      - step:
+          image: openjdk:11-jdk-buster
+          name: Build and Test Backend
+          services:
+            - docker
+          script:
+            - curl -L https://github.com/docker/compose/releases/download/1.26.2/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
+            - chmod +x /usr/local/bin/docker-compose
+            - docker-compose --version
+            - cd ./backend
+            - if [ -f .env ]; then export $(cat .env | grep -v '#' | awk '/=/ {print $1}'); fi
+            - docker-compose -f docker-compose.dev.yml up -d
+            - ./gradlew build
+          artifacts:
+            - backend/build/libs/*.jar
+      - step:
+          image: atlassian/default-image:2
+          name: Build and Push Backend Docker Image
+          services:
+            - docker
+          script:
+            - cd ./backend
+            - docker build . -f FromJar.Dockerfile
