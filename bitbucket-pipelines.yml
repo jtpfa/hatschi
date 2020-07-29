@@ -8,11 +8,13 @@ image: atlassian/default-image:2
 pipelines:
   default:
     - step:
-        image: openjdk:11-jdk-slim
+        image: openjdk:11-jdk-slim-buster
         services:
           - docker
         script:
-          - apk add docker-compose
+          - curl -L https://github.com/docker/compose/releases/download/1.26.2/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
+          - sudo chmod +x /usr/local/bin/docker-compose
+          - docker-compose --version
           - cd ./backend
           - docker-compose -f docker-compose.dev.yml up -d
           - ./gradlew build
