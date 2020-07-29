@@ -16,5 +16,6 @@ pipelines:
           - chmod +x /usr/local/bin/docker-compose
           - docker-compose --version
           - cd ./backend
+          - if [ -f .env ]; then export $(cat .env | grep -v '#' | awk '/=/ {print $1}'); fi
           - docker-compose -f docker-compose.dev.yml up -d
           - ./gradlew build
