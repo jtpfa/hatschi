@@ -21,7 +21,7 @@ pipelines:
           - docker-compose -f docker-compose.dev.yml up -d
           - ./gradlew build
         artifacts:
-          - ./backend/build/**
+          - /backend/build/libs/*.jar
     - step:
         image: atlassian/default-image:2
         name: Build and Push Backend Docker Image
