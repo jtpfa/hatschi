@@ -25,7 +25,11 @@ export default {
     position: relative !important;
 }
 
+.b-sidebar-outer {
+    height: unset;
+}
+
 ::v-deep .b-sidebar {
-    height: calc(100vh - #{$navbar-brand-height}) !important;
+    height: 100% !important;
 }
 </style>

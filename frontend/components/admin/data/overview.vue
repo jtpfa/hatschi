@@ -53,7 +53,7 @@
             v-model="currentPage"
             align="center"
             aria-controls="data-table"
-            :limit="3"
+            :limit="5"
             :per-page="perPage"
             :total-rows="rows"
         ></b-pagination>
@@ -109,7 +109,7 @@ export default {
     fetchOnServer: false,
     data() {
         return {
-            perPage: 2,
+            perPage: 5,
             currentPage: 1,
             currentItem: {},
             deletionConfirmed: '',
