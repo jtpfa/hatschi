@@ -16,6 +16,7 @@ export default {
             fields: [
                 { key: 'name', label: 'Artikelbezeichnung', sortable: true },
                 { key: 'description', label: 'Beschreibung', sortable: true },
+                { key: 'details', label: 'Details', sortable: true },
                 {
                     key: 'price',
                     label: 'Preis',

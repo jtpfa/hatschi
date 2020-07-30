@@ -29,7 +29,7 @@ export default {
         this.accessGranted = this.$auth.$state.roles.includes('employee') || this.$auth.$state.roles.includes('admin')
 
         if (!this.accessGranted) {
-            this.$auth.$storage.setCookie('auth.redirect', '/admin')
+            this.$auth.$storage.setCookie('redirect', '/admin')
         }
     },
 }

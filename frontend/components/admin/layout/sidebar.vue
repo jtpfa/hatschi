@@ -27,6 +27,7 @@ export default {
 
 .b-sidebar-outer {
     height: unset;
+    min-height: 100vh;
 }
 
 ::v-deep .b-sidebar {

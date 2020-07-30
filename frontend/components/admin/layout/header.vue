@@ -13,8 +13,4 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-.navbar {
-    z-index: 9999;
-}
-</style>
+<style lang="scss" scoped></style>

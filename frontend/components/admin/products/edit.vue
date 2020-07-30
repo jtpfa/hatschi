@@ -10,6 +10,7 @@
                     id="name"
                     v-model="product.name"
                     aria-describedby="input-live-feedback"
+                    pattern="^.{4,255}$"
                     placeholder="Artikelbezeichnung"
                     required
                     trim
@@ -28,6 +29,7 @@
                     id="description"
                     v-model="product.description"
                     aria-describedby="input-live-feedback"
+                    pattern="^.{4,4096}$"
                     placeholder="Beschreibung"
                     required
                     trim
@@ -35,6 +37,25 @@
 
                 <b-form-invalid-feedback id="input-live-feedback">
                     Bitte Beschreibung angeben.
+                </b-form-invalid-feedback>
+            </div>
+            <div class="mb-4" role="group">
+                <label for="details">
+                    Details
+                    <span class="mandatory">*</span>
+                </label>
+                <b-form-input
+                    id="details"
+                    v-model="product.details"
+                    aria-describedby="input-live-feedback"
+                    pattern="^.{4,32768}$"
+                    placeholder="Details"
+                    required
+                    trim
+                />
+
+                <b-form-invalid-feedback id="input-live-feedback">
+                    Bitte Details angeben.
                 </b-form-invalid-feedback>
             </div>
             <div class="mb-4" role="group">
@@ -108,7 +129,20 @@ export default {
     methods: {
         async editProduct() {
             try {
-                await this.$api.editProduct(this.product, this.$auth.getToken('keycloak'))
+                await this.$api.editProduct(
+                    {
+                        id: this.product.id,
+                        name: this.product.name,
+                        description: this.product.description,
+                        details: this.product.details,
+                        price: +this.product.price,
+                        stock: +this.product.stock,
+                    },
+                    this.$auth.getToken('keycloak')
+                )
+
+                this.$root.$emit('bv::hide::modal', this.modalId)
+                this.$router.app.refresh()
             } catch (e) {
                 // @todo error handling
             }

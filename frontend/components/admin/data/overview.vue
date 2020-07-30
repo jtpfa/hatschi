@@ -1,7 +1,7 @@
 <template>
     <div>
         <b-table
-            id="data-table"
+            :id="`${type}-table`"
             :busy="$fetchState.pending"
             :current-page="currentPage"
             :fields="fields"
@@ -159,6 +159,8 @@ export default {
             } else {
                 // @todo
             }
+
+            this.$router.app.refresh()
         },
     },
 }
