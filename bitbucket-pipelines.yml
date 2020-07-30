@@ -7,8 +7,7 @@ image: atlassian/default-image:2
 
 pipelines:
   branches: 
-    #'{master, develop}':
-    default:
+    '{master, develop}':
       - step:
           image: openjdk:11-jdk-buster
           name: Build and Test Backend
