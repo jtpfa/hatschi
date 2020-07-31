@@ -9,8 +9,8 @@
         <b-card-text class="product-description mb-4">
             {{ cropText }}
         </b-card-text>
-        <b-card-text class="product-price font-weight-bold text-primary big-noodle">{{ price }} €</b-card-text>
-        <b-link class="stretched-link" :to="`/produkte/${productId}`"></b-link>
+        <b-card-text class="product-price font-weight-bold text-primary big-noodle">{{ price | currency }}</b-card-text>
+        <b-link class="stretched-link" :to="`/produkte/${id}`"></b-link>
     </b-card>
 </template>
 
@@ -41,11 +41,6 @@ export default {
             type: Number,
             required: true,
         },
-    },
-    data() {
-        return {
-            id: 1,
-        }
     },
     computed: {
         // Get 50 characters of the description text and append '...'

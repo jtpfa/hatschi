@@ -4,11 +4,13 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.util.Date;
 
 @MappedSuperclass
+@EntityListeners(AuditingEntityListener.class)
 public abstract class AbstractEntity {
     @Transient
     public static final String TABLE_PREFIX="PCMR_";
@@ -23,9 +25,11 @@ public abstract class AbstractEntity {
     @UpdateTimestamp
     private Date updated;
 
+    @Column(length = 100)
     @CreatedBy
     private String createdBy;
 
+    @Column(length = 100)
     @LastModifiedBy
     private String lastModifiedBy;
 

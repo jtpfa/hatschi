@@ -9,9 +9,13 @@
         :no-close-on-esc="loginPage"
         :no-fade="loginPage"
         ok-only
+        return-focus="null"
         scrollable
         title="Login"
+        :visible="loginPage"
     >
+        <b-alert class="mt-3 mb-5" :show="!hasAccess" variant="warning">Zugriff nicht gewährt.</b-alert>
+
         <b-form ref="form" novalidate>
             <div class="mb-3" role="group">
                 <label for="email">
@@ -75,7 +79,11 @@ export default {
         },
         loginPage: {
             type: Boolean,
-            defaults: false,
+            default: false,
+        },
+        hasAccess: {
+            type: Boolean,
+            default: true,
         },
     },
     data() {
@@ -88,9 +96,9 @@ export default {
     },
     methods: {
         async onSubmit(event) {
+            this.loading = true
             this.$refs.email.setCustomValidity('')
             this.$refs.password.setCustomValidity('')
-            this.loading = true
             if (!this.$refs.form.checkValidity()) {
                 event.preventDefault()
                 event.stopPropagation()

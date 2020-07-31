@@ -1,24 +1,38 @@
 <template>
-    <div class="grid">
+    <fetch-content v-if="$fetchState.pending" :size="6" />
+    <div v-else class="grid">
         <product-card
-            v-for="i in 10"
-            :key="i"
+            v-for="item in products"
+            :key="item.id"
             image-src="/img/sample.png"
-            name="Feinste Ware"
-            :price="299.99"
-            :product-id="i"
-            text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip"
+            :name="item.name"
+            :price="item.price"
+            :product-id="item.id"
+            :text="item.description"
         />
     </div>
 </template>
 
 <script>
+import FetchContent from '~/components/layout/fetchContent'
 import ProductCard from '~/components/product/card'
 
 export default {
     name: 'HomeProductOverview',
-    components: { ProductCard },
+    components: { FetchContent, ProductCard },
+    async fetch() {
+        try {
+            this.products = await this.$api.getAllProducts()
+        } catch (e) {
+            // @todo error handling
+        }
+    },
+    data() {
+        return {
+            products: [],
+        }
+    },
+    fetchOnServer: false,
 }
 </script>
 

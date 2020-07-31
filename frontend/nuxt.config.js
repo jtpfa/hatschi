@@ -46,6 +46,17 @@ export default {
         '@nuxtjs/style-resources',
         // Doc: https://bootstrap-vue.js.org/docs/
         'bootstrap-vue/nuxt',
+        [
+            'vue-currency-filter/nuxt',
+            {
+                symbol: '€',
+                thousandsSeparator: '.',
+                fractionCount: 2,
+                fractionSeparator: ',',
+                symbolPosition: 'end',
+                symbolSpacing: true,
+            },
+        ],
         '@nuxtjs/axios',
         '@nuxtjs/auth',
     ],

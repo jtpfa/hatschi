@@ -1,19 +1,19 @@
 <template>
     <div class="d-flex flex-column page">
         <page-header />
-        <nuxt class="mb-5" />
+        <nuxt class="mb-5" keep-alive />
         <page-footer />
     </div>
 </template>
 
 <script>
 import PageFooter from '~/components/layout/footer'
-import pageHeader from '../components/layout/header'
+import PageHeader from '~/components/layout/header'
 
 export default {
     components: {
         PageFooter,
-        pageHeader,
+        PageHeader,
     },
 }
 </script>

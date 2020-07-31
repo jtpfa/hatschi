@@ -23,7 +23,7 @@ class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
 
     @Autowired
     public void configureGlobal(
-            AuthenticationManagerBuilder auth) throws Exception {
+            AuthenticationManagerBuilder auth) {
 
         KeycloakAuthenticationProvider keycloakAuthenticationProvider
                 = keycloakAuthenticationProvider();
@@ -48,8 +48,9 @@ class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         super.configure(http);
         http.authorizeRequests()
-                .antMatchers("/registration/**").permitAll()
-                .antMatchers("/api/customer/**").hasRole("customer");
+                .antMatchers("/api/registration/**").permitAll()
+                .antMatchers("/api/customer/**").hasRole("customer")
+                .antMatchers("/api/employee/**").hasRole("employee");
         http.csrf().disable();
         http.cors();
     }

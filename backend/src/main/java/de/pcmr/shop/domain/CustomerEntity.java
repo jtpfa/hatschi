@@ -16,16 +16,16 @@ public class CustomerEntity extends AbstractEntity {
 
     private static final String PASSWORD_REGEX = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[!§$%&/()=?|\\\\{}\\[\\]+#;:.,@€_-])[A-Za-z\\d!§$%&/()=?|\\\\{}\\[\\]+#;:.,@€_-]{6,}$";
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false, unique = true, length = 100)
     @Size(min = 4, max = 100, message = "Email muss zwischen {min} und {max} Zeichen lang sein")
     @Email(message = "Keine valide Email angegeben")
     private String email;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 50)
     @Size(min = 1, max = 50, message = "Vorname muss zwischen {min} und {max} Zeichen lang sein")
     private String firstName;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 50)
     @Size(min = 1, max = 50, message = "Nachname muss zwischen {min} und {max} Zeichen lang sein")
     private String lastName;
 
