@@ -154,22 +154,33 @@ export default {
                     this.$auth.getToken('keycloak')
                 )
                 this.success = 'Der Artikel wurde erfolgreich angelegt.'
+                this.clearForm()
             } catch (err) {
-                this.error = 'Leider gab es ein Problem. Bitte versuch es später erneut.'
+                this.error = 'Leider gab es ein Problem. Bitte später erneut versuchen.'
             }
         },
-        onSubmit(event) {
+        async onSubmit(event) {
             this.loading = true
             this.success = ''
             this.error = ''
             if (!this.$refs.form.checkValidity()) {
+                this.$refs.form.classList.add('was-validated')
                 event.preventDefault()
                 event.stopPropagation()
             } else {
-                this.addProduct()
+                this.$refs.form.classList.add('was-validated')
+                await this.addProduct()
             }
             this.loading = false
-            this.$refs.form.classList.add('was-validated')
+        },
+        clearForm() {
+            this.$refs.form.classList.remove('was-validated')
+            this.name = ''
+            this.description = ''
+            this.details = ''
+            this.priceEur = 0
+            this.priceCt = 0
+            this.stock = 0
         },
     },
 }

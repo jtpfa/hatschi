@@ -1,5 +1,6 @@
 <template>
     <b-modal :id="modalId" centered lazy scrollable title="Produktdaten bearbeiten" @ok.prevent="onSubmit">
+        <b-alert :show="error.length > 0" variant="danger">{{ error }}</b-alert>
         <b-form ref="form" novalidate>
             <div class="mb-4" role="group">
                 <label for="name">
@@ -106,7 +107,8 @@
             <b-button size="sm" variant="danger" @click="cancel()">
                 Schließen
             </b-button>
-            <b-button size="sm" variant="success" @click="ok()">
+            <b-button :disabled="loading" size="sm" variant="success" @click="ok()">
+                <b-spinner v-if="loading" small></b-spinner>
                 Speichern
             </b-button>
         </template>
@@ -126,6 +128,12 @@ export default {
             default: '',
         },
     },
+    data() {
+        return {
+            error: '',
+            loading: false,
+        }
+    },
     methods: {
         async editProduct() {
             try {
@@ -144,16 +152,20 @@ export default {
                 this.$root.$emit('bv::hide::modal', this.modalId)
                 this.$router.app.refresh()
             } catch (e) {
-                // @todo error handling
+                this.error = 'Leider gab es ein Problem. Bitte später erneut versuchen.'
             }
         },
-        onSubmit(event) {
+        async onSubmit(event) {
+            this.loading = true
+            this.error = ''
             if (!this.$refs.form.checkValidity()) {
+                this.$refs.form.classList.add('was-validated')
                 event.preventDefault()
             } else {
-                this.editProduct()
+                this.$refs.form.classList.add('was-validated')
+                await this.editProduct()
             }
-            this.$refs.form.classList.add('was-validated')
+            this.loading = false
         },
     },
 }

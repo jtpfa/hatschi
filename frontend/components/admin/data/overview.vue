@@ -1,5 +1,8 @@
 <template>
     <div>
+        <b-alert :show="fetchErrorMsg.length > 0" variant="warning">{{ fetchErrorMsg }}</b-alert>
+        <b-alert :show="error.length > 0" variant="danger">{{ error }}</b-alert>
+
         <b-table
             :id="`${type}-table`"
             :busy="$fetchState.pending"
@@ -11,7 +14,7 @@
             outlined
             :per-page="perPage"
             primary-key="id"
-            responsive="true"
+            responsive
             show-empty
             :sort-by="sortBy"
             @row-hovered="setCurrentItem"
@@ -103,7 +106,7 @@ export default {
                 this.items = []
             }
         } catch (e) {
-            // @todo error hadnling
+            this.fetchErrorMsg = 'Leider gab es ein Problem beim Laden der Daten. Bitte später erneut versuchen.'
         }
     },
     fetchOnServer: false,
@@ -114,6 +117,8 @@ export default {
             currentItem: {},
             deletionConfirmed: '',
             items: [],
+            fetchErrorMsg: '',
+            error: '',
         }
     },
     computed: {
@@ -143,24 +148,21 @@ export default {
                         this.deleteData()
                     }
                 })
-                .catch(err => {
-                    this.deletionConfirmed = err
+                .catch(() => {
+                    this.error = 'Leider gab es ein Problem. Bitte später erneut versuchen.'
                 })
         },
         async deleteData() {
             if (this.type === 'product') {
                 try {
                     await this.$api.deleteProduct(this.currentItem.id, this.$auth.getToken('keycloak'))
-                } catch (e) {
-                    // @todo error handling
+                    this.$router.app.refresh()
+                } catch (error) {
+                    this.error = 'Leider gab es ein Problem. Bitte später erneut versuchen.'
                 }
             } else if (this.type === 'customer') {
                 // @todo
-            } else {
-                // @todo
             }
-
-            this.$router.app.refresh()
         },
     },
 }

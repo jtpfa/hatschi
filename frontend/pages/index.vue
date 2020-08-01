@@ -2,7 +2,7 @@
     <b-container>
         <home-stage />
 
-        <p class="h3">Aktuelle Top-Seller</p>
+        <p class="h3 mb-5">Aktuelle Top-Seller</p>
 
         <home-product-overview />
     </b-container>
@@ -20,4 +20,8 @@ export default {
 }
 </script>
 
-<style></style>
+<style lang="scss" scoped>
+p {
+    margin-top: 5rem;
+}
+</style>

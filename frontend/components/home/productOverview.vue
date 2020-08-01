@@ -1,12 +1,14 @@
 <template>
     <fetch-content v-if="$fetchState.pending" :size="6" />
     <div v-else class="grid">
+        <b-alert :show="message.length > 0" variant="secondary">{{ message }}</b-alert>
         <product-card
             v-for="item in products"
             :key="item.id"
             image-src="/img/sample.png"
             :name="item.name"
             :price="item.price"
+            :product-id="item.id"
             :text="item.description"
         />
     </div>
@@ -22,13 +24,14 @@ export default {
     async fetch() {
         try {
             this.products = await this.$api.getAllProducts()
-        } catch (e) {
-            // @todo error hadnling
+        } catch (err) {
+            this.message = 'Keine Artikel gefunden.'
         }
     },
     data() {
         return {
             products: [],
+            message: '',
         }
     },
     fetchOnServer: false,

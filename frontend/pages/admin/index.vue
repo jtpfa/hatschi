@@ -34,7 +34,7 @@ export default {
                 { key: 'stock', label: 'Lagerbestand', sortable: true },
                 { key: 'actions', label: '', sortable: false },
             ],
-            customerfields: [
+            customerFields: [
                 { key: 'firstName', label: 'Vorname', sortable: true },
                 { key: 'lastName', label: 'Nachname', sortable: true },
                 { key: 'actions', label: '', sortable: false },

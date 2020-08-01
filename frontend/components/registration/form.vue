@@ -1,6 +1,9 @@
 <template>
     <div>
-        <b-alert class="my-3" :show="success.length > 0" variant="success">{{ success }}</b-alert>
+        <b-alert class="my-3" :show="success.length > 0" variant="success">
+            {{ success }}
+            <b-link to="/auth/login">Zum Login</b-link>
+        </b-alert>
 
         <b-form v-if="success.length === 0" ref="form" novalidate @submit.prevent="onSubmit">
             <div class="mb-4" role="group">
@@ -106,18 +109,19 @@ export default {
                 this.error = 'Leider gab es ein Problem. Bitte versuch es später erneut.'
             }
         },
-        onSubmit(event) {
+        async onSubmit(event) {
             this.loading = true
             this.success = ''
             this.error = ''
             if (!this.$refs.form.checkValidity() || !this.$refs.passwordConfirmation.isPasswordConfirmed()) {
+                this.$refs.form.classList.add('was-validated')
                 event.preventDefault()
                 event.stopPropagation()
             } else {
-                this.register()
+                this.$refs.form.classList.add('was-validated')
+                await this.register()
             }
             this.loading = false
-            this.$refs.form.classList.add('was-validated')
         },
     },
 }

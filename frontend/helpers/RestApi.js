@@ -10,8 +10,7 @@ export class RestApi {
                 'Content-type': 'application/json; charset=UTF-8',
             },
             body: JSON.stringify(userAttributes),
-        }).then(response => (response.ok ? Promise.resolve(response) : Promise.reject(response)))
-        // @todo error handling
+        }).then(response => (response.ok ? response : throw response))
     }
 
     addProduct(productAttributes, userToken) {
@@ -22,13 +21,13 @@ export class RestApi {
                 Authorization: userToken,
             },
             body: JSON.stringify(productAttributes),
-        }).then(response => (response.ok ? Promise.resolve(response) : Promise.reject(response)))
-        // @todo error handling
+        }).then(response => (response.ok ? response : throw response))
     }
 
     getAllProducts() {
-        return fetch(`${this.baseUrl}article`, { method: 'GET' }).then(response => response.json())
-        // @todo error handling
+        return fetch(`${this.baseUrl}article`, { method: 'GET' })
+            .then(response => response.json())
+            .catch(error => throw error)
     }
 
     editProduct(productAttributes, userToken) {
@@ -39,8 +38,7 @@ export class RestApi {
                 Authorization: userToken,
             },
             body: JSON.stringify(productAttributes),
-        }).then(response => (response.ok ? Promise.resolve(response) : Promise.reject(response)))
-        // @todo error handling
+        }).then(response => (response.ok ? response : throw response))
     }
 
     deleteProduct(productId, userToken) {
@@ -50,6 +48,6 @@ export class RestApi {
                 'Content-type': 'application/json; charset=UTF-8',
                 Authorization: userToken,
             },
-        }).then(response => (response.ok ? Promise.resolve(response) : Promise.reject(response)))
+        }).then(response => (response.ok ? response : throw response))
     }
 }

@@ -31,7 +31,8 @@ export default {
      ** Plugins to load before mounting the App
      */
     plugins: [
-        { src: '~/plugins/api.js', ssr: false },
+        { src: '~/plugins/api', ssr: false },
+        { src: '~/plugins/currency', ssr: false },
         { src: '~/plugins/vuex-persist', ssr: false },
     ],
     /*
@@ -84,6 +85,10 @@ export default {
         extend(config, ctx) {},
         /* eslint-enable no-unused-vars */
         transpile: ['@nuxtjs/auth'],
+
+        babel: {
+            plugins: ['@babel/plugin-proposal-throw-expressions'],
+        },
     },
     auth: {
         strategies: {
