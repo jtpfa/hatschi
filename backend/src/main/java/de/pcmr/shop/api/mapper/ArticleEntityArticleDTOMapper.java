@@ -1,11 +1,15 @@
 package de.pcmr.shop.api.mapper;
 
+import de.pcmr.shop.api.model.ArticleDTO;
 import de.pcmr.shop.domain.ArticleEntity;
 import de.pcmr.shop.util.SanitizationUtils;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class ArticleEntityArticleDTOMapper {
-    public static de.pcmr.shop.api.model.ArticleDTO mapArticleEntityToArticleDTO(ArticleEntity articleEntity) {
-        de.pcmr.shop.api.model.ArticleDTO articleDTO = new de.pcmr.shop.api.model.ArticleDTO();
+    public static ArticleDTO mapArticleEntityToArticleDTO(ArticleEntity articleEntity) {
+        ArticleDTO articleDTO = new de.pcmr.shop.api.model.ArticleDTO();
         articleDTO.setId(articleEntity.getId());
         articleDTO.setName(articleEntity.getName());
         articleDTO.setDescription(SanitizationUtils.sanitizeHtml(articleEntity.getDescription()));
@@ -14,5 +18,9 @@ public class ArticleEntityArticleDTOMapper {
         articleDTO.setStock(articleEntity.getStock());
 
         return articleDTO;
+    }
+
+    public static List<ArticleDTO> mapListOfArticleEntitiesToListOfArticleDTO(List<ArticleEntity> articleEntities) {
+        return articleEntities.stream().map(ArticleEntityArticleDTOMapper::mapArticleEntityToArticleDTO).collect(Collectors.toList());
     }
 }

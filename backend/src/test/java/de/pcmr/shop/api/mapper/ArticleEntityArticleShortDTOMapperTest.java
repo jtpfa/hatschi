@@ -32,21 +32,21 @@ public class ArticleEntityArticleShortDTOMapperTest {
     private List<ArticleShortDTO> articleShortDTOs;
 
     @Test
-    public void mapArticleEntityToArticleShortDTO() {
+    public void testMapArticleEntityToArticleShortDTO() {
         given.aArticleEntityWith(ARTICLE_ID, ARTICLE_NAME, ARTICLE_DESCRIPTION, ARTICLE_DETAILS, ARTICLE_PRICE, ARTICLE_STOCK);
         when.aArticleEntityIsMappedToArticleShortDTO(articleEntity);
         then.theAttributesOfTheArticleShortDTOAre(articleShortDTO, ARTICLE_ID, ARTICLE_NAME, ARTICLE_DESCRIPTION, ARTICLE_PRICE);
     }
 
     @Test
-    public void mapArticleEntityToArticleShortDTOWithHTML() {
+    public void testMapArticleEntityToArticleShortDTOWithHTML() {
         given.aArticleEntityWith(ARTICLE_ID, ARTICLE_NAME, ARTICLE_DESCRIPTION_HTML, ARTICLE_DETAILS_HTML, ARTICLE_PRICE, ARTICLE_STOCK);
         when.aArticleEntityIsMappedToArticleShortDTO(articleEntity);
         then.theAttributesOfTheArticleShortDTOAreExceptHTMLFields(articleShortDTO, ARTICLE_ID, ARTICLE_NAME, ARTICLE_DESCRIPTION_HTML, ARTICLE_PRICE);
     }
 
     @Test
-    public void mapArticleEntityListToArticleShortDTOList() {
+    public void testMapArticleEntityListToArticleShortDTOList() {
         given.aArticleEntityListWith(ARTICLE_NAME, ARTICLE_DESCRIPTION, ARTICLE_DETAILS, 10);
         when.aArticleEntityListIsMappedToArticleShortDTOList(articleEntities);
         then.numberOfElementsInListAre(articleShortDTOs, 10);
