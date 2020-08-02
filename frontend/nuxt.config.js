@@ -91,10 +91,10 @@ export default {
         },
     },
     publicRuntimeConfig: {
-        baseURL: process.env.BASE_URL || 'http://localhost:3000',
-        restApiBaseUrl: process.env.REST_API_BASE_URL || 'http://localhost:8090/api/',
+        baseURL: process.env.PCMR_BASE_URL_PROD || 'http://localhost:3000',
+        restApiBaseUrl: process.env.PCMR_REST_API_PROD || 'http://localhost:8090/api/',
         keycloakTokenEndpoint:
-            process.env.KEYCLOAK_TOKEN_ENDPOINT ||
+            process.env.KEYCLOAK_TOKEN_ENDPOINT_PROD ||
             'http://localhost:8090/auth/realms/pcmr/protocol/openid-connect/token',
     },
     auth: {
