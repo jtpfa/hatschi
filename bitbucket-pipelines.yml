@@ -43,7 +43,7 @@ pipelines:
             - npm run build
           artifacts:
             - frontend/.nuxt/**
-            - frontend/.node_modules/**
+            - frontend/node_modules/**
       - step:
           image: atlassian/default-image:2
           name: Build and Push Frontend Docker Image
