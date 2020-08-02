@@ -34,6 +34,16 @@ pipelines:
             - docker build . -f FromJar.Dockerfile -t fynloh/pc-mr:backend
             - docker push fynloh/pc-mr:backend
       - step:
+          image: node:12
+          name: Build Frontend
+          script:
+            - cd ./frontend
+            - npm install
+            - npm rebuild node-sass
+            - npm run build
+          artifacts:
+            - frontend/.nuxt/**
+      - step:
           image: atlassian/default-image:2
           name: Build and Push Frontend Docker Image
           services:
@@ -41,5 +51,5 @@ pipelines:
           script:
             - cd ./frontend
             - docker login -u $DOCKER_HUB_USER -p $DOCKER_HUB_PASSWORD
-            - docker build . -t fynloh/pc-mr:frontend
+            - docker build . -f ./FromDist.Dockerfile -t fynloh/pc-mr:frontend
             - docker push fynloh/pc-mr:frontend
