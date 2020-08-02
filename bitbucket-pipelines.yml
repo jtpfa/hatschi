@@ -60,7 +60,7 @@ pipelines:
           name: Deploy to Production
           script:
             - ssh $PROD_USER@$PROD_HOST
-            - cd docker/pc-mr/
+            - cd ~/docker/pc-mr/
             - docker login -u $DOCKER_HUB_USER -p $DOCKER_HUB_PASSWORD
             - docker-compose stop
             - docker-compose pull
