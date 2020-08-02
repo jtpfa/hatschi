@@ -90,11 +90,18 @@ export default {
             plugins: ['@babel/plugin-proposal-throw-expressions'],
         },
     },
+    publicRuntimeConfig: {
+        baseURL: process.env.BASE_URL || 'http://localhost:3000',
+        restApiBaseUrl: process.env.REST_API_BASE_URL || 'http://localhost:8090/api/',
+        keycloakTokenEndpoint:
+            process.env.KEYCLOAK_TOKEN_ENDPOINT ||
+            'http://localhost:8090/auth/realms/pcmr/protocol/openid-connect/token',
+    },
     auth: {
         strategies: {
             keycloak: {
                 _scheme: '~/schemes/keycloak',
-                access_token_endpoint: 'http://localhost:8090/auth/realms/pcmr/protocol/openid-connect/token',
+                access_token_endpoint: process.env.keycloakTokenEndpoint,
                 token_type: 'Bearer',
                 token_key: 'access_token',
                 grant_type: 'password',
@@ -111,17 +118,17 @@ export default {
                 },
                 endpoints: {
                     login: {
-                        url: 'http://auth.pcmr.de:8080/auth/realms/pcmr/protocol/openid-connect/token',
+                        url: process.env.keycloakTokenEndpoint,
                         method: 'post',
                         propertyName: 'access_token',
                     },
                     logout: { url: '/', method: 'post' },
                     refresh: {
-                        url: 'http://auth.pcmr.de:8080/auth/realms/pcmr/protocol/openid-connect/token',
+                        url: process.env.keycloakTokenEndpoint,
                         method: 'post',
                         propertyName: 'refresh_token',
                     },
-                    user: { url: 'http://localhost:8090/api/customer', method: 'get' },
+                    user: { url: `${process.env.restApiBaseUrl}customer`, method: 'get' },
                 },
             },
         },
