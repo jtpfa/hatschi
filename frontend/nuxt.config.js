@@ -95,14 +95,12 @@ export default {
         restApiBaseUrl: process.env.PCMR_REST_API_PROD || 'http://localhost:8090/api/',
         keycloakTokenEndpoint:
             process.env.KEYCLOAK_TOKEN_ENDPOINT_PROD ||
-            'http://localhost:8090/auth/realms/pcmr/protocol/openid-connect/token',
+            'http://auth.pcmr.de:8080/auth/realms/pcmr/protocol/openid-connect/token',
     },
     auth: {
         strategies: {
             keycloak: {
                 _scheme: '~/schemes/keycloak',
-                access_token_endpoint: process.env.keycloakTokenEndpoint,
-                token_type: 'Bearer',
                 token_key: 'access_token',
                 grant_type: 'password',
                 client_id: 'pcmr',
@@ -115,20 +113,6 @@ export default {
                 },
                 autoRefresh: {
                     enable: true,
-                },
-                endpoints: {
-                    login: {
-                        url: process.env.keycloakTokenEndpoint,
-                        method: 'post',
-                        propertyName: 'access_token',
-                    },
-                    logout: { url: '/', method: 'post' },
-                    refresh: {
-                        url: process.env.keycloakTokenEndpoint,
-                        method: 'post',
-                        propertyName: 'refresh_token',
-                    },
-                    user: { url: `${process.env.restApiBaseUrl}customer`, method: 'get' },
                 },
             },
         },

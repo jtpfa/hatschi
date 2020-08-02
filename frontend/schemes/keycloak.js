@@ -13,7 +13,25 @@ export default class KeyCloakScheme {
         this.$auth = auth
         this.name = options._name
 
-        this.options = { ...DEFAULTS, ...options }
+        this.options = {
+            ...DEFAULTS,
+            ...options,
+            access_token_endpoint: this.$auth.ctx.$config.keycloakTokenEndpoint,
+            endpoints: {
+                login: {
+                    url: this.$auth.ctx.$config.keycloakTokenEndpoint,
+                    method: 'post',
+                    propertyName: 'access_token',
+                },
+                logout: { url: '/', method: 'post' },
+                refresh: {
+                    url: this.$auth.ctx.$config.keycloakTokenEndpoint,
+                    method: 'post',
+                    propertyName: 'refresh_token',
+                },
+                user: { url: `${this.$auth.ctx.$config.restApiBaseUrl}customer`, method: 'get' },
+            },
+        }
     }
 
     _setToken(token) {
