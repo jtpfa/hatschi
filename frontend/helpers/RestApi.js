@@ -24,8 +24,19 @@ export class RestApi {
         }).then(response => (response.ok ? response : throw response))
     }
 
-    getAllProducts() {
+    getAllProductsShortVersion() {
         return fetch(`${this.baseUrl}article`, { method: 'GET' })
+            .then(response => response.json())
+            .catch(error => throw error)
+    }
+
+    getAllProductsDetailedVersion(userToken) {
+        return fetch(`${this.baseUrl}employee/article`, {
+            method: 'GET',
+            headers: {
+                Authorization: userToken,
+            },
+        })
             .then(response => response.json())
             .catch(error => throw error)
     }

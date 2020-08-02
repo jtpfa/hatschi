@@ -10,7 +10,7 @@
             {{ cropText }}
         </b-card-text>
         <b-card-text class="product-price font-weight-bold text-primary big-noodle">
-            {{ $currency.insertFractionForEuroConversation(price) | currency }}
+            {{ $currencyConverter.insertFractionForEuroConversation(price) | currency }}
         </b-card-text>
         <b-link class="stretched-link" :to="`/produkte/${productId}`"></b-link>
     </b-card>

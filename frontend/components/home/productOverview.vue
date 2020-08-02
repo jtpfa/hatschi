@@ -1,7 +1,7 @@
 <template>
     <fetch-content v-if="$fetchState.pending" :size="6" />
     <div v-else class="grid">
-        <b-alert :show="message.length > 0" variant="secondary">{{ message }}</b-alert>
+        <b-alert :show="emptyResponse || products.length === 0" variant="secondary">Keine Produkte gefunden.</b-alert>
         <product-card
             v-for="item in products"
             :key="item.id"
@@ -23,15 +23,15 @@ export default {
     components: { FetchContent, ProductCard },
     async fetch() {
         try {
-            this.products = await this.$api.getAllProducts()
+            this.products = await this.$api.getAllProductsShortVersion()
         } catch (err) {
-            this.message = 'Keine Artikel gefunden.'
+            this.emptyResponse = true
         }
     },
     data() {
         return {
             products: [],
-            message: '',
+            emptyResponse: false,
         }
     },
     fetchOnServer: false,

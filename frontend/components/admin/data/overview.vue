@@ -99,7 +99,7 @@ export default {
     async fetch() {
         try {
             if (this.type === 'product') {
-                this.items = await this.$api.getAllProducts()
+                this.items = await this.$api.getAllProductsDetailedVersion(this.$auth.getToken('keycloak'))
             } else if (this.type === 'customer') {
                 // @todo getAllCustomers
             } else {
