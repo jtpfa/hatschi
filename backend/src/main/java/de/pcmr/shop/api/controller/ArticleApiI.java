@@ -14,4 +14,5 @@ public interface ArticleApiI {
     void createArticle(@Valid ArticleCreationDTO articleCreationDTO);
     void updateArticle(@Valid ArticleDTO articleDTO) throws NoArticleFoundException;
     void deleteArticle(long id) throws NoArticleFoundException;
+    List<ArticleDTO> getArticlesFull();
 }

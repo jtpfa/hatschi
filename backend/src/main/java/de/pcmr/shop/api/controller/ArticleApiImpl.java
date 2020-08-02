@@ -41,6 +41,12 @@ public class ArticleApiImpl implements ArticleApiI {
     }
 
     @Override
+    @RequestMapping(value = EMPLOYEE_ROLE_URI + "/article", method = RequestMethod.GET)
+    public List<ArticleDTO> getArticlesFull() {
+        return ArticleEntityArticleDTOMapper.mapListOfArticleEntitiesToListOfArticleDTO(articleService.getAllArticles());
+    }
+
+    @Override
     @RequestMapping(value = EMPLOYEE_ROLE_URI + "/article", method = RequestMethod.POST)
     public void createArticle(@Valid @RequestBody ArticleCreationDTO articleCreationDTO) {
         articleService.createNewArticle(ArticleCreationDTOArticleEntityMapper.mapArticleCreationDTOToArticleEntity(articleCreationDTO));
