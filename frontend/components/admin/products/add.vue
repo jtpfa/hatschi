@@ -148,7 +148,7 @@ export default {
                         name: this.name,
                         description: this.description,
                         details: this.details,
-                        price: +(this.priceEur + this.priceCt),
+                        price: +(this.priceEur + (this.priceCt <= 9 ? `0${this.priceCt}` : this.priceCt)),
                         stock: +this.stock,
                     },
                     this.$auth.getToken('keycloak')
