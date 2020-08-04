@@ -3,7 +3,6 @@
         :id="modalId"
         centered
         footer-class="login-footer"
-        lazy
         :no-close-on-backdrop="loginPage"
         :no-close-on-esc="loginPage"
         :no-fade="loginPage"
@@ -109,8 +108,10 @@ export default {
             this.$refs.form.classList.add('was-validated')
 
             try {
-                await this.$auth.loginWith('keycloak', { username: this.email, password: this.password })
-                this.$bvModal.hide(this.modalId)
+                await this.$auth
+                    .loginWith('keycloak', { username: this.email, password: this.password })
+                    .then // @todo remove body class 'modal-open'
+                    ()
             } catch (err) {
                 this.$refs.email.setCustomValidity('Benutzername und Passwort stimmen nicht überein.')
                 this.$refs.password.setCustomValidity('Benutzername und Passwort stimmen nicht überein.')
