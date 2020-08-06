@@ -6,7 +6,7 @@
   "private": true,
   "scripts": {
     "dev": "npm run dev-env && HOST=0.0.0.0 nuxt",
-    "build": "npm run prod-env && nuxt build",
+    "build": "nuxt build",
     "start": "nuxt start",
     "serve": "nuxt serve",
     "generate": "nuxt build --target static && nuxt export",
@@ -26,16 +26,19 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged"
+      "pre-commit": "npm run prod-env && git add .env && lint-staged"
     }
   },
   "dependencies": {
+    "@ckeditor/ckeditor5-build-classic": "^21.0.0",
+    "@ckeditor/ckeditor5-vue": "^1.0.1",
     "@nuxtjs/auth": "^4.9.1",
     "@nuxtjs/axios": "^5.12.0",
     "bootstrap": "^4.5.0",
     "bootstrap-vue": "^2.16.0",
     "jwt-decode": "^2.2.0",
     "nuxt": "^2.14.0",
+    "vue-client-only": "^2.0.0",
     "vue-currency-filter": "^5.1.0",
     "vuex-persist": "^2.2.0"
   },

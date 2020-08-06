@@ -3,8 +3,6 @@
         :id="modalId"
         centered
         footer-class="login-footer"
-        :hide-header-close="loginPage"
-        lazy
         :no-close-on-backdrop="loginPage"
         :no-close-on-esc="loginPage"
         :no-fade="loginPage"
@@ -13,6 +11,7 @@
         scrollable
         title="Login"
         :visible="loginPage"
+        @close="closeModal"
     >
         <b-alert class="mt-3 mb-5" :show="!hasAccess" variant="warning">Zugriff nicht gewährt.</b-alert>
 
@@ -109,8 +108,10 @@ export default {
             this.$refs.form.classList.add('was-validated')
 
             try {
-                await this.$auth.loginWith('keycloak', { username: this.email, password: this.password })
-                this.$bvModal.hide(this.modalId)
+                await this.$auth
+                    .loginWith('keycloak', { username: this.email, password: this.password })
+                    .then // @todo remove body class 'modal-open'
+                    ()
             } catch (err) {
                 this.$refs.email.setCustomValidity('Benutzername und Passwort stimmen nicht überein.')
                 this.$refs.password.setCustomValidity('Benutzername und Passwort stimmen nicht überein.')
@@ -119,7 +120,11 @@ export default {
             this.loading = false
         },
         closeModal() {
-            this.$bvModal.hide(this.modalId)
+            if (!this.loginPage) {
+                this.$bvModal.hide(this.modalId)
+            } else {
+                this.$router.push('/')
+            }
         },
     },
 }
