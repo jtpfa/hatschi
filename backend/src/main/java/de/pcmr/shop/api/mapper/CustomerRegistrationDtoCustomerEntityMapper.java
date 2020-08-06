@@ -8,7 +8,11 @@ import org.springframework.validation.annotation.Validated;
 import javax.validation.Valid;
 
 @Validated
-public class CustomerRegistrationDtoCustomerEntityMapper {
+public final class CustomerRegistrationDtoCustomerEntityMapper {
+    private CustomerRegistrationDtoCustomerEntityMapper() {
+        throw new IllegalStateException();
+    }
+
     public static @Valid CustomerEntity mapCustomerRegistrationDtoToCustomerEntity(CustomerRegistrationDTO customerRegistrationDTO) {
         CustomerEntity customerEntity = new CustomerEntity();
         customerEntity.setEmail(customerRegistrationDTO.getEmail().trim());

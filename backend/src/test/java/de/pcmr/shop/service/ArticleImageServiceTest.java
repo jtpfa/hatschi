@@ -23,7 +23,7 @@ import java.io.IOException;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class ArticleImageServiceTest extends AbstractServiceTest {
+class ArticleImageServiceTest extends AbstractServiceTest {
 
     private static final String IMAGE_PATH = "./media/article/";
     private static final String TEST_IMAGE_PATH_PNG = "./src/test/resources/images/gpu.png";
@@ -45,14 +45,14 @@ public class ArticleImageServiceTest extends AbstractServiceTest {
     private ArticleEntity lastSavedArticleEntity;
 
     @Autowired
-    public ArticleImageServiceTest(Environment environment, CustomerRepository customerRepository, ArticleRepository articleRepository, ArticleImageServiceI articleImageService) {
+    ArticleImageServiceTest(Environment environment, CustomerRepository customerRepository, ArticleRepository articleRepository, ArticleImageServiceI articleImageService) {
         super(environment, customerRepository, articleRepository);
         this.articleImageService = articleImageService;
         this.articleRepository = articleRepository;
     }
 
     @BeforeEach
-    public void cleanUpMedia() {
+    void cleanUpMedia() {
         File imageDir = new File(IMAGE_PATH);
 
         if (imageDir.listFiles() != null) {
@@ -64,7 +64,7 @@ public class ArticleImageServiceTest extends AbstractServiceTest {
     }
 
     @Test
-    public void testProcessAndSaveArticleImagePng() throws NoArticleFoundException, UploadedImageResolutionTooLowException, IOException {
+    void testProcessAndSaveArticleImagePng() throws NoArticleFoundException, UploadedImageResolutionTooLowException, IOException {
         given.aArticleEntityInDatabaseWith(ARTICLE_TITLE_, ARTICLE_DESCRIPTION, ARTICLE_DETAILS, 500, 5);
         when.aImageIsProcessed(lastSavedArticleEntity.getId(), TEST_IMAGE_PATH_PNG);
         then.numberOfFilesInArticleImageFolderAre(3);
@@ -72,18 +72,18 @@ public class ArticleImageServiceTest extends AbstractServiceTest {
     }
 
     @Test
-    public void testProcessAndSaveArticleImageArticleDoesNotExist() {
+    void testProcessAndSaveArticleImageArticleDoesNotExist() {
         assertThrows(NoArticleFoundException.class, () -> when.aImageIsProcessed(5, TEST_IMAGE_PATH_PNG));
     }
 
     @Test
-    public void testProcessAndSaveArticleImageTooSmall() {
+    void testProcessAndSaveArticleImageTooSmall() {
         given.aArticleEntityInDatabaseWith(ARTICLE_TITLE_, ARTICLE_DESCRIPTION, ARTICLE_DETAILS, 500, 5);
         assertThrows(UploadedImageResolutionTooLowException.class, () -> when.aImageIsProcessed(lastSavedArticleEntity.getId(), TEST_IMAGE_SMALL_PATH_PNG));
     }
 
     @Test
-    public void testProcessAndSaveArticleImageAlreadyExists() throws NoArticleFoundException, UploadedImageResolutionTooLowException, IOException {
+    void testProcessAndSaveArticleImageAlreadyExists() throws NoArticleFoundException, UploadedImageResolutionTooLowException, IOException {
         given.aArticleEntityInDatabaseWith(ARTICLE_TITLE_, ARTICLE_DESCRIPTION, ARTICLE_DETAILS, 500, 5);
         when.aImageIsProcessed(lastSavedArticleEntity.getId(), TEST_IMAGE_PATH_PNG);
         when.aImageIsProcessed(lastSavedArticleEntity.getId(), TEST_IMAGE_PATH_PNG);
@@ -92,7 +92,7 @@ public class ArticleImageServiceTest extends AbstractServiceTest {
     }
 
     @Test
-    public void testProcessAndSaveArticleImageJpg() throws NoArticleFoundException, UploadedImageResolutionTooLowException, IOException {
+    void testProcessAndSaveArticleImageJpg() throws NoArticleFoundException, UploadedImageResolutionTooLowException, IOException {
         given.aArticleEntityInDatabaseWith(ARTICLE_TITLE_, ARTICLE_DESCRIPTION, ARTICLE_DETAILS, 500, 5);
         when.aImageIsProcessed(lastSavedArticleEntity.getId(), TEST_IMAGE_PATH_JPG);
         then.numberOfFilesInArticleImageFolderAre(3);
@@ -100,7 +100,7 @@ public class ArticleImageServiceTest extends AbstractServiceTest {
     }
 
     class Given {
-        public void aArticleEntityInDatabaseWith(String name, String description, String details, int price, int stock) {
+        void aArticleEntityInDatabaseWith(String name, String description, String details, int price, int stock) {
             ArticleEntity articleEntity = ArticleEntityBuilder.anArticleEntity()
                     .withName(name)
                     .withDescription(description)
@@ -114,7 +114,7 @@ public class ArticleImageServiceTest extends AbstractServiceTest {
     }
 
     class When {
-        public void aImageIsProcessed(long articleId, String filePath) throws IOException, NoArticleFoundException, UploadedImageResolutionTooLowException {
+        void aImageIsProcessed(long articleId, String filePath) throws IOException, NoArticleFoundException, UploadedImageResolutionTooLowException {
             File imageFile = new File(filePath);
             MultipartFile multipartFile = new MockMultipartFile(FilenameUtils.getName(filePath), FileUtils.readFileToByteArray(imageFile));
 
@@ -127,7 +127,7 @@ public class ArticleImageServiceTest extends AbstractServiceTest {
             assertEquals(numberOfFiles, new File(IMAGE_PATH).list().length);
         }
 
-        public void theImageHasBeenRescaled() throws IOException {
+        void theImageHasBeenRescaled() throws IOException {
             for (File file : new File(IMAGE_PATH).listFiles()) {
                 String resolutionString = FilenameUtils.getBaseName(file.getName()).split("_")[1];
                 checkImageHeight(file, Integer.valueOf(resolutionString));

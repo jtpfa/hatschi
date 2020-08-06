@@ -9,7 +9,7 @@ import javax.validation.ValidationException;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class ArticleCreationDTOArticleDTOMapperTest {
+class ArticleCreationDTOArticleDTOMapperTest {
 
     private static final String ARTICLE_NAME = "Testartikel";
     private static final String ARTICLE_NAME_HTML = "<script>Testartikel</script>";
@@ -26,20 +26,20 @@ public class ArticleCreationDTOArticleDTOMapperTest {
     private ArticleCreationDTO articleCreationDTO;
 
     @Test
-    public void testMapArticleCreationDTOToArticleEntity() {
+    void testMapArticleCreationDTOToArticleEntity() {
         given.aArticleCreationDTOWith(ARTICLE_NAME, ARTICLE_DESCRIPTION, ARTICLE_DETAILS, ARTICLE_PRICE, ARTICLE_STOCK);
         when.aArticleCreationDTOIsMappedTo(articleCreationDTO);
         then.theAttributesOfTheArticleEntityAre(articleEntity, ARTICLE_NAME, ARTICLE_DESCRIPTION, ARTICLE_DETAILS, ARTICLE_PRICE, ARTICLE_STOCK);
     }
 
     @Test
-    public void testMapArticleCreationDTOToArticleEntityFailHTML() {
+    void testMapArticleCreationDTOToArticleEntityFailHTML() {
         given.aArticleCreationDTOWith(ARTICLE_NAME_HTML, ARTICLE_DESCRIPTION, ARTICLE_DETAILS, ARTICLE_PRICE, ARTICLE_STOCK);
         assertThrows(ValidationException.class, () -> when.aArticleCreationDTOIsMappedTo(articleCreationDTO));
     }
 
     class Given {
-        public void aArticleCreationDTOWith(String name, String description, String details, int price, int stock) {
+        void aArticleCreationDTOWith(String name, String description, String details, int price, int stock) {
             articleCreationDTO = new ArticleCreationDTO();
             articleCreationDTO.setName(name);
             articleCreationDTO.setDescription(description);
@@ -50,13 +50,13 @@ public class ArticleCreationDTOArticleDTOMapperTest {
     }
 
     class When {
-        public void aArticleCreationDTOIsMappedTo(ArticleCreationDTO articleCreationDTO) {
+        void aArticleCreationDTOIsMappedTo(ArticleCreationDTO articleCreationDTO) {
             articleEntity = ArticleCreationDTOArticleEntityMapper.mapArticleCreationDTOToArticleEntity(articleCreationDTO);
         }
     }
 
     class Then {
-        public void theAttributesOfTheArticleEntityAre(ArticleEntity articleEntity, String name, String description, String details, int price, int stock) {
+        void theAttributesOfTheArticleEntityAre(ArticleEntity articleEntity, String name, String description, String details, int price, int stock) {
             assertEquals(name, articleEntity.getName());
             assertEquals(description, articleEntity.getDescription());
             assertEquals(details, articleEntity.getDetails());

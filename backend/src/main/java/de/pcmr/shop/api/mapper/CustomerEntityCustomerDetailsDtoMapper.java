@@ -3,7 +3,11 @@ package de.pcmr.shop.api.mapper;
 import de.pcmr.shop.api.model.CustomerDetailsDTO;
 import de.pcmr.shop.domain.CustomerEntity;
 
-public class CustomerEntityCustomerDetailsDtoMapper {
+public final class CustomerEntityCustomerDetailsDtoMapper {
+    private CustomerEntityCustomerDetailsDtoMapper() {
+        throw new IllegalStateException();
+    }
+
     public static CustomerDetailsDTO mapCustomerEntityToCustomerDetailsDto(CustomerEntity customerEntity) {
         CustomerDetailsDTO customerDetailsDTO = new CustomerDetailsDTO();
         customerDetailsDTO.setEmail(customerEntity.getEmail());

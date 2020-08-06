@@ -29,7 +29,7 @@ import java.util.Collections;
 @Validated
 public class RegistrationServiceImpl implements RegistrationServiceI {
 
-    private final String KEYCLOAK_REALM;
+    private final String keycloakRealm;
 
     private final CustomerRepository customerRepository;
 
@@ -37,19 +37,19 @@ public class RegistrationServiceImpl implements RegistrationServiceI {
 
     @Autowired
     public RegistrationServiceImpl(Environment env, CustomerRepository customerRepository) {
-        String KEYCLOAK_URL = env.getProperty("PCMR_AUTH_SERVER_URL");
-        KEYCLOAK_REALM = env.getProperty("PCMR_KEYCLOAK_REALM");
-        String KEYCLOAK_CLIENT = env.getProperty("PCMR_RESOURCE");
-        String KEYCLOAK_REGISTRATION_USER = env.getProperty("PCMR_KEYCLOAK_REGISTRATION_USER");
-        String KEYCLOAK_REGISTRATION_PASSWORD = env.getProperty("PCMR_KEYCLOAK_REGISTRATION_PASSWORD");
+        String authServerUrl = env.getProperty("PCMR_AUTH_SERVER_URL");
+        keycloakRealm = env.getProperty("PCMR_KEYCLOAK_REALM");
+        String keycloakClient = env.getProperty("PCMR_RESOURCE");
+        String keycloakRegistrationUser = env.getProperty("PCMR_KEYCLOAK_REGISTRATION_USER");
+        String keycloakRegistrationPassword = env.getProperty("PCMR_KEYCLOAK_REGISTRATION_PASSWORD");
         this.customerRepository = customerRepository;
 
         keycloak = KeycloakBuilder.builder()
-                .serverUrl(KEYCLOAK_URL)
-                .realm(KEYCLOAK_REALM)
-                .clientId(KEYCLOAK_CLIENT)
-                .username(KEYCLOAK_REGISTRATION_USER)
-                .password(KEYCLOAK_REGISTRATION_PASSWORD)
+                .serverUrl(authServerUrl)
+                .realm(keycloakRealm)
+                .clientId(keycloakClient)
+                .username(keycloakRegistrationUser)
+                .password(keycloakRegistrationPassword)
                 .build();
     }
 
@@ -58,7 +58,7 @@ public class RegistrationServiceImpl implements RegistrationServiceI {
         try {
             UserRepresentation user = createKeycloakUserFromCustomer(customerEntity);
 
-            RealmResource realmResource = keycloak.realm(KEYCLOAK_REALM);
+            RealmResource realmResource = keycloak.realm(keycloakRealm);
             UsersResource usersResource = realmResource.users();
 
             Response response = usersResource.create(user);

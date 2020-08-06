@@ -19,7 +19,7 @@ import javax.validation.ConstraintViolationException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class RegistrationServiceTest extends AbstractServiceTest {
+class RegistrationServiceTest extends AbstractServiceTest {
     private final RegistrationServiceI registrationService;
     private final CustomerRepository customerRepository;
 
@@ -42,7 +42,7 @@ public class RegistrationServiceTest extends AbstractServiceTest {
     private final UsersResource usersResource;
 
     @Autowired
-    public RegistrationServiceTest(RegistrationServiceI registrationService, CustomerRepository customerRepository, Environment environment, ArticleRepository articleRepository) {
+    RegistrationServiceTest(RegistrationServiceI registrationService, CustomerRepository customerRepository, Environment environment, ArticleRepository articleRepository) {
         super(environment, customerRepository, articleRepository);
         this.registrationService = registrationService;
         this.customerRepository = customerRepository;
@@ -50,7 +50,7 @@ public class RegistrationServiceTest extends AbstractServiceTest {
     }
 
     @Test
-    public void testSuccessfulRegisterNewCustomer() throws KeycloakUserAlreadyExistsException, CustomerAlreadyExistsException, KeycloakEndpointNotFoundException, KeycloakUserIsNotAuthorizedException, KeycloakUnknownErrorException {
+    void testSuccessfulRegisterNewCustomer() throws KeycloakUserAlreadyExistsException, CustomerAlreadyExistsException, KeycloakEndpointNotFoundException, KeycloakUserIsNotAuthorizedException, KeycloakUnknownErrorException {
         given.aCustomerEntityWith(CUSTOMER_EMAIL, CUSTOMER_FIRSTNAME, CUSTOMER_LASTNAME, CUSTOMER_PASSWORD);
 
         when.aCustomerIsRegistered();
@@ -66,7 +66,7 @@ public class RegistrationServiceTest extends AbstractServiceTest {
     }
 
     @Test
-    public void testRegisterNewCustomerWithInvalidEmail() {
+    void testRegisterNewCustomerWithInvalidEmail() {
         given.aCustomerEntityWith(CUSTOMER_INVALID_EMAIL, CUSTOMER_FIRSTNAME, CUSTOMER_LASTNAME, CUSTOMER_PASSWORD);
 
         assertThrows(ConstraintViolationException.class, when::aCustomerIsRegistered);
@@ -76,7 +76,7 @@ public class RegistrationServiceTest extends AbstractServiceTest {
     }
 
     @Test
-    public void testRegisterNewCustomerWithInvalidPassword() {
+    void testRegisterNewCustomerWithInvalidPassword() {
         given.aCustomerEntityWith(CUSTOMER_EMAIL, CUSTOMER_FIRSTNAME, CUSTOMER_LASTNAME, CUSTOMER_INVALID_PASSWORD);
 
         assertThrows(ConstraintViolationException.class, when::aCustomerIsRegistered);
@@ -86,7 +86,7 @@ public class RegistrationServiceTest extends AbstractServiceTest {
     }
 
     @Test
-    public void testRegisterNewCustomerThatAlreadyExists() throws KeycloakUnknownErrorException, KeycloakUserAlreadyExistsException, CustomerAlreadyExistsException, KeycloakEndpointNotFoundException, KeycloakUserIsNotAuthorizedException {
+    void testRegisterNewCustomerThatAlreadyExists() throws KeycloakUnknownErrorException, KeycloakUserAlreadyExistsException, CustomerAlreadyExistsException, KeycloakEndpointNotFoundException, KeycloakUserIsNotAuthorizedException {
         given.aCustomerEntityWith(CUSTOMER_EMAIL, CUSTOMER_FIRSTNAME, CUSTOMER_LASTNAME, CUSTOMER_PASSWORD);
 
         when.aCustomerIsRegistered();
@@ -103,7 +103,7 @@ public class RegistrationServiceTest extends AbstractServiceTest {
     }
 
     @Test
-    public void testRegisterNewCustomerWithInvalidFirstname() {
+    void testRegisterNewCustomerWithInvalidFirstname() {
         given.aCustomerEntityWith(CUSTOMER_EMAIL, CUSTOMER_INVALID_FIRSTNAME, CUSTOMER_LASTNAME, CUSTOMER_PASSWORD);
 
         assertThrows(ConstraintViolationException.class, when::aCustomerIsRegistered);
@@ -113,7 +113,7 @@ public class RegistrationServiceTest extends AbstractServiceTest {
     }
 
     @Test
-    public void testRegisterNewCustomerWithInvalidLastname() {
+    void testRegisterNewCustomerWithInvalidLastname() {
         given.aCustomerEntityWith(CUSTOMER_EMAIL, CUSTOMER_FIRSTNAME, CUSTOMER_INVALID_LASTNAME, CUSTOMER_PASSWORD);
 
         assertThrows(ConstraintViolationException.class, when::aCustomerIsRegistered);
@@ -123,7 +123,7 @@ public class RegistrationServiceTest extends AbstractServiceTest {
     }
 
     class Given {
-        public void aCustomerEntityWith(String email, String firstname, String lastname, String password) {
+        void aCustomerEntityWith(String email, String firstname, String lastname, String password) {
             customerEntity = CustomerEntityBuilder.aCustomerEntity()
                     .withEmail(email)
                     .withFirstName(firstname)
@@ -134,42 +134,41 @@ public class RegistrationServiceTest extends AbstractServiceTest {
     }
 
     class When {
-        public void aCustomerIsRegistered() throws KeycloakEndpointNotFoundException, KeycloakUserAlreadyExistsException, KeycloakUserIsNotAuthorizedException, CustomerAlreadyExistsException, KeycloakUnknownErrorException {
+        void aCustomerIsRegistered() throws KeycloakEndpointNotFoundException, KeycloakUserAlreadyExistsException, KeycloakUserIsNotAuthorizedException, CustomerAlreadyExistsException, KeycloakUnknownErrorException {
             registrationService.registerCustomer(customerEntity);
         }
     }
 
     class Then {
-        public void numberOfCustomersInTheDatabaseAre(int numberOfCustomers) {
+        void numberOfCustomersInTheDatabaseAre(int numberOfCustomers) {
             assertEquals(numberOfCustomers, customerRepository.findAll().size());
         }
 
-        public void theAttributesOfTheCustomerAre(String email, String firstname, String lastname) {
+        void theAttributesOfTheCustomerAre(String email, String firstname, String lastname) {
             CustomerEntity customer = customerRepository.findAll().get(0);
             assertEquals(email, customer.getEmail());
             assertEquals(firstname, customer.getFirstName());
             assertEquals(lastname, customer.getLastName());
         }
 
-        public void passwordShouldBeNull() {
+        void passwordShouldBeNull() {
             CustomerEntity customer = customerRepository.findAll().get(0);
             assertNull(customer.getPassword());
         }
 
-        public void technicalAttributesShouldNotBeNull() {
+        void technicalAttributesShouldNotBeNull() {
             CustomerEntity customer = customerRepository.findAll().get(0);
-            assertNotNull(customer.getId());
             assertNotNull(customer.getCreated());
             //assertNotNull(customer.getCreatedBy());
             //assertNotNull(customer.getLastModifiedBy());
             assertNotNull(customer.getUpdated());
         }
 
-        public void numberOfKeycloakUsersAre(int numberOfKeycloakUsers) {
+        void numberOfKeycloakUsersAre(int numberOfKeycloakUsers) {
             assertEquals(numberOfKeycloakUsers, usersResource.list().size());
         }
 
-        public void theAttributesOfTheKeycloakUserAre(String email, String firstname, String lastname) {
+        void theAttributesOfTheKeycloakUserAre(String email, String firstname, String lastname) {
             UserRepresentation userRepresentation = usersResource.search(email).get(0);
             assertEquals(email, userRepresentation.getEmail());
             assertEquals(email, userRepresentation.getUsername());
@@ -178,7 +177,7 @@ public class RegistrationServiceTest extends AbstractServiceTest {
 
         }
 
-        public void theKeycloakUserIsEnabled(String email) {
+        void theKeycloakUserIsEnabled(String email) {
             UserRepresentation userRepresentation = usersResource.search(email).get(0);
             assertTrue(userRepresentation.isEnabled());
         }

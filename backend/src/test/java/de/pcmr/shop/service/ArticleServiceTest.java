@@ -11,12 +11,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 
 import javax.validation.ConstraintViolationException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class ArticleServiceTest extends AbstractServiceTest {
+class ArticleServiceTest extends AbstractServiceTest {
 
     private static final String ARTICLE_TITLE_1 = "Testartikel 1";
     private static final String ARTICLE_TITLE_2 = "Testartikel 2";
@@ -37,19 +38,19 @@ public class ArticleServiceTest extends AbstractServiceTest {
     private ArticleEntity updatedArticleEntity;
 
     @Autowired
-    public ArticleServiceTest(Environment environment, CustomerRepository customerRepository, ArticleServiceI articleService, ArticleRepository articleRepository) {
+    ArticleServiceTest(Environment environment, CustomerRepository customerRepository, ArticleServiceI articleService, ArticleRepository articleRepository) {
         super(environment, customerRepository, articleRepository);
         this.articleService = articleService;
         this.articleRepository = articleRepository;
     }
 
     @BeforeEach
-    public void cleanUpArticleEntityList() {
+    void cleanUpArticleEntityList() {
         articleEntities = new ArrayList<>();
     }
 
     @Test
-    public void testGetAllArticles() {
+    void testGetAllArticles() {
         given.aArticleEntityInDatabaseWith(ARTICLE_TITLE_1, ARTICLE_DESCRIPTION, ARTICLE_DETAILS, 500, 15);
         given.aArticleEntityInDatabaseWith(ARTICLE_TITLE_2, ARTICLE_DESCRIPTION, ARTICLE_DETAILS, 1000, 10);
         given.aArticleEntityInDatabaseWith(ARTICLE_TITLE_3, ARTICLE_DESCRIPTION, ARTICLE_DETAILS, 200, 32);
@@ -58,7 +59,7 @@ public class ArticleServiceTest extends AbstractServiceTest {
     }
 
     @Test
-    public void testGetArticle() throws NoArticleFoundException {
+    void testGetArticle() throws NoArticleFoundException {
         given.aArticleEntityInDatabaseWith(ARTICLE_TITLE_1, ARTICLE_DESCRIPTION, ARTICLE_DETAILS, 500, 15);
         when.aArticleEntityIsRetirieved(lastSavedArticleEntity.getId());
         then.numberOfArticlesInDatabaseAre(1);
@@ -66,13 +67,13 @@ public class ArticleServiceTest extends AbstractServiceTest {
     }
 
     @Test
-    public void testGetArticleWrongId() {
+    void testGetArticleWrongId() {
         given.aArticleEntityInDatabaseWith(ARTICLE_TITLE_1, ARTICLE_DESCRIPTION, ARTICLE_DETAILS, 500, 15);
         assertThrows(NoArticleFoundException.class, () -> when.aArticleEntityIsRetirieved(lastSavedArticleEntity.getId()+1));
     }
 
     @Test
-    public void testCreateNewArticle() {
+    void testCreateNewArticle() {
         given.aArticleEntityWith(ARTICLE_TITLE_1, ARTICLE_DESCRIPTION, ARTICLE_DETAILS, 500, 15);
         given.aArticleEntityWith(ARTICLE_TITLE_2, ARTICLE_DESCRIPTION, ARTICLE_DETAILS, 1000, 5);
         given.aArticleEntityWith(ARTICLE_TITLE_3, ARTICLE_DESCRIPTION, ARTICLE_DETAILS, 70000, 3);
@@ -81,37 +82,37 @@ public class ArticleServiceTest extends AbstractServiceTest {
     }
 
     @Test
-    public void testCreateNewArticleInvalidName() {
+    void testCreateNewArticleInvalidName() {
         given.aArticleEntityWith("ab", ARTICLE_DESCRIPTION, ARTICLE_DETAILS, 500, 15);
         assertThrows(ConstraintViolationException.class, () -> when.newArticlesEntityAreCreated(articleEntities));
     }
 
     @Test
-    public void testCreateNewArticleInvalidPrice() {
+    void testCreateNewArticleInvalidPrice() {
         given.aArticleEntityWith(ARTICLE_TITLE_1, ARTICLE_DESCRIPTION, ARTICLE_DETAILS, -1, 15);
         assertThrows(ConstraintViolationException.class, () -> when.newArticlesEntityAreCreated(articleEntities));
     }
 
     @Test
-    public void testCreateNewArticleInvalidStock() {
+    void testCreateNewArticleInvalidStock() {
         given.aArticleEntityWith(ARTICLE_TITLE_1, ARTICLE_DESCRIPTION, ARTICLE_DETAILS, 500, -1);
         assertThrows(ConstraintViolationException.class, () -> when.newArticlesEntityAreCreated(articleEntities));
     }
 
     @Test
-    public void testCreateNewArticleInvalidDescription() {
+    void testCreateNewArticleInvalidDescription() {
         given.aArticleEntityWith(ARTICLE_TITLE_1, "bla", ARTICLE_DETAILS, 500, 5);
         assertThrows(ConstraintViolationException.class, () -> when.newArticlesEntityAreCreated(articleEntities));
     }
 
     @Test
-    public void testCreateNewArticleInvalidDetails() {
+    void testCreateNewArticleInvalidDetails() {
         given.aArticleEntityWith(ARTICLE_TITLE_1, ARTICLE_DESCRIPTION, "bla", 500, 5);
         assertThrows(ConstraintViolationException.class, () -> when.newArticlesEntityAreCreated(articleEntities));
     }
 
     @Test
-    public void testUpdateArticle() throws NoArticleFoundException {
+    void testUpdateArticle() throws NoArticleFoundException {
         given.aArticleEntityInDatabaseWith(ARTICLE_TITLE_1, ARTICLE_DESCRIPTION, ARTICLE_DETAILS, 500, 5);
         given.aArticleEntityInDatabaseWith(ARTICLE_TITLE_2, ARTICLE_DESCRIPTION, ARTICLE_DETAILS, 5000, 10);
         given.aArticleEntityInDatabaseWith(ARTICLE_TITLE_3, ARTICLE_DESCRIPTION, ARTICLE_DETAILS, 70000, 2);
@@ -122,7 +123,7 @@ public class ArticleServiceTest extends AbstractServiceTest {
     }
 
     @Test
-    public void testUpdateArticleWrongId() {
+    void testUpdateArticleWrongId() {
         given.aArticleEntityInDatabaseWith(ARTICLE_TITLE_1, ARTICLE_DESCRIPTION, ARTICLE_DETAILS, 500, 5);
         given.aArticleEntityInDatabaseWith(ARTICLE_TITLE_2, ARTICLE_DESCRIPTION, ARTICLE_DETAILS, 5000, 10);
         given.aArticleEntityInDatabaseWith(ARTICLE_TITLE_3, ARTICLE_DESCRIPTION, ARTICLE_DETAILS, 70000, 2);
@@ -131,7 +132,7 @@ public class ArticleServiceTest extends AbstractServiceTest {
     }
 
     @Test
-    public void testDeleteArticle() throws NoArticleFoundException {
+    void testDeleteArticle() throws NoArticleFoundException, IOException {
         given.aArticleEntityInDatabaseWith(ARTICLE_TITLE_1, ARTICLE_DESCRIPTION, ARTICLE_DETAILS, 500, 5);
         given.aArticleEntityInDatabaseWith(ARTICLE_TITLE_2, ARTICLE_DESCRIPTION, ARTICLE_DETAILS, 5000, 10);
         given.aArticleEntityInDatabaseWith(ARTICLE_TITLE_3, ARTICLE_DESCRIPTION, ARTICLE_DETAILS, 70000, 2);
@@ -141,7 +142,7 @@ public class ArticleServiceTest extends AbstractServiceTest {
     }
 
     @Test
-    public void testDeleteArticleWrongId() {
+    void testDeleteArticleWrongId() {
         given.aArticleEntityInDatabaseWith(ARTICLE_TITLE_1, ARTICLE_DESCRIPTION, ARTICLE_DETAILS, 500, 5);
         given.aArticleEntityInDatabaseWith(ARTICLE_TITLE_2, ARTICLE_DESCRIPTION, ARTICLE_DETAILS, 5000, 10);
         given.aArticleEntityInDatabaseWith(ARTICLE_TITLE_3, ARTICLE_DESCRIPTION, ARTICLE_DETAILS, 70000, 2);
@@ -149,7 +150,7 @@ public class ArticleServiceTest extends AbstractServiceTest {
     }
 
     class Given {
-        public void aArticleEntityInDatabaseWith(String name, String description, String details, int price, int stock) {
+        void aArticleEntityInDatabaseWith(String name, String description, String details, int price, int stock) {
             ArticleEntity articleEntity = ArticleEntityBuilder.anArticleEntity()
                     .withName(name)
                     .withDescription(description)
@@ -162,7 +163,7 @@ public class ArticleServiceTest extends AbstractServiceTest {
             articleEntities.add(lastSavedArticleEntity);
         }
 
-        public void aArticleEntityWith(String name, String description, String details, int price, int stock) {
+        void aArticleEntityWith(String name, String description, String details, int price, int stock) {
             ArticleEntity articleEntity = ArticleEntityBuilder.anArticleEntity()
                     .withName(name)
                     .withDescription(description)
@@ -174,7 +175,7 @@ public class ArticleServiceTest extends AbstractServiceTest {
             articleEntities.add(articleEntity);
         }
 
-        public void aUpdatedArticleEntityWith(long id, String name, String description, String details, int price, int stock) {
+        void aUpdatedArticleEntityWith(long id, String name, String description, String details, int price, int stock) {
             updatedArticleEntity = new ArticleEntity();
             updatedArticleEntity.setId(id);
             updatedArticleEntity.setName(name);
@@ -186,49 +187,49 @@ public class ArticleServiceTest extends AbstractServiceTest {
     }
 
     class When {
-        public void allArticlesAreRetrieved() {
+        void allArticlesAreRetrieved() {
             resultArticlesEntities = articleService.getAllArticles();
         }
 
-        public void aArticleEntityIsRetirieved(long id) throws NoArticleFoundException {
+        void aArticleEntityIsRetirieved(long id) throws NoArticleFoundException {
             articleService.getArticle(id);
         }
 
-        public void newArticlesEntityAreCreated(List<ArticleEntity> articleEntities) {
+        void newArticlesEntityAreCreated(List<ArticleEntity> articleEntities) {
             for (ArticleEntity articleEntity : articleEntities) {
                 articleService.createNewArticle(articleEntity);
             }
         }
 
-        public void aArticleIsUpdated(ArticleEntity articleEntity) throws NoArticleFoundException {
+        void aArticleIsUpdated(ArticleEntity articleEntity) throws NoArticleFoundException {
             articleService.updateArticle(articleEntity);
         }
 
-        public void aArticleIsDeleted(long id) throws NoArticleFoundException {
+        void aArticleIsDeleted(long id) throws NoArticleFoundException, IOException {
             articleService.deleteArticle(id);
         }
     }
 
     class Then {
-        public void numberOfArticlesInResultListAre(int number) {
+        void numberOfArticlesInResultListAre(int number) {
             assertEquals(number, resultArticlesEntities.size());
         }
 
-        public void numberOfArticlesInDatabaseAre(int numberOfArticles) {
+        void numberOfArticlesInDatabaseAre(int numberOfArticles) {
             assertEquals(numberOfArticles, articleRepository.findAll().size());
         }
 
-        public void theArticleInDatabaseEquals(ArticleEntity articleEntity) {
+        void theArticleInDatabaseEquals(ArticleEntity articleEntity) {
             ArticleEntity dbArticleEntity = articleRepository.findAll().get(0);
             articleEntityEquals(articleEntity, dbArticleEntity);
         }
 
-        public void articleEntityIsUpdated(long id, ArticleEntity updatedArticleEntity) {
+        void articleEntityIsUpdated(long id, ArticleEntity updatedArticleEntity) {
             ArticleEntity articleEntity = articleRepository.findById(id).get();
             articleEntityEquals(updatedArticleEntity, articleEntity);
         }
 
-        public void articleWithIdDoesNotExist(long id) {
+        void articleWithIdDoesNotExist(long id) {
             assertFalse(articleRepository.existsById(id));
         }
 

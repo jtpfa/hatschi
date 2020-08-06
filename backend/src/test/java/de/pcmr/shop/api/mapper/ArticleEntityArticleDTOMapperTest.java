@@ -12,7 +12,7 @@ import java.util.Random;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
-public class ArticleEntityArticleDTOMapperTest {
+class ArticleEntityArticleDTOMapperTest {
     private static final long ARTICLE_ID = 15L;
     private static final String ARTICLE_NAME = "Testartikel";
     private static final String ARTICLE_DESCRIPTION = "Artikelbeschreibung";
@@ -32,21 +32,21 @@ public class ArticleEntityArticleDTOMapperTest {
     private List<ArticleDTO> articleDTOs;
 
     @Test
-    public void testMapArticleEntityToArticleDTO() {
+    void testMapArticleEntityToArticleDTO() {
         given.aArticleEntityWith(ARTICLE_ID, ARTICLE_NAME, ARTICLE_DESCRIPTION, ARTICLE_DETAILS, ARTICLE_PRICE, ARTICLE_STOCK);
         when.aArticleEntityIsMappedToArticleDTO(articleEntity);
         then.theAttributesOfTheArticleDTOAre(articleDTO, ARTICLE_ID, ARTICLE_NAME, ARTICLE_DESCRIPTION, ARTICLE_DETAILS, ARTICLE_PRICE, ARTICLE_STOCK);
     }
 
     @Test
-    public void testMapArticleEntityToArticleDTOWithHTML() {
+    void testMapArticleEntityToArticleDTOWithHTML() {
         given.aArticleEntityWith(ARTICLE_ID, ARTICLE_NAME, ARTICLE_DESCRIPTION_HTML, ARTICLE_DETAILS_HTML, ARTICLE_PRICE, ARTICLE_STOCK);
         when.aArticleEntityIsMappedToArticleDTO(articleEntity);
         then.theAttributesOfTheArticleDTOAreExceptHTMLFields(articleDTO, ARTICLE_ID, ARTICLE_NAME, ARTICLE_DESCRIPTION_HTML, ARTICLE_DETAILS_HTML, ARTICLE_PRICE, ARTICLE_STOCK);
     }
 
     @Test
-    public void testMapListOfArticleEntitesToListOfArticleDTOs() {
+    void testMapListOfArticleEntitesToListOfArticleDTOs() {
         given.aArticleEntityListWith(ARTICLE_NAME, ARTICLE_DESCRIPTION, ARTICLE_DETAILS, 10);
         when.aListOfArticleEntitiesIsMappedToAListOfArticleDTOs(articleEntities);
         then.numberOfElementsInListAre(articleDTOs, 10);
@@ -54,7 +54,7 @@ public class ArticleEntityArticleDTOMapperTest {
     }
 
     class Given {
-        public void aArticleEntityWith(long id, String name, String description, String details, int price, int stock) {
+        void aArticleEntityWith(long id, String name, String description, String details, int price, int stock) {
             articleEntity = ArticleEntityBuilder.anArticleEntity()
                     .withId(id)
                     .withName(name)
@@ -65,7 +65,7 @@ public class ArticleEntityArticleDTOMapperTest {
                     .build();
         }
 
-        public void aArticleEntityListWith(String name, String description, String details, int length) {
+        void aArticleEntityListWith(String name, String description, String details, int length) {
             for (int i=0; i<length; i++) {
                 articleEntities.add(ArticleEntityBuilder.anArticleEntity()
                         .withId(i+1)
@@ -80,17 +80,17 @@ public class ArticleEntityArticleDTOMapperTest {
     }
 
     class When {
-        public void aArticleEntityIsMappedToArticleDTO(ArticleEntity articleEntity) {
+        void aArticleEntityIsMappedToArticleDTO(ArticleEntity articleEntity) {
             articleDTO = ArticleEntityArticleDTOMapper.mapArticleEntityToArticleDTO(articleEntity);
         }
 
-        public void aListOfArticleEntitiesIsMappedToAListOfArticleDTOs(List<ArticleEntity> articleEntities) {
+        void aListOfArticleEntitiesIsMappedToAListOfArticleDTOs(List<ArticleEntity> articleEntities) {
             articleDTOs = ArticleEntityArticleDTOMapper.mapListOfArticleEntitiesToListOfArticleDTO(articleEntities);
         }
     }
 
     class Then {
-        public void theAttributesOfTheArticleDTOAre(ArticleDTO articleDTO, long id, String name, String description, String details, int price, int stock) {
+        void theAttributesOfTheArticleDTOAre(ArticleDTO articleDTO, long id, String name, String description, String details, int price, int stock) {
             assertEquals(id, articleDTO.getId());
             assertEquals(name, articleDTO.getName());
             assertEquals(description, articleDTO.getDescription());
@@ -99,7 +99,7 @@ public class ArticleEntityArticleDTOMapperTest {
             assertEquals(stock, articleDTO.getStock());
         }
 
-        public void theAttributesOfTheArticleDTOAreExceptHTMLFields(ArticleDTO articleDTO, long id, String name, String description, String details, int price, int stock) {
+        void theAttributesOfTheArticleDTOAreExceptHTMLFields(ArticleDTO articleDTO, long id, String name, String description, String details, int price, int stock) {
             assertEquals(id, articleDTO.getId());
             assertEquals(name, articleDTO.getName());
             assertNotEquals(description, articleDTO.getDescription());
@@ -108,11 +108,11 @@ public class ArticleEntityArticleDTOMapperTest {
             assertEquals(stock, articleDTO.getStock());
         }
 
-        public <T> void numberOfElementsInListAre(List<T> list, int expected) {
+        private <T> void numberOfElementsInListAre(List<T> list, int expected) {
             assertEquals(expected, list.size());
         }
 
-        public void theAttributesOfTheElementsInTheListAre(List<ArticleEntity> expected, List<ArticleDTO> actual) {
+        void theAttributesOfTheElementsInTheListAre(List<ArticleEntity> expected, List<ArticleDTO> actual) {
             for (int i=0; i<actual.size(); i++) {
                 ArticleEntity articleEntity = expected.get(i);
                 theAttributesOfTheArticleDTOAre(actual.get(i), articleEntity.getId(), articleEntity.getName(), articleEntity.getDescription(), articleEntity.getDetails(), articleEntity.getPrice(), articleEntity.getStock());

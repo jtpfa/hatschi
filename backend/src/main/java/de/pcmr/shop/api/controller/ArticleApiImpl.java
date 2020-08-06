@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -29,38 +30,38 @@ public class ArticleApiImpl implements ArticleApiI {
     }
 
     @Override
-    @RequestMapping(value = "/article", method = RequestMethod.GET)
+    @GetMapping(value = "/article")
     public List<ArticleShortDTO> getArticles() {
         return ArticleEntityArticleShortDTOMapper.mapListOfArticleEntityToListOfArticleShortDTO(articleService.getAllArticles());
     }
 
     @Override
-    @RequestMapping(value = "/article/{id}", method = RequestMethod.GET)
+    @GetMapping(value = "/article/{id}")
     public ArticleDTO getArticle(@PathVariable long id) throws NoArticleFoundException {
         return ArticleEntityArticleDTOMapper.mapArticleEntityToArticleDTO(articleService.getArticle(id));
     }
 
     @Override
-    @RequestMapping(value = EMPLOYEE_ROLE_URI + "/article", method = RequestMethod.GET)
+    @GetMapping(value = EMPLOYEE_ROLE_URI + "/article")
     public List<ArticleDTO> getArticlesFull() {
         return ArticleEntityArticleDTOMapper.mapListOfArticleEntitiesToListOfArticleDTO(articleService.getAllArticles());
     }
 
     @Override
-    @RequestMapping(value = EMPLOYEE_ROLE_URI + "/article", method = RequestMethod.POST)
+    @PostMapping(value = EMPLOYEE_ROLE_URI + "/article")
     public void createArticle(@Valid @RequestBody ArticleCreationDTO articleCreationDTO) {
         articleService.createNewArticle(ArticleCreationDTOArticleEntityMapper.mapArticleCreationDTOToArticleEntity(articleCreationDTO));
     }
 
     @Override
-    @RequestMapping(value = EMPLOYEE_ROLE_URI + "/article", method = RequestMethod.PUT)
+    @PutMapping(value = EMPLOYEE_ROLE_URI + "/article")
     public void updateArticle(@Valid @RequestBody ArticleDTO articleDTO) throws NoArticleFoundException {
         articleService.updateArticle(ArticleDTOArticleEntityMapper.mapArticleDTOToArticleEntity(articleDTO));
     }
 
     @Override
-    @RequestMapping(value = EMPLOYEE_ROLE_URI + "/article/{id}", method = RequestMethod.DELETE)
-    public void deleteArticle(@PathVariable long id) throws NoArticleFoundException {
+    @DeleteMapping(value = EMPLOYEE_ROLE_URI + "/article/{id}")
+    public void deleteArticle(@PathVariable long id) throws NoArticleFoundException, IOException {
         articleService.deleteArticle(id);
     }
 }

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -55,7 +56,7 @@ public class ArticleServiceImpl implements ArticleServiceI {
     }
 
     @Override
-    public void deleteArticle(long articleId) throws NoArticleFoundException {
+    public void deleteArticle(long articleId) throws NoArticleFoundException, IOException {
         if (articleRepository.existsById(articleId)) {
             articleImageService.deleteArticleImages(articleId);
             articleRepository.deleteById(articleId);

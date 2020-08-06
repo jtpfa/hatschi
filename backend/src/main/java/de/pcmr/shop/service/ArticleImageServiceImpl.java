@@ -51,7 +51,7 @@ public class ArticleImageServiceImpl implements ArticleImageServiceI {
     }
 
     @Override
-    public void deleteArticleImages(long articleId) throws NoArticleFoundException {
+    public void deleteArticleImages(long articleId) throws NoArticleFoundException, IOException {
         deleteExistingArticleImagesIfExisting(articleId);
     }
 
@@ -100,17 +100,17 @@ public class ArticleImageServiceImpl implements ArticleImageServiceI {
         }
     }
 
-    private void deleteExistingArticleImagesIfExisting(long articleId) {
+    private void deleteExistingArticleImagesIfExisting(long articleId) throws IOException {
         File imagePathFile = new File(IMAGE_PATH);
         if (imagePathFile.listFiles() != null) {
             deleteExistingArticleImages(imagePathFile, articleId);
         }
     }
 
-    private void deleteExistingArticleImages(File imagePathFile, long articleId) {
+    private void deleteExistingArticleImages(File imagePathFile, long articleId) throws IOException {
         for (File file : imagePathFile.listFiles()) {
             if (file.getName().startsWith(articleId + "_")) {
-                file.delete();
+                Files.delete(Paths.get(file.getPath()));
             }
         }
     }

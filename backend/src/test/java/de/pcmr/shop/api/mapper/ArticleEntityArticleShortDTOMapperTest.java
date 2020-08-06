@@ -12,7 +12,7 @@ import java.util.Random;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
-public class ArticleEntityArticleShortDTOMapperTest {
+class ArticleEntityArticleShortDTOMapperTest {
     private static final long ARTICLE_ID = 15L;
     private static final String ARTICLE_NAME = "Testartikel";
     private static final String ARTICLE_DESCRIPTION = "Artikelbeschreibung";
@@ -32,21 +32,21 @@ public class ArticleEntityArticleShortDTOMapperTest {
     private List<ArticleShortDTO> articleShortDTOs;
 
     @Test
-    public void testMapArticleEntityToArticleShortDTO() {
+    void testMapArticleEntityToArticleShortDTO() {
         given.aArticleEntityWith(ARTICLE_ID, ARTICLE_NAME, ARTICLE_DESCRIPTION, ARTICLE_DETAILS, ARTICLE_PRICE, ARTICLE_STOCK);
         when.aArticleEntityIsMappedToArticleShortDTO(articleEntity);
         then.theAttributesOfTheArticleShortDTOAre(articleShortDTO, ARTICLE_ID, ARTICLE_NAME, ARTICLE_DESCRIPTION, ARTICLE_PRICE);
     }
 
     @Test
-    public void testMapArticleEntityToArticleShortDTOWithHTML() {
+    void testMapArticleEntityToArticleShortDTOWithHTML() {
         given.aArticleEntityWith(ARTICLE_ID, ARTICLE_NAME, ARTICLE_DESCRIPTION_HTML, ARTICLE_DETAILS_HTML, ARTICLE_PRICE, ARTICLE_STOCK);
         when.aArticleEntityIsMappedToArticleShortDTO(articleEntity);
         then.theAttributesOfTheArticleShortDTOAreExceptHTMLFields(articleShortDTO, ARTICLE_ID, ARTICLE_NAME, ARTICLE_DESCRIPTION_HTML, ARTICLE_PRICE);
     }
 
     @Test
-    public void testMapArticleEntityListToArticleShortDTOList() {
+    void testMapArticleEntityListToArticleShortDTOList() {
         given.aArticleEntityListWith(ARTICLE_NAME, ARTICLE_DESCRIPTION, ARTICLE_DETAILS, 10);
         when.aArticleEntityListIsMappedToArticleShortDTOList(articleEntities);
         then.numberOfElementsInListAre(articleShortDTOs, 10);
@@ -54,7 +54,7 @@ public class ArticleEntityArticleShortDTOMapperTest {
     }
 
     class Given {
-        public void aArticleEntityWith(long id, String name, String description, String details, int price, int stock) {
+        void aArticleEntityWith(long id, String name, String description, String details, int price, int stock) {
             articleEntity = ArticleEntityBuilder.anArticleEntity()
                     .withId(id)
                     .withName(name)
@@ -65,7 +65,7 @@ public class ArticleEntityArticleShortDTOMapperTest {
                     .build();
         }
 
-        public void aArticleEntityListWith(String name, String description, String details, int length) {
+        void aArticleEntityListWith(String name, String description, String details, int length) {
             for (int i=0; i<length; i++) {
                 articleEntities.add(ArticleEntityBuilder.anArticleEntity()
                         .withId(i+1)
@@ -80,38 +80,38 @@ public class ArticleEntityArticleShortDTOMapperTest {
     }
 
     class When {
-        public void aArticleEntityIsMappedToArticleShortDTO(ArticleEntity articleEntity) {
+        void aArticleEntityIsMappedToArticleShortDTO(ArticleEntity articleEntity) {
             articleShortDTO = ArticleEntityArticleShortDTOMapper.mapArticleEntityToArticleShortDTO(articleEntity);
         }
 
-        public void aArticleEntityListIsMappedToArticleShortDTOList(List<ArticleEntity> articleEntities) {
+        void aArticleEntityListIsMappedToArticleShortDTOList(List<ArticleEntity> articleEntities) {
             articleShortDTOs = ArticleEntityArticleShortDTOMapper.mapListOfArticleEntityToListOfArticleShortDTO(articleEntities);
         }
     }
 
     class Then {
-        public void theAttributesOfTheArticleShortDTOAre(ArticleShortDTO articleShortDTO, long id, String name, String description, int price) {
+        void theAttributesOfTheArticleShortDTOAre(ArticleShortDTO articleShortDTO, long id, String name, String description, int price) {
             assertEquals(id, articleShortDTO.getId());
             assertEquals(name, articleShortDTO.getName());
             assertEquals(description, articleShortDTO.getDescription());
             assertEquals(price, articleShortDTO.getPrice());
         }
 
-        public void theAttributesOfTheArticleShortDTOAreExceptHTMLFields(ArticleShortDTO articleShortDTO, long id, String name, String description, int price) {
+        void theAttributesOfTheArticleShortDTOAreExceptHTMLFields(ArticleShortDTO articleShortDTO, long id, String name, String description, int price) {
             assertEquals(id, articleShortDTO.getId());
             assertEquals(name, articleShortDTO.getName());
             assertNotEquals(description, articleShortDTO.getDescription());
             assertEquals(price, articleShortDTO.getPrice());
         }
 
-        public void theAttributesOfTheElementsInTheListAre(List<ArticleEntity> expected, List<ArticleShortDTO> actual) {
+        void theAttributesOfTheElementsInTheListAre(List<ArticleEntity> expected, List<ArticleShortDTO> actual) {
             for (int i=0; i<actual.size(); i++) {
                 ArticleEntity articleEntity = expected.get(i);
                 theAttributesOfTheArticleShortDTOAre(actual.get(i), articleEntity.getId(), articleEntity.getName(), articleEntity.getDescription(), articleEntity.getPrice());
             }
         }
 
-        public <T> void numberOfElementsInListAre(List<T> list, int expected) {
+        private <T> void numberOfElementsInListAre(List<T> list, int expected) {
             assertEquals(expected, list.size());
         }
     }

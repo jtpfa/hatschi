@@ -5,8 +5,8 @@ import de.pcmr.shop.api.model.CustomerDetailsDTO;
 import de.pcmr.shop.exception.NoCustomerFoundException;
 import de.pcmr.shop.service.CustomerServiceI;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.security.Principal;
@@ -24,7 +24,7 @@ public class CustomerApiImpl implements CustomerApiI {
     }
 
     @Override
-    @RequestMapping(method = RequestMethod.GET)
+    @GetMapping
     public CustomerDetailsDTO getCustomer(Principal principal) throws NoCustomerFoundException {
         return CustomerEntityCustomerDetailsDtoMapper.mapCustomerEntityToCustomerDetailsDto(customerService.getCurrentCustomer(principal));
     }

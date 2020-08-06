@@ -12,7 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.core.env.Environment;
 
 @SpringBootTest
-public abstract class AbstractServiceTest {
+abstract class AbstractServiceTest {
 
     private final String KEYCLOAK_REGISTRATION_USER;
 
@@ -20,7 +20,7 @@ public abstract class AbstractServiceTest {
     private final ArticleRepository articleRepository;
     private final UsersResource usersResource;
 
-    public AbstractServiceTest(Environment environment, CustomerRepository customerRepository, ArticleRepository articleRepository) {
+    AbstractServiceTest(Environment environment, CustomerRepository customerRepository, ArticleRepository articleRepository) {
         this.articleRepository = articleRepository;
         String KEYCLOAK_URL = environment.getProperty("PCMR_AUTH_SERVER_URL");
         String KEYCLOAK_REALM = environment.getProperty("PCMR_KEYCLOAK_REALM");
@@ -43,17 +43,17 @@ public abstract class AbstractServiceTest {
     }
 
     @BeforeEach
-    public void cleanUp() {
+    void cleanUp() {
         cleanUpDatabase();
         cleanUpKeycloak();
     }
 
-    private void cleanUpDatabase() {
+    void cleanUpDatabase() {
         articleRepository.deleteAll();
         customerRepository.deleteAll();
     }
 
-    private void cleanUpKeycloak() {
+    void cleanUpKeycloak() {
         for (UserRepresentation user : usersResource.list()) {
             if (!user.getUsername().equals(KEYCLOAK_REGISTRATION_USER)) {
                 usersResource.delete(user.getId());

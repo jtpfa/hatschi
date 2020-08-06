@@ -24,14 +24,14 @@ public class ArticleImageApiImpl implements ArticleImageApiI {
     }
 
     @Override
-    @RequestMapping(value = EMPLOYEE_ROLE_URI + "/article/{id}/image", method = RequestMethod.POST)
+    @PostMapping(value = EMPLOYEE_ROLE_URI + "/article/{id}/image")
     public void uploadArticleImage(@PathVariable long id, @RequestParam(value = "file", required = true) MultipartFile imageFile) throws IOException, UploadedImageResolutionTooLowException, UploadedImageInvalidFileExtensionException, NoArticleFoundException {
         checkFileExtension(imageFile);
         articleImageService.processAndSaveArticleImage(id, imageFile);
     }
 
     private void checkFileExtension(MultipartFile file) throws UploadedImageInvalidFileExtensionException {
-        if (!ArticleImageServiceI.ALLOWED_FILE_EXTENSIONS.contains(FilenameUtils.getExtension(file.getOriginalFilename()))) {
+        if (!AllowedImageFileExtensionsEnum.getStringList().contains(FilenameUtils.getExtension(file.getOriginalFilename()))) {
             throw new UploadedImageInvalidFileExtensionException();
         }
     }

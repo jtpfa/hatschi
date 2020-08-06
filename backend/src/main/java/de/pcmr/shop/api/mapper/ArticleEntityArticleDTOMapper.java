@@ -7,7 +7,11 @@ import de.pcmr.shop.util.SanitizationUtils;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class ArticleEntityArticleDTOMapper {
+public final class ArticleEntityArticleDTOMapper {
+    private ArticleEntityArticleDTOMapper() {
+        throw new IllegalStateException();
+    }
+
     public static ArticleDTO mapArticleEntityToArticleDTO(ArticleEntity articleEntity) {
         ArticleDTO articleDTO = new de.pcmr.shop.api.model.ArticleDTO();
         articleDTO.setId(articleEntity.getId());

@@ -9,7 +9,7 @@ import javax.validation.ValidationException;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class CustomerRegistrationDtoCustomerEntityMapperTest {
+class CustomerRegistrationDtoCustomerEntityMapperTest {
     private final static String CUSTOMER_EMAIL = "test@test.com";
     private final static String CUSTOMER_FIRSTNAME = "John";
     private final static String CUSTOMER_FIRSTNAME_HTML = "<script>John</script>";
@@ -24,20 +24,20 @@ public class CustomerRegistrationDtoCustomerEntityMapperTest {
     CustomerEntity customerEntity;
 
     @Test
-    public void testMapCustomerEntityToCustomerDetailsDtoSuccess() {
+    void testMapCustomerEntityToCustomerDetailsDtoSuccess() {
         given.aCustomerRegistrationDtoWith(CUSTOMER_EMAIL, CUSTOMER_FIRSTNAME, CUSTOMER_LASTNAME, CUSTOMER_PASSWORD);
         when.aCustomerRegistrationDtoIsMappedToEntity(customerRegistrationDTO);
         then.theAttributesOfTheCustomerAreEqualTo(customerRegistrationDTO);
     }
 
     @Test
-    public void testMapCustomerEntityToCustomerDetailsDtoFailHtml() {
+    void testMapCustomerEntityToCustomerDetailsDtoFailHtml() {
         given.aCustomerRegistrationDtoWith(CUSTOMER_EMAIL, CUSTOMER_FIRSTNAME_HTML, CUSTOMER_LASTNAME, CUSTOMER_PASSWORD);
         assertThrows(ValidationException.class, () -> when.aCustomerRegistrationDtoIsMappedToEntity(customerRegistrationDTO));
     }
 
     class Given {
-        public void aCustomerRegistrationDtoWith(String email, String firstname, String lastname, String password) {
+        void aCustomerRegistrationDtoWith(String email, String firstname, String lastname, String password) {
             customerRegistrationDTO = new CustomerRegistrationDTO();
             customerRegistrationDTO.setEmail(email);
             customerRegistrationDTO.setFirstName(firstname);
@@ -47,13 +47,13 @@ public class CustomerRegistrationDtoCustomerEntityMapperTest {
     }
 
     class When {
-        public void aCustomerRegistrationDtoIsMappedToEntity(CustomerRegistrationDTO customerRegistrationDTO) {
+        void aCustomerRegistrationDtoIsMappedToEntity(CustomerRegistrationDTO customerRegistrationDTO) {
             customerEntity = CustomerRegistrationDtoCustomerEntityMapper.mapCustomerRegistrationDtoToCustomerEntity(customerRegistrationDTO);
         }
     }
 
     class Then {
-        public void theAttributesOfTheCustomerAreEqualTo(CustomerRegistrationDTO customerRegistrationDTO) {
+        void theAttributesOfTheCustomerAreEqualTo(CustomerRegistrationDTO customerRegistrationDTO) {
             assertEquals(customerRegistrationDTO.getEmail(), customerEntity.getEmail());
             assertEquals(customerRegistrationDTO.getFirstName(), customerEntity.getFirstName());
             assertEquals(customerRegistrationDTO.getLastName(), customerEntity.getLastName());

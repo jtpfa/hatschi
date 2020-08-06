@@ -12,7 +12,6 @@ import de.pcmr.shop.repository.ArticleRepository;
 import de.pcmr.shop.repository.CustomerRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.core.env.Environment;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -24,7 +23,7 @@ import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class CustomerServiceTest extends AbstractServiceTest {
+class CustomerServiceTest extends AbstractServiceTest {
 
     private final static String CUSTOMER_EMAIL_A = "test@userA.de";
     private final static String CUSTOMER_FIRSTNAME_A = "TestA";
@@ -48,14 +47,14 @@ public class CustomerServiceTest extends AbstractServiceTest {
     private CustomerEntity customerEntityB;
 
     @Autowired
-    public CustomerServiceTest(RegistrationServiceI registrationService, CustomerServiceI customerService, CustomerRepository customerRepository, Environment environment, ArticleRepository articleRepository) {
+    CustomerServiceTest(RegistrationServiceI registrationService, CustomerServiceI customerService, CustomerRepository customerRepository, Environment environment, ArticleRepository articleRepository) {
         super(environment, customerRepository, articleRepository);
         this.registrationService = registrationService;
         this.customerService = customerService;
     }
 
     @Test
-    public void testGetCurrentCustomerWithOneCustomerSuccess() throws KeycloakUnknownErrorException, KeycloakUserAlreadyExistsException, CustomerAlreadyExistsException, KeycloakEndpointNotFoundException, KeycloakUserIsNotAuthorizedException, NoCustomerFoundException {
+    void testGetCurrentCustomerWithOneCustomerSuccess() throws KeycloakUnknownErrorException, KeycloakUserAlreadyExistsException, CustomerAlreadyExistsException, KeycloakEndpointNotFoundException, KeycloakUserIsNotAuthorizedException, NoCustomerFoundException {
         given.aCustomerEntityWith(CUSTOMER_EMAIL_A, CUSTOMER_FIRSTNAME_A, CUSTOMER_LASTNAME_A, CUSTOMER_PASSWORD_A);
         when.aCustomerIsRegistered(customerEntity);
         when.aRegistredCustomerIsAuthenticated(CUSTOMER_EMAIL_A, CUSTOMER_PASSWORD_A);
@@ -63,7 +62,7 @@ public class CustomerServiceTest extends AbstractServiceTest {
     }
 
     @Test
-    public void testGetCurrentCustomerWithMultipleCustomersSuccess() throws KeycloakUnknownErrorException, KeycloakUserAlreadyExistsException, CustomerAlreadyExistsException, KeycloakEndpointNotFoundException, KeycloakUserIsNotAuthorizedException, NoCustomerFoundException {
+    void testGetCurrentCustomerWithMultipleCustomersSuccess() throws KeycloakUnknownErrorException, KeycloakUserAlreadyExistsException, CustomerAlreadyExistsException, KeycloakEndpointNotFoundException, KeycloakUserIsNotAuthorizedException, NoCustomerFoundException {
         given.twoCustomerEntityWith(CUSTOMER_EMAIL_A, CUSTOMER_FIRSTNAME_A, CUSTOMER_LASTNAME_A, CUSTOMER_PASSWORD_A, CUSTOMER_EMAIL_B, CUSTOMER_FIRSTNAME_B, CUSTOMER_LASTNAME_B, CUSTOMER_PASSWORD_B);
         when.aCustomerIsRegistered(customerEntityB);
         when.aCustomerIsRegistered(customerEntityA);
@@ -72,7 +71,7 @@ public class CustomerServiceTest extends AbstractServiceTest {
     }
 
     class Given {
-        public void aCustomerEntityWith(String email, String firstname, String lastname, String password) {
+        void aCustomerEntityWith(String email, String firstname, String lastname, String password) {
             customerEntity = CustomerEntityBuilder.aCustomerEntity()
                     .withEmail(email)
                     .withFirstName(firstname)
@@ -81,7 +80,7 @@ public class CustomerServiceTest extends AbstractServiceTest {
                     .build();
         }
 
-        public void twoCustomerEntityWith(String emailA, String firstnameA, String lastnameA, String passwordA, String emailB, String firstnameB, String lastnameB, String passwordB) {
+        void twoCustomerEntityWith(String emailA, String firstnameA, String lastnameA, String passwordA, String emailB, String firstnameB, String lastnameB, String passwordB) {
             customerEntityB = CustomerEntityBuilder.aCustomerEntity()
                     .withEmail(emailB)
                     .withFirstName(firstnameB)
@@ -99,11 +98,11 @@ public class CustomerServiceTest extends AbstractServiceTest {
     }
 
     class When {
-        public void aCustomerIsRegistered(CustomerEntity customer) throws KeycloakEndpointNotFoundException, KeycloakUserAlreadyExistsException, KeycloakUserIsNotAuthorizedException, CustomerAlreadyExistsException, KeycloakUnknownErrorException {
+        void aCustomerIsRegistered(CustomerEntity customer) throws KeycloakEndpointNotFoundException, KeycloakUserAlreadyExistsException, KeycloakUserIsNotAuthorizedException, CustomerAlreadyExistsException, KeycloakUnknownErrorException {
             registrationService.registerCustomer(customer);
         }
 
-        public void aRegistredCustomerIsAuthenticated(String email, String password) {
+        void aRegistredCustomerIsAuthenticated(String email, String password) {
             Authentication auth = new UsernamePasswordAuthenticationToken(email, password, new ArrayList<>());
             SecurityContext securityContext = SecurityContextHolder.getContext();
             securityContext.setAuthentication(auth);
@@ -111,7 +110,7 @@ public class CustomerServiceTest extends AbstractServiceTest {
     }
 
     class Then {
-        public void theAttributesOfTheCurrentCustomerAre(String email, String firstname, String lastname) throws NoCustomerFoundException {
+        void theAttributesOfTheCurrentCustomerAre(String email, String firstname, String lastname) throws NoCustomerFoundException {
             Principal principal = SecurityContextHolder.getContext().getAuthentication();
             CustomerEntity customer = customerService.getCurrentCustomer(principal);
 
