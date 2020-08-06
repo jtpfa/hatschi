@@ -6,7 +6,7 @@
   "private": true,
   "scripts": {
     "dev": "npm run dev-env && HOST=0.0.0.0 nuxt",
-    "build": "npm run prod-env && nuxt build",
+    "build": "nuxt build",
     "start": "nuxt start",
     "serve": "nuxt serve",
     "generate": "nuxt build --target static && nuxt export",
@@ -26,7 +26,8 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged"
+      "pre-commit": "lint-staged",
+      "pre-push": "npm run prod-env"
     }
   },
   "dependencies": {
