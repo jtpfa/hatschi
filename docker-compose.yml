@@ -2,15 +2,15 @@ version: '3.1'
 
 services:
   pcmr-backend:
-    build:
-      context: ./backend
-      dockerfile: ./Dockerfile
+    image: fynloh/pc-mr:backend
     restart: always
     ports:
       - 8090
     environment:
       VIRTUAL_HOST: api.pc-mr.de
       VIRTUAL_PORT: 8090
+      LETSENCRYPT_HOST: api.pc-mr.de
+      LETSENCRYPT_EMAIL: ${LETSENCRYPT_EMAIL}
       PCMR_SERVER_PORT: ${PCMR_SERVER_PORT}
       PCMR_MYSQL_HOST: ${PCMR_MYSQL_HOST_DOCKER}
       MYSQL_DB_PORT: ${MYSQL_DB_PORT}
@@ -22,6 +22,9 @@ services:
       PCMR_RESOURCE: ${PCMR_RESOURCE}
       PCMR_KEYCLOAK_REGISTRATION_USER: ${PCMR_KEYCLOAK_REGISTRATION_USER}
       PCMR_KEYCLOAK_REGISTRATION_PASSWORD: ${PCMR_KEYCLOAK_REGISTRATION_PASSWORD}
+      PCMR_CORS_ORIGINS: ${PCMR_CORS_ORIGINS}
+      PCMR_CORS_METHODS: ${PCMR_CORS_METHODS}
+      PCMR_CORS_HEADERS: ${PCMR_CORS_HEADERS}
     depends_on:
       - db
       - keycloak
@@ -33,15 +36,15 @@ services:
           - api.pcmr.de
 
   pcmr-frontend:
-    build:
-      context: ./frontend
-      dockerfile: ./Dockerfile
+    image: fynloh/pc-mr:frontend
     restart: always
     ports:
       - 3000
     environment:
       VIRTUAL_HOST: pc-mr.de
       VIRTUAL_PORT: 3000
+      LETSENCRYPT_HOST: pc-mr.de
+      LETSENCRYPT_EMAIL: ${LETSENCRYPT_EMAIL}
     depends_on:
       - pcmr-backend
     networks:
@@ -62,6 +65,7 @@ services:
       KEYCLOAK_MYSQL_USER: ${KEYCLOAK_MYSQL_USER}
       KEYCLOAK_MYSQL_PASSWORD: ${KEYCLOAK_MYSQL_PASSWORD}
     volumes:
+      - db-data:/var/lib/mysql
       - ./backend/src/main/resources/db/init:/docker-entrypoint-initdb.d/
     networks:
       - pcmr-net
@@ -74,6 +78,8 @@ services:
     environment:
       VIRTUAL_HOST: auth.pc-mr.de
       VIRTUAL_PORT: 8080
+      LETSENCRYPT_HOST: auth.pc-mr.de
+      LETSENCRYPT_EMAIL: ${LETSENCRYPT_EMAIL}
       DB_VENDOR: mariadb
       DB_ADDR: ${KEYCLOAK_DB_ADDR}
       DB_PORT: ${MYSQL_DB_PORT}
@@ -83,6 +89,7 @@ services:
       KEYCLOAK_USER: ${KEYCLOAK_USER}
       KEYCLOAK_PASSWORD: ${KEYCLOAK_PASSWORD}
       KEYCLOAK_IMPORT: /tmp/pcmr-realm.json
+      PROXY_ADDRESS_FORWARDING: ${PROXY_ADDRESS_FORWARDING}
     volumes:
       - ./backend/src/main/resources/keycloak/:/tmp/
     depends_on:
@@ -95,11 +102,35 @@ services:
     image: jwilder/nginx-proxy
     ports:
       - 80:80
+      - 443:443
     volumes:
       - ./htpasswd:/etc/nginx/htpasswd
+      - certs:/etc/nginx/certs:ro
+      - dhparam:/etc/nginx/dhparam
+      - vhost:/etc/nginx/vhost.d
+      - html:/usr/share/nginx/html
       - /var/run/docker.sock:/tmp/docker.sock
     networks:
       - pcmr-net
-
+    labels:
+      - "com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy"
+  
+  nginx-letsencrypt:
+    restart: always
+    image: jrcs/letsencrypt-nginx-proxy-companion
+    depends_on:
+      - "nginx-proxy"
+    volumes:
+      - certs:/etc/nginx/certs:rw
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - vhost:/etc/nginx/vhost.d
+      - html:/usr/share/nginx/html
 networks:
   pcmr-net:
+
+volumes:
+  db-data:
+  certs:
+  html:
+  vhost:
+  dhparam:
