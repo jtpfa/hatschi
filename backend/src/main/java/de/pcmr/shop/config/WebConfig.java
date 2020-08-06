@@ -12,8 +12,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @EnableWebMvc
 public class WebConfig implements WebMvcConfigurer {
 
-    private Environment environment;
-
     @Value("${PCMR_CORS_ORIGINS}")
     private String allowedOrigins;
     @Value("${PCMR_CORS_METHODS}")
