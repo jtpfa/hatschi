@@ -80,7 +80,7 @@
                     ></ckeditor>
 
                     <b-form-invalid-feedback id="input-live-feedback">
-                        Detailes angeben.
+                        Details angeben.
                     </b-form-invalid-feedback>
                 </div>
 
@@ -145,14 +145,15 @@
 </template>
 
 <script>
+/* eslint global-require: "off" */
 import ClientOnly from 'vue-client-only'
 import ButtonContainer from '~/components/layout/buttonContainer'
 
 let ckeditor
 let ClassicEditor = {}
 if (process.client) {
-    ClassicEditor = import('@ckeditor/ckeditor5-build-classic')
-    ckeditor = import('@ckeditor/ckeditor5-vue').component
+    ClassicEditor = require('@ckeditor/ckeditor5-build-classic')
+    ckeditor = require('@ckeditor/ckeditor5-vue').component
 }
 
 export default {

@@ -4,6 +4,9 @@
   "description": "PC Masterrace",
   "author": "Aleksandar Vuk Jovanovic, Fynn Lohse, Jonas Pfannkuche, Tayfun Gülbasi, Vera Meermeier",
   "private": true,
+  "engines": {
+    "node": ">=12.0.0"
+  },
   "scripts": {
     "dev": "npm run dev-env && HOST=0.0.0.0 nuxt",
     "build": "nuxt build",
