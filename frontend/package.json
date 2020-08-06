@@ -26,8 +26,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged",
-      "pre-push": "npm run prod-env"
+      "pre-commit": "npm run prod-env && git add .env && lint-staged"
     }
   },
   "dependencies": {
