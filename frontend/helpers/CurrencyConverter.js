@@ -5,6 +5,10 @@ export class CurrenyConverter {
     }
 
     insertFractionForEuroConversation(priceInCents) {
+        if (!priceInCents) {
+            return 0
+        }
+
         let price = priceInCents.toString()
 
         price =

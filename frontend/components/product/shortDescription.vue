@@ -8,26 +8,23 @@
         </div>
 
         <div class="col-12 col-md-7">
-            <h1 class="text-primary text-center text-md-left oblique mb-0">Acer Predator-X B3 Serie</h1>
-            <span class="delivery-time d-block text-center text-md-left text-muted">Lieferbar in 3-4 Werktagen</span>
+            <h1 class="text-primary text-center text-md-left oblique mb-0">{{ product.name }}</h1>
+            <span class="delivery-time d-block text-center text-md-left text-muted">{{ deliveryInformation }}</span>
 
             <p class="mt-5">
-                Highlights: 16:9 Gaming Monitor mit einer Auflösung von 1920x1080, DisplayHDR 400, Fast LC 1ms (G2G),
-                G-Sync Kompatibel
-            </p>
-            <p class="mt-5">
-                G-Sync Kompatibel sind Freesync (Adaptive Sync) Monitore, die sich vergleichbar wie Gsync Monitore
-                verhalten und somit ruckelfreie, flüssige Spielesessions ermöglichen.
+                {{ product.description }}
             </p>
 
             <div class="d-flex justify-content-between align-items-end flex-column flex-sm-row mt-5">
                 <div class="price-information mb-2 mb-sm-0">
-                    <span class="price big-noodle oblique text-dark">834.39 €</span>
+                    <span class="price big-noodle oblique text-dark">
+                        {{ $currencyConverter.insertFractionForEuroConversation(product.price) | currency }}
+                    </span>
                     <span class="text-muted">inkl. MwSt.</span>
                     <span class="text-muted">zzgl. Versandkosten</span>
                 </div>
 
-                <add-to-cart name="2" />
+                <add-to-cart :orderable="product.stock > 0" :product-id="product.id" />
             </div>
         </div>
     </div>
@@ -44,6 +41,11 @@ export default {
         product: {
             type: Object,
             required: true,
+        },
+    },
+    computed: {
+        deliveryInformation() {
+            return this.product.stock === 0 ? 'Nicht auf Lager' : 'Lieferbar in 3-4 Werktagen'
         },
     },
 }

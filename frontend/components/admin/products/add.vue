@@ -75,7 +75,6 @@
                         :config="editor.config"
                         :editor="editor.editor"
                         placeholder="Details"
-                        required
                         tag-name="textarea"
                     ></ckeditor>
 

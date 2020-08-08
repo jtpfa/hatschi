@@ -24,6 +24,12 @@ export class RestApi {
         }).then(response => (response.ok ? response : throw response))
     }
 
+    getProduct(productId) {
+        return fetch(`${this.baseUrl}article/${productId}`, { method: 'GET' })
+            .then(response => response.json())
+            .catch(error => throw error)
+    }
+
     getAllProductsShortVersion() {
         return fetch(`${this.baseUrl}article`, { method: 'GET' })
             .then(response => response.json())

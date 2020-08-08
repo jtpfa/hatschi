@@ -1,5 +1,10 @@
 <template>
-    <b-button class="d-flex justify-content-center align-items-center px-5 py-1" variant="primary" @click="addToCart">
+    <b-button
+        class="d-flex justify-content-center align-items-center px-5 py-1"
+        :disabled="!orderable"
+        variant="primary"
+        @click="addToCart"
+    >
         <icon-shopping-cart class="mr-3" />
         In den Warenkorb
     </b-button>
@@ -12,9 +17,13 @@ export default {
     name: 'AddToCart',
     components: { IconShoppingCart },
     props: {
-        name: {
-            type: String,
-            default: '',
+        productId: {
+            type: Number,
+            required: true,
+        },
+        orderable: {
+            type: Boolean,
+            required: true,
         },
     },
     methods: {
@@ -22,7 +31,7 @@ export default {
             let item = this.product
             item = {
                 ...item,
-                id: this.name,
+                id: this.productId,
                 quantity: 1,
             }
             this.$store.commit('addToCart', { ...item })

@@ -1,38 +1,54 @@
 <template>
-    <b-container class="my-5">
-        <h1>{{ id }}</h1>
-        <product-short-description class="my-5" :product="{}" />
+    <fetch-content v-if="$fetchState.pending" :size="6" />
+    <b-container v-else class="my-5">
+        <b-alert v-if="noProductFound" :show="true">Dieses Produkt existiert nicht.</b-alert>
+        <template v-else>
+            <product-short-description class="my-5" :product="product" />
 
-        <product-details class="my-5" />
+            <product-details class="my-5" :product="product" />
 
-        <p class="h5">Ähnliche Produkte</p>
+            <p class="h5">Ähnliche Produkte</p>
 
-        <div class="grid">
-            <product-card
-                v-for="i in 5"
-                :key="i"
-                image-src="/img/sample.png"
-                name="Feinste Ware"
-                :price="299.99"
-                :product-id="i"
-                text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+            <div class="grid">
+                <product-card
+                    v-for="i in 5"
+                    :key="i"
+                    image-src="/img/sample.png"
+                    name="Feinste Ware"
+                    :price="299.99"
+                    :product-id="i"
+                    text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
             dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip"
-            />
-        </div>
+                />
+            </div>
+        </template>
     </b-container>
 </template>
 
 <script>
+import FetchContent from '~/components/layout/fetchContent'
 import productCard from '~/components/product/card'
 import productDetails from '~/components/product/details'
 import productShortDescription from '~/components/product/shortDescription'
 
 export default {
     name: 'Product',
-    components: { productCard, productDetails, productShortDescription },
+    components: { FetchContent, productCard, productDetails, productShortDescription },
+    async fetch() {
+        try {
+            this.product = await this.$api.getProduct(this.$route.params.id)
+        } catch (err) {
+            this.noProductFound = true
+        }
+
+        if (!this.product.id) {
+            this.noProductFound = true
+        }
+    },
     data() {
         return {
-            id: this.$route.params.id,
+            product: {},
+            noProductFound: false,
         }
     },
 }

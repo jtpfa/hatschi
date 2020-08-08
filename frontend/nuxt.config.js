@@ -31,8 +31,8 @@ export default {
      ** Plugins to load before mounting the App
      */
     plugins: [
-        { src: '~/plugins/api', ssr: false },
-        { src: '~/plugins/currency', ssr: false },
+        { src: '~/plugins/api', ssr: true },
+        { src: '~/plugins/currency', ssr: true },
         { src: '~/plugins/vuex-persist', ssr: false },
     ],
     /*
