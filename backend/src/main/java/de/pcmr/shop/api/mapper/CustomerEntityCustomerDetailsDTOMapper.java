@@ -3,8 +3,8 @@ package de.pcmr.shop.api.mapper;
 import de.pcmr.shop.api.model.CustomerDetailsDTO;
 import de.pcmr.shop.domain.CustomerEntity;
 
-public final class CustomerEntityCustomerDetailsDtoMapper {
-    private CustomerEntityCustomerDetailsDtoMapper() {
+public final class CustomerEntityCustomerDetailsDTOMapper {
+    private CustomerEntityCustomerDetailsDTOMapper() {
         throw new IllegalStateException();
     }
 

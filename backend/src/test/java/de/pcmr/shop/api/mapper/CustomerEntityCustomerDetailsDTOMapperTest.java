@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class CustomerEntityCustomerDetailsDtoMapperTest {
+class CustomerEntityCustomerDetailsDTOMapperTest {
     private final static String CUSTOMER_EMAIL = "test@test.com";
     private final static String CUSTOMER_FIRSTNAME = "John";
     private final static String CUSTOMER_LASTNAME = "Smith";
@@ -40,7 +40,7 @@ class CustomerEntityCustomerDetailsDtoMapperTest {
 
     class When {
         void aCustomerEntityIsMappedToDto(CustomerEntity customerEntity) {
-            customerDetailsDTO = CustomerEntityCustomerDetailsDtoMapper.mapCustomerEntityToCustomerDetailsDto(customerEntity);
+            customerDetailsDTO = CustomerEntityCustomerDetailsDTOMapper.mapCustomerEntityToCustomerDetailsDto(customerEntity);
         }
     }
 
