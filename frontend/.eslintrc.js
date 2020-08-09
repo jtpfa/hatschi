@@ -50,14 +50,11 @@ module.exports = {
             },
         ],
         'import/prefer-default-export': 0,
-        'no-underscore-dangle': 'off',
+        'no-underscore-dangle': 'off', // to use the nuxt/auth localScheme
         'consistent-return': 'off',
         'vue/no-v-html': 0,
         'no-param-reassign': ['error', { props: false }],
-        // @todo: remove these when products are included dynamically
-        'vue/no-unused-vars': 0,
-        'vue/valid-v-for': 0,
-        'no-shadow': 0,
+        'no-shadow': ['error', { allow: ['resolve', 'reject', 'done', 'cb', 'state'] }],
     },
     settings: {
         'import/resolver': {

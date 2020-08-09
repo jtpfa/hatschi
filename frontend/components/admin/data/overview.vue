@@ -14,12 +14,12 @@
             outlined
             :per-page="perPage"
             primary-key="id"
-            responsive
+            :responsive="true"
             show-empty
             :sort-by="sortBy"
             @row-hovered="setCurrentItem"
         >
-            <template v-slot:cell(actions)="row">
+            <template v-slot:cell(actions)>
                 <b-button
                     v-b-tooltip.hover
                     class="mr-1"
@@ -48,7 +48,7 @@
                 </div>
             </template>
 
-            <template v-slot:empty="scope">
+            <template v-slot:empty>
                 <h4 class="text-center text-info">Keine Daten vorhanden. Bitte neuen Datensatz erstellen.</h4>
             </template>
         </b-table>
