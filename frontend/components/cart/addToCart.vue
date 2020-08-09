@@ -33,6 +33,15 @@ export default {
                 quantity: 1,
             }
             this.$store.commit('addToCart', { ...item })
+
+            this.$root.$bvToast.toast(`"${this.product.name}" liegt nun im Warenkorb`, {
+                title: 'Artikel wurde dem Warenkorb hinzugefügt',
+                autoHideDelay: 3000,
+                appendToast: true,
+                isStatus: true,
+                solid: true,
+                variant: 'success',
+            })
         },
     },
 }

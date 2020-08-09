@@ -4,7 +4,7 @@ export class CurrenyConverter {
         this.fractionSeperator = fractionSeperator
     }
 
-    insertFractionForEuroConversation(priceInCents) {
+    insertFractionForEuroConversion(priceInCents) {
         if (!priceInCents) {
             return 0
         }

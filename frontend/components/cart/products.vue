@@ -1,5 +1,5 @@
 <template>
-    <div v-if="cartCountElements > 0" class="col-md-7">
+    <div>
         <b-card v-for="item in cart" :key="item.id" body-class="row" class="product">
             <div class="lazy-image col-6 d-flex justify-content-center align-items-center">
                 <b-card-img-lazy alt="Image" class="mb-4" src="/img/sample.png" top />
@@ -9,10 +9,10 @@
             <div class="col-6">
                 <h2 class="product-title font-weight-bold mb-3">{{ item.name }}</h2>
                 <b-card-text class="product-description mb-2">
-                    {{ $textCropper.cropText(item.description, 25) }}
+                    {{ $textCropper.cropText(item.description, 75) }}
                 </b-card-text>
                 <b-card-text class="product-price font-weight-bold text-primary big-noodle">
-                    {{ $currencyConverter.insertFractionForEuroConversation(item.price) | currency }}
+                    {{ $currencyConverter.insertFractionForEuroConversion(item.price) | currency }}
                 </b-card-text>
             </div>
             <b-card-body>
@@ -54,7 +54,7 @@ export default {
     components: { IconTrash, Spinner },
     computed: {
         ...mapState(['cart']),
-        ...mapGetters(['cartCountElements', 'cartTotal']),
+        ...mapGetters(['cartTotal']),
     },
     methods: {
         addOneToCart(item) {
@@ -76,6 +76,10 @@ export default {
     border: none;
     box-shadow: 0 0 7px 1px rgba(0, 0, 11, 0.16);
     transition: all 0.3s ease-in-out;
+
+    &:not(:last-of-type) {
+        margin-bottom: 1rem;
+    }
 
     .lazy-image {
         position: relative;
@@ -135,5 +139,6 @@ export default {
 
 .btn-outline-light {
     color: $black !important;
+    border-color: $gray-500 !important;
 }
 </style>

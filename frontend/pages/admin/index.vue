@@ -28,7 +28,7 @@ export default {
                     label: 'Preis',
                     formatter: price => {
                         return this.$options.filters.currency(
-                            this.$currencyConverter.insertFractionForEuroConversation(price)
+                            this.$currencyConverter.insertFractionForEuroConversion(price)
                         )
                     },
                     sortable: true,
