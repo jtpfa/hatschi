@@ -14,15 +14,15 @@
                             to="/warenkorb"
                         >
                             <div class="bg-primary rounded-circle shopping-cart b-avatar badge-primary mr-2 mr-md-0">
-                                <icon-shopping-cart :items="cartElements" />
-                                <span v-if="cartElements > 0" class="cart-elements b-avatar-badge badge-dark">
-                                    {{ cartElements }}
+                                <icon-shopping-cart :items="cartCountElements" />
+                                <span v-if="cartCountElements > 0" class="cart-elements b-avatar-badge badge-dark">
+                                    {{ cartCountElements }}
                                 </span>
                             </div>
                             Warenkorb
                         </b-link>
                         <span
-                            v-if="!this.$auth.loggedIn"
+                            v-if="!$auth.loggedIn"
                             v-b-modal.modal-center
                             class="d-flex align-items-center flex-md-column nav-icon big-noodle text-primary"
                         >
@@ -53,7 +53,7 @@ export default {
     name: 'LayoutHeader',
     components: { IconShoppingCart, PageLogo, LoginForm },
     computed: {
-        ...mapGetters(['cartElements']),
+        ...mapGetters(['cartCountElements']),
     },
 }
 </script>

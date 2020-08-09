@@ -17,8 +17,8 @@ export default {
     name: 'AddToCart',
     components: { IconShoppingCart },
     props: {
-        productId: {
-            type: Number,
+        product: {
+            type: Object,
             required: true,
         },
         orderable: {
@@ -28,10 +28,8 @@ export default {
     },
     methods: {
         addToCart() {
-            let item = this.product
-            item = {
-                ...item,
-                id: this.productId,
+            const item = {
+                ...this.product,
                 quantity: 1,
             }
             this.$store.commit('addToCart', { ...item })

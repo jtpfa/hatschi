@@ -24,7 +24,7 @@
                     <span class="text-muted">zzgl. Versandkosten</span>
                 </div>
 
-                <add-to-cart :orderable="product.stock > 0" :product-id="product.id" />
+                <add-to-cart :orderable="product.stock > 0" :product="product" />
             </div>
         </div>
     </div>

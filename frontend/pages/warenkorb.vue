@@ -1,15 +1,16 @@
 <template>
-    <div>
-        <add-to-cart name="produkt1" />
-        <add-to-cart name="produkt2" />
-    </div>
+    <client-only>
+        <b-container>
+            <cart-products />
+        </b-container>
+    </client-only>
 </template>
 
 <script>
-import AddToCart from '~/components/cart/addToCart'
+import CartProducts from '~/components/cart/products'
 
 export default {
-    components: { AddToCart },
+    components: { CartProducts },
 }
 </script>
 

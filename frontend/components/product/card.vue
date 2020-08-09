@@ -7,7 +7,7 @@
 
         <h2 class="product-title font-weight-bold mb-4">{{ name }}</h2>
         <b-card-text class="product-description mb-4">
-            {{ cropText }}
+            {{ $textCropper.cropText(description, 50) }}
         </b-card-text>
         <b-card-text class="product-price font-weight-bold text-primary big-noodle">
             {{ $currencyConverter.insertFractionForEuroConversation(price) | currency }}
@@ -27,7 +27,7 @@ export default {
             type: String,
             required: true,
         },
-        text: {
+        description: {
             type: String,
             required: true,
         },
@@ -42,21 +42,6 @@ export default {
         productId: {
             type: Number,
             required: true,
-        },
-    },
-    computed: {
-        // Get 50 characters of the description text and append '...'
-        cropText() {
-            let description = this.text.substring(0, 49)
-
-            // Add a space if the cropped text doesn't end with one
-            if (description.slice(-1) !== ' ') {
-                description += ' '
-            }
-
-            description += '...'
-
-            return description
         },
     },
 }

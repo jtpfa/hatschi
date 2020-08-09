@@ -13,12 +13,12 @@
                 <product-card
                     v-for="i in 5"
                     :key="i"
+                    description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip"
                     image-src="/img/sample.png"
                     name="Feinste Ware"
                     :price="299.99"
                     :product-id="i"
-                    text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip"
                 />
             </div>
         </template>
