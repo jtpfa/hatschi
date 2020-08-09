@@ -23,6 +23,7 @@
                     <b-input-group class="w-auto">
                         <b-input-group-prepend>
                             <b-button
+                                :disabled="item.quantity <= 1"
                                 variant="outline-light"
                                 @click="item.quantity > 1 ? removeOneFromCart(item) : null"
                             >
@@ -35,10 +36,21 @@
                         </b-input-group-text>
 
                         <b-input-group-append>
-                            <b-button variant="outline-light" @click="addOneToCart(item)">+</b-button>
+                            <b-button
+                                :disabled="item.quantity >= item.stock"
+                                variant="outline-light"
+                                @click="item.quantity < item.stock ? addOneToCart(item) : null"
+                            >
+                                +
+                            </b-button>
                         </b-input-group-append>
                     </b-input-group>
                 </div>
+                <p v-if="item.quantity >= item.stock" class="text-right text-muted small">
+                    Maximal bestellbare
+                    <br />
+                    Menge erreicht
+                </p>
             </b-card-body>
         </b-card>
     </div>

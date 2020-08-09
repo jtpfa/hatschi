@@ -35,7 +35,7 @@
             </b-tfoot>
         </b-table-simple>
         <div class="d-flex justify-content-center align-items-center flex-column">
-            <b-button class="my-3 w-100" variant="primary">Zur Kasse gehen</b-button>
+            <b-button class="my-3 w-100" size="lg" variant="primary">Zur Kasse gehen</b-button>
             <b-button class="w-100" to="/" variant="white">Weiter einkaufen</b-button>
         </div>
     </b-card>
