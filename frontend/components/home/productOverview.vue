@@ -5,11 +5,11 @@
         <product-card
             v-for="item in products"
             :key="item.id"
+            :description="item.description"
             image-src="/img/sample.png"
             :name="item.name"
             :price="item.price"
             :product-id="item.id"
-            :text="item.description"
         />
     </div>
 </template>

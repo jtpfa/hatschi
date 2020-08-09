@@ -17,8 +17,8 @@ export default {
     name: 'AddToCart',
     components: { IconShoppingCart },
     props: {
-        productId: {
-            type: Number,
+        product: {
+            type: Object,
             required: true,
         },
         orderable: {
@@ -28,13 +28,20 @@ export default {
     },
     methods: {
         addToCart() {
-            let item = this.product
-            item = {
-                ...item,
-                id: this.productId,
+            const item = {
+                ...this.product,
                 quantity: 1,
             }
             this.$store.commit('addToCart', { ...item })
+
+            this.$root.$bvToast.toast(`"${this.product.name}" liegt nun im Warenkorb`, {
+                title: 'Artikel wurde dem Warenkorb hinzugefügt',
+                autoHideDelay: 3000,
+                appendToast: true,
+                isStatus: true,
+                solid: true,
+                variant: 'success',
+            })
         },
     },
 }

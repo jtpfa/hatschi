@@ -33,6 +33,7 @@ export default {
     plugins: [
         { src: '~/plugins/api', ssr: true },
         { src: '~/plugins/currency', ssr: true },
+        { src: '~/plugins/text-crop', ssr: true },
         { src: '~/plugins/vuex-persist', ssr: false },
     ],
     /*

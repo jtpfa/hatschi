@@ -145,7 +145,6 @@
 
 <script>
 /* eslint global-require: "off" */
-import ClientOnly from 'vue-client-only'
 import ButtonContainer from '~/components/layout/buttonContainer'
 
 let ckeditor
@@ -157,7 +156,7 @@ if (process.client) {
 
 export default {
     name: 'ProductAdd',
-    components: { ButtonContainer, ClientOnly, ckeditor },
+    components: { ButtonContainer, ckeditor },
     data() {
         return {
             name: '',

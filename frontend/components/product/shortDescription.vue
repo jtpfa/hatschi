@@ -18,13 +18,13 @@
             <div class="d-flex justify-content-between align-items-end flex-column flex-sm-row mt-5">
                 <div class="price-information mb-2 mb-sm-0">
                     <span class="price big-noodle oblique text-dark">
-                        {{ $currencyConverter.insertFractionForEuroConversation(product.price) | currency }}
+                        {{ $currencyConverter.insertFractionForEuroConversion(product.price) | currency }}
                     </span>
                     <span class="text-muted">inkl. MwSt.</span>
                     <span class="text-muted">zzgl. Versandkosten</span>
                 </div>
 
-                <add-to-cart :orderable="product.stock > 0" :product-id="product.id" />
+                <add-to-cart :orderable="product.stock > 0" :product="product" />
             </div>
         </div>
     </div>

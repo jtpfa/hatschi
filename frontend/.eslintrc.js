@@ -53,6 +53,7 @@ module.exports = {
         'no-underscore-dangle': 'off',
         'consistent-return': 'off',
         'vue/no-v-html': 0,
+        'no-param-reassign': ['error', { props: false }],
         // @todo: remove these when products are included dynamically
         'vue/no-unused-vars': 0,
         'vue/valid-v-for': 0,
