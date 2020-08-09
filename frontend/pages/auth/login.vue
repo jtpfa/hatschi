@@ -1,5 +1,5 @@
 <template>
-    <login-form :login-page="true" modal-id="modal-login" />
+    <login-form :login-page="true" />
 </template>
 
 <script>

@@ -1,22 +1,11 @@
 <template>
-    <b-modal
-        :id="modalId"
-        centered
-        footer-class="login-footer"
-        :no-close-on-backdrop="loginPage"
-        :no-close-on-esc="loginPage"
-        :no-fade="loginPage"
-        ok-only
-        return-focus="null"
-        scrollable
-        title="Login"
-        :visible="loginPage"
-        @close="closeModal"
-    >
-        <b-alert class="mt-3 mb-5" :show="!hasAccess" variant="warning">Zugriff nicht gewährt.</b-alert>
-
-        <b-form ref="form" novalidate>
-            <div class="mb-3" role="group">
+    <div :class="{ 'pb-4 mx-4 col-11 col-sm-9 col-md-7 col-lg-5 col-xl-4 bg-white border': loginPage }">
+        <b-form ref="form" class="pb-3 px-3" novalidate @submit.prevent="onSubmit">
+            <b-alert class="mt-5 mb-3" :show="!hasAccess" variant="warning">
+                Zugriff nicht gewährt. Bitte mit anderem Benutzer anmelden.
+            </b-alert>
+            <b-button-close v-if="loginPage" @click="$router.push('/')" />
+            <div class="mb-3" :class="{ 'mt-3': !loginPage, 'mt-5': loginPage }" role="group">
                 <label for="email">
                     E-Mail
                     <span class="mandatory">*</span>
@@ -33,7 +22,7 @@
                 ></b-form-input>
             </div>
 
-            <div role="group">
+            <div class="mb-4" role="group">
                 <label for="password">
                     Passwort
                     <span class="mandatory">*</span>
@@ -49,40 +38,34 @@
                     type="password"
                 ></b-form-input>
             </div>
-        </b-form>
 
-        <b-alert class="mt-5 mb-0" :show="error.length > 0" variant="danger">{{ error }}</b-alert>
+            <b-alert class="mt-5 mb-3" :show="error.length > 0" variant="danger">{{ error }}</b-alert>
 
-        <template v-slot:modal-footer>
             <div class="d-flex justify-content-between align-items-center w-100">
                 <div class="big-noodle">
                     Noch kein Konto?
-                    <b-link to="/auth/registrierung" @click="closeModal">Jetzt registrieren</b-link>
+                    <b-link to="/auth/registrierung">Jetzt registrieren</b-link>
                 </div>
-                <b-button :disabled="loading" type="submit" variant="primary" @click.prevent="onSubmit">
+                <b-button :disabled="loading" type="submit" variant="primary">
                     <b-spinner v-if="loading" small></b-spinner>
                     Login
                 </b-button>
             </div>
-        </template>
-    </b-modal>
+        </b-form>
+    </div>
 </template>
 
 <script>
 export default {
     name: 'LoginForm',
     props: {
-        modalId: {
-            type: String,
-            default: '',
+        hasAccess: {
+            type: Boolean,
+            default: true,
         },
         loginPage: {
             type: Boolean,
             default: false,
-        },
-        hasAccess: {
-            type: Boolean,
-            default: true,
         },
     },
     data() {
@@ -96,8 +79,8 @@ export default {
     methods: {
         async onSubmit(event) {
             this.loading = true
-            this.$refs.email.setCustomValidity('')
-            this.$refs.password.setCustomValidity('')
+            this.$refs.email?.setCustomValidity('')
+            this.$refs.password?.setCustomValidity('')
             if (!this.$refs.form.checkValidity()) {
                 event.preventDefault()
                 event.stopPropagation()
@@ -108,30 +91,17 @@ export default {
             this.$refs.form.classList.add('was-validated')
 
             try {
-                await this.$auth
-                    .loginWith('keycloak', { username: this.email, password: this.password })
-                    .then // @todo remove body class 'modal-open'
-                    ()
+                await this.$auth.loginWith('keycloak', { username: this.email, password: this.password })
+                this.$emit('success')
             } catch (err) {
-                this.$refs.email.setCustomValidity('Benutzername und Passwort stimmen nicht überein.')
-                this.$refs.password.setCustomValidity('Benutzername und Passwort stimmen nicht überein.')
+                this.$refs.email?.setCustomValidity('Benutzername und Passwort stimmen nicht überein.')
+                this.$refs.password?.setCustomValidity('Benutzername und Passwort stimmen nicht überein.')
                 this.error = 'Es ist ein Fehler passiert. Bitter später erneut versuchen.'
             }
             this.loading = false
-        },
-        closeModal() {
-            if (!this.loginPage) {
-                this.$bvModal.hide(this.modalId)
-            } else {
-                this.$router.push('/')
-            }
         },
     },
 }
 </script>
 
-<style lang="scss" scoped>
-::v-deep .login-footer {
-    border-top: none;
-}
-</style>
+<style lang="scss" scoped></style>
