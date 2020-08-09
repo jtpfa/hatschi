@@ -13,16 +13,13 @@
         ]"
         type="customer"
     ></data-overview>
-
-    <login-form v-else :has-access="accessGranted" :login-page="true" modal-id="modal-login" />
 </template>
 
 <script>
 import DataOverview from '~/components/admin/data/overview'
-import LoginForm from '~/components/login/form'
 
 export default {
-    components: { LoginForm, DataOverview },
+    components: { DataOverview },
     layout: 'admin',
     data() {
         return {
@@ -34,6 +31,7 @@ export default {
 
         if (!this.accessGranted) {
             this.$auth.$storage.setCookie('redirect', '/admin/kunden')
+            this.$router.push('/auth/login')
         }
     },
 }

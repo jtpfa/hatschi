@@ -9,7 +9,7 @@ import javax.validation.ValidationException;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-class CustomerRegistrationDtoCustomerEntityMapperTest {
+class CustomerRegistrationDTOCustomerEntityMapperTest {
     private final static String CUSTOMER_EMAIL = "test@test.com";
     private final static String CUSTOMER_FIRSTNAME = "John";
     private final static String CUSTOMER_FIRSTNAME_HTML = "<script>John</script>";
@@ -24,14 +24,14 @@ class CustomerRegistrationDtoCustomerEntityMapperTest {
     CustomerEntity customerEntity;
 
     @Test
-    void testMapCustomerEntityToCustomerDetailsDtoSuccess() {
+    void testMapCustomerRegistrationDTOToCustomerEntitySuccess() {
         given.aCustomerRegistrationDtoWith(CUSTOMER_EMAIL, CUSTOMER_FIRSTNAME, CUSTOMER_LASTNAME, CUSTOMER_PASSWORD);
         when.aCustomerRegistrationDtoIsMappedToEntity(customerRegistrationDTO);
         then.theAttributesOfTheCustomerAreEqualTo(customerRegistrationDTO);
     }
 
     @Test
-    void testMapCustomerEntityToCustomerDetailsDtoFailHtml() {
+    void testMapCustomerRegistrationDTOToCustomerEntityFailHtml() {
         given.aCustomerRegistrationDtoWith(CUSTOMER_EMAIL, CUSTOMER_FIRSTNAME_HTML, CUSTOMER_LASTNAME, CUSTOMER_PASSWORD);
         assertThrows(ValidationException.class, () -> when.aCustomerRegistrationDtoIsMappedToEntity(customerRegistrationDTO));
     }
@@ -48,7 +48,7 @@ class CustomerRegistrationDtoCustomerEntityMapperTest {
 
     class When {
         void aCustomerRegistrationDtoIsMappedToEntity(CustomerRegistrationDTO customerRegistrationDTO) {
-            customerEntity = CustomerRegistrationDtoCustomerEntityMapper.mapCustomerRegistrationDtoToCustomerEntity(customerRegistrationDTO);
+            customerEntity = CustomerRegistrationDTOCustomerEntityMapper.mapCustomerRegistrationDtoToCustomerEntity(customerRegistrationDTO);
         }
     }
 

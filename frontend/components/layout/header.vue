@@ -38,7 +38,7 @@
                     </b-navbar-nav>
                 </b-collapse>
             </b-navbar>
-            <login-form modal-id="modal-center" />
+            <login-modal :has-access="true" modal-id="modal-center" />
         </div>
     </client-only>
 </template>
@@ -47,11 +47,11 @@
 import { mapGetters } from 'vuex'
 import IconShoppingCart from '~/components/icons/shoppingCart'
 import PageLogo from '~/components/layout/logo'
-import LoginForm from '../login/form'
+import LoginModal from '~/components/login/modal'
 
 export default {
     name: 'LayoutHeader',
-    components: { IconShoppingCart, PageLogo, LoginForm },
+    components: { LoginModal, IconShoppingCart, PageLogo },
     computed: {
         ...mapGetters(['cartCountElements']),
     },

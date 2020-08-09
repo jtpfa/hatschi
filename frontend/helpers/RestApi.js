@@ -13,6 +13,17 @@ export class RestApi {
         }).then(response => (response.ok ? response : throw response))
     }
 
+    updateUserData(userAttributes, userToken) {
+        return fetch(`${this.baseUrl}customer`, {
+            method: 'PUT',
+            headers: {
+                'Content-type': 'application/json; charset=UTF-8',
+                Authorization: userToken,
+            },
+            body: JSON.stringify(userAttributes),
+        }).then(response => (response.ok ? response : throw response))
+    }
+
     addProduct(productAttributes, userToken) {
         return fetch(`${this.baseUrl}employee/article`, {
             method: 'POST',

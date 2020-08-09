@@ -3,19 +3,15 @@ package de.pcmr.shop.api.mapper;
 import de.pcmr.shop.api.model.CustomerRegistrationDTO;
 import de.pcmr.shop.domain.CustomerEntity;
 import de.pcmr.shop.util.ValidationUtils;
-import org.springframework.validation.annotation.Validated;
 
-import javax.validation.Valid;
-
-@Validated
-public final class CustomerRegistrationDtoCustomerEntityMapper {
-    private CustomerRegistrationDtoCustomerEntityMapper() {
+public final class CustomerRegistrationDTOCustomerEntityMapper {
+    private CustomerRegistrationDTOCustomerEntityMapper() {
         throw new IllegalStateException();
     }
 
-    public static @Valid CustomerEntity mapCustomerRegistrationDtoToCustomerEntity(CustomerRegistrationDTO customerRegistrationDTO) {
+    public static CustomerEntity mapCustomerRegistrationDtoToCustomerEntity(CustomerRegistrationDTO customerRegistrationDTO) {
         CustomerEntity customerEntity = new CustomerEntity();
-        customerEntity.setEmail(customerRegistrationDTO.getEmail().trim());
+        customerEntity.setEmail(customerRegistrationDTO.getEmail().trim().toLowerCase());
         customerEntity.setFirstName(ValidationUtils.validateNoHtml(customerRegistrationDTO.getFirstName().trim()));
         customerEntity.setLastName(ValidationUtils.validateNoHtml(customerRegistrationDTO.getLastName().trim()));
         customerEntity.setPassword(customerRegistrationDTO.getPassword());

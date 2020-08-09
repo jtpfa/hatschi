@@ -70,7 +70,7 @@ export default {
         isPasswordConfirmed() {
             if (this.password !== this.passwordConfirmation) {
                 this.passwordConfirmationErrorMessage = 'Prüfe, ob deine Passwörter übereinstimmen.'
-                this.$refs.passwordConfirmation.setCustomValidity('Passwords do not match.')
+                this.$refs.passwordConfirmation?.setCustomValidity('Passwords do not match.')
                 return false
             }
 
@@ -81,11 +81,11 @@ export default {
             ) {
                 this.passwordConfirmationErrorMessage =
                     'Wähle ein Passwort, das den Sicherheitsbestimmungen entspricht.'
-                this.$refs.passwordConfirmation.setCustomValidity('Password does not match criteria.')
+                this.$refs.passwordConfirmation?.setCustomValidity('Password does not match criteria.')
                 return false
             }
 
-            this.$refs.passwordConfirmation.setCustomValidity('')
+            this.$refs.passwordConfirmation?.setCustomValidity('')
             return true
         },
     },

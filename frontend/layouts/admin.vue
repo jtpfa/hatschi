@@ -10,7 +10,9 @@
             </b-container>
         </div>
     </div>
-    <login-form v-else :has-access="accessGranted" :login-page="true" modal-id="modal-login" />
+    <div v-else class="d-flex justify-content-center align-items-center vh-100">
+        <login-form :has-access="accessGranted" :login-page="true" />
+    </div>
 </template>
 
 <script>

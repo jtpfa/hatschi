@@ -1,14 +1,19 @@
 package de.pcmr.shop.api.controller;
 
-import de.pcmr.shop.api.mapper.CustomerEntityCustomerDetailsDtoMapper;
+import de.pcmr.shop.api.mapper.CustomerDetailsDTOCustomerEntityMapper;
+import de.pcmr.shop.api.mapper.CustomerEntityCustomerDetailsDTOMapper;
 import de.pcmr.shop.api.model.CustomerDetailsDTO;
+import de.pcmr.shop.exception.CustomerAlreadyExistsException;
 import de.pcmr.shop.exception.NoCustomerFoundException;
+import de.pcmr.shop.exception.keycloak.KeycloakEndpointNotFoundException;
+import de.pcmr.shop.exception.keycloak.KeycloakUnknownErrorException;
+import de.pcmr.shop.exception.keycloak.KeycloakUserAlreadyExistsException;
+import de.pcmr.shop.exception.keycloak.KeycloakUserIsNotAuthorizedException;
 import de.pcmr.shop.service.CustomerServiceI;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.security.Principal;
 
 @RestController
@@ -26,6 +31,12 @@ public class CustomerApiImpl implements CustomerApiI {
     @Override
     @GetMapping
     public CustomerDetailsDTO getCustomer(Principal principal) throws NoCustomerFoundException {
-        return CustomerEntityCustomerDetailsDtoMapper.mapCustomerEntityToCustomerDetailsDto(customerService.getCurrentCustomer(principal));
+        return CustomerEntityCustomerDetailsDTOMapper.mapCustomerEntityToCustomerDetailsDto(customerService.getCurrentCustomer(principal));
+    }
+
+    @Override
+    @PutMapping
+    public void updateCustomer(@RequestBody @Valid CustomerDetailsDTO customerDetailsDTO, Principal principal) throws NoCustomerFoundException, KeycloakUnknownErrorException, KeycloakUserAlreadyExistsException, CustomerAlreadyExistsException, KeycloakEndpointNotFoundException, KeycloakUserIsNotAuthorizedException {
+        customerService.updateCurrentCustomer(CustomerDetailsDTOCustomerEntityMapper.mapCustomerDetailsDTOToCustomerEntity(customerDetailsDTO), principal);
     }
 }

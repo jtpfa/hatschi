@@ -1,8 +1,13 @@
 package de.pcmr.shop.api.model;
 
+import javax.validation.constraints.NotNull;
+
 public class CustomerDetailsDTO {
+    @NotNull
     private String email;
+    @NotNull
     private String firstName;
+    @NotNull
     private String lastName;
 
     public String getEmail() {
