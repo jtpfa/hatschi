@@ -9,6 +9,11 @@ export default {
     name: 'AuthLogin',
     components: { LoginForm },
     layout: 'blank',
+    head() {
+        return {
+            title: `PC Masterrace – Login`,
+        }
+    },
 }
 </script>
 

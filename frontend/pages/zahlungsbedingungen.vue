@@ -77,7 +77,13 @@
 </template>
 
 <script>
-export default {}
+export default {
+    head() {
+        return {
+            title: `PC Masterrace – ${this.$route.name.replace(/^\w/, c => c.toUpperCase())}`,
+        }
+    },
+}
 </script>
 
 <style scoped></style>

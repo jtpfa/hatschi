@@ -13,6 +13,11 @@ export default {
     name: 'Profil',
     components: { ProfilForm },
     middleware: ['auth'],
+    head() {
+        return {
+            title: `PC Masterrace – ${this.$route.name.replace(/^\w/, c => c.toUpperCase())}`,
+        }
+    },
 }
 </script>
 

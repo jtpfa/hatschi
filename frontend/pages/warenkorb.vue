@@ -30,6 +30,11 @@ import CartProducts from '~/components/cart/products'
 
 export default {
     components: { CartPriceOverview, CartProducts },
+    head() {
+        return {
+            title: `PC Masterrace – ${this.$route.name.replace(/^\w/, c => c.toUpperCase())}`,
+        }
+    },
     computed: {
         ...mapGetters(['cartCountElements']),
     },

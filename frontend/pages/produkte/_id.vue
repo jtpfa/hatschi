@@ -51,6 +51,11 @@ export default {
             noProductFound: false,
         }
     },
+    head() {
+        return {
+            title: `PC Masterrace – ${this.product.name}`,
+        }
+    },
 }
 </script>
 

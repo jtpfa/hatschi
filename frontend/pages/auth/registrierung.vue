@@ -11,6 +11,11 @@ import RegistrationForm from '~/components/registration/form'
 
 export default {
     components: { RegistrationForm },
+    head() {
+        return {
+            title: `PC Masterrace – Registrierung`,
+        }
+    },
 }
 </script>
 
