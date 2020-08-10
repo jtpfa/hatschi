@@ -22,15 +22,6 @@ export const mutations = {
             state.cart.push(payload)
         }
     },
-    addOneToCart: (state, payload) => {
-        const itemfound = state.cart.find(el => el.id === payload.id)
-
-        if (itemfound) {
-            itemfound.quantity += 1
-        } else {
-            state.cart.push(payload)
-        }
-    },
     removeOneFromCart: (state, payload) => {
         const index = state.cart.findIndex(el => el.id === payload.id)
 
@@ -42,5 +33,16 @@ export const mutations = {
     },
     removeAllFromCart: (state, payload) => {
         state.cart = state.cart.filter(el => el.id !== payload.id)
+    },
+    updateCart: (state, payload) => {
+        const itemfound = state.cart.find(el => el.id === payload.id)
+
+        if (itemfound) {
+            Object.assign(itemfound, payload)
+
+            if (itemfound.quantity > itemfound.stock) {
+                itemfound.quantity = itemfound.stock
+            }
+        }
     },
 }

@@ -38,7 +38,8 @@
             </b-tfoot>
         </b-table-simple>
         <div class="d-flex justify-content-center align-items-center flex-column">
-            <b-button class="my-3 w-100" size="lg" variant="primary">Zur Kasse gehen</b-button>
+            <b-alert :show="error.length > 0" variant="danger">{{ error }}</b-alert>
+            <b-button class="my-3 w-100" size="lg" variant="primary" @click="onSubmit">Zur Kasse gehen</b-button>
             <b-button class="w-100" to="/" variant="white">Weiter einkaufen</b-button>
         </div>
     </b-card>
@@ -49,9 +50,26 @@ import { mapGetters, mapState } from 'vuex'
 
 export default {
     name: 'CartPriceOverview',
+    data() {
+        return {
+            error: '',
+        }
+    },
     computed: {
         ...mapGetters(['cartTotal']),
         ...mapState(['cart']),
+    },
+    methods: {
+        onSubmit() {
+            this.cart.map(async item => {
+                try {
+                    const product = await this.$api.getProduct(item.id)
+                    this.$store.commit('updateCart', product)
+                } catch (err) {
+                    this.error = 'Bitte Seite neu laden. Es gibt ein Problem mit mind. einem der Produkte.'
+                }
+            })
+        },
     },
 }
 </script>

@@ -70,7 +70,11 @@ export default {
     },
     methods: {
         addOneToCart(item) {
-            this.$store.commit('addOneToCart', item)
+            const product = {
+                ...item,
+                quantity: 1,
+            }
+            this.$store.commit('addToCart', { ...product })
         },
         removeOneFromCart(item) {
             this.$store.commit('removeOneFromCart', item)
