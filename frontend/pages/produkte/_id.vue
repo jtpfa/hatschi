@@ -3,11 +3,9 @@
     <b-container v-else class="my-5">
         <b-alert v-if="noProductFound" :show="true">Dieses Produkt existiert nicht.</b-alert>
         <template v-else>
-            <product-short-description class="my-5" :product="product" />
-
             <product-details class="my-5" :product="product" />
 
-            <p class="h5">Ähnliche Produkte</p>
+            <p class="h5">Weitere Produkte</p>
 
             <div class="grid">
                 <product-card
@@ -29,11 +27,10 @@
 import FetchContent from '~/components/layout/fetchContent'
 import productCard from '~/components/product/card'
 import productDetails from '~/components/product/details'
-import productShortDescription from '~/components/product/shortDescription'
 
 export default {
     name: 'Product',
-    components: { FetchContent, productCard, productDetails, productShortDescription },
+    components: { FetchContent, productCard, productDetails },
     async fetch() {
         try {
             this.product = await this.$api.getProduct(this.$route.params.id)

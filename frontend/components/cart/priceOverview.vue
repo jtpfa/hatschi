@@ -1,6 +1,9 @@
 <template>
     <b-card sub-title="Gutscheine können im Zahlungsschritt hinzugefügt werden" title="Zusammenfassung">
         <b-table-simple borderless class="my-4" small striped>
+            <caption class="small">
+                Lieferbar in 3-4 Werktagen
+            </caption>
             <colgroup>
                 <col />
                 <col />
