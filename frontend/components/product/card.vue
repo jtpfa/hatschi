@@ -1,17 +1,21 @@
 <template>
-    <b-card class="product">
-        <div class="lazy-image">
-            <b-card-img-lazy alt="Image" class="mb-4" :src="imageSrc" top />
-            <spinner />
-        </div>
+    <b-card body-class="d-flex flex-wrap align-content-between" class="product">
+        <div class="w-100">
+            <div class="lazy-image">
+                <b-card-img-lazy alt="Image" class="mb-4" :src="imageSrc" top />
+                <spinner />
+            </div>
 
-        <h2 class="product-title font-weight-bold mb-4">{{ name }}</h2>
-        <b-card-text class="product-description mb-4">
-            {{ $textCropper.cropText(description, 50) }}
-        </b-card-text>
-        <b-card-text class="product-price font-weight-bold text-primary big-noodle">
-            {{ $currencyConverter.insertFractionForEuroConversion(price) | currency }}
-        </b-card-text>
+            <h2 class="product-title font-weight-bold mb-4">{{ name }}</h2>
+            <b-card-text class="product-description mb-4">
+                {{ $textCropper.cropText(description, 50) }}
+            </b-card-text>
+        </div>
+        <div class="w-100">
+            <b-card-text class="product-price mb-0 font-weight-bold text-primary big-noodle">
+                {{ $currencyConverter.insertFractionForEuroConversion(price) | currency }}
+            </b-card-text>
+        </div>
         <b-link class="stretched-link" :to="`/produkte/${productId}`"></b-link>
     </b-card>
 </template>
