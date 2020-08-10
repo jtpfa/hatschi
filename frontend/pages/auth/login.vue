@@ -11,7 +11,7 @@ export default {
     layout: 'blank',
     head() {
         return {
-            title: `PC Masterrace – Login`,
+            title: 'PC Masterrace – Login',
         }
     },
 }

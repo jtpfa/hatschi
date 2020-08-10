@@ -1,6 +1,6 @@
 <template>
     <b-modal :id="modalId" centered hide-footer return-focus="null" scrollable title="Login">
-        <login-form :has-access="hasAccess" @success="$bvModal.hide(modalId)" />
+        <login-form :has-access="hasAccess" @register="$bvModal.hide(modalId)" @success="$bvModal.hide(modalId)" />
     </b-modal>
 </template>
 

@@ -44,7 +44,7 @@
             <div class="d-flex justify-content-between align-items-center w-100">
                 <div class="big-noodle">
                     Noch kein Konto?
-                    <b-link to="/auth/registrierung">Jetzt registrieren</b-link>
+                    <b-link to="/auth/registrierung" @click="$emit('register')">Jetzt registrieren</b-link>
                 </div>
                 <b-button :disabled="loading" type="submit" variant="primary">
                     <b-spinner v-if="loading" small></b-spinner>
