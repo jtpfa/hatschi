@@ -35,6 +35,16 @@ export class RestApi {
         }).then(response => (response.ok ? response : throw response))
     }
 
+    addProductImage(image, id, userToken) {
+        return fetch(`${this.baseUrl}employee/article/${id}/image`, {
+            method: 'POST',
+            headers: {
+                Authorization: userToken,
+            },
+            body: image,
+        }).then(response => (response.ok ? response : throw response))
+    }
+
     getProduct(productId) {
         return fetch(`${this.baseUrl}article/${productId}`, { method: 'GET' })
             .then(response => response.json())

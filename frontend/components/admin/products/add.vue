@@ -135,6 +135,29 @@
                     </b-form-invalid-feedback>
                 </div>
 
+                <div class="mb-5" role="group">
+                    <label for="image">
+                        Bild
+                    </label>
+                    <b-form-file
+                        id="image"
+                        v-model="image"
+                        accept="image/jpg, image/png"
+                        aria-describedby="input-live-feedback"
+                        browse-text="Datei auswählen"
+                        drop-placeholder="Datei hierhin ziehen..."
+                        :state="acceptedFile"
+                    />
+
+                    <b-form-invalid-feedback id="input-live-feedback">
+                        Zulässige Bildformate: jpg, png
+                        <br />
+                        Maximale Dateigröße: 10 MB
+                        <br />
+                        Minimale Bildhöhe: 512 Pixel
+                    </b-form-invalid-feedback>
+                </div>
+
                 <b-alert class="mt-3" :show="error.length > 0" variant="danger">{{ error }}</b-alert>
 
                 <button-container :loading="loading" text="Artikel hinzufügen" />
@@ -165,6 +188,7 @@ export default {
             priceEur: 0,
             priceCt: 0,
             stock: 0,
+            image: null,
             editor: {
                 editor: ClassicEditor,
                 config: {
@@ -190,6 +214,23 @@ export default {
             error: '',
             loading: false,
         }
+    },
+    computed: {
+        acceptedFile() {
+            if (!this.image) {
+                return null
+            }
+
+            if (!['image/jpg', 'image/jpeg', 'image/png'].includes(this.image.type)) {
+                return false
+            }
+
+            if (this.image.size > 10 * 2 ** 20) {
+                return false
+            }
+
+            return true
+        },
     },
     methods: {
         async addProduct() {
@@ -232,6 +273,7 @@ export default {
             this.priceEur = 0
             this.priceCt = 0
             this.stock = 0
+            this.file = null
         },
     },
 }
