@@ -3,12 +3,14 @@ package de.pcmr.shop.service;
 import de.pcmr.shop.builder.ArticleEntityBuilder;
 import de.pcmr.shop.domain.ArticleEntity;
 import de.pcmr.shop.exception.NoArticleFoundException;
+import de.pcmr.shop.exception.UploadedImageResolutionTooLowException;
 import de.pcmr.shop.repository.ArticleRepository;
 import de.pcmr.shop.repository.CustomerRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.ConstraintViolationException;
 import java.io.IOException;
@@ -36,6 +38,9 @@ class ArticleServiceTest extends AbstractServiceTest {
     private ArticleEntity lastSavedArticleEntity;
     private List<ArticleEntity> articleEntities = new ArrayList<>();
     private ArticleEntity updatedArticleEntity;
+
+    private MultipartFile nullImageFile;
+    private MultipartFile imageFile;
 
     @Autowired
     ArticleServiceTest(Environment environment, CustomerRepository customerRepository, ArticleServiceI articleService, ArticleRepository articleRepository) {
@@ -73,7 +78,7 @@ class ArticleServiceTest extends AbstractServiceTest {
     }
 
     @Test
-    void testCreateNewArticle() {
+    void testCreateNewArticle() throws NoArticleFoundException, UploadedImageResolutionTooLowException, IOException {
         given.aArticleEntityWith(ARTICLE_TITLE_1, ARTICLE_DESCRIPTION, ARTICLE_DETAILS, 500, 15);
         given.aArticleEntityWith(ARTICLE_TITLE_2, ARTICLE_DESCRIPTION, ARTICLE_DETAILS, 1000, 5);
         given.aArticleEntityWith(ARTICLE_TITLE_3, ARTICLE_DESCRIPTION, ARTICLE_DETAILS, 70000, 3);
@@ -112,7 +117,7 @@ class ArticleServiceTest extends AbstractServiceTest {
     }
 
     @Test
-    void testUpdateArticle() throws NoArticleFoundException {
+    void testUpdateArticle() throws NoArticleFoundException, IOException, UploadedImageResolutionTooLowException {
         given.aArticleEntityInDatabaseWith(ARTICLE_TITLE_1, ARTICLE_DESCRIPTION, ARTICLE_DETAILS, 500, 5);
         given.aArticleEntityInDatabaseWith(ARTICLE_TITLE_2, ARTICLE_DESCRIPTION, ARTICLE_DETAILS, 5000, 10);
         given.aArticleEntityInDatabaseWith(ARTICLE_TITLE_3, ARTICLE_DESCRIPTION, ARTICLE_DETAILS, 70000, 2);
@@ -195,14 +200,14 @@ class ArticleServiceTest extends AbstractServiceTest {
             articleService.getArticle(id);
         }
 
-        void newArticlesEntityAreCreated(List<ArticleEntity> articleEntities) {
+        void newArticlesEntityAreCreated(List<ArticleEntity> articleEntities) throws NoArticleFoundException, UploadedImageResolutionTooLowException, IOException {
             for (ArticleEntity articleEntity : articleEntities) {
-                articleService.createNewArticle(articleEntity);
+                articleService.createNewArticle(articleEntity, nullImageFile);
             }
         }
 
-        void aArticleIsUpdated(ArticleEntity articleEntity) throws NoArticleFoundException {
-            articleService.updateArticle(articleEntity);
+        void aArticleIsUpdated(ArticleEntity articleEntity) throws NoArticleFoundException, IOException, UploadedImageResolutionTooLowException {
+            articleService.updateArticle(articleEntity, nullImageFile);
         }
 
         void aArticleIsDeleted(long id) throws NoArticleFoundException, IOException {

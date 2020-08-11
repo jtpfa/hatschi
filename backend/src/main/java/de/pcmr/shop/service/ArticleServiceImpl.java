@@ -2,10 +2,12 @@ package de.pcmr.shop.service;
 
 import de.pcmr.shop.domain.ArticleEntity;
 import de.pcmr.shop.exception.NoArticleFoundException;
+import de.pcmr.shop.exception.UploadedImageResolutionTooLowException;
 import de.pcmr.shop.repository.ArticleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.io.IOException;
@@ -42,14 +44,18 @@ public class ArticleServiceImpl implements ArticleServiceI {
     }
 
     @Override
-    public void createNewArticle(@Valid ArticleEntity articleEntity) {
-        articleRepository.save(articleEntity);
+    public void createNewArticle(@Valid ArticleEntity articleEntity, MultipartFile imageFile) throws NoArticleFoundException, UploadedImageResolutionTooLowException, IOException {
+        articleEntity = articleRepository.save(articleEntity);
+        if (imageFile != null) {
+            articleImageService.processAndSaveArticleImage(articleEntity.getId(), imageFile);
+        }
     }
 
     @Override
-    public void updateArticle(@Valid ArticleEntity articleEntity) throws NoArticleFoundException {
+    public void updateArticle(@Valid ArticleEntity articleEntity, MultipartFile imageFile) throws NoArticleFoundException, IOException, UploadedImageResolutionTooLowException {
         if (articleRepository.existsById(articleEntity.getId())) {
-            articleRepository.save(articleEntity);
+            articleEntity = articleRepository.save(articleEntity);
+            processImageIfNotNull(articleEntity, imageFile);
         } else {
             throw new NoArticleFoundException();
         }
@@ -62,6 +68,12 @@ public class ArticleServiceImpl implements ArticleServiceI {
             articleRepository.deleteById(articleId);
         } else {
             throw new NoArticleFoundException();
+        }
+    }
+
+    private void processImageIfNotNull(ArticleEntity articleEntity, MultipartFile imageFile) throws NoArticleFoundException, UploadedImageResolutionTooLowException, IOException {
+        if (imageFile != null) {
+            articleImageService.processAndSaveArticleImage(articleEntity.getId(), imageFile);
         }
     }
 }

@@ -8,9 +8,13 @@ import de.pcmr.shop.api.model.ArticleCreationDTO;
 import de.pcmr.shop.api.model.ArticleDTO;
 import de.pcmr.shop.api.model.ArticleShortDTO;
 import de.pcmr.shop.exception.NoArticleFoundException;
+import de.pcmr.shop.exception.UploadedImageInvalidFileExtensionException;
+import de.pcmr.shop.exception.UploadedImageResolutionTooLowException;
 import de.pcmr.shop.service.ArticleServiceI;
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.io.IOException;
@@ -49,19 +53,31 @@ public class ArticleApiImpl implements ArticleApiI {
 
     @Override
     @PostMapping(value = EMPLOYEE_ROLE_URI + "/article")
-    public void createArticle(@Valid @RequestBody ArticleCreationDTO articleCreationDTO) {
-        articleService.createNewArticle(ArticleCreationDTOArticleEntityMapper.mapArticleCreationDTOToArticleEntity(articleCreationDTO));
+    public void createArticle(@Valid @RequestPart(value = "json", required = true) ArticleCreationDTO articleCreationDTO, @RequestPart(value = "file", required = false) MultipartFile imageFile) throws NoArticleFoundException, UploadedImageResolutionTooLowException, IOException, UploadedImageInvalidFileExtensionException {
+        if (imageFile != null) {
+            checkFileExtension(imageFile);
+        }
+        articleService.createNewArticle(ArticleCreationDTOArticleEntityMapper.mapArticleCreationDTOToArticleEntity(articleCreationDTO), imageFile);
     }
 
     @Override
     @PutMapping(value = EMPLOYEE_ROLE_URI + "/article")
-    public void updateArticle(@Valid @RequestBody ArticleDTO articleDTO) throws NoArticleFoundException {
-        articleService.updateArticle(ArticleDTOArticleEntityMapper.mapArticleDTOToArticleEntity(articleDTO));
+    public void updateArticle(@Valid @RequestPart(value = "json", required = true) ArticleDTO articleDTO, @RequestPart(value = "file", required = false) MultipartFile imageFile) throws NoArticleFoundException, IOException, UploadedImageResolutionTooLowException, UploadedImageInvalidFileExtensionException {
+        if (imageFile != null) {
+            checkFileExtension(imageFile);
+        }
+        articleService.updateArticle(ArticleDTOArticleEntityMapper.mapArticleDTOToArticleEntity(articleDTO), imageFile);
     }
 
     @Override
     @DeleteMapping(value = EMPLOYEE_ROLE_URI + "/article/{id}")
     public void deleteArticle(@PathVariable long id) throws NoArticleFoundException, IOException {
         articleService.deleteArticle(id);
+    }
+
+    private void checkFileExtension(MultipartFile file) throws UploadedImageInvalidFileExtensionException {
+        if (!AllowedImageFileExtensionsEnum.getStringList().contains(FilenameUtils.getExtension(file.getOriginalFilename()))) {
+            throw new UploadedImageInvalidFileExtensionException();
+        }
     }
 }
