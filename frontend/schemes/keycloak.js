@@ -64,7 +64,8 @@ export default class KeyCloakScheme {
             }
         }
 
-        this.$auth.$storage.setState('roles', roles)
+        // remove last colon and whitespace from roles and add them to storage
+        this.$auth.$storage.setState('roles', roles.slice(0, -2))
     }
 
     mounted() {
@@ -144,7 +145,24 @@ export default class KeyCloakScheme {
     async logout(endpoint) {
         // Only connect to logout endpoint if it's configured
         if (this.options.endpoints.logout) {
-            await this.$auth.requestWith(this.name, endpoint, this.options.endpoints.logout).catch(() => {})
+            const opts = {
+                client_id: this.options.client_id,
+                // @todo global definition of clientid
+            }
+
+            const xhrData = { ...endpoint }
+
+            xhrData.headers = {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            }
+
+            const urlencoded = new URLSearchParams()
+            urlencoded.append('client_id', opts.client_id)
+            urlencoded.append('refresh_token', this.$auth.getRefreshToken(this.name))
+
+            xhrData.data = urlencoded
+
+            await this.$auth.requestWith(this.name, xhrData, this.options.endpoints.logout).catch(() => {})
         }
 
         // But reset regardless

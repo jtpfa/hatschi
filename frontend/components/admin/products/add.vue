@@ -64,14 +64,15 @@
                 </div>
 
                 <div class="mb-4" role="group">
-                    <label for="de">
+                    <label for="detailsa">
                         Details
                         <span class="mandatory">*</span>
                     </label>
                     <ckeditor
-                        id="det"
+                        id="detailsa"
                         v-model.trim="details"
                         class="form-control"
+                        :class="{ valid: details, invalid: !details }"
                         :config="editor.config"
                         :editor="editor.editor"
                         placeholder="Details"
@@ -141,21 +142,22 @@
                     </label>
                     <b-form-file
                         id="image"
+                        ref="fileInput"
                         v-model="image"
                         accept="image/jpg, image/png"
-                        aria-describedby="input-live-feedback"
+                        aria-describedby="file-upload-help"
                         browse-text="Datei auswählen"
                         drop-placeholder="Datei hierhin ziehen..."
                         :state="acceptedFile"
                     />
 
-                    <b-form-invalid-feedback id="input-live-feedback">
+                    <b-form-text id="file-upload-help" class="mt-2">
                         Zulässige Bildformate: jpg, png
                         <br />
                         Maximale Dateigröße: 10 MB
                         <br />
                         Minimale Bildhöhe: 512 Pixel
-                    </b-form-invalid-feedback>
+                    </b-form-text>
                 </div>
 
                 <b-alert class="mt-3" :show="error.length > 0" variant="danger">{{ error }}</b-alert>
@@ -167,6 +169,7 @@
 </template>
 
 <script>
+// @todo export file input and ckeditor to own components
 /* eslint global-require: "off" */
 import ButtonContainer from '~/components/layout/buttonContainer'
 
@@ -217,14 +220,17 @@ export default {
     },
     computed: {
         acceptedFile() {
+            // if no image was uploaded no need to check image properties
             if (!this.image) {
                 return null
             }
 
+            // check if image type is supported
             if (!['image/jpg', 'image/jpeg', 'image/png'].includes(this.image.type)) {
                 return false
             }
 
+            // check if image size is under 10 MB
             if (this.image.size > 10 * 2 ** 20) {
                 return false
             }
@@ -243,12 +249,13 @@ export default {
                         price: +(this.priceEur + (this.priceCt <= 9 ? `0${this.priceCt}` : this.priceCt)),
                         stock: +this.stock,
                     },
+                    this.image,
                     this.$auth.getToken('keycloak')
                 )
                 this.success = 'Der Artikel wurde erfolgreich angelegt.'
                 this.clearForm()
             } catch (err) {
-                this.error = 'Leider gab es ein Problem. Bitte später erneut versuchen.'
+                this.error = err || 'Leider gab es ein Problem. Bitte später erneut versuchen.'
             }
         },
         async onSubmit(event) {
@@ -273,22 +280,78 @@ export default {
             this.priceEur = 0
             this.priceCt = 0
             this.stock = 0
-            this.file = null
+            this.$refs.fileInput.reset()
         },
     },
 }
 </script>
 
 <style lang="scss" scoped>
-::v-deep .was-validated :invalid ~ .ck-editor {
-    .ck-editor__top {
-        background-position: right calc(0.375em + 0.1875rem) center;
+::v-deep #detailsa ~ .ck-editor {
+    .ck-toolbar {
+        border-radius: $border-radius $border-radius 0 0;
+    }
 
-        border-color: #f44336;
-        padding-right: calc(1.5em + 0.75rem);
-        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='none' stroke='%23f44336' viewBox='0 0 12 12'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23f44336' stroke='none'/%3e%3c/svg%3e");
+    .ck-content {
+        border-radius: 0 0 $border-radius $border-radius;
+        border-color: $gray-400;
+
+        &.ck-focused,
+        &:focus {
+            color: $gray-700;
+            background-color: $white;
+            border-color: #9acffa;
+            border-radius: 0.25rem;
+            outline: 0;
+            box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 0 0.2rem rgba(33, 150, 243, 0.25);
+        }
+    }
+}
+
+::v-deep .was-validated #detailsa ~ .ck-editor {
+    .ck-toolbar .ck-toolbar__items {
+        background-position: right calc(0.375em + 0.1875rem) center;
+        margin-right: -0.25em;
         background-repeat: no-repeat;
-        background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
+        background-size: calc(0.75em + 0.525rem) calc(0.75em + 0.525rem);
+    }
+}
+
+::v-deep .was-validated #detailsa.invalid ~ .ck-editor {
+    .ck-toolbar {
+        border-color: $danger;
+
+        .ck-toolbar__items {
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='none' stroke='%23f44336' viewBox='0 0 12 12'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23f44336' stroke='none'/%3e%3c/svg%3e");
+        }
+    }
+
+    .ck-content {
+        border-color: $danger;
+
+        &.ck-focused,
+        &:focus {
+            box-shadow: 0 0 0 0.2rem rgba(244, 67, 54, 0.25);
+        }
+    }
+}
+
+::v-deep .was-validated #detailsa.valid ~ .ck-editor {
+    .ck-toolbar {
+        border-color: $success;
+
+        .ck-toolbar__items {
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8' viewBox='0 0 8 8'%3e%3cpath fill='%2342ab7d' d='M2.3 6.73L.6 4.53c-.4-1.04.46-1.4 1.1-.8l1.1 1.4 3.4-3.8c.6-.63 1.6-.27 1.2.7l-4 4.6c-.43.5-.8.4-1.1.1z'/%3e%3c/svg%3e");
+        }
+    }
+
+    .ck-content {
+        border-color: $success;
+
+        &.ck-focused,
+        &:focus {
+            box-shadow: 0 0 0 0.2rem rgba(66, 171, 125, 0.25);
+        }
     }
 }
 </style>

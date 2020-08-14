@@ -3,7 +3,12 @@
         <div class="row my-5">
             <div class="col-12 col-md-5 d-flex justify-content-center align-items-center mb-5 mb-md-0">
                 <div class="lazy-image d-flex justify-content-center align-items-center">
-                    <b-img-lazy alt="Image" src="/img/sample.png" />
+                    <b-img-lazy
+                        alt="Image"
+                        onerror="this.onerror=null;this.srcset='/img/logo-placeholder.svg';"
+                        :src="$imageSrcSet.getImageUrl(product.id, 512)"
+                        :srcset="$imageSrcSet.getSrcSet(product.id)"
+                    />
                     <spinner />
                 </div>
             </div>

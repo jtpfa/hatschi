@@ -1,22 +1,29 @@
 <template>
     <b-card body-class="d-flex flex-wrap align-content-between" class="product">
         <div class="w-100">
-            <div class="lazy-image">
-                <b-card-img-lazy alt="Image" class="mb-4" :src="imageSrc" top />
+            <div class="lazy-image d-flex justify-content-center align-items-center">
+                <b-card-img-lazy
+                    alt="Image"
+                    class="mb-4"
+                    onerror="this.onerror=null;this.srcset='/img/logo-placeholder.svg';"
+                    :src="$imageSrcSet.getImageUrl(product.id, 512)"
+                    :srcset="$imageSrcSet.getSrcSet(product.id)"
+                    top
+                />
                 <spinner />
             </div>
 
-            <h2 class="product-title font-weight-bold mb-4">{{ name }}</h2>
+            <h2 class="product-title font-weight-bold mb-4">{{ product.name }}</h2>
             <b-card-text class="product-description mb-4">
-                {{ $textCropper.cropText(description, 50) }}
+                {{ $textCropper.cropText(product.description, 50) }}
             </b-card-text>
         </div>
         <div class="w-100">
             <b-card-text class="product-price mb-0 font-weight-bold text-primary big-noodle">
-                {{ $currencyConverter.insertFractionForEuroConversion(price) | currency }}
+                {{ $currencyConverter.insertFractionForEuroConversion(product.price) | currency }}
             </b-card-text>
         </div>
-        <b-link class="stretched-link" :to="`/produkte/${productId}`"></b-link>
+        <b-link class="stretched-link" :to="`/produkte/${product.id}`"></b-link>
     </b-card>
 </template>
 
@@ -27,24 +34,8 @@ export default {
     name: 'ProductCard',
     components: { Spinner },
     props: {
-        name: {
-            type: String,
-            required: true,
-        },
-        description: {
-            type: String,
-            required: true,
-        },
-        price: {
-            type: Number,
-            required: true,
-        },
-        imageSrc: {
-            type: String,
-            required: true,
-        },
-        productId: {
-            type: Number,
+        product: {
+            type: Object,
             required: true,
         },
     },
@@ -73,7 +64,6 @@ export default {
         img {
             display: block;
             max-width: 35%;
-            margin: 0 auto;
 
             @media (min-width: $grid-sm) {
                 max-width: 45%;

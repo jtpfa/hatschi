@@ -2,7 +2,14 @@
     <div>
         <b-card v-for="item in cart" :key="item.id" body-class="row" class="product">
             <div class="lazy-image col-6 d-flex justify-content-center align-items-center">
-                <b-card-img-lazy alt="Image" class="mb-4" src="/img/sample.png" top />
+                <b-card-img-lazy
+                    alt="Image"
+                    class="mb-4"
+                    onerror="this.onerror=null;this.srcset='/img/logo-placeholder.svg';"
+                    :src="$imageSrcSet.getImageUrl(item.id, 512)"
+                    :srcset="$imageSrcSet.getSrcSet(item.id)"
+                    top
+                />
                 <spinner />
             </div>
 

@@ -99,10 +99,13 @@
                 <b-form-invalid-feedback id="input-live-feedback">
                     Bitte Bestand angeben.
                 </b-form-invalid-feedback>
+
+                <!-- @todo insert file upload and ckeditor; add preview of current image if available-->
             </div>
         </b-form>
 
         <template v-slot:modal-footer="{ ok, cancel }">
+            <!-- @todo remove modal footer and insert buttons in form to submit with enter -->
             <!-- Emulate built in modal footer ok and cancel button actions -->
             <b-button size="sm" variant="danger" @click="cancel()">
                 Schließen

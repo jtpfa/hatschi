@@ -1,7 +1,6 @@
 <template>
     <div class="d-block position-relative" :style="{ height: containerSize + 'rem' }">
         <spinner :size="size" />
-        <p>Lade Inhalt</p>
     </div>
 </template>
 

@@ -11,12 +11,14 @@
                 <product-card
                     v-for="i in 5"
                     :key="i"
-                    description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip"
-                    image-src="/img/sample.png"
-                    name="Feinste Ware"
-                    :price="299.99"
-                    :product-id="i"
+                    :product="{
+                        id: i,
+                        name: 'Feinste Ware',
+                        description:
+                            'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et\n' +
+                            '            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip',
+                        price: 299.99,
+                    }"
                 />
             </div>
         </template>
@@ -50,7 +52,7 @@ export default {
     },
     head() {
         return {
-            title: `PC Masterrace – ${this.product.name}`,
+            title: `${this.product.name} – PC Masterrace`,
         }
     },
 }

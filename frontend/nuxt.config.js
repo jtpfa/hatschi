@@ -34,6 +34,7 @@ export default {
         { src: '~/plugins/api', ssr: true },
         { src: '~/plugins/currency', ssr: true },
         { src: '~/plugins/text-crop', ssr: true },
+        { src: '~/plugins/image-src-set', ssr: true },
         { src: '~/plugins/vuex-persist', ssr: false },
     ],
     /*
@@ -94,6 +95,7 @@ export default {
     publicRuntimeConfig: {
         baseURL: process.env.PCMR_BASE_URL_PROD || 'http://localhost:3000',
         restApiBaseUrl: process.env.PCMR_REST_API_PROD || 'http://localhost:8090/api/',
+        mediaUrl: process.env.PCMR_MEDIA_API_PROD || 'http://localhost:8090/media/article/',
         keycloakTokenEndpoint:
             process.env.KEYCLOAK_TOKEN_ENDPOINT_PROD ||
             'http://auth.pcmr.de:8080/auth/realms/pcmr/protocol/openid-connect/token',

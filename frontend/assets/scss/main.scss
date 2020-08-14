@@ -5,7 +5,7 @@
 
 // import bootstrap before other components to use bootstrap stuff in own components
 @import 'node_modules/bootstrap/scss/bootstrap';
-@import 'node_modules/bootstrap-vue/src/index.scss';
+@import 'node_modules/bootstrap-vue/src/index';
 
 @import 'utilities/typography';
 @import 'components/body';

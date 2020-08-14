@@ -24,28 +24,31 @@ export class RestApi {
         }).then(response => (response.ok ? response : throw response))
     }
 
-    addProduct(productAttributes, productImage = null, userToken) {
-        if (!productImage) {
-            return fetch(`${this.baseUrl}employee/article`, {
-                method: 'POST',
-                headers: {
-                    'Content-type': 'application/json; charset=UTF-8',
-                    Authorization: userToken,
-                },
-                body: JSON.stringify(productAttributes),
-            }).then(response => (response.ok ? response : throw response))
+    addProduct(productAttributes, productImage, userToken) {
+        const formdata = new FormData()
+
+        formdata.append(
+            'json',
+            new Blob([JSON.stringify(productAttributes)], {
+                type: 'application/json',
+            })
+        )
+
+        if (productImage) {
+            formdata.append('file', productImage)
         }
+
         return fetch(`${this.baseUrl}employee/article`, {
             method: 'POST',
             headers: {
-                'Content-type': 'application/json; charset=UTF-8',
                 Authorization: userToken,
             },
-            body: {
-                json: JSON.stringify(productAttributes),
-                file: productImage,
-            },
-        }).then(response => (response.ok ? response : throw response))
+            body: formdata,
+        }).then(response =>
+            response.ok
+                ? response
+                : response.json().then(result => (result.error !== '' ? throw result.message : result))
+        )
     }
 
     getProduct(productId) {

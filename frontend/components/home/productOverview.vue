@@ -1,16 +1,8 @@
 <template>
-    <fetch-content v-if="$fetchState.pending" :size="6" />
+    <fetch-content v-if="state" :size="6" />
     <div v-else class="grid">
-        <b-alert :show="emptyResponse || products.length === 0" variant="secondary">Keine Produkte gefunden.</b-alert>
-        <product-card
-            v-for="item in products"
-            :key="item.id"
-            :description="item.description"
-            image-src="/img/sample.png"
-            :name="item.name"
-            :price="item.price"
-            :product-id="item.id"
-        />
+        <b-alert :show="products.length === 0" variant="secondary">Keine Produkte gefunden.</b-alert>
+        <product-card v-for="item in products" :key="item.id" :product="item" />
     </div>
 </template>
 
@@ -21,20 +13,16 @@ import ProductCard from '~/components/product/card'
 export default {
     name: 'HomeProductOverview',
     components: { FetchContent, ProductCard },
-    async fetch() {
-        try {
-            this.products = await this.$api.getAllProductsShortVersion()
-        } catch (err) {
-            this.emptyResponse = true
-        }
+    props: {
+        products: {
+            type: Array,
+            required: true,
+        },
+        state: {
+            type: Boolean,
+            required: true,
+        },
     },
-    data() {
-        return {
-            products: [],
-            emptyResponse: false,
-        }
-    },
-    fetchOnServer: false,
 }
 </script>
 
