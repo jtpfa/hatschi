@@ -97,6 +97,9 @@ export default {
         keycloakTokenEndpoint:
             process.env.KEYCLOAK_TOKEN_ENDPOINT_PROD ||
             'http://auth.pcmr.de:8080/auth/realms/pcmr/protocol/openid-connect/token',
+        keycloakLogoutEndpoint:
+            process.env.KEYCLOAK_LOGOUT_ENDPOINT_PROD ||
+            'http://auth.pcmr.de:8080/auth/realms/pcmr/protocol/openid-connect/logout',
     },
     auth: {
         strategies: {

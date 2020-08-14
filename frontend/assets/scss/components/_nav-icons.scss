@@ -1,0 +1,11 @@
+.nav-icon {
+    text-decoration: none;
+    transition: opacity 0.3s ease-in-out;
+
+    &:hover {
+        color: $primary;
+        text-decoration: none;
+        opacity: 0.8;
+        cursor: pointer;
+    }
+}

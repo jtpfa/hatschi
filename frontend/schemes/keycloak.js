@@ -23,7 +23,7 @@ export default class KeyCloakScheme {
                     method: 'post',
                     propertyName: 'access_token',
                 },
-                logout: { url: '/', method: 'post' },
+                logout: { url: this.$auth.ctx.$config.keycloakLogoutEndpoint, method: 'post' },
                 refresh: {
                     url: this.$auth.ctx.$config.keycloakTokenEndpoint,
                     method: 'post',
@@ -77,16 +77,16 @@ export default class KeyCloakScheme {
     }
 
     async login(endpoint) {
+        if (!this.options.endpoints.login) {
+            return
+        }
+
         const opts = {
             client_id: this.options.client_id,
             grant_type: this.options.grant_type,
         }
 
         const xhrData = endpoint
-
-        if (!this.options.endpoints.login) {
-            return
-        }
 
         xhrData.headers = {
             'Content-Type': 'application/x-www-form-urlencoded',
@@ -108,25 +108,18 @@ export default class KeyCloakScheme {
         this.setRoles(result)
 
         if (this.options.tokenRequired) {
-            const token = this.options.tokenType ? `${this.options.tokenType} ${result}` : result
-
-            this.$auth.setToken(this.name, token)
-            this._setToken(token)
-
-            this.$auth.setRefreshToken(this.name, response.data.refresh_token)
-        }
-
-        if (this.options.autoFetchUser) {
-            await this.fetchUser()
+            await this.setUserToken(result, response.data.refresh_token)
         }
 
         return response
     }
 
-    async setUserToken(tokenValue) {
-        const token = this.options.tokenType ? `${this.options.tokenType} ${tokenValue}` : tokenValue
+    async setUserToken(accessToken, refreshToken) {
+        const token = this.options.tokenType ? `${this.options.tokenType} ${accessToken}` : accessToken
         this.$auth.setToken(this.name, token)
         this._setToken(token)
+
+        this.$auth.setRefreshToken(this.name, refreshToken)
 
         return this.fetchUser()
     }
@@ -166,6 +159,7 @@ export default class KeyCloakScheme {
         this.$auth.setUser(false)
         this.$auth.setToken(this.name, false)
         this.$auth.setRefreshToken(this.name, false)
+        this.$auth.$storage.setState('roles', false)
 
         return Promise.resolve()
     }
