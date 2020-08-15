@@ -14,7 +14,7 @@ export default {
     data() {
         return {
             fields: [
-                { key: 'name', label: 'Artikelbezeichnung', sortable: true },
+                { key: 'name', label: 'Name', sortable: true },
                 { key: 'description', label: 'Beschreibung', sortable: true },
                 { key: 'details', label: 'Details', sortable: true },
                 {
@@ -27,7 +27,8 @@ export default {
                     },
                     sortable: true,
                 },
-                { key: 'stock', label: 'Lagerbestand', sortable: true },
+                { key: 'stock', label: 'Lager', sortable: true },
+                { key: 'image', label: 'Bild', sortable: false },
                 { key: 'actions', label: '', sortable: false },
             ],
         }

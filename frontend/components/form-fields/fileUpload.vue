@@ -1,7 +1,7 @@
 <template>
     <div class="mb-5" role="group">
         <label for="image">
-            Bild
+            {{ replace ? 'Bild (aktuelles Bild wird ersetzt)' : 'Bild' }}
         </label>
         <b-form-file
             id="image"
@@ -26,6 +26,12 @@
 <script>
 export default {
     name: 'FormFieldFileUpload',
+    props: {
+        replace: {
+            type: Boolean,
+            default: false,
+        },
+    },
     data() {
         return {
             image: null,

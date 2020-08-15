@@ -19,6 +19,15 @@
             :sort-by="sortBy"
             @row-hovered="setCurrentItem"
         >
+            <template v-slot:cell(image)="row" class="test">
+                <b-img-lazy
+                    alt="Image"
+                    class="image-preview"
+                    onerror="this.onerror=null;this.srcset='/img/logo-placeholder.svg';"
+                    :src="$imageSrcSet.getImageUrl(row.item.id, 256)"
+                />
+            </template>
+
             <template v-slot:cell(actions)>
                 <b-button
                     v-b-tooltip.hover
@@ -52,6 +61,7 @@
                 <h4 class="text-center text-info">Keine Daten vorhanden. Bitte neuen Datensatz erstellen.</h4>
             </template>
         </b-table>
+
         <b-pagination
             v-model="currentPage"
             align="center"
@@ -168,4 +178,9 @@ export default {
 }
 </script>
 
-<style scoped></style>
+<style lang="scss" scoped>
+.image-preview {
+    max-width: 6rem;
+    max-height: 4rem;
+}
+</style>

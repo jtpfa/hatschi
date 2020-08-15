@@ -1,5 +1,15 @@
 <template>
-    <b-modal :id="modalId" centered lazy scrollable title="Produktdaten bearbeiten" @ok.prevent="onSubmit">
+    <b-modal
+        :id="modalId"
+        centered
+        :hide-header-close="loading"
+        lazy
+        :no-close-on-backdrop="loading"
+        :no-close-on-esc="loading"
+        scrollable
+        title="Produktdaten bearbeiten"
+        @ok.prevent="onSubmit"
+    >
         <b-form ref="form" novalidate>
             <div class="mb-4" role="group">
                 <label for="name">
@@ -99,8 +109,8 @@
                     Bitte Bestand angeben.
                 </b-form-invalid-feedback>
             </div>
-            <!-- @todo insert file upload and ckeditor; add preview of current image if available-->
-            <form-field-file-upload ref="fileInput" />
+            <!-- @todo insert ckeditor; add preview of current image if available-->
+            <form-field-file-upload ref="fileInput" :replace="true" />
 
             <b-alert class="my-3" :show="error.length > 0" variant="danger">{{ error }}</b-alert>
         </b-form>
@@ -108,7 +118,7 @@
         <template v-slot:modal-footer="{ ok, cancel }">
             <!-- @todo remove modal footer and insert buttons in form to submit with enter -->
             <!-- Emulate built in modal footer ok and cancel button actions -->
-            <b-button size="sm" variant="danger" @click="cancel()">
+            <b-button :disabled="loading" size="sm" variant="danger" @click="cancel()">
                 Schließen
             </b-button>
             <b-button :disabled="loading" size="sm" variant="success" @click="ok()">

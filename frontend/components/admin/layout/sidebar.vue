@@ -32,5 +32,6 @@ export default {
 
 ::v-deep .b-sidebar {
     height: 100% !important;
+    width: 5.875rem !important;
 }
 </style>

@@ -34,6 +34,7 @@ export default {
                     sortable: true,
                 },
                 { key: 'stock', label: 'Lagerbestand', sortable: true },
+                { key: 'image', label: 'Bild', sortable: false },
                 { key: 'actions', label: '', sortable: false },
             ],
             customerFields: [
