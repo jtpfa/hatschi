@@ -1,11 +1,7 @@
 package de.pcmr.shop.repository;
 
 import de.pcmr.shop.domain.ArticleEntity;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.List;
-
-public interface ArticleRepository extends CrudRepository<ArticleEntity, Long> {
-    @Override
-    List<ArticleEntity> findAll();
+public interface ArticleRepository extends JpaRepository<ArticleEntity, Long> {
 }

@@ -1,13 +1,9 @@
 package de.pcmr.shop.repository;
 
 import de.pcmr.shop.domain.CustomerEntity;
-import org.springframework.data.repository.CrudRepository;
-
-import java.util.List;
+import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 
-public interface CustomerRepository extends CrudRepository<CustomerEntity, Long> {
-    @Override
-    List<CustomerEntity> findAll();
+public interface CustomerRepository extends JpaRepository<CustomerEntity, Long> {
     Optional<CustomerEntity> findByEmail(String email);
 }

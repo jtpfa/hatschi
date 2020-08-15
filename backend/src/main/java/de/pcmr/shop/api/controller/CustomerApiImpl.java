@@ -17,9 +17,9 @@ import javax.validation.Valid;
 import java.security.Principal;
 
 @RestController
-@RequestMapping(CustomerApiImpl.REGISTRATION_URI)
+@RequestMapping(CustomerApiImpl.CUSTOMER_URI)
 public class CustomerApiImpl implements CustomerApiI {
-    public static final String REGISTRATION_URI = "/api/customer";
+    public static final String CUSTOMER_URI = "/api/customer";
 
     private final CustomerServiceI customerService;
 
