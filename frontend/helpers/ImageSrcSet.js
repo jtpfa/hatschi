@@ -7,8 +7,8 @@ export default class ImageSrcSet {
         const sizes = ['256', '512', '1024']
         let result = ''
 
-        sizes.forEach(size => {
-            result += `${this.baseUrl}${productId}_${size}.png, `
+        sizes.forEach((size, index) => {
+            result += `${this.baseUrl}${productId}_${size}.png ${index + 1}x, `
         })
 
         // remove last colon and whitespace from result

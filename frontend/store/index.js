@@ -1,5 +1,6 @@
 export const state = () => ({
     cart: [],
+    stockOfCartElementsChanged: false,
 })
 
 export const getters = {
@@ -9,6 +10,9 @@ export const getters = {
     cartTotal: state => {
         if (!state.cart.length) return 0
         return state.cart.reduce((ac, next) => ac + next.quantity * next.price, 0)
+    },
+    changedStockOfCartElements: state => {
+        return state.stockOfCartElementsChanged
     },
 }
 
@@ -34,6 +38,9 @@ export const mutations = {
     removeAllFromCart: (state, payload) => {
         state.cart = state.cart.filter(el => el.id !== payload.id)
     },
+    resetStockElementsChangeListener: (state, payload = false) => {
+        state.stockOfCartElementsChanged = payload
+    },
     updateCart: (state, payload) => {
         const itemfound = state.cart.find(el => el.id === payload.id)
 
@@ -41,6 +48,7 @@ export const mutations = {
             Object.assign(itemfound, payload)
 
             if (itemfound.quantity > itemfound.stock) {
+                state.stockOfCartElementsChanged = true
                 itemfound.quantity = itemfound.stock
             }
         }

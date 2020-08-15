@@ -56,12 +56,13 @@ export default {
         }
     },
     computed: {
-        ...mapGetters(['cartTotal']),
+        ...mapGetters(['cartTotal', 'changedStockOfCartElements']),
         ...mapState(['cart']),
     },
     methods: {
         onSubmit() {
-            this.cart.map(async item => {
+            this.$store.commit('resetStockElementsChangeListener')
+            this.cart.forEach(async item => {
                 try {
                     const product = await this.$api.getProduct(item.id)
                     this.$store.commit('updateCart', product)
@@ -69,6 +70,20 @@ export default {
                     this.error = 'Bitte Seite neu laden. Es gibt ein Problem mit mind. einem der Produkte.'
                 }
             })
+
+            if (this.changedStockOfCartElements) {
+                this.$root.$bvToast.toast(
+                    'Wir mussten leider bei mindestens einem Produkt deine gewünschte Menge auf unseren neuen Lagerstand aktualisieren.',
+                    {
+                        title: 'Es gab Änderungen beim Lagerbestand',
+                        autoHideDelay: 7000,
+                        appendToast: true,
+                        isStatus: true,
+                        solid: true,
+                        variant: 'warning',
+                    }
+                )
+            }
         },
     },
 }
