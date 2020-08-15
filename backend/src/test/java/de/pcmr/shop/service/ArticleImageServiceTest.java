@@ -45,8 +45,8 @@ class ArticleImageServiceTest extends AbstractServiceTest {
     private ArticleEntity lastSavedArticleEntity;
 
     @Autowired
-    ArticleImageServiceTest(Environment environment, CustomerRepository customerRepository, ArticleRepository articleRepository, ArticleImageServiceI articleImageService) {
-        super(environment, customerRepository, articleRepository);
+    ArticleImageServiceTest(ArticleRepository articleRepository, ArticleImageServiceI articleImageService) {
+        super();
         this.articleImageService = articleImageService;
         this.articleRepository = articleRepository;
     }

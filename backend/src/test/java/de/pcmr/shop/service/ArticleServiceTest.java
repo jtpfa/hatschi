@@ -43,8 +43,8 @@ class ArticleServiceTest extends AbstractServiceTest {
     private MultipartFile imageFile;
 
     @Autowired
-    ArticleServiceTest(Environment environment, CustomerRepository customerRepository, ArticleServiceI articleService, ArticleRepository articleRepository) {
-        super(environment, customerRepository, articleRepository);
+    ArticleServiceTest(ArticleServiceI articleService, ArticleRepository articleRepository) {
+        super();
         this.articleService = articleService;
         this.articleRepository = articleRepository;
     }

@@ -15,6 +15,7 @@ import org.keycloak.representations.idm.UserRepresentation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 
+import javax.annotation.PostConstruct;
 import javax.validation.ConstraintViolationException;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -39,13 +40,18 @@ class RegistrationServiceTest extends AbstractServiceTest {
     private final When when = new When();
     private final Then then = new Then();
 
-    private final UsersResource usersResource;
+    private UsersResource usersResource;
 
     @Autowired
-    RegistrationServiceTest(RegistrationServiceI registrationService, CustomerRepository customerRepository, Environment environment, ArticleRepository articleRepository) {
-        super(environment, customerRepository, articleRepository);
+    RegistrationServiceTest(RegistrationServiceI registrationService, CustomerRepository customerRepository) {
+        super();
         this.registrationService = registrationService;
         this.customerRepository = customerRepository;
+
+    }
+
+    @PostConstruct
+    void initUserResource() {
         this.usersResource = super.getUsersResource();
     }
 

@@ -20,6 +20,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 
+import javax.annotation.PostConstruct;
 import javax.validation.ConstraintViolationException;
 import java.security.Principal;
 import java.util.ArrayList;
@@ -55,14 +56,18 @@ class CustomerServiceTest extends AbstractServiceTest {
     private CustomerEntity customerEntityB;
     private CustomerEntity updatedCustomerEntity;
 
-    private final UsersResource usersResource;
+    private UsersResource usersResource;
 
     @Autowired
-    CustomerServiceTest(RegistrationServiceI registrationService, CustomerServiceI customerService, CustomerRepository customerRepository, Environment environment, ArticleRepository articleRepository) {
-        super(environment, customerRepository, articleRepository);
+    CustomerServiceTest(RegistrationServiceI registrationService, CustomerServiceI customerService, CustomerRepository customerRepository) {
+        super();
         this.registrationService = registrationService;
         this.customerService = customerService;
         this.customerRepository = customerRepository;
+    }
+
+    @PostConstruct
+    void initUsersResource() {
         this.usersResource = super.getUsersResource();
     }
 

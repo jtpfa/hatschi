@@ -1,44 +1,55 @@
 package de.pcmr.shop.service;
 
-import de.pcmr.shop.repository.ArticleRepository;
-import de.pcmr.shop.repository.CustomerRepository;
+import de.pcmr.shop.repository.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.keycloak.admin.client.Keycloak;
 import org.keycloak.admin.client.KeycloakBuilder;
 import org.keycloak.admin.client.resource.RealmResource;
 import org.keycloak.admin.client.resource.UsersResource;
 import org.keycloak.representations.idm.UserRepresentation;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.core.env.Environment;
+
+import javax.annotation.PostConstruct;
 
 @SpringBootTest
 abstract class AbstractServiceTest {
+    @Autowired
+    private CustomerRepository customerRepository;
+    @Autowired
+    private ArticleRepository articleRepository;
+    @Autowired
+    private OrderRepository orderRepository;
+    @Autowired
+    private AddressRepository addressRepository;
+    @Autowired
+    private OrderItemRepository orderItemRepository;
 
-    private final String KEYCLOAK_REGISTRATION_USER;
+    @Value("${PCMR_AUTH_SERVER_URL}")
+    private String keycloakUrl;
+    @Value("${PCMR_KEYCLOAK_REALM}")
+    private String keycloakRealm;
+    @Value("${PCMR_RESOURCE}")
+    private String keycloakClient;
+    @Value("${PCMR_KEYCLOAK_REGISTRATION_USER}")
+    private String keycloakRegistrationUser;
+    @Value("${PCMR_KEYCLOAK_REGISTRATION_PASSWORD}")
+    private String keycloakRegistrationPassword;
 
-    private final CustomerRepository customerRepository;
-    private final ArticleRepository articleRepository;
-    private final UsersResource usersResource;
+    private UsersResource usersResource;
 
-    AbstractServiceTest(Environment environment, CustomerRepository customerRepository, ArticleRepository articleRepository) {
-        this.articleRepository = articleRepository;
-        String KEYCLOAK_URL = environment.getProperty("PCMR_AUTH_SERVER_URL");
-        String KEYCLOAK_REALM = environment.getProperty("PCMR_KEYCLOAK_REALM");
-        String KEYCLOAK_CLIENT = environment.getProperty("PCMR_RESOURCE");
-        KEYCLOAK_REGISTRATION_USER = environment.getProperty("PCMR_KEYCLOAK_REGISTRATION_USER");
-        String KEYCLOAK_REGISTRATION_PASSWORD = environment.getProperty("PCMR_KEYCLOAK_REGISTRATION_PASSWORD");
-
-        this.customerRepository = customerRepository;
-
+    @PostConstruct
+    void initKeycloak() {
         Keycloak keycloak = KeycloakBuilder.builder()
-                .serverUrl(KEYCLOAK_URL)
-                .realm(KEYCLOAK_REALM)
-                .clientId(KEYCLOAK_CLIENT)
-                .username(KEYCLOAK_REGISTRATION_USER)
-                .password(KEYCLOAK_REGISTRATION_PASSWORD)
+                .serverUrl(keycloakUrl)
+                .realm(keycloakRealm)
+                .clientId(keycloakClient)
+                .username(keycloakRegistrationUser)
+                .password(keycloakRegistrationPassword)
                 .build();
 
-        RealmResource realmResource = keycloak.realm(KEYCLOAK_REALM);
+        RealmResource realmResource = keycloak.realm(keycloakRealm);
         usersResource = realmResource.users();
     }
 
@@ -49,13 +60,16 @@ abstract class AbstractServiceTest {
     }
 
     void cleanUpDatabase() {
+        orderRepository.deleteAll();
+        orderItemRepository.deleteAll();
+        addressRepository.deleteAll();
         articleRepository.deleteAll();
         customerRepository.deleteAll();
     }
 
     void cleanUpKeycloak() {
         for (UserRepresentation user : usersResource.list()) {
-            if (!user.getUsername().equals(KEYCLOAK_REGISTRATION_USER)) {
+            if (!user.getUsername().equals(keycloakRegistrationUser)) {
                 usersResource.delete(user.getId());
             }
         }
