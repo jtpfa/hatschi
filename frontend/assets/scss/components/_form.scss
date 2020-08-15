@@ -2,7 +2,8 @@ form {
     label {
         font-size: $font-size-lg;
     }
-    span.mandatory {
-        color: $danger;
-    }
+}
+
+label span.mandatory {
+    color: $danger;
 }

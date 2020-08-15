@@ -21,7 +21,9 @@ export default {
     name: 'HeaderNavShoppingCart',
     components: { IconShoppingCart },
     computed: {
-        ...mapGetters(['cartCountElements']),
+        ...mapGetters({
+            cartCountElements: 'shoppingcart/cartCountElements',
+        }),
     },
 }
 </script>

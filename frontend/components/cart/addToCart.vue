@@ -32,7 +32,7 @@ export default {
                 ...this.product,
                 quantity: 1,
             }
-            this.$store.commit('addToCart', { ...item })
+            this.$store.commit('shoppingcart/addToCart', { ...item })
 
             this.$root.$bvToast.toast(`"${this.product.name}" liegt nun im Warenkorb`, {
                 title: 'Artikel wurde dem Warenkorb hinzugefügt',
