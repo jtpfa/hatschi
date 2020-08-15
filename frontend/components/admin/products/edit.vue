@@ -1,6 +1,5 @@
 <template>
     <b-modal :id="modalId" centered lazy scrollable title="Produktdaten bearbeiten" @ok.prevent="onSubmit">
-        <b-alert :show="error.length > 0" variant="danger">{{ error }}</b-alert>
         <b-form ref="form" novalidate>
             <div class="mb-4" role="group">
                 <label for="name">
@@ -99,9 +98,11 @@
                 <b-form-invalid-feedback id="input-live-feedback">
                     Bitte Bestand angeben.
                 </b-form-invalid-feedback>
-
-                <!-- @todo insert file upload and ckeditor; add preview of current image if available-->
             </div>
+            <!-- @todo insert file upload and ckeditor; add preview of current image if available-->
+            <form-field-file-upload ref="fileInput" />
+
+            <b-alert class="my-3" :show="error.length > 0" variant="danger">{{ error }}</b-alert>
         </b-form>
 
         <template v-slot:modal-footer="{ ok, cancel }">
@@ -119,8 +120,11 @@
 </template>
 
 <script>
+import FormFieldFileUpload from '~/components/form-fields/fileUpload'
+
 export default {
     name: 'CustomerEdit',
+    components: { FormFieldFileUpload },
     props: {
         product: {
             type: Object,
@@ -149,13 +153,14 @@ export default {
                         price: +this.product.price,
                         stock: +this.product.stock,
                     },
+                    this.$refs.fileInput.image,
                     this.$auth.getToken('keycloak')
                 )
 
                 this.$root.$emit('bv::hide::modal', this.modalId)
                 this.$router.app.refresh()
-            } catch (e) {
-                this.error = 'Leider gab es ein Problem. Bitte später erneut versuchen.'
+            } catch (err) {
+                this.error = err || 'Leider gab es ein Problem. Bitte später erneut versuchen.'
             }
         },
         async onSubmit(event) {

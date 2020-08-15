@@ -136,29 +136,7 @@
                     </b-form-invalid-feedback>
                 </div>
 
-                <div class="mb-5" role="group">
-                    <label for="image">
-                        Bild
-                    </label>
-                    <b-form-file
-                        id="image"
-                        ref="fileInput"
-                        v-model="image"
-                        accept="image/jpg, image/png"
-                        aria-describedby="file-upload-help"
-                        browse-text="Datei auswählen"
-                        drop-placeholder="Datei hierhin ziehen..."
-                        :state="acceptedFile"
-                    />
-
-                    <b-form-text id="file-upload-help" class="mt-2">
-                        Zulässige Bildformate: jpg, png
-                        <br />
-                        Maximale Dateigröße: 10 MB
-                        <br />
-                        Minimale Bildhöhe: 512 Pixel
-                    </b-form-text>
-                </div>
+                <form-field-file-upload ref="fileInput" />
 
                 <b-alert class="mt-3" :show="error.length > 0" variant="danger">{{ error }}</b-alert>
 
@@ -169,6 +147,7 @@
 </template>
 
 <script>
+import FormFieldFileUpload from '~/components/form-fields/fileUpload'
 // @todo export file input and ckeditor to own components
 /* eslint global-require: "off" */
 import ButtonContainer from '~/components/layout/buttonContainer'
@@ -182,7 +161,7 @@ if (process.client) {
 
 export default {
     name: 'ProductAdd',
-    components: { ButtonContainer, ckeditor },
+    components: { FormFieldFileUpload, ButtonContainer, ckeditor },
     data() {
         return {
             name: '',
@@ -191,7 +170,6 @@ export default {
             priceEur: 0,
             priceCt: 0,
             stock: 0,
-            image: null,
             editor: {
                 editor: ClassicEditor,
                 config: {
@@ -218,26 +196,6 @@ export default {
             loading: false,
         }
     },
-    computed: {
-        acceptedFile() {
-            // if no image was uploaded no need to check image properties
-            if (!this.image) {
-                return null
-            }
-
-            // check if image type is supported
-            if (!['image/jpg', 'image/jpeg', 'image/png'].includes(this.image.type)) {
-                return false
-            }
-
-            // check if image size is under 10 MB
-            if (this.image.size > 10 * 2 ** 20) {
-                return false
-            }
-
-            return true
-        },
-    },
     methods: {
         async addProduct() {
             try {
@@ -249,7 +207,7 @@ export default {
                         price: +(this.priceEur + (this.priceCt <= 9 ? `0${this.priceCt}` : this.priceCt)),
                         stock: +this.stock,
                     },
-                    this.image,
+                    this.$refs.fileInput.image,
                     this.$auth.getToken('keycloak')
                 )
                 this.success = 'Der Artikel wurde erfolgreich angelegt.'
@@ -280,7 +238,7 @@ export default {
             this.priceEur = 0
             this.priceCt = 0
             this.stock = 0
-            this.$refs.fileInput.reset()
+            this.$refs.fileInput.image = null
         },
     },
 }
