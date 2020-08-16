@@ -1,5 +1,5 @@
 <template>
-    <b-card title="Vouchers">
+    <order-overview-card :step-to-edit-data="1" title="Vouchers">
         <div class="row mb-2">
             <div class="col-lg-5">
                 <span class="font-weight-bold">Geschenkkartencode:</span>
@@ -16,12 +16,15 @@
                 <b-card-text v-if="order.discountCode.length > 0" text-tag="span">{{ order.discountCode }}</b-card-text>
             </div>
         </div>
-    </b-card>
+    </order-overview-card>
 </template>
 
 <script>
+import OrderOverviewCard from '~/components/order/overview/card'
+
 export default {
     name: 'OrderOverviewVouchers',
+    components: { OrderOverviewCard },
     computed: {
         order() {
             return this.$store.state.order

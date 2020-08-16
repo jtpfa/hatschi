@@ -1,5 +1,5 @@
 <template>
-    <b-card :title="title">
+    <order-overview-card :step-to-edit-data="0" :title="title">
         <div class="row mb-2">
             <div class="col-sm-3 col-md-4 col-lg-3 col-xl-2">
                 <span class="font-weight-bold">Name:</span>
@@ -24,12 +24,15 @@
                 </b-card-text>
             </div>
         </div>
-    </b-card>
+    </order-overview-card>
 </template>
 
 <script>
+import OrderOverviewCard from '~/components/order/overview/card'
+
 export default {
     name: 'OrderOverviewAddress',
+    components: { OrderOverviewCard },
     props: {
         addressType: {
             type: String,

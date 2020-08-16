@@ -1,6 +1,6 @@
 <template>
     <b-button
-        class="d-flex justify-content-center align-items-center px-5 py-1"
+        class="d-flex justify-content-center align-items-center px-4 py-2 py-sm-1"
         :disabled="!orderable"
         variant="primary"
         @click="addToCart"
@@ -54,7 +54,7 @@ button {
 
     @media (min-width: $grid-sm) {
         width: auto;
-        font-size: 2rem;
+        font-size: 1.75rem;
     }
 
     svg {
