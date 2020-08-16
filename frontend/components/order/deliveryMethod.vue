@@ -1,6 +1,9 @@
 <template>
     <div>
-        <h2>Versandart wählen</h2>
+        <h2>
+            Versandart wählen
+            <span class="mandatory">*</span>
+        </h2>
         <b-list-group>
             <b-list-group-item v-for="method in availableMethods" :key="method.name + method.description">
                 <b-form-radio
@@ -8,7 +11,7 @@
                     name="delivery-methods"
                     required
                     :state="validState"
-                    :value="method.description + ' ' + method.name"
+                    :value="method.description + ' – ' + method.name"
                 >
                     <span class="delivery-key">{{ method.description }} – {{ method.name }}</span>
                     <br />
@@ -47,5 +50,9 @@ export default {
 <style lang="scss" scoped>
 .delivery-key {
     font-size: 1.2rem;
+}
+
+span.mandatory {
+    color: $danger;
 }
 </style>

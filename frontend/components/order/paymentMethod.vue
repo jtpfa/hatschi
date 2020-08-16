@@ -1,6 +1,9 @@
 <template>
     <div>
-        <h2>Zahlungsart</h2>
+        <h2>
+            Zahlungsart
+            <span class="mandatory">*</span>
+        </h2>
         <b-list-group>
             <b-list-group-item v-for="method in availableMethods" :key="method.name">
                 <b-form-radio
@@ -45,4 +48,8 @@ export default {
 }
 </script>
 
-<style scoped></style>
+<style lang="scss" scoped>
+span.mandatory {
+    color: $danger;
+}
+</style>

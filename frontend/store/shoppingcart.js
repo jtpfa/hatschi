@@ -11,6 +11,11 @@ export const getters = {
         if (!state.cart.length) return 0
         return state.cart.reduce((ac, next) => ac + next.quantity * next.price, 0)
     },
+    productQuantity: state => productId => {
+        const itemfound = state.cart.find(el => el.id === productId)
+
+        return itemfound ? itemfound.quantity : 0
+    },
 }
 
 export const mutations = {

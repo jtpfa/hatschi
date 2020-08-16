@@ -1,5 +1,5 @@
 <template>
-    <b-card sub-title="Gutscheine können im Zahlungsschritt hinzugefügt werden" title="Zusammenfassung">
+    <b-card title="Zusammenfassung">
         <cart-price-overview />
 
         <div class="d-flex justify-content-center align-items-center flex-column">

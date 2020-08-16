@@ -16,10 +16,18 @@ import OrderAddressForm from '~/components/order/addressForm'
 export default {
     name: 'OrderAddresses',
     components: { OrderAddressForm },
-    data() {
-        return {
-            differentInvoiceAddress: false,
-        }
+    computed: {
+        differentInvoiceAddress: {
+            get() {
+                return this.$store.state.order.differentInvoiceAddress
+            },
+            set(differentInvoiceAddress) {
+                this.$store.commit('order/updateOrderInformation', {
+                    key: 'differentInvoiceAddress',
+                    data: differentInvoiceAddress,
+                })
+            },
+        },
     },
 }
 </script>

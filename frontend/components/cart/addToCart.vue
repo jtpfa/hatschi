@@ -6,7 +6,7 @@
         @click="addToCart"
     >
         <icon-shopping-cart class="mr-3" />
-        In den Warenkorb
+        {{ orderable ? 'In den Warenkorb' : 'Nicht mehr verfügbar' }}
     </b-button>
 </template>
 

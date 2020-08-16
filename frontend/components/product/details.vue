@@ -30,7 +30,7 @@
                         <span class="text-muted">zzgl. Versandkosten</span>
                     </div>
 
-                    <add-to-cart :orderable="product.stock > 0" :product="product" />
+                    <add-to-cart :orderable="orderable" :product="product" />
                 </div>
             </div>
         </div>
@@ -45,6 +45,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import AddToCart from '~/components/cart/addToCart'
 import Spinner from '~/components/layout/spinner'
 
@@ -58,8 +59,12 @@ export default {
         },
     },
     computed: {
+        ...mapGetters({ productQuantity: 'shoppingcart/productQuantity' }),
         deliveryInformation() {
-            return this.product.stock === 0 ? 'Nicht auf Lager' : 'Lieferbar in 3-4 Werktagen'
+            return !this.orderable ? 'Nicht mehr auf Lager' : 'Lieferbar in 3-4 Werktagen'
+        },
+        orderable() {
+            return this.product.stock > 0 && this.productQuantity(this.product.id) < this.product.stock
         },
     },
 }

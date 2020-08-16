@@ -2,24 +2,23 @@
     <client-only>
         <b-container class="mt-5">
             <order-headline />
-            <b-form ref="form" novalidate @submit.prevent="onSubmit">
+            <b-form ref="form" novalidate @submit.prevent.stop="onSubmit">
                 <div class="row my-5">
                     <div class="col-md-7 mb-0">
-                        <template v-if="step === 0">
-                            <order-delivery-method class="mb-5" />
+                        <order-step1 v-if="step === 0" />
 
-                            <order-addresses v-if="deliveryMethod !== null && deliveryMethod.length > 0" class="mb-5" />
-                        </template>
-                        <template v-else-if="step === 1">
-                            <order-payment-method class="mb-5" />
+                        <order-step2 v-else-if="step === 1" />
 
-                            <order-vouchers v-if="paymentMethod !== null && paymentMethod.length > 0" class="mb-5" />
+                        <order-step3 v-else-if="step === 2" />
+
+                        <template v-else>
+                            <p>Fehler</p>
                         </template>
                     </div>
                     <div class="col-md-5">
                         <cart-summary :error="error">
                             <b-button class="my-3 w-100" :disabled="loading" size="lg" type="submit" variant="primary">
-                                Weiter
+                                {{ step === 2 ? 'Jetzt kaufen' : 'Weiter' }}
                             </b-button>
                             <b-button v-if="step === 0" class="w-100" size="lg" to="/warenkorb" variant="light">
                                 Zurück
@@ -37,15 +36,20 @@
 
 <script>
 import CartSummary from '~/components/cart/summary'
-import OrderAddresses from '~/components/order/addresses'
-import OrderDeliveryMethod from '~/components/order/deliveryMethod'
 import OrderHeadline from '~/components/order/headline'
-import OrderPaymentMethod from '~/components/order/paymentMethod'
-import OrderVouchers from '~/components/order/vouchers'
+import OrderStep1 from '~/components/order/steps/orderStep1'
+import OrderStep2 from '~/components/order/steps/orderStep2'
+import OrderStep3 from '~/components/order/steps/orderStep3'
 
 export default {
     name: 'Order',
-    components: { OrderVouchers, OrderPaymentMethod, OrderHeadline, OrderAddresses, OrderDeliveryMethod, CartSummary },
+    components: {
+        OrderStep3,
+        OrderStep2,
+        OrderStep1,
+        OrderHeadline,
+        CartSummary,
+    },
     data() {
         return {
             loading: false,
@@ -78,14 +82,24 @@ export default {
                 event.preventDefault()
                 event.stopPropagation()
             } else {
-                // do not show validation state if everything is fine because the next would be validated as well
-                this.step += 1
+                // do not show validation state if everything is fine
+                // because the next step would be validated as well
+
+                // eslint-disable-next-line no-lonely-if
+                if (this.step === 2) {
+                    this.submitOrder()
+                } else {
+                    this.step += 1
+                }
             }
             this.loading = false
         },
         stepBack() {
             this.$refs.form.classList.remove('was-validated')
             this.step -= 1
+        },
+        submitOrder() {
+            console.log('orderSubmitted')
         },
     },
 }

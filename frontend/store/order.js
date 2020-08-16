@@ -8,6 +8,7 @@ export const state = () => ({
         street: '',
         number: '',
     },
+    differentInvoiceAddress: false,
     invoiceAddress: {
         firstName: '',
         lastName: '',
