@@ -42,7 +42,9 @@
     "bootstrap": "^4.5.2",
     "bootstrap-vue": "^2.16.0",
     "jwt-decode": "^2.2.0",
+    "node-sass": "^4.14.1",
     "nuxt": "^2.14.3",
+    "sass-loader": "^9.0.3",
     "vue-currency-filter": "^5.1.1",
     "vuex-persist": "^2.2.0"
   },
@@ -59,8 +61,6 @@
     "eslint-plugin-vue": "^6.2.2",
     "husky": "^4.2.5",
     "lint-staged": "^10.2.11",
-    "node-sass": "^4.14.1",
-    "prettier": "^2.0.5",
-    "sass-loader": "^9.0.3"
+    "prettier": "^2.0.5"
   }
 }
