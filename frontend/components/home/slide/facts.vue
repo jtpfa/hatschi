@@ -3,7 +3,7 @@
         <home-slide-background-shape>
             <div class="col-12 col-sm-5 mt-2 mt-sm-0">
                 <div class="lazy-image d-flex justify-content-center align-items-center">
-                    <b-img-lazy src="/img/stage-sample.png" />
+                    <b-img-lazy src="~assets/img/stage-sample.png" />
                     <spinner color="white" :size="6" />
                 </div>
             </div>
