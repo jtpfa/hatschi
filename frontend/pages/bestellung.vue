@@ -107,7 +107,7 @@ export default {
         },
     },
     methods: {
-        onSubmit(event) {
+        async onSubmit(event) {
             this.$refs.form.classList.remove('was-validated')
             this.loading = true
             this.error = ''
@@ -123,15 +123,11 @@ export default {
                 if (this.step === 2) {
                     // this.submitOrder()
 
-                    setTimeout(() => {
-                        this.step += 1
-                        this.loading = false
-                    }, 3000)
-                } else {
-                    this.step += 1
-                    this.loading = false
+                    await new Promise(res => setTimeout(res, 3000))
                 }
+                this.step += 1
             }
+            this.loading = false
         },
         stepBack() {
             this.$refs.form.classList.remove('was-validated')
