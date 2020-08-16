@@ -1,4 +1,4 @@
-// @todo adjust response hadnling to show error messages from backend
+// @todo adjust response handling to show error messages from backend
 export class RestApi {
     constructor(baseUrl) {
         this.baseUrl = baseUrl

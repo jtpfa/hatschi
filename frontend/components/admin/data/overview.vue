@@ -103,7 +103,11 @@ export default {
         },
         type: {
             type: String,
-            default: '',
+            required: true,
+            validator(type) {
+                // The value must match one of these strings
+                return ['product', 'customer'].indexOf(type) !== -1
+            },
         },
     },
     async fetch() {
@@ -171,7 +175,12 @@ export default {
                     this.error = 'Leider gab es ein Problem. Bitte später erneut versuchen.'
                 }
             } else if (this.type === 'customer') {
-                // @todo
+                try {
+                    // @todo delete customer api endpoint
+                    this.$router.app.refresh()
+                } catch (error) {
+                    this.error = 'Leider gab es ein Problem. Bitte später erneut versuchen.'
+                }
             }
         },
     },

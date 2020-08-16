@@ -1,17 +1,19 @@
 <template>
     <client-only>
         <b-container class="mt-5">
-            <order-headline :step="step" />
+            <order-headline />
             <b-form ref="form" novalidate @submit.prevent="onSubmit">
                 <div class="row my-5">
                     <div class="col-md-7 mb-0">
                         <template v-if="step === 0">
-                            <order-delivery-method ref="deliveryOption" class="mb-5" />
+                            <order-delivery-method class="mb-5" />
 
                             <order-addresses v-if="deliveryMethod !== null && deliveryMethod.length > 0" class="mb-5" />
                         </template>
-                        <template v-if="step === 1">
-                            <p>hallo</p>
+                        <template v-else-if="step === 1">
+                            <order-payment-method class="mb-5" />
+
+                            <order-vouchers v-if="paymentMethod !== null && paymentMethod.length > 0" class="mb-5" />
                         </template>
                     </div>
                     <div class="col-md-5">
@@ -38,20 +40,32 @@ import CartSummary from '~/components/cart/summary'
 import OrderAddresses from '~/components/order/addresses'
 import OrderDeliveryMethod from '~/components/order/deliveryMethod'
 import OrderHeadline from '~/components/order/headline'
+import OrderPaymentMethod from '~/components/order/paymentMethod'
+import OrderVouchers from '~/components/order/vouchers'
 
 export default {
     name: 'Order',
-    components: { OrderHeadline, OrderAddresses, OrderDeliveryMethod, CartSummary },
+    components: { OrderVouchers, OrderPaymentMethod, OrderHeadline, OrderAddresses, OrderDeliveryMethod, CartSummary },
     data() {
         return {
-            step: 0,
             loading: false,
             error: '',
         }
     },
     computed: {
+        step: {
+            get() {
+                return this.$store.state.order.step
+            },
+            set(step) {
+                this.$store.commit('order/updateOrderInformation', { key: 'step', data: step })
+            },
+        },
         deliveryMethod() {
             return this.$store.state.order.deliveryMethod
+        },
+        paymentMethod() {
+            return this.$store.state.order.paymentMethod
         },
     },
     methods: {
@@ -64,7 +78,7 @@ export default {
                 event.preventDefault()
                 event.stopPropagation()
             } else {
-                this.$refs.form.classList.add('was-validated')
+                // do not show validation state if everything is fine because the next would be validated as well
                 this.step += 1
             }
             this.loading = false

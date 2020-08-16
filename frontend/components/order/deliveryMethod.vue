@@ -9,7 +9,6 @@
                     required
                     :state="validState"
                     :value="method.description + ' ' + method.name"
-                    @input="validate"
                 >
                     <span class="delivery-key">{{ method.description }} – {{ method.name }}</span>
                     <br />
@@ -40,11 +39,6 @@ export default {
             set(deliveryMethod) {
                 this.$store.commit('order/updateOrderInformation', { key: 'deliveryMethod', data: deliveryMethod })
             },
-        },
-    },
-    methods: {
-        validate() {
-            this.validState = Boolean(this.selectedMethod)
         },
     },
 }

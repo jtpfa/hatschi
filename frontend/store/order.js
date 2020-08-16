@@ -16,6 +16,10 @@ export const state = () => ({
         street: '',
         number: '',
     },
+    paymentMethod: null,
+    giftCardCode: '',
+    discountCode: '',
+    step: 0,
 })
 
 export const mutations = {
