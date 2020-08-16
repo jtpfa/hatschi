@@ -22,7 +22,7 @@
                     {{ $currencyConverter.insertFractionForEuroConversion(item.price) | currency }}
                 </b-card-text>
             </div>
-            <b-card-body>
+            <b-card-body v-if="!order">
                 <div class="d-flex justify-content-end">
                     <b-button class="mr-2 mr-md-3" variant="outline-light" @click="removeAllFromCart(item)">
                         <icon-trash class="trash-icon" />
@@ -64,16 +64,22 @@
 </template>
 
 <script>
-import { mapGetters, mapState } from 'vuex'
 import IconTrash from '~/components/icons/trash'
 import Spinner from '~/components/layout/spinner'
 
 export default {
     name: 'CartProducts',
     components: { IconTrash, Spinner },
+    props: {
+        order: {
+            type: Boolean,
+            default: false,
+        },
+    },
     computed: {
-        ...mapState(['cart']),
-        ...mapGetters(['cartTotal']),
+        cart() {
+            return this.$store.state.shoppingcart.cart
+        },
     },
     methods: {
         addOneToCart(item) {
@@ -81,13 +87,13 @@ export default {
                 ...item,
                 quantity: 1,
             }
-            this.$store.commit('addToCart', { ...product })
+            this.$store.commit('shoppingcart/addToCart', { ...product })
         },
         removeOneFromCart(item) {
-            this.$store.commit('removeOneFromCart', item)
+            this.$store.commit('shoppingcart/removeOneFromCart', item)
         },
         removeAllFromCart(item) {
-            this.$store.commit('removeAllFromCart', item)
+            this.$store.commit('shoppingcart/removeAllFromCart', item)
         },
     },
 }

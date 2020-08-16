@@ -1,12 +1,12 @@
 <template>
     <b-button
-        class="d-flex justify-content-center align-items-center px-5 py-1"
+        class="d-flex justify-content-center align-items-center px-4 py-2 py-sm-1"
         :disabled="!orderable"
         variant="primary"
         @click="addToCart"
     >
         <icon-shopping-cart class="mr-3" />
-        In den Warenkorb
+        {{ orderable ? 'In den Warenkorb' : 'Nicht mehr verfügbar' }}
     </b-button>
 </template>
 
@@ -32,7 +32,7 @@ export default {
                 ...this.product,
                 quantity: 1,
             }
-            this.$store.commit('addToCart', { ...item })
+            this.$store.commit('shoppingcart/addToCart', { ...item })
 
             this.$root.$bvToast.toast(`"${this.product.name}" liegt nun im Warenkorb`, {
                 title: 'Artikel wurde dem Warenkorb hinzugefügt',
@@ -54,7 +54,7 @@ button {
 
     @media (min-width: $grid-sm) {
         width: auto;
-        font-size: 2rem;
+        font-size: 1.75rem;
     }
 
     svg {

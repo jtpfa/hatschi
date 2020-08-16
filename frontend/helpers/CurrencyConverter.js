@@ -1,3 +1,4 @@
+// @todo write the whole conversion process instead of using a plugin
 export class CurrenyConverter {
     constructor(fractionCount, fractionSeperator) {
         this.fractionCount = fractionCount

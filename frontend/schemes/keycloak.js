@@ -82,11 +82,6 @@ export default class KeyCloakScheme {
             return
         }
 
-        const opts = {
-            client_id: this.options.client_id,
-            grant_type: this.options.grant_type,
-        }
-
         const xhrData = endpoint
 
         xhrData.headers = {
@@ -94,10 +89,10 @@ export default class KeyCloakScheme {
         }
 
         const urlencoded = new URLSearchParams()
-        urlencoded.append('client_id', opts.client_id)
+        urlencoded.append('client_id', this.options.client_id)
         urlencoded.append('username', endpoint.username)
         urlencoded.append('password', endpoint.password)
-        urlencoded.append('grant_type', opts.grant_type)
+        urlencoded.append('grant_type', this.options.grant_type)
 
         xhrData.data = urlencoded
 
@@ -145,11 +140,6 @@ export default class KeyCloakScheme {
     async logout(endpoint) {
         // Only connect to logout endpoint if it's configured
         if (this.options.endpoints.logout) {
-            const opts = {
-                client_id: this.options.client_id,
-                // @todo global definition of clientid
-            }
-
             const xhrData = { ...endpoint }
 
             xhrData.headers = {
@@ -157,7 +147,7 @@ export default class KeyCloakScheme {
             }
 
             const urlencoded = new URLSearchParams()
-            urlencoded.append('client_id', opts.client_id)
+            urlencoded.append('client_id', this.options.client_id)
             urlencoded.append('refresh_token', this.$auth.getRefreshToken(this.name))
 
             xhrData.data = urlencoded

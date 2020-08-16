@@ -148,7 +148,7 @@
 
 <script>
 import FormFieldFileUpload from '~/components/form-fields/fileUpload'
-// @todo export file input and ckeditor to own components
+// @todo export ckeditor to own component
 /* eslint global-require: "off" */
 import ButtonContainer from '~/components/layout/buttonContainer'
 

@@ -68,6 +68,8 @@
                     Bitte Details angeben.
                 </b-form-invalid-feedback>
             </div>
+
+            <!-- @todo price as in add product component -->
             <div class="mb-4" role="group">
                 <label for="price">
                     Preis
