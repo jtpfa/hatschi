@@ -11,7 +11,7 @@
                     name="delivery-methods"
                     required
                     :state="validState"
-                    :value="method.name"
+                    :value="method.description ? `${method.name} – ${method.description}` : method.name"
                 >
                     <span class="delivery-key">
                         {{ method.name }}{{ method.description ? ` – ${method.description}` : null }}
