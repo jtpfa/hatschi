@@ -1,7 +1,7 @@
 <template>
     <b-table-simple borderless class="mt-4 mb-0" small striped>
         <caption class="small">
-            Lieferbar in 3-4 Werktagen
+            {{ deliveryTime ? 'Lieferbar in 2-4 Werktagen' : 'Lieferbar in 1-2 Werktagen' }}
         </caption>
         <colgroup>
             <col />
@@ -47,6 +47,12 @@ export default {
         ...mapGetters({ cartTotal: 'shoppingcart/cartTotal' }),
         cart() {
             return this.$store.state.shoppingcart.cart
+        },
+        deliveryMethod() {
+            return this.$store.state.order.deliveryMethod
+        },
+        deliveryTime() {
+            return this.deliveryMethod?.toLocaleLowerCase().includes('standardversand')
         },
     },
 }

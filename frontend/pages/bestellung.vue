@@ -2,9 +2,11 @@
     <client-only>
         <b-container class="mt-5">
             <order-progressbar class="position-relative mt-5" />
-            <order-headline />
             <b-form ref="form" novalidate @submit.prevent.stop="onSubmit">
-                <div class="row my-5">
+                <order-pagination @back="stepBack" />
+                <order-headline />
+
+                <div class="row mt-5">
                     <div class="col-md-7 mb-0">
                         <order-step1 v-if="step === 0" />
 
@@ -32,33 +34,11 @@
                         </template>
                     </div>
                     <div v-if="step >= 0 && step <= 2" class="col-md-5">
-                        <cart-summary :error="error">
-                            <b-button
-                                class="d-flex justify-content-center align-items-center my-3 w-100"
-                                :disabled="loading"
-                                size="lg"
-                                type="submit"
-                                variant="primary"
-                            >
-                                <b-spinner v-if="loading" class="mr-3" small></b-spinner>
-                                {{ step === 2 ? 'Jetzt kaufen' : 'Weiter' }}
-                            </b-button>
-                            <b-button v-if="step === 0" class="w-100" size="lg" to="/warenkorb" variant="light">
-                                Zurück
-                            </b-button>
-                            <b-button
-                                v-else-if="step > 0"
-                                class="w-100"
-                                :disabled="loading"
-                                size="lg"
-                                variant="light"
-                                @click="stepBack"
-                            >
-                                Zurück
-                            </b-button>
-                        </cart-summary>
+                        <cart-summary class="mb-5 mb-md-0" :error="error" />
                     </div>
                 </div>
+
+                <order-pagination @back="stepBack" />
             </b-form>
         </b-container>
     </client-only>
@@ -67,6 +47,7 @@
 <script>
 import CartSummary from '~/components/cart/summary'
 import OrderHeadline from '~/components/order/headline'
+import OrderPagination from '~/components/order/pagination'
 import OrderProgressbar from '~/components/order/progressbar'
 import OrderConfirmation from '~/components/order/steps/orderConfirmation'
 import OrderStep1 from '~/components/order/steps/orderStep1'
@@ -76,6 +57,7 @@ import OrderStep3 from '~/components/order/steps/orderStep3'
 export default {
     name: 'Order',
     components: {
+        OrderPagination,
         OrderConfirmation,
         OrderProgressbar,
         OrderStep3,

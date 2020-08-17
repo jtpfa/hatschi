@@ -125,14 +125,10 @@ export default {
         redirect: {
             login: '/auth/login',
             logout: '/',
-            callback: '/auth/login',
             home: '/',
+            callback: false,
         },
-        cookie: {
-            options: {
-                secure: true,
-                sameSite: 'lax',
-            },
-        },
+        cookie: false,
+        defaultStrategy: 'keycloak',
     },
 }

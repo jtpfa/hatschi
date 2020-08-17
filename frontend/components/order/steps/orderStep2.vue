@@ -2,7 +2,7 @@
     <div>
         <order-payment-method class="mb-5" />
 
-        <order-vouchers v-if="paymentMethod !== null && paymentMethod.length > 0" class="mb-5" />
+        <order-vouchers class="mb-5" />
     </div>
 </template>
 
@@ -13,11 +13,6 @@ import OrderVouchers from '~/components/order/vouchers'
 export default {
     name: 'OrderStep2',
     components: { OrderVouchers, OrderPaymentMethod },
-    computed: {
-        paymentMethod() {
-            return this.$store.state.order.paymentMethod
-        },
-    },
 }
 </script>
 
