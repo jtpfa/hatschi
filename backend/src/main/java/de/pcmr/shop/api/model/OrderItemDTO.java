@@ -1,7 +1,11 @@
 package de.pcmr.shop.api.model;
 
+import javax.validation.constraints.NotNull;
+
 public class OrderItemDTO {
+    @NotNull
     private long article;
+    @NotNull
     private int quantity;
 
     public long getArticle() {

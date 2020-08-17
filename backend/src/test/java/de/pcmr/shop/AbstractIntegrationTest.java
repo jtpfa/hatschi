@@ -1,4 +1,4 @@
-package de.pcmr.shop.service;
+package de.pcmr.shop;
 
 import de.pcmr.shop.repository.*;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,7 +14,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import javax.annotation.PostConstruct;
 
 @SpringBootTest
-abstract class AbstractServiceTest {
+public abstract class AbstractIntegrationTest {
     @Autowired
     private CustomerRepository customerRepository;
     @Autowired

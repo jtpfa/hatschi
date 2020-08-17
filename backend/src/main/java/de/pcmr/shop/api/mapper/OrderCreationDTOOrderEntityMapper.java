@@ -11,11 +11,7 @@ public class OrderCreationDTOOrderEntityMapper {
         OrderEntity orderEntity = new OrderEntity();
         orderEntity.setInvoiceAddress(AddressDTOAddressEntityMapper.mapToAddressEntity(orderCreationDTO.getInvoiceAddress()));
         orderEntity.setShippingAddress(AddressDTOAddressEntityMapper.mapToAddressEntity(orderCreationDTO.getShippingAddress()));
-        orderEntity.setOrderItems(OrderItemDTOOrderItemEntityMapper.mapListToOrderItemEntityList(orderCreationDTO.getOrderItems(), articleRepository, orderEntity));
-
-        orderEntity.setOrderStatus(OrderStatusEnum.OPEN);
-        orderEntity.setPaid(false);
-
+        orderEntity.setOrderItems(OrderItemDTOOrderItemEntityMapper.mapListToOrderItemEntityList(orderCreationDTO.getOrderItems(), articleRepository));
 
         return orderEntity;
     }

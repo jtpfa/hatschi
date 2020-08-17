@@ -10,20 +10,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OrderItemDTOOrderItemEntityMapper {
-    public static List<OrderItemEntity> mapListToOrderItemEntityList(List<OrderItemDTO> orderItemDTOs, ArticleRepository articleRepository, OrderEntity orderEntity) throws NoArticleFoundException {
+    public static List<OrderItemEntity> mapListToOrderItemEntityList(List<OrderItemDTO> orderItemDTOs, ArticleRepository articleRepository) throws NoArticleFoundException {
         List<OrderItemEntity> orderItemEntities = new ArrayList<>();
         for (OrderItemDTO orderItemDTO : orderItemDTOs) {
-            orderItemEntities.add(mapToOrderItemEntity(orderItemDTO, articleRepository, orderEntity));
+            orderItemEntities.add(mapToOrderItemEntity(orderItemDTO, articleRepository));
         }
         return orderItemEntities;
     }
 
 
-    private static OrderItemEntity mapToOrderItemEntity(OrderItemDTO orderItemDTO, ArticleRepository articleRepository, OrderEntity orderEntity) throws NoArticleFoundException {
+    private static OrderItemEntity mapToOrderItemEntity(OrderItemDTO orderItemDTO, ArticleRepository articleRepository) throws NoArticleFoundException {
         OrderItemEntity orderItemEntity = new OrderItemEntity();
         if (articleRepository.existsById(orderItemDTO.getArticle())) {
             orderItemEntity.setArticle(articleRepository.findById(orderItemDTO.getArticle()).get());
-            orderItemEntity.setOrder(orderEntity);
         } else {
             throw new NoArticleFoundException();
         }

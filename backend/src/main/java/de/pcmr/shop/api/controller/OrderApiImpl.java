@@ -18,7 +18,7 @@ import java.security.Principal;
 
 @RestController
 @RequestMapping(OrderApiImpl.ORDER_URI)
-public class OrderApiImpl {
+public class OrderApiImpl implements OrderApiI {
     public static final String ORDER_URI = "/api/customer/order";
 
     private final OrderServiceI orderService;

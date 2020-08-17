@@ -1,9 +1,6 @@
 package de.pcmr.shop.service;
 
-import de.pcmr.shop.domain.ArticleEntity;
-import de.pcmr.shop.domain.CustomerEntity;
-import de.pcmr.shop.domain.OrderEntity;
-import de.pcmr.shop.domain.OrderItemEntity;
+import de.pcmr.shop.domain.*;
 import de.pcmr.shop.exception.DuplicateOrderItemsException;
 import de.pcmr.shop.exception.NoCustomerFoundException;
 import de.pcmr.shop.exception.NotEnoughArticlesOnStockException;
@@ -16,7 +13,6 @@ import org.springframework.validation.annotation.Validated;
 
 import javax.validation.Valid;
 import java.security.Principal;
-import java.time.LocalDateTime;
 import java.util.*;
 
 @Service
@@ -44,6 +40,8 @@ public class OrderServiceImpl implements OrderServiceI {
         orderEntity.getInvoiceAddress().setCustomer(currentCustomer);
         orderEntity.getShippingAddress().setCustomer(currentCustomer);
         orderEntity.setOrderDate(new Date());
+        orderEntity.setPaid(false);
+        orderEntity.setOrderStatus(OrderStatusEnum.OPEN);
         orderRepository.save(orderEntity);
     }
 

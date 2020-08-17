@@ -1,10 +1,15 @@
 package de.pcmr.shop.api.model;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 public class OrderCreationDTO {
+    @NotEmpty
     private List<OrderItemDTO> orderItems;
+    @NotNull
     private AddressDTO invoiceAddress;
+    @NotNull
     private AddressDTO shippingAddress;
 
     public List<OrderItemDTO> getOrderItems() {

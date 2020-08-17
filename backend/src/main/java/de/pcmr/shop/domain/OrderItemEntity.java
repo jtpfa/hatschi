@@ -12,21 +12,17 @@ public class OrderItemEntity extends AbstractEntity {
 
     @Column(nullable = false)
     @Range(min = 0, max = 99999999, message = "Anzahl muss zwischen {min} und {max} Cent liegen")
-    private int quantity;
+    private Integer quantity;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(nullable = false)
     private ArticleEntity article;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(nullable = false)
-    private OrderEntity order;
-
-    public int getQuantity() {
+    public Integer getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(int quantity) {
+    public void setQuantity(Integer quantity) {
         this.quantity = quantity;
     }
 
@@ -36,13 +32,5 @@ public class OrderItemEntity extends AbstractEntity {
 
     public void setArticle(ArticleEntity article) {
         this.article = article;
-    }
-
-    public OrderEntity getOrder() {
-        return order;
-    }
-
-    public void setOrder(OrderEntity order) {
-        this.order = order;
     }
 }

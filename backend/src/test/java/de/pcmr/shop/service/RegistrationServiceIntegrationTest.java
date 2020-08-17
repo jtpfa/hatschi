@@ -1,5 +1,6 @@
 package de.pcmr.shop.service;
 
+import de.pcmr.shop.AbstractIntegrationTest;
 import de.pcmr.shop.builder.CustomerEntityBuilder;
 import de.pcmr.shop.domain.CustomerEntity;
 import de.pcmr.shop.exception.CustomerAlreadyExistsException;
@@ -7,20 +8,18 @@ import de.pcmr.shop.exception.keycloak.KeycloakEndpointNotFoundException;
 import de.pcmr.shop.exception.keycloak.KeycloakUnknownErrorException;
 import de.pcmr.shop.exception.keycloak.KeycloakUserAlreadyExistsException;
 import de.pcmr.shop.exception.keycloak.KeycloakUserIsNotAuthorizedException;
-import de.pcmr.shop.repository.ArticleRepository;
 import de.pcmr.shop.repository.CustomerRepository;
 import org.junit.jupiter.api.Test;
 import org.keycloak.admin.client.resource.UsersResource;
 import org.keycloak.representations.idm.UserRepresentation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
 
 import javax.annotation.PostConstruct;
 import javax.validation.ConstraintViolationException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class RegistrationServiceTest extends AbstractServiceTest {
+class RegistrationServiceIntegrationTest extends AbstractIntegrationTest {
     private final RegistrationServiceI registrationService;
     private final CustomerRepository customerRepository;
 
@@ -43,7 +42,7 @@ class RegistrationServiceTest extends AbstractServiceTest {
     private UsersResource usersResource;
 
     @Autowired
-    RegistrationServiceTest(RegistrationServiceI registrationService, CustomerRepository customerRepository) {
+    RegistrationServiceIntegrationTest(RegistrationServiceI registrationService, CustomerRepository customerRepository) {
         super();
         this.registrationService = registrationService;
         this.customerRepository = customerRepository;
