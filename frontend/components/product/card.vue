@@ -3,11 +3,12 @@
         <div class="w-100">
             <div class="lazy-image d-flex justify-content-center align-items-center">
                 <b-card-img-lazy
-                    alt="Image"
+                    :alt="product.name"
                     class="mb-4"
                     onerror="this.onerror=null;this.srcset='/img/logo-placeholder.svg';"
                     :src="$imageSrcSet.getImageUrl(product.id, 512)"
                     :srcset="$imageSrcSet.getSrcSet(product.id)"
+                    :title="product.name"
                     top
                 />
                 <spinner />
@@ -23,7 +24,7 @@
                 {{ $currencyConverter.insertFractionForEuroConversion(product.price) | currency }}
             </b-card-text>
         </div>
-        <b-link class="stretched-link" :to="`/produkte/${product.id}`"></b-link>
+        <b-link class="stretched-link" :title="`Detailseite von ${product.name}`" :to="`/produkte/${product.id}`" />
     </b-card>
 </template>
 
@@ -49,8 +50,10 @@ export default {
     box-shadow: 0 0 7px 1px rgba(0, 0, 11, 0.16);
     transition: all 0.3s ease-in-out;
 
-    &:hover {
+    &:hover,
+    &:focus {
         box-shadow: 0 0 7px 1px $primary;
+        outline: none;
     }
 
     .lazy-image {

@@ -19,12 +19,13 @@
             :sort-by="sortBy"
             @row-hovered="setCurrentItem"
         >
-            <template v-slot:cell(image)="row" class="test">
+            <template v-slot:cell(image)="row">
                 <b-img-lazy
-                    alt="Image"
+                    :alt="row.item.name"
                     class="image-preview"
                     onerror="this.onerror=null;this.srcset='/img/logo-placeholder.svg';"
                     :src="$imageSrcSet.getImageUrl(row.item.id, 256)"
+                    :title="row.item.name"
                 />
             </template>
 

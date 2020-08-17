@@ -128,5 +128,11 @@ export default {
             callback: '/auth/login',
             home: '/',
         },
+        cookie: {
+            options: {
+                secure: true,
+                sameSite: 'lax',
+            },
+        },
     },
 }

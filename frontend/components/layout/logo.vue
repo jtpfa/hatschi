@@ -1,7 +1,7 @@
 <template>
     <div class="d-flex justify-content-center align-items-center">
-        <b-navbar-brand href="/">
-            <icon-logo />
+        <b-navbar-brand href="/" title="Zur Startseite von PC-MR">
+            <icon-logo aria-label="Logo von PC-MR" />
         </b-navbar-brand>
         <span class="big-noodle description" :class="{ 'text-light': darkBackground, 'text-dark': !darkBackground }">
             Dein Online-
