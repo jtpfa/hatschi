@@ -1,8 +1,9 @@
 <template>
     <fetch-content v-if="state" :size="6" />
     <div v-else class="grid">
-        <b-alert :show="products.length === 0" variant="secondary">Keine Produkte gefunden.</b-alert>
-        <product-card v-for="item in products" :key="item.id" :product="item" />
+        <span v-if="error.length > 0">{{ error }}</span>
+        <b-alert v-else-if="products.length === 0" :show="true" variant="secondary">Keine Produkte gefunden.</b-alert>
+        <product-card v-for="item in products" v-else :key="item.id" :product="item" />
     </div>
 </template>
 
@@ -21,6 +22,10 @@ export default {
         state: {
             type: Boolean,
             required: true,
+        },
+        error: {
+            type: String,
+            default: '',
         },
     },
 }

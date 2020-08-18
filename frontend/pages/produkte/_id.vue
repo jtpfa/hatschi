@@ -1,7 +1,7 @@
 <template>
     <fetch-content v-if="$fetchState.pending" :size="6" />
     <b-container v-else class="my-5">
-        <b-alert v-if="noProductFound" :show="true">Dieses Produkt existiert nicht.</b-alert>
+        <b-alert v-if="error.length > 0" :show="true">{{ error }}</b-alert>
         <template v-else>
             <product-details class="my-5" :product="product" />
 
@@ -37,22 +37,22 @@ export default {
         try {
             this.product = await this.$api.getProduct(this.$route.params.id)
         } catch (err) {
-            this.noProductFound = true
+            this.error = err || 'Dieses Produkt existiert nicht.'
         }
 
         if (!this.product.id) {
-            this.noProductFound = true
+            this.error = 'Dieses Produkt existiert nicht.'
         }
     },
     data() {
         return {
             product: {},
-            noProductFound: false,
+            error: '',
         }
     },
     head() {
         return {
-            title: `${this.product.name} – PC Masterrace`,
+            title: `${this.product.name ? this.product.name : this.error} – PC Masterrace`,
         }
     },
 }

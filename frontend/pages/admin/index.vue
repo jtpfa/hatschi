@@ -3,10 +3,10 @@
         <h1 class="mb-5">Dashboard</h1>
 
         <h2 class="mb-4">Produkte</h2>
-        <data-overview :fields="productFields" type="product"></data-overview>
+        <data-overview :dashboard="true" :fields="productFields" type="product"></data-overview>
 
         <h2>Kunden</h2>
-        <data-overview :fields="customerFields" type="customer"></data-overview>
+        <data-overview :dashboard="true" :fields="customerFields" type="customer"></data-overview>
     </div>
 </template>
 

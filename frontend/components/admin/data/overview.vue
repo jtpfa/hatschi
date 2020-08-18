@@ -29,7 +29,7 @@
                 />
             </template>
 
-            <template v-slot:cell(actions)>
+            <template v-if="!dashboard" v-slot:cell(actions)>
                 <b-button
                     v-b-tooltip.hover
                     class="mr-1"
@@ -94,6 +94,10 @@ export default {
     name: 'DataOverview',
     components: { ProductEdit, CustomerEdit },
     props: {
+        dashboard: {
+            type: Boolean,
+            required: true,
+        },
         fields: {
             type: Array,
             required: true,
@@ -120,8 +124,8 @@ export default {
             } else {
                 this.items = []
             }
-        } catch (e) {
-            this.fetchErrorMsg = 'Leider gab es ein Problem beim Laden der Daten. Bitte später erneut versuchen.'
+        } catch (err) {
+            this.fetchErrorMsg = err || 'Leider gab es ein Problem beim Laden der Daten. Bitte später erneut versuchen.'
         }
     },
     fetchOnServer: false,
@@ -172,15 +176,19 @@ export default {
                 try {
                     await this.$api.deleteProduct(this.currentItem.id, this.$auth.getToken('keycloak'))
                     this.$router.app.refresh()
-                } catch (error) {
-                    this.error = 'Leider gab es ein Problem. Bitte später erneut versuchen.'
+                } catch (err) {
+                    this.error =
+                        `Produkt wurde nicht gelöscht: ${err}` ||
+                        'Leider gab es ein Problem beim Löschen. Bitte später erneut versuchen.'
                 }
             } else if (this.type === 'customer') {
                 try {
                     // @todo delete customer api endpoint
                     this.$router.app.refresh()
-                } catch (error) {
-                    this.error = 'Leider gab es ein Problem. Bitte später erneut versuchen.'
+                } catch (err) {
+                    this.error =
+                        `Kunde wurde nicht gelöscht: ${err}` ||
+                        'Leider gab es ein Problem beim Löschen. Bitte später erneut versuchen.'
                 }
             }
         },

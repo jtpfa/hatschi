@@ -11,7 +11,11 @@ export class RestApi {
                 'Content-type': 'application/json; charset=UTF-8',
             },
             body: JSON.stringify(userAttributes),
-        }).then(response => (response.ok ? response : throw response))
+        }).then(response =>
+            response.ok
+                ? response
+                : response.json().then(result => (result.error !== '' ? throw result.message : result))
+        )
     }
 
     updateUserData(userAttributes, userToken) {
@@ -22,7 +26,11 @@ export class RestApi {
                 Authorization: userToken,
             },
             body: JSON.stringify(userAttributes),
-        }).then(response => (response.ok ? response : throw response))
+        }).then(response =>
+            response.ok
+                ? response
+                : response.json().then(result => (result.error !== '' ? throw result.message : result))
+        )
     }
 
     addProduct(productAttributes, productImage, userToken) {
@@ -53,15 +61,19 @@ export class RestApi {
     }
 
     getProduct(productId) {
-        return fetch(`${this.baseUrl}article/${productId}`, { method: 'GET' })
-            .then(response => response.json())
-            .catch(error => throw error)
+        return fetch(`${this.baseUrl}article/${productId}`, { method: 'GET' }).then(response =>
+            response.ok
+                ? response.json()
+                : response.json().then(result => (result.error !== '' ? throw result.message : result))
+        )
     }
 
     getAllProductsShortVersion() {
-        return fetch(`${this.baseUrl}article`, { method: 'GET' })
-            .then(response => response.json())
-            .catch(error => throw error)
+        return fetch(`${this.baseUrl}article`, { method: 'GET' }).then(response =>
+            response.ok
+                ? response.json()
+                : response.json().then(result => (result.error !== '' ? throw result.message : result))
+        )
     }
 
     getAllProductsDetailedVersion(userToken) {
@@ -70,9 +82,11 @@ export class RestApi {
             headers: {
                 Authorization: userToken,
             },
-        })
-            .then(response => response.json())
-            .catch(error => throw error)
+        }).then(response =>
+            response.ok
+                ? response.json()
+                : response.json().then(result => (result.error !== '' ? throw result.message : result))
+        )
     }
 
     editProduct(productAttributes, productImage, userToken) {
@@ -109,6 +123,10 @@ export class RestApi {
                 'Content-type': 'application/json; charset=UTF-8',
                 Authorization: userToken,
             },
-        }).then(response => (response.ok ? response : throw response))
+        }).then(response =>
+            response.ok
+                ? response
+                : response.json().then(result => (result.error !== '' ? throw result.message : result))
+        )
     }
 }

@@ -1,6 +1,7 @@
 <template>
     <data-overview
         v-if="accessGranted"
+        :dashboard="false"
         :fields="[
             { key: 'firstName', label: 'Vorname', sortable: true },
             { key: 'lastName', label: 'Nachname', sortable: true },

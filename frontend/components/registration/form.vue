@@ -106,7 +106,7 @@ export default {
                 })
                 this.success = 'Dein Benutzer wurde erfolgreich angelegt.'
             } catch (err) {
-                this.error = 'Leider gab es ein Problem. Bitte versuch es später erneut.'
+                this.error = err || 'Leider gab es ein Problem. Bitte später erneut versuchen.'
             }
         },
         async onSubmit(event) {

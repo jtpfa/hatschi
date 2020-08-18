@@ -7,7 +7,11 @@
         <!-- @todo adjust search form styling -->
         <home-search @search="filterProducts($event)" />
 
-        <home-product-overview :products="!filtered ? products : filteredProducts" :state="$fetchState.pending" />
+        <home-product-overview
+            :error="error"
+            :products="!filtered ? products : filteredProducts"
+            :state="$fetchState.pending"
+        />
     </b-container>
 </template>
 
@@ -26,7 +30,7 @@ export default {
         try {
             this.products = await this.$api.getAllProductsShortVersion()
         } catch (err) {
-            this.products = []
+            this.error = err || 'Leider konnten keine Produkte geladen werden.'
         }
     },
     data() {
@@ -34,6 +38,7 @@ export default {
             products: [],
             filteredProducts: [],
             filtered: false,
+            error: '',
         }
     },
     fetchOnServer: false,
