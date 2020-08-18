@@ -14,7 +14,7 @@
                     </b-navbar-nav>
                 </b-collapse>
             </b-navbar>
-            <login-modal :has-access="true" modal-id="modal-center" />
+            <login-modal modal-id="modal-center" />
         </div>
     </client-only>
 </template>

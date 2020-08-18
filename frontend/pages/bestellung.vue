@@ -66,6 +66,7 @@ export default {
         OrderHeadline,
         CartSummary,
     },
+    middleware: 'auth',
     data() {
         return {
             loading: false,

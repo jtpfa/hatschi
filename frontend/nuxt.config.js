@@ -128,7 +128,6 @@ export default {
             home: '/',
             callback: false,
         },
-        cookie: false,
         defaultStrategy: 'keycloak',
     },
 }

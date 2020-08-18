@@ -30,8 +30,10 @@ export default {
         this.accessGranted = this.$auth.$state.roles.includes('admin')
 
         if (!this.accessGranted) {
-            this.$auth.$storage.setCookie('redirect', '/admin/kunden')
+            this.$auth.$storage.setUniversal('redirect', '/admin/kunden')
             this.$router.push('/auth/login')
+        } else {
+            this.$auth.$storage.removeUniversal('redirect')
         }
     },
 }

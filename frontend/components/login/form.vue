@@ -1,9 +1,6 @@
 <template>
     <div :class="{ 'pb-4 mx-4 col-11 col-sm-9 col-md-7 col-lg-5 col-xl-4 bg-white border': loginPage }">
         <b-form ref="form" class="pb-3 px-3" novalidate @submit.prevent="onSubmit">
-            <b-alert class="mt-5 mb-3" :show="!hasAccess" variant="warning">
-                Zugriff nicht gewährt. Bitte mit anderem Benutzer anmelden.
-            </b-alert>
             <b-button-close v-if="loginPage" @click="$router.push('/')" />
             <div class="mb-3" :class="{ 'mt-3': !loginPage, 'mt-5': loginPage }" role="group">
                 <label for="email">
@@ -59,10 +56,6 @@
 export default {
     name: 'LoginForm',
     props: {
-        hasAccess: {
-            type: Boolean,
-            default: true,
-        },
         loginPage: {
             type: Boolean,
             default: false,
