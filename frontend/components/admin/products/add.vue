@@ -213,7 +213,7 @@ export default {
                 this.success = 'Der Artikel wurde erfolgreich angelegt.'
                 this.clearForm()
             } catch (err) {
-                this.error = err || 'Leider gab es ein Problem. Bitte später erneut versuchen.'
+                this.error = err.message || 'Leider gab es ein Problem. Bitte später erneut versuchen.'
             }
         },
         async onSubmit(event) {

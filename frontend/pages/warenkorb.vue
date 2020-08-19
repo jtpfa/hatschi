@@ -83,7 +83,7 @@ export default {
                             })
                             .then(() => resolve())
                     } catch (err) {
-                        if (err.toLocaleLowerCase().includes('kein artikel')) {
+                        if (err.message.toLocaleLowerCase().includes('kein artikel')) {
                             this.cartChanged = true
                             this.$store.commit('shoppingcart/removeAllFromCart', item)
                             this.generateToastMessage(
@@ -93,7 +93,8 @@ export default {
                             )
                         } else {
                             this.error =
-                                err || 'Bitte Seite neu laden. Es gibt ein Problem mit mind. einem der Produkte.'
+                                err.message ||
+                                'Bitte Seite neu laden. Es gibt ein Problem mit mind. einem der Produkte.'
                             reject()
                         }
                     }

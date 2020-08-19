@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h2>{{ addressType === 'delivery' ? 'Lieferadresse' : 'Rechnungsadresse' }} angeben</h2>
+        <h2>{{ addressType === 'shipping' ? 'Lieferadresse' : 'Rechnungsadresse' }} angeben</h2>
         <b-card>
             <div class="row">
                 <!-- @todo insert first and last name when user is logged in  -->
@@ -57,6 +57,7 @@
                         :id="`${addressType}-zip`"
                         v-model="zip"
                         aria-describedby="input-live-feedback"
+                        pattern="^.{1,50}$"
                         placeholder="PLZ"
                         required
                         trim
@@ -76,6 +77,7 @@
                         :id="`${addressType}-city`"
                         v-model="city"
                         aria-describedby="input-live-feedback"
+                        pattern="^.{1,100}$"
                         placeholder="Stadt"
                         required
                         trim
@@ -97,6 +99,7 @@
                         :id="`${addressType}-street`"
                         v-model="street"
                         aria-describedby="input-live-feedback"
+                        pattern="^.{1,245}$"
                         placeholder="Straße"
                         required
                         trim
@@ -116,6 +119,7 @@
                         :id="`${addressType}-number`"
                         v-model="number"
                         aria-describedby="input-live-feedback"
+                        pattern="^.{1,10}$"
                         placeholder="Hausnr."
                         required
                         trim
@@ -123,6 +127,46 @@
 
                     <b-form-invalid-feedback id="input-live-feedback">
                         Bitte gib eine Hausnummer an.
+                    </b-form-invalid-feedback>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="mb-4 col-sm-4 col-xl-3" role="group">
+                    <label :for="`${addressType}-additional-address`">
+                        Adresszusatz
+                    </label>
+                    <b-form-input
+                        :id="`${addressType}-additional-address`"
+                        v-model="additionalAddress"
+                        aria-describedby="input-live-feedback"
+                        pattern="^.{1,255}$"
+                        placeholder="Zusatz"
+                        trim
+                    />
+
+                    <b-form-invalid-feedback id="input-live-feedback">
+                        Bitte gib einen Adresszusatz an.
+                    </b-form-invalid-feedback>
+                </div>
+
+                <div class="mb-4 col-sm-8 col-xl-9" role="group">
+                    <label :for="`${addressType}-country`">
+                        Land
+                        <span class="mandatory">*</span>
+                    </label>
+                    <b-form-input
+                        :id="`${addressType}-country`"
+                        v-model="country"
+                        aria-describedby="input-live-feedback"
+                        pattern="^.{1,50}$"
+                        placeholder="Land"
+                        required
+                        trim
+                    />
+
+                    <b-form-invalid-feedback id="input-live-feedback">
+                        Bitte gib ein Land an.
                     </b-form-invalid-feedback>
                 </div>
             </div>
@@ -139,7 +183,7 @@ export default {
             required: true,
             validator(type) {
                 // The value must match one of these strings
-                return ['delivery', 'invoice'].indexOf(type) !== -1
+                return ['shipping', 'invoice'].indexOf(type) !== -1
             },
         },
     },
@@ -213,6 +257,30 @@ export default {
                     address: `${this.addressType}Address`,
                     key: 'number',
                     data: number,
+                })
+            },
+        },
+        additionalAddress: {
+            get() {
+                return this.$store.state.order[`${this.addressType}Address`].additionalAddress
+            },
+            set(additionalAddress) {
+                this.$store.commit('order/updateOrderInformation', {
+                    address: `${this.addressType}Address`,
+                    key: 'additionalAddress',
+                    data: additionalAddress,
+                })
+            },
+        },
+        country: {
+            get() {
+                return this.$store.state.order[`${this.addressType}Address`].country
+            },
+            set(country) {
+                this.$store.commit('order/updateOrderInformation', {
+                    address: `${this.addressType}Address`,
+                    key: 'country',
+                    data: country,
                 })
             },
         },

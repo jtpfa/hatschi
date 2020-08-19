@@ -3,14 +3,14 @@
         <h2>Deine Daten</h2>
         <b-card-group class="mb-5" deck>
             <order-overview-card :step-to-edit-data="0" title="Versandart">
-                {{ order.deliveryMethod }}
+                {{ order.shippingMethod }}
             </order-overview-card>
             <order-overview-card :step-to-edit-data="1" title="Zahlungsart">
                 {{ order.paymentMethod }}
             </order-overview-card>
         </b-card-group>
 
-        <order-overview-address address-type="delivery" class="mb-5" title="Lieferadresse" />
+        <order-overview-address address-type="shipping" class="mb-5" title="Lieferadresse" />
 
         <order-overview-address
             v-if="order.differentInvoiceAddress"

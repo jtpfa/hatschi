@@ -172,7 +172,7 @@ export default {
                 this.$root.$emit('bv::hide::modal', this.modalId)
                 this.$router.app.refresh()
             } catch (err) {
-                this.error = err || 'Leider gab es ein Problem. Bitte später erneut versuchen.'
+                this.error = err.message || 'Leider gab es ein Problem. Bitte später erneut versuchen.'
             }
         },
         async onSubmit(event) {

@@ -16,7 +16,7 @@
 
             <div class="col-12 col-md-7">
                 <h1 class="text-primary text-center text-md-left oblique mb-0">{{ product.name }}</h1>
-                <span class="delivery-time d-block text-center text-md-left text-muted">{{ deliveryInformation }}</span>
+                <span class="shipping-time d-block text-center text-md-left text-muted">{{ shippingInformation }}</span>
 
                 <p class="mt-5">
                     {{ product.description }}
@@ -61,7 +61,7 @@ export default {
     },
     computed: {
         ...mapGetters({ productQuantity: 'shoppingcart/productQuantity' }),
-        deliveryInformation() {
+        shippingInformation() {
             return !this.orderable ? 'Nicht mehr auf Lager' : 'Lieferbar in 3-4 Werktagen'
         },
         orderable() {
@@ -84,7 +84,7 @@ export default {
         width: 50%;
     }
 }
-.delivery-time {
+.shipping-time {
     margin-top: -0.5rem;
 }
 

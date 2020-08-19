@@ -1,12 +1,14 @@
 export const state = () => ({
-    deliveryMethod: null,
-    deliveryAddress: {
+    shippingMethod: null,
+    shippingAddress: {
         firstName: '',
         lastName: '',
         zip: '',
         city: '',
         street: '',
         number: '',
+        country: '',
+        additionalAddress: '',
     },
     differentInvoiceAddress: false,
     invoiceAddress: {
@@ -16,6 +18,8 @@ export const state = () => ({
         city: '',
         street: '',
         number: '',
+        country: '',
+        additionalAddress: '',
     },
     paymentMethod: null,
     giftCardCode: '',

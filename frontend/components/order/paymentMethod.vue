@@ -8,12 +8,12 @@
             <b-list-group-item v-for="method in availableMethods" :key="method.name">
                 <b-form-radio
                     v-model="selectedMethod"
-                    name="delivery-methods"
+                    name="shipping-methods"
                     required
                     :state="validState"
                     :value="method.description ? `${method.name} – ${method.description}` : method.name"
                 >
-                    <span class="delivery-key">
+                    <span class="shipping-key">
                         {{ method.name }}{{ method.description ? ` – ${method.description}` : null }}
                     </span>
                 </b-form-radio>

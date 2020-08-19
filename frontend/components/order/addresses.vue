@@ -1,6 +1,6 @@
 <template>
     <div>
-        <order-address-form address-type="delivery" />
+        <order-address-form address-type="shipping" />
 
         <b-form-checkbox v-model="differentInvoiceAddress" class="my-5" name="differentInvoiceAddress" size="lg" switch>
             Rechnungsadresse weicht von der Lieferadresse ab

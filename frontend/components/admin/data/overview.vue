@@ -130,7 +130,8 @@ export default {
                 this.items = []
             }
         } catch (err) {
-            this.fetchErrorMsg = err || 'Leider gab es ein Problem beim Laden der Daten. Bitte später erneut versuchen.'
+            this.fetchErrorMsg =
+                err.message || 'Leider gab es ein Problem beim Laden der Daten. Bitte später erneut versuchen.'
         }
     },
     fetchOnServer: false,
@@ -183,7 +184,7 @@ export default {
                     this.$router.app.refresh()
                 } catch (err) {
                     this.error =
-                        `Produkt wurde nicht gelöscht: ${err}` ||
+                        `Produkt wurde nicht gelöscht: ${err.message}` ||
                         'Leider gab es ein Problem beim Löschen. Bitte später erneut versuchen.'
                 }
             } else if (this.type === 'customer') {
@@ -192,7 +193,7 @@ export default {
                     this.$router.app.refresh()
                 } catch (err) {
                     this.error =
-                        `Kunde wurde nicht gelöscht: ${err}` ||
+                        `Kunde wurde nicht gelöscht: ${err.message}` ||
                         'Leider gab es ein Problem beim Löschen. Bitte später erneut versuchen.'
                 }
             }

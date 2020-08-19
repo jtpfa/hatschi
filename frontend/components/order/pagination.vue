@@ -9,10 +9,12 @@
             </b-button>
             <b-button
                 class="d-flex justify-content-center align-items-center my-3"
+                :disabled="loading"
                 size="lg"
                 type="submit"
                 variant="primary"
             >
+                <b-spinner v-if="loading" small></b-spinner>
                 {{ step === 2 ? 'Jetzt kaufen' : 'Weiter' }} &rarr;
             </b-button>
         </div>
@@ -22,6 +24,12 @@
 <script>
 export default {
     name: 'OrderPagination',
+    props: {
+        loading: {
+            type: Boolean,
+            default: false,
+        },
+    },
     computed: {
         step: {
             get() {

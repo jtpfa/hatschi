@@ -109,7 +109,7 @@ export default {
                     this.emailChanged = true
                 }
             } catch (err) {
-                this.error = err || 'Leider gab es ein Problem. Bitte später erneut versuchen.'
+                this.error = err.message || 'Leider gab es ein Problem. Bitte später erneut versuchen.'
             }
         },
         async onSubmit(event) {

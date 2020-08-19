@@ -89,7 +89,7 @@ export default {
             } catch (err) {
                 this.$refs.email?.setCustomValidity('Benutzername und Passwort stimmen nicht überein.')
                 this.$refs.password?.setCustomValidity('Benutzername und Passwort stimmen nicht überein.')
-                this.error = 'Es ist ein Fehler passiert. Bitter später erneut versuchen.'
+                this.error = err.message || 'Es ist ein Fehler passiert. Bitter später erneut versuchen.'
             }
             this.loading = false
         },

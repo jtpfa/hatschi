@@ -37,17 +37,19 @@
                             <b-button
                                 v-if="step === 2"
                                 class="d-flex justify-content-center w-100 align-items-center my-3"
+                                :disabled="loading"
                                 size="lg"
                                 type="submit"
                                 variant="primary"
                             >
+                                <b-spinner v-if="loading" small></b-spinner>
                                 Jetzt kaufen
                             </b-button>
                         </cart-summary>
                     </div>
                 </div>
 
-                <order-pagination @back="stepBack" />
+                <order-pagination :loading="loading" @back="stepBack" />
             </b-form>
         </b-container>
     </client-only>
@@ -75,7 +77,6 @@ export default {
         OrderHeadline,
         CartSummary,
     },
-    middleware: 'auth',
     data() {
         return {
             loading: false,
@@ -91,8 +92,14 @@ export default {
                 this.$store.commit('order/updateOrderInformation', { key: 'step', data: step })
             },
         },
-        deliveryMethod() {
-            return this.$store.state.order.deliveryMethod
+        cart() {
+            return this.$store.state.shoppingcart.cart
+        },
+        order() {
+            return this.$store.state.order
+        },
+        shippingMethod() {
+            return this.$store.state.order.shippingMethod
         },
         paymentMethod() {
             return this.$store.state.order.paymentMethod
@@ -119,9 +126,17 @@ export default {
                     } else {
                         this.$auth.$storage.removeUniversal('redirect')
                         await this.submitOrder()
+
+                        if (this.error.length > 0) {
+                            this.loading = false
+                            return
+                        }
+
+                        this.step += 1
                     }
+                } else {
+                    this.step += 1
                 }
-                this.step += 1
             }
             this.loading = false
         },
@@ -130,7 +145,31 @@ export default {
             this.step -= 1
         },
         async submitOrder() {
-            await new Promise(res => setTimeout(res, 3000))
+            try {
+                const shippingAddress = this.getAddress('shipping')
+                const invoiceAddress = this.order.differentInvoiceAddress ? this.getAddress('invoice') : shippingAddress
+                const orderItems = this.cart.map(item => {
+                    return { article: item.id, quantity: item.quantity }
+                })
+
+                await this.$api.placeOrder(
+                    { orderItems, shippingAddress, invoiceAddress },
+                    this.$auth.getToken('keycloak')
+                )
+            } catch (err) {
+                this.error = err.message || 'Leider gab es ein Problem. Bitte später erneut versuchen.'
+            }
+        },
+        getAddress(addressType) {
+            return {
+                firstName: this.order[`${addressType}Address`].firstName,
+                lastName: this.order[`${addressType}Address`].lastName,
+                address: `${this.order[`${addressType}Address`].street} ${this.order[`${addressType}Address`].number}`,
+                additionalAddress: this.order[`${addressType}Address`].additionalAddress,
+                zip: this.order[`${addressType}Address`].zip,
+                city: this.order[`${addressType}Address`].city,
+                country: this.order[`${addressType}Address`].country,
+            }
         },
     },
 }

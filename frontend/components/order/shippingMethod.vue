@@ -8,14 +8,14 @@
             <b-list-group-item v-for="method in availableMethods" :key="method.name + method.description">
                 <b-form-radio
                     v-model="selectedMethod"
-                    name="delivery-methods"
+                    name="shipping-methods"
                     required
                     :state="validState"
                     :value="method.description + ' – ' + method.name"
                 >
-                    <span class="delivery-key">{{ method.description }} – {{ method.name }}</span>
+                    <span class="shipping-key">{{ method.description }} – {{ method.name }}</span>
                     <br />
-                    <span class="text-muted">{{ method.deliveryTime }}</span>
+                    <span class="text-muted">{{ method.shippingTime }}</span>
                 </b-form-radio>
             </b-list-group-item>
         </b-list-group>
@@ -24,23 +24,23 @@
 
 <script>
 export default {
-    name: 'OrderDeliveryMethod',
+    name: 'OrdershippingMethod',
     data() {
         return {
             validState: null,
             availableMethods: [
-                { name: 'UPS', description: 'Standardversand', deliveryTime: 'Lieferung innerhalb von 2-4 Werktagen' },
-                { name: 'DHL', description: 'Expressversand', deliveryTime: 'Lieferung innerhalb von 1-2 Werktagen' },
+                { name: 'UPS', description: 'Standardversand', shippingTime: 'Lieferung innerhalb von 2-4 Werktagen' },
+                { name: 'DHL', description: 'Expressversand', shippingTime: 'Lieferung innerhalb von 1-2 Werktagen' },
             ],
         }
     },
     computed: {
         selectedMethod: {
             get() {
-                return this.$store.state.order.deliveryMethod
+                return this.$store.state.order.shippingMethod
             },
-            set(deliveryMethod) {
-                this.$store.commit('order/updateOrderInformation', { key: 'deliveryMethod', data: deliveryMethod })
+            set(shippingMethod) {
+                this.$store.commit('order/updateOrderInformation', { key: 'shippingMethod', data: shippingMethod })
             },
         },
     },
@@ -48,7 +48,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.delivery-key {
+.shipping-key {
     font-size: 1.2rem;
 }
 

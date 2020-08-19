@@ -37,7 +37,7 @@ export default {
         try {
             this.product = await this.$api.getProduct(this.$route.params.id)
         } catch (err) {
-            this.error = err || 'Dieses Produkt existiert nicht.'
+            this.error = err.message || 'Dieses Produkt existiert nicht.'
         }
 
         if (!this.product.id) {

@@ -1,21 +1,21 @@
 <template>
     <div>
-        <order-delivery-method class="mb-5" />
+        <order-shipping-method class="mb-5" />
 
-        <order-addresses v-if="deliveryMethod !== null && deliveryMethod.length > 0" class="mb-5" />
+        <order-addresses v-if="shippingMethod !== null && shippingMethod.length > 0" class="mb-5" />
     </div>
 </template>
 
 <script>
 import OrderAddresses from '~/components/order/addresses'
-import OrderDeliveryMethod from '~/components/order/deliveryMethod'
+import OrderShippingMethod from '~/components/order/shippingMethod'
 
 export default {
     name: 'OrderStep1',
-    components: { OrderAddresses, OrderDeliveryMethod },
+    components: { OrderAddresses, OrderShippingMethod },
     computed: {
-        deliveryMethod() {
-            return this.$store.state.order.deliveryMethod
+        shippingMethod() {
+            return this.$store.state.order.shippingMethod
         },
     },
 }

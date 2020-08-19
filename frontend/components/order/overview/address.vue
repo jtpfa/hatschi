@@ -39,7 +39,7 @@ export default {
             required: true,
             validator(type) {
                 // The value must match one of these strings
-                return ['delivery', 'invoice'].indexOf(type) !== -1
+                return ['shipping', 'invoice'].indexOf(type) !== -1
             },
         },
         title: {

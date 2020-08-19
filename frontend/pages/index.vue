@@ -30,7 +30,7 @@ export default {
         try {
             this.products = await this.$api.getAllProductsShortVersion()
         } catch (err) {
-            this.error = err || 'Leider konnten keine Produkte geladen werden.'
+            this.error = err.message || 'Leider konnten keine Produkte geladen werden.'
         }
     },
     data() {
