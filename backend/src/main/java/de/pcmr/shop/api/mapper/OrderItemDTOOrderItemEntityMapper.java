@@ -1,7 +1,6 @@
 package de.pcmr.shop.api.mapper;
 
 import de.pcmr.shop.api.model.OrderItemDTO;
-import de.pcmr.shop.domain.OrderEntity;
 import de.pcmr.shop.domain.OrderItemEntity;
 import de.pcmr.shop.exception.NoArticleFoundException;
 import de.pcmr.shop.repository.ArticleRepository;

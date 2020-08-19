@@ -2,7 +2,6 @@ package de.pcmr.shop.domain;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
-
 import java.util.Objects;
 
 import static de.pcmr.shop.domain.AbstractEntity.TABLE_PREFIX;
