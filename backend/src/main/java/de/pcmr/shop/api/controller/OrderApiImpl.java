@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.security.Principal;
 
 @RestController
@@ -31,7 +32,7 @@ public class OrderApiImpl implements OrderApiI {
     }
 
     @PostMapping
-    public void placeOrder(@RequestBody OrderCreationDTO orderCreationDTO, Principal principal) throws NoArticleFoundException, NoCustomerFoundException, NotEnoughArticlesOnStockException, DuplicateOrderItemsException {
+    public void placeOrder(@RequestBody @Valid OrderCreationDTO orderCreationDTO, Principal principal) throws NoArticleFoundException, NoCustomerFoundException, NotEnoughArticlesOnStockException, DuplicateOrderItemsException {
         orderService.processOrder(OrderCreationDTOOrderEntityMapper.mapToOrderEntity(orderCreationDTO, articleRepository), principal);
     }
 }
