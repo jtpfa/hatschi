@@ -46,52 +46,71 @@ export default {
         cart() {
             return this.$store.state.shoppingcart.cart
         },
-        stockOfCartElementsChanged() {
-            return this.$store.state.shoppingcart.stockOfCartElementsChanged
+        stockOfElementChanged() {
+            return this.$store.state.shoppingcart.stockOfElementChanged
         },
     },
     methods: {
-        onSubmit() {
+        async onSubmit() {
             this.cartChanged = false
-            new Promise((resolve, reject) => {
-                this.cart.forEach(async (item, index, array) => {
-                    try {
-                        const product = await this.$api.getProduct(item.id)
-                        this.$store.commit('shoppingcart/updateCart', product)
 
-                        if (this.stockOfCartElementsChanged) {
-                            this.cartChanged = true
-                            this.$bvToast.toast(
-                                `Wir mussten leider bei "${item.name}" deine gewünschte Menge auf unseren neuen Lagerstand aktualisieren. Bitte den Warenkorb überprüfen und erneut absenden.`,
-                                {
-                                    title: 'Es gab eine Änderung beim Lagerbestand',
-                                    noAutoHide: true,
-                                    appendToast: true,
-                                    isStatus: true,
-                                    solid: true,
-                                    variant: 'warning',
-                                }
+            await this.asyncForEach(this.cart, async item => {
+                try {
+                    const product = await this.$api.getProduct(item.id)
+                    this.$store.commit('shoppingcart/updateCart', product)
+
+                    if (this.stockOfElementChanged) {
+                        this.cartChanged = true
+
+                        if (product.stock === 0) {
+                            this.$store.commit('shoppingcart/removeAllFromCart', item)
+                            this.generateToastMessage(
+                                'Es gab eine Änderung des Warenkorbs',
+                                `Wir mussten leider "${item.name}" aus deinem Warenkorb entfernen, da dieser Artikel nicht mehr verfügbar ist.`,
+                                'danger'
                             )
-                            this.$store.commit('shoppingcart/resetStockElementsChangeListener')
+                        } else {
+                            this.generateToastMessage(
+                                'Es gab eine Änderung beim Lagerbestand',
+                                `Wir mussten leider bei "${item.name}" deine gewünschte Menge auf unseren neuen Lagerstand aktualisieren. Bitte den Warenkorb überprüfen und erneut absenden.`,
+                                'warning'
+                            )
                         }
-
-                        if (index === array.length - 1) {
-                            resolve()
-                        }
-                    } catch (err) {
-                        this.error = 'Bitte Seite neu laden. Es gibt ein Problem mit mind. einem der Produkte.'
-                        reject()
                     }
-                })
+                } catch (err) {
+                    if (err.toLocaleLowerCase().includes('kein artikel')) {
+                        this.cartChanged = true
+                        await this.$store.commit('shoppingcart/removeAllFromCart', item)
+                        await this.generateToastMessage(
+                            'Es gab eine Änderung des Warenkorbs',
+                            `Wir mussten leider "${item.name}" aus deinem Warenkorb entfernen, da dieser Artikel nicht mehr verfügbar ist.`,
+                            'danger'
+                        )
+                    } else {
+                        this.error = err || 'Bitte Seite neu laden. Es gibt ein Problem mit mind. einem der Produkte.'
+                    }
+                }
             })
-                .then(() => {
-                    if (!this.cartChanged) {
-                        this.$router.push('/bestellung')
-                    }
-                })
-                .catch(() => {
-                    this.error = 'Leider gab es ein Problem. Bitte versuch es später erneut.'
-                })
+
+            if (!this.cartChanged) {
+                this.$router.push('/bestellung')
+            }
+        },
+        async asyncForEach(array, callback) {
+            for (let index = 0; index < array.length; index += 1) {
+                // eslint-disable-next-line no-await-in-loop
+                await callback(array[index], index, array)
+            }
+        },
+        generateToastMessage(title, description, variant) {
+            this.$bvToast.toast(description, {
+                title,
+                noAutoHide: true,
+                appendToast: true,
+                isStatus: true,
+                solid: true,
+                variant,
+            })
         },
     },
     head() {

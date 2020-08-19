@@ -28,7 +28,7 @@ export default {
         }
     },
     mounted() {
-        this.accessGranted = this.$auth.$state.roles.includes('employee') || this.$auth.$state.roles.includes('admin')
+        this.accessGranted = this.$auth.$state.roles?.includes('employee') || this.$auth.$state.roles?.includes('admin')
 
         if (!this.accessGranted) {
             this.$auth.$storage.setUniversal('redirect', '/admin')

@@ -3,7 +3,6 @@
         <b-container class="mt-5">
             <order-progressbar class="position-relative mt-5" />
             <b-form ref="form" novalidate @submit.prevent.stop="onSubmit">
-                <order-pagination @back="stepBack" />
                 <order-headline />
 
                 <div class="row mt-5">
@@ -34,7 +33,17 @@
                         </template>
                     </div>
                     <div v-if="step >= 0 && step <= 2" class="col-md-5">
-                        <cart-summary class="mb-5 mb-md-0" :error="error" />
+                        <cart-summary class="mb-5 mb-md-0" :error="error">
+                            <b-button
+                                v-if="step === 2"
+                                class="d-flex justify-content-center w-100 align-items-center my-3"
+                                size="lg"
+                                type="submit"
+                                variant="primary"
+                            >
+                                Jetzt kaufen
+                            </b-button>
+                        </cart-summary>
                     </div>
                 </div>
 
@@ -104,9 +113,13 @@ export default {
 
                 // eslint-disable-next-line no-lonely-if
                 if (this.step === 2) {
-                    // this.submitOrder()
-
-                    await new Promise(res => setTimeout(res, 3000))
+                    if (!this.$auth.loggedIn) {
+                        this.$auth.$storage.setUniversal('redirect', '/bestellung')
+                        this.$router.push('/auth/login')
+                    } else {
+                        this.$auth.$storage.removeUniversal('redirect')
+                        await this.submitOrder()
+                    }
                 }
                 this.step += 1
             }
@@ -116,7 +129,9 @@ export default {
             this.$refs.form.classList.remove('was-validated')
             this.step -= 1
         },
-        submitOrder() {},
+        async submitOrder() {
+            await new Promise(res => setTimeout(res, 3000))
+        },
     },
 }
 </script>

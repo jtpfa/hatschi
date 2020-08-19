@@ -30,25 +30,28 @@
             </template>
 
             <template v-if="!dashboard" v-slot:cell(actions)>
-                <b-button
-                    v-b-tooltip.hover
-                    class="mr-1"
-                    size="sm"
-                    title="Bearbeiten"
-                    variant="primary"
-                    @click="$bvModal.show(`modal-edit-${type}`)"
-                >
-                    &#9998;
-                </b-button>
-                <b-button
-                    v-b-tooltip.hover
-                    size="sm"
-                    title="Löschen"
-                    variant="danger"
-                    @click="showMsgBoxConfirmDeletion"
-                >
-                    &#10007;
-                </b-button>
+                <b-button-group>
+                    <b-button
+                        v-b-tooltip.hover
+                        class="action-button"
+                        size="sm"
+                        title="Bearbeiten"
+                        variant="primary"
+                        @click="$bvModal.show(`modal-edit-${type}`)"
+                    >
+                        <icon-pen />
+                    </b-button>
+                    <b-button
+                        v-b-tooltip.hover
+                        class="action-button"
+                        size="sm"
+                        title="Löschen"
+                        variant="danger"
+                        @click="showMsgBoxConfirmDeletion"
+                    >
+                        <icon-trash />
+                    </b-button>
+                </b-button-group>
             </template>
 
             <template v-slot:table-busy>
@@ -89,10 +92,12 @@
 <script>
 import ProductEdit from '~/components/admin/products/edit'
 import CustomerEdit from '~/components/admin/customers/edit'
+import IconPen from '~/components/icons/pen'
+import IconTrash from '~/components/icons/trash'
 
 export default {
     name: 'DataOverview',
-    components: { ProductEdit, CustomerEdit },
+    components: { IconTrash, IconPen, ProductEdit, CustomerEdit },
     props: {
         dashboard: {
             type: Boolean,
@@ -200,5 +205,11 @@ export default {
 .image-preview {
     max-width: 6rem;
     max-height: 4rem;
+}
+
+.action-button svg {
+    width: 1.25rem;
+    height: auto;
+    fill: $white;
 }
 </style>
