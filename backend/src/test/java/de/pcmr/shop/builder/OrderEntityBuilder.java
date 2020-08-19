@@ -10,10 +10,12 @@ public final class OrderEntityBuilder {
     private Date orderDate;
     private CustomerEntity customer;
     private List<OrderItemEntity> orderItems;
-    private boolean paid;
+    private Boolean paid;
     private AddressEntity invoiceAddress;
     private AddressEntity shippingAddress;
-    private long id;
+    private PaymentMethodEnum paymentMethod;
+    private ShippingMethodEnum shippingMethod;
+    private Long id;
     private Date created;
     private Date updated;
     private String createdBy;
@@ -46,7 +48,7 @@ public final class OrderEntityBuilder {
         return this;
     }
 
-    public OrderEntityBuilder withPaid(boolean paid) {
+    public OrderEntityBuilder withPaid(Boolean paid) {
         this.paid = paid;
         return this;
     }
@@ -61,7 +63,17 @@ public final class OrderEntityBuilder {
         return this;
     }
 
-    public OrderEntityBuilder withId(long id) {
+    public OrderEntityBuilder withPaymentMethod(PaymentMethodEnum paymentMethod) {
+        this.paymentMethod = paymentMethod;
+        return this;
+    }
+
+    public OrderEntityBuilder withShippingMethod(ShippingMethodEnum shippingMethod) {
+        this.shippingMethod = shippingMethod;
+        return this;
+    }
+
+    public OrderEntityBuilder withId(Long id) {
         this.id = id;
         return this;
     }
@@ -95,6 +107,8 @@ public final class OrderEntityBuilder {
         orderEntity.setPaid(paid);
         orderEntity.setInvoiceAddress(invoiceAddress);
         orderEntity.setShippingAddress(shippingAddress);
+        orderEntity.setPaymentMethod(paymentMethod);
+        orderEntity.setShippingMethod(shippingMethod);
         orderEntity.setId(id);
         orderEntity.setCreated(created);
         orderEntity.setUpdated(updated);

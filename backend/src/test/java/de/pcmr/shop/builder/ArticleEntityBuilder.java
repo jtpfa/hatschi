@@ -8,9 +8,9 @@ public final class ArticleEntityBuilder {
     private String name;
     private String description;
     private String details;
-    private int price;
-    private int stock;
-    private long id;
+    private Integer price;
+    private Integer stock;
+    private Long id;
     private Date created;
     private Date updated;
     private String createdBy;

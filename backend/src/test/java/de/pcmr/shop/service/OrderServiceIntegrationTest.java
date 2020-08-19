@@ -17,7 +17,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 
-import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 import java.util.ArrayList;
 import java.util.List;
@@ -72,7 +71,7 @@ class OrderServiceIntegrationTest extends AbstractIntegrationTest {
         given.anAddressEntity();
         given.anOrderItemEntityWith(articleEntities.get(0), 1);
         given.anOrderItemEntityWith(articleEntities.get(1), 3);
-        given.anOrderEntityWith(addressEntity, addressEntity, orderItemEntities.get(0), orderItemEntities.get(1));
+        given.anOrderEntityWith(addressEntity, addressEntity, PaymentMethodEnum.CREDIT_CARD, ShippingMethodEnum.DEFAULT, orderItemEntities.get(0), orderItemEntities.get(1));
 
         when.aRegisteredCustomerIsAuthenticated(CUSTOMER_EMAIL_A, CUSTOMER_PASSWORD_A);
         when.anOrderIsProcessed(orderEntity);
@@ -92,7 +91,7 @@ class OrderServiceIntegrationTest extends AbstractIntegrationTest {
         given.anAddressEntity();
         given.anOrderItemEntityWith(articleEntities.get(0), 1);
         given.anOrderItemEntityWith(articleEntities.get(1), 4);
-        given.anOrderEntityWith(addressEntity, addressEntity, orderItemEntities.get(0), orderItemEntities.get(1));
+        given.anOrderEntityWith(addressEntity, addressEntity, PaymentMethodEnum.CREDIT_CARD, ShippingMethodEnum.DEFAULT, orderItemEntities.get(0), orderItemEntities.get(1));
 
         when.aRegisteredCustomerIsAuthenticated(CUSTOMER_EMAIL_A, CUSTOMER_PASSWORD_A);
         assertThrows(NotEnoughArticlesOnStockException.class, () -> when.anOrderIsProcessed(orderEntity));
@@ -108,7 +107,7 @@ class OrderServiceIntegrationTest extends AbstractIntegrationTest {
         given.anOrderItemEntityWith(articleEntities.get(0), 1);
         given.anOrderItemEntityWith(articleEntities.get(1), 4);
         given.anOrderItemEntityWith(articleEntities.get(0), 1);
-        given.anOrderEntityWith(addressEntity, addressEntity, orderItemEntities.get(0), orderItemEntities.get(1), orderItemEntities.get(2));
+        given.anOrderEntityWith(addressEntity, addressEntity, PaymentMethodEnum.CREDIT_CARD, ShippingMethodEnum.DEFAULT, orderItemEntities.get(0), orderItemEntities.get(1), orderItemEntities.get(2));
 
         when.aRegisteredCustomerIsAuthenticated(CUSTOMER_EMAIL_A, CUSTOMER_PASSWORD_A);
         assertThrows(DuplicateOrderItemsException.class, () -> when.anOrderIsProcessed(orderEntity));
@@ -123,7 +122,7 @@ class OrderServiceIntegrationTest extends AbstractIntegrationTest {
         given.anAddressEntity();
         given.anOrderItemEntityWith(articleEntities.get(0), 1);
         given.anOrderItemEntityWith(articleEntities.get(1), 3);
-        given.anOrderEntityWith(addressEntity, addressEntity, orderItemEntities.get(0), orderItemEntities.get(1));
+        given.anOrderEntityWith(addressEntity, addressEntity, PaymentMethodEnum.CREDIT_CARD, ShippingMethodEnum.DEFAULT, orderItemEntities.get(0), orderItemEntities.get(1));
 
         assertThrows(NoCustomerFoundException.class, () -> when.anOrderIsProcessed(orderEntity));
     }
@@ -135,7 +134,7 @@ class OrderServiceIntegrationTest extends AbstractIntegrationTest {
         given.anArticleEntityInDatabaseWith("Testartikel 2", "Testbeschreibung 2", "Testdetails 2", 3, 999);
 
         given.anAddressEntity();
-        given.anOrderEntityWith(addressEntity, addressEntity);
+        given.anOrderEntityWith(addressEntity, addressEntity, PaymentMethodEnum.CREDIT_CARD, ShippingMethodEnum.DEFAULT);
 
         when.aRegisteredCustomerIsAuthenticated(CUSTOMER_EMAIL_A, CUSTOMER_PASSWORD_A);
         assertThrows(ConstraintViolationException.class, () -> when.anOrderIsProcessed(orderEntity));
@@ -163,11 +162,13 @@ class OrderServiceIntegrationTest extends AbstractIntegrationTest {
             articleEntities.add(articleRepository.save(articleEntity));
         }
 
-        void anOrderEntityWith(AddressEntity invoiceAddress, AddressEntity shippingAddress, OrderItemEntity... orderItemEntities) {
+        void anOrderEntityWith(AddressEntity invoiceAddress, AddressEntity shippingAddress, PaymentMethodEnum paymentMethod, ShippingMethodEnum shippingMethod, OrderItemEntity... orderItemEntities) {
             orderEntity = OrderEntityBuilder.anOrderEntity()
                     .withOrderItems(List.of(orderItemEntities))
                     .withInvoiceAddress(invoiceAddress)
                     .withShippingAddress(shippingAddress)
+                    .withShippingMethod(shippingMethod)
+                    .withPaymentMethod(paymentMethod)
                     .build();
         }
 

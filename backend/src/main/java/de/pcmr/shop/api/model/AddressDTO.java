@@ -1,12 +1,20 @@
 package de.pcmr.shop.api.model;
 
+import javax.validation.constraints.NotNull;
+
 public class AddressDTO {
+    @NotNull
     private String firstName;
+    @NotNull
     private String lastName;
+    @NotNull
     private String address;
     private String additionalAddress;
+    @NotNull
     private String zip;
+    @NotNull
     private String city;
+    @NotNull
     private String country;
 
     public String getFirstName() {

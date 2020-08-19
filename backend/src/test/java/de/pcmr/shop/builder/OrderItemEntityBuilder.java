@@ -6,9 +6,9 @@ import de.pcmr.shop.domain.OrderItemEntity;
 import java.util.Date;
 
 public final class OrderItemEntityBuilder {
-    private int quantity;
+    private Integer quantity;
     private ArticleEntity article;
-    private long id;
+    private Long id;
     private Date created;
     private Date updated;
     private String createdBy;

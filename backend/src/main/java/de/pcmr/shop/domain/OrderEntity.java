@@ -1,7 +1,6 @@
 package de.pcmr.shop.domain;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.PastOrPresent;
 import javax.validation.constraints.Size;
 
@@ -40,6 +39,12 @@ public class OrderEntity extends AbstractEntity {
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(nullable = false)
     private AddressEntity shippingAddress;
+
+    @Column(nullable = false)
+    private PaymentMethodEnum paymentMethod;
+
+    @Column(nullable = false)
+    private ShippingMethodEnum shippingMethod;
 
     public OrderStatusEnum getOrderStatus() {
         return orderStatus;
@@ -95,5 +100,21 @@ public class OrderEntity extends AbstractEntity {
 
     public void setShippingAddress(AddressEntity shippingAddress) {
         this.shippingAddress = shippingAddress;
+    }
+
+    public PaymentMethodEnum getPaymentMethod() {
+        return paymentMethod;
+    }
+
+    public void setPaymentMethod(PaymentMethodEnum paymentMethod) {
+        this.paymentMethod = paymentMethod;
+    }
+
+    public ShippingMethodEnum getShippingMethod() {
+        return shippingMethod;
+    }
+
+    public void setShippingMethod(ShippingMethodEnum shippingMethod) {
+        this.shippingMethod = shippingMethod;
     }
 }

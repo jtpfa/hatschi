@@ -14,7 +14,7 @@ public final class CustomerEntityBuilder {
     private String password;
     private List<OrderEntity> orders;
     private List<AddressEntity> addresses;
-    private long id;
+    private Long id;
     private Date created;
     private Date updated;
     private String createdBy;
