@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class SanitizationUtilsTest {
+class SanitizationUtilsUnitTest {
 
     private static final String HTML_UNSANITIZED = "<script> malicious-javascipt; </script> Test";
     private static final String HTML_SANITIZED = "Test";

@@ -47,6 +47,10 @@ public class CustomerServiceImpl implements CustomerServiceI {
     }
 
     private CustomerEntity getCurrentCustomerIfExists(Principal principal) throws NoCustomerFoundException {
+        if (principal == null) {
+            throw new NoCustomerFoundException();
+        }
+
         Optional<CustomerEntity> customerEntity = customerRepository.findByEmail(principal.getName());
         if (customerEntity.isPresent()) {
             return customerEntity.get();

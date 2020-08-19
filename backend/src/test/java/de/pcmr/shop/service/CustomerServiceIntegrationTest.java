@@ -1,5 +1,6 @@
 package de.pcmr.shop.service;
 
+import de.pcmr.shop.AbstractIntegrationTest;
 import de.pcmr.shop.builder.CustomerEntityBuilder;
 import de.pcmr.shop.domain.CustomerEntity;
 import de.pcmr.shop.exception.CustomerAlreadyExistsException;
@@ -8,25 +9,24 @@ import de.pcmr.shop.exception.keycloak.KeycloakEndpointNotFoundException;
 import de.pcmr.shop.exception.keycloak.KeycloakUnknownErrorException;
 import de.pcmr.shop.exception.keycloak.KeycloakUserAlreadyExistsException;
 import de.pcmr.shop.exception.keycloak.KeycloakUserIsNotAuthorizedException;
-import de.pcmr.shop.repository.ArticleRepository;
 import de.pcmr.shop.repository.CustomerRepository;
 import org.junit.jupiter.api.Test;
 import org.keycloak.admin.client.resource.UsersResource;
 import org.keycloak.representations.idm.UserRepresentation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 
+import javax.annotation.PostConstruct;
 import javax.validation.ConstraintViolationException;
 import java.security.Principal;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class CustomerServiceTest extends AbstractServiceTest {
+class CustomerServiceIntegrationTest extends AbstractIntegrationTest {
 
     private final static String CUSTOMER_EMAIL_A = "test@userA.de";
     private final static String CUSTOMER_FIRSTNAME_A = "TestA";
@@ -55,14 +55,18 @@ class CustomerServiceTest extends AbstractServiceTest {
     private CustomerEntity customerEntityB;
     private CustomerEntity updatedCustomerEntity;
 
-    private final UsersResource usersResource;
+    private UsersResource usersResource;
 
     @Autowired
-    CustomerServiceTest(RegistrationServiceI registrationService, CustomerServiceI customerService, CustomerRepository customerRepository, Environment environment, ArticleRepository articleRepository) {
-        super(environment, customerRepository, articleRepository);
+    CustomerServiceIntegrationTest(RegistrationServiceI registrationService, CustomerServiceI customerService, CustomerRepository customerRepository) {
+        super();
         this.registrationService = registrationService;
         this.customerService = customerService;
         this.customerRepository = customerRepository;
+    }
+
+    @PostConstruct
+    void initUsersResource() {
         this.usersResource = super.getUsersResource();
     }
 

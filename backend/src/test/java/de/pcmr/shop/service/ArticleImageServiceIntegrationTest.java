@@ -1,17 +1,16 @@
 package de.pcmr.shop.service;
 
+import de.pcmr.shop.AbstractIntegrationTest;
 import de.pcmr.shop.builder.ArticleEntityBuilder;
 import de.pcmr.shop.domain.ArticleEntity;
 import de.pcmr.shop.exception.NoArticleFoundException;
 import de.pcmr.shop.exception.UploadedImageResolutionTooLowException;
 import de.pcmr.shop.repository.ArticleRepository;
-import de.pcmr.shop.repository.CustomerRepository;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -23,7 +22,7 @@ import java.io.IOException;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-class ArticleImageServiceTest extends AbstractServiceTest {
+class ArticleImageServiceIntegrationTest extends AbstractIntegrationTest {
 
     private static final String IMAGE_PATH = "./media/article/";
     private static final String TEST_IMAGE_PATH_PNG = "./src/test/resources/images/gpu.png";
@@ -45,8 +44,8 @@ class ArticleImageServiceTest extends AbstractServiceTest {
     private ArticleEntity lastSavedArticleEntity;
 
     @Autowired
-    ArticleImageServiceTest(Environment environment, CustomerRepository customerRepository, ArticleRepository articleRepository, ArticleImageServiceI articleImageService) {
-        super(environment, customerRepository, articleRepository);
+    ArticleImageServiceIntegrationTest(ArticleRepository articleRepository, ArticleImageServiceI articleImageService) {
+        super();
         this.articleImageService = articleImageService;
         this.articleRepository = articleRepository;
     }

@@ -1,15 +1,14 @@
 package de.pcmr.shop.service;
 
+import de.pcmr.shop.AbstractIntegrationTest;
 import de.pcmr.shop.builder.ArticleEntityBuilder;
 import de.pcmr.shop.domain.ArticleEntity;
 import de.pcmr.shop.exception.NoArticleFoundException;
 import de.pcmr.shop.exception.UploadedImageResolutionTooLowException;
 import de.pcmr.shop.repository.ArticleRepository;
-import de.pcmr.shop.repository.CustomerRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.ConstraintViolationException;
@@ -19,7 +18,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class ArticleServiceTest extends AbstractServiceTest {
+class ArticleServiceIntegrationTest extends AbstractIntegrationTest {
 
     private static final String ARTICLE_TITLE_1 = "Testartikel 1";
     private static final String ARTICLE_TITLE_2 = "Testartikel 2";
@@ -43,8 +42,8 @@ class ArticleServiceTest extends AbstractServiceTest {
     private MultipartFile imageFile;
 
     @Autowired
-    ArticleServiceTest(Environment environment, CustomerRepository customerRepository, ArticleServiceI articleService, ArticleRepository articleRepository) {
-        super(environment, customerRepository, articleRepository);
+    ArticleServiceIntegrationTest(ArticleServiceI articleService, ArticleRepository articleRepository) {
+        super();
         this.articleService = articleService;
         this.articleRepository = articleRepository;
     }

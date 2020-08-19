@@ -9,7 +9,7 @@ import javax.validation.ValidationException;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-class ArticleCreationDTOArticleDTOMapperTest {
+class ArticleCreationDTOArticleDTOMapperUnitTest {
 
     private static final String ARTICLE_NAME = "Testartikel";
     private static final String ARTICLE_NAME_HTML = "<script>Testartikel</script>";

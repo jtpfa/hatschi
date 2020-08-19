@@ -7,7 +7,7 @@ import javax.validation.ValidationException;
 import static org.junit.jupiter.api.Assertions.*;
 
 
-class ValidationUtilsTest {
+class ValidationUtilsUnitTest {
 
     @Test
     void testSuccessfulHtmlValidation() {

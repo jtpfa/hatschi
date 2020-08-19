@@ -30,11 +30,11 @@ public class ArticleEntity extends AbstractEntity {
 
     @Column(nullable = false)
     @Range(min = 0, max = 99999999, message = "Der Preis muss zwischen {min} und {max} Cent liegen")
-    private int price;
+    private Integer price;
 
     @Column(nullable = false)
     @Range(min = 0, max = 999999, message = "Der Lagerbestand muss zwischen {min} und {max} liegen")
-    private int stock;
+    private Integer stock;
 
     public String getName() {
         return name;
@@ -60,19 +60,19 @@ public class ArticleEntity extends AbstractEntity {
         this.details = details;
     }
 
-    public int getPrice() {
+    public Integer getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(Integer price) {
         this.price = price;
     }
 
-    public int getStock() {
+    public Integer getStock() {
         return stock;
     }
 
-    public void setStock(int stock) {
+    public void setStock(Integer stock) {
         this.stock = stock;
     }
 }

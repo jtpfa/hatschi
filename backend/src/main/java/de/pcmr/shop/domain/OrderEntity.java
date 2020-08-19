@@ -1,6 +1,9 @@
 package de.pcmr.shop.domain;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.PastOrPresent;
+import javax.validation.constraints.Size;
 
 import java.util.Date;
 import java.util.List;
@@ -15,23 +18,26 @@ public class OrderEntity extends AbstractEntity {
     private OrderStatusEnum orderStatus;
 
     @Column(nullable = false)
+    @PastOrPresent
     private Date orderDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(nullable = false)
     private CustomerEntity customer;
 
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "order_id", nullable = false)
+    @Size(min = 1, max = 999)
     private List<OrderItemEntity> orderItems;
 
     @Column(nullable = false)
-    private boolean paid;
+    private Boolean paid;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(nullable = false)
     private AddressEntity invoiceAddress;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(nullable = false)
     private AddressEntity shippingAddress;
 
@@ -67,11 +73,11 @@ public class OrderEntity extends AbstractEntity {
         this.orderItems = orderItems;
     }
 
-    public boolean isPaid() {
+    public Boolean isPaid() {
         return paid;
     }
 
-    public void setPaid(boolean paid) {
+    public void setPaid(Boolean paid) {
         this.paid = paid;
     }
 
