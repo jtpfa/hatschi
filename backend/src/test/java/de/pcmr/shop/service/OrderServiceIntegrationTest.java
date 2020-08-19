@@ -91,7 +91,7 @@ class OrderServiceIntegrationTest extends AbstractIntegrationTest {
         given.anAddressEntity();
         given.anOrderItemEntityWith(articleEntities.get(0), 1);
         given.anOrderItemEntityWith(articleEntities.get(1), 4);
-        given.anOrderEntityWith(addressEntity, addressEntity, PaymentMethodEnum.CREDIT_CARD, ShippingMethodEnum.DEFAULT, orderItemEntities.get(0), orderItemEntities.get(1));
+        given.anOrderEntityWith(addressEntity, addressEntity, PaymentMethodEnum.PAYPAL, ShippingMethodEnum.EXPRESS, orderItemEntities.get(0), orderItemEntities.get(1));
 
         when.aRegisteredCustomerIsAuthenticated(CUSTOMER_EMAIL_A, CUSTOMER_PASSWORD_A);
         assertThrows(NotEnoughArticlesOnStockException.class, () -> when.anOrderIsProcessed(orderEntity));
@@ -107,7 +107,7 @@ class OrderServiceIntegrationTest extends AbstractIntegrationTest {
         given.anOrderItemEntityWith(articleEntities.get(0), 1);
         given.anOrderItemEntityWith(articleEntities.get(1), 4);
         given.anOrderItemEntityWith(articleEntities.get(0), 1);
-        given.anOrderEntityWith(addressEntity, addressEntity, PaymentMethodEnum.CREDIT_CARD, ShippingMethodEnum.DEFAULT, orderItemEntities.get(0), orderItemEntities.get(1), orderItemEntities.get(2));
+        given.anOrderEntityWith(addressEntity, addressEntity, PaymentMethodEnum.INVOICE, ShippingMethodEnum.DEFAULT, orderItemEntities.get(0), orderItemEntities.get(1), orderItemEntities.get(2));
 
         when.aRegisteredCustomerIsAuthenticated(CUSTOMER_EMAIL_A, CUSTOMER_PASSWORD_A);
         assertThrows(DuplicateOrderItemsException.class, () -> when.anOrderIsProcessed(orderEntity));
