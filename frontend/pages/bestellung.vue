@@ -13,9 +13,7 @@
 
                         <order-step3 v-else-if="step === 2" />
 
-                        <order-confirmation v-else-if="step === 3" />
-
-                        <template v-else>
+                        <template v-else-if="step < 0 || step > 3">
                             <b-jumbotron
                                 bg-variant="light"
                                 class="my-5"
@@ -60,7 +58,6 @@ import CartSummary from '~/components/cart/summary'
 import OrderHeadline from '~/components/order/headline'
 import OrderPagination from '~/components/order/pagination'
 import OrderProgressbar from '~/components/order/progressbar'
-import OrderConfirmation from '~/components/order/steps/orderConfirmation'
 import OrderStep1 from '~/components/order/steps/orderStep1'
 import OrderStep2 from '~/components/order/steps/orderStep2'
 import OrderStep3 from '~/components/order/steps/orderStep3'
@@ -69,7 +66,6 @@ export default {
     name: 'Order',
     components: {
         OrderPagination,
-        OrderConfirmation,
         OrderProgressbar,
         OrderStep3,
         OrderStep2,
@@ -77,6 +73,7 @@ export default {
         OrderHeadline,
         CartSummary,
     },
+    middleware: 'auth',
     data() {
         return {
             loading: false,
@@ -105,6 +102,11 @@ export default {
             return this.$store.state.order.paymentMethod
         },
     },
+    mounted() {
+        if (this.$store.state.shoppingcart.cart.length === 0) {
+            this.$router.push('/warenkorb')
+        }
+    },
     methods: {
         async onSubmit(event) {
             this.$refs.form.classList.remove('was-validated')
@@ -120,20 +122,15 @@ export default {
 
                 // eslint-disable-next-line no-lonely-if
                 if (this.step === 2) {
-                    if (!this.$auth.loggedIn) {
-                        this.$auth.$storage.setUniversal('redirect', '/bestellung')
-                        this.$router.push('/auth/login')
-                    } else {
-                        this.$auth.$storage.removeUniversal('redirect')
-                        await this.submitOrder()
+                    await this.submitOrder()
 
-                        if (this.error.length > 0) {
-                            this.loading = false
-                            return
-                        }
-
-                        this.step += 1
+                    if (this.error.length > 0) {
+                        this.loading = false
+                        return
                     }
+
+                    this.step += 1
+                    this.$router.push('/bestell-bestaetigung')
                 } else {
                     this.step += 1
                 }

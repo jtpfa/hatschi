@@ -28,6 +28,9 @@ export const mutations = {
             state.cart.push(payload)
         }
     },
+    clearCart: state => {
+        Object.assign(state, { cart: [], stockOfElementChanged: false })
+    },
     removeOneFromCart: (state, payload) => {
         const index = state.cart.findIndex(el => el.id === payload.id)
 

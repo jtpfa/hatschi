@@ -1,4 +1,3 @@
-// @todo adjust response handling to show error messages from backend
 const _handleResponse = (response, needJsonOutput = false) => {
     if (response.ok) {
         return needJsonOutput ? response.json() : response

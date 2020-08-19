@@ -10,11 +10,11 @@
                 :button="step >= i && step < 3"
                 class="big-noodle"
                 size="3.5rem"
-                :variant="step + 1 >= i ? 'primary' : 'outline-primary'"
+                :variant="step + 1 >= i || ready ? 'primary' : 'outline-primary'"
                 @click="step = i - 1"
             >
                 {{ i }}
-                <template v-if="step >= i" v-slot:badge>&#10003;</template>
+                <template v-if="step >= i || ready" v-slot:badge>&#10003;</template>
             </b-avatar>
         </div>
     </div>
@@ -23,6 +23,12 @@
 <script>
 export default {
     name: 'OrderProgressbar',
+    props: {
+        ready: {
+            type: Boolean,
+            default: false,
+        },
+    },
     computed: {
         step: {
             get() {
@@ -33,15 +39,19 @@ export default {
             },
         },
         progressBarValue() {
-            if (this.step > 3) {
-                return 0
+            if (!this.ready) {
+                if (this.step > 3) {
+                    return 0
+                }
+
+                if (this.step === 0) {
+                    return 1
+                }
+
+                return this.step * 2 + 1
             }
 
-            if (this.step === 0) {
-                return 1
-            }
-
-            return this.step * 2 + 1
+            return 6
         },
     },
 }
