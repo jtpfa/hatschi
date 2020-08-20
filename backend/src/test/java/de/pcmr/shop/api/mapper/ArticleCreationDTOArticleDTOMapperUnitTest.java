@@ -51,7 +51,7 @@ class ArticleCreationDTOArticleDTOMapperUnitTest {
 
     class When {
         void aArticleCreationDTOIsMappedTo(ArticleCreationDTO articleCreationDTO) {
-            articleEntity = ArticleCreationDTOArticleEntityMapper.mapArticleCreationDTOToArticleEntity(articleCreationDTO);
+            articleEntity = ArticleMapper.mapArticleCreationDTOToArticleEntity(articleCreationDTO);
         }
     }
 

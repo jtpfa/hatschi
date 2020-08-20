@@ -46,7 +46,7 @@ class CustomerDetailsDTOCustomerEntityMapperUnitTest {
 
     class When {
         void aCustomerDetailsDtoIsMappedToEntity(CustomerDetailsDTO customerDetailsDTO) {
-            customerEntity = CustomerDetailsDTOCustomerEntityMapper.mapCustomerDetailsDTOToCustomerEntity(customerDetailsDTO);
+            customerEntity = CustomerMapper.mapCustomerDetailsDTOToCustomerEntity(customerDetailsDTO);
         }
     }
 

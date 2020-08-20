@@ -37,6 +37,7 @@ public class OrderServiceImpl implements OrderServiceI {
     public void processOrder(@Valid OrderEntity orderEntity, Principal principal) throws NotEnoughArticlesOnStockException, DuplicateOrderItemsException, NoCustomerFoundException {
         validateNoDuplicateItems(orderEntity);
         checkAndReduceStockOfOrder(orderEntity);
+        calculateOrderItemPrices(orderEntity);
 
         CustomerEntity currentCustomer = customerService.getCurrentCustomer(principal);
         orderEntity.setCustomer(currentCustomer);
@@ -48,11 +49,19 @@ public class OrderServiceImpl implements OrderServiceI {
         orderRepository.save(orderEntity);
     }
 
+    public List<OrderEntity> getAllOrders() {
+        return orderRepository.findAll();
+    }
+
     private void checkAndReduceStockOfOrder(OrderEntity orderEntity) throws NotEnoughArticlesOnStockException {
         for (OrderItemEntity orderItemEntity : orderEntity.getOrderItems()) {
             checkStockOfOrderItem(orderItemEntity);
             reduceStockOfOrderItemArticle(orderItemEntity);
         }
+    }
+
+    private void calculateOrderItemPrices(OrderEntity orderEntity) {
+        orderEntity.getOrderItems().forEach(e -> e.setPrice(e.getQuantity() * e.getArticle().getPrice()));
     }
 
     private void checkStockOfOrderItem(OrderItemEntity orderItemEntity) throws NotEnoughArticlesOnStockException {

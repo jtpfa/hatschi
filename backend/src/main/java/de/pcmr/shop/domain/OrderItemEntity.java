@@ -18,6 +18,9 @@ public class OrderItemEntity extends AbstractEntity {
     @JoinColumn(nullable = false)
     private ArticleEntity article;
 
+    @Column(nullable = false)
+    private Integer price;
+
     public Integer getQuantity() {
         return quantity;
     }
@@ -32,5 +35,13 @@ public class OrderItemEntity extends AbstractEntity {
 
     public void setArticle(ArticleEntity article) {
         this.article = article;
+    }
+
+    public Integer getPrice() {
+        return price;
+    }
+
+    public void setPrice(Integer price) {
+        this.price = price;
     }
 }

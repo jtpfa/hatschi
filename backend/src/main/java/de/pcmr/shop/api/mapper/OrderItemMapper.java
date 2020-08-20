@@ -8,7 +8,11 @@ import de.pcmr.shop.repository.ArticleRepository;
 import java.util.ArrayList;
 import java.util.List;
 
-public class OrderItemDTOOrderItemEntityMapper {
+public class OrderItemMapper {
+    private OrderItemMapper() {
+        throw new IllegalStateException();
+    }
+
     public static List<OrderItemEntity> mapListToOrderItemEntityList(List<OrderItemDTO> orderItemDTOs, ArticleRepository articleRepository) throws NoArticleFoundException {
         List<OrderItemEntity> orderItemEntities = new ArrayList<>();
         for (OrderItemDTO orderItemDTO : orderItemDTOs) {
@@ -17,11 +21,10 @@ public class OrderItemDTOOrderItemEntityMapper {
         return orderItemEntities;
     }
 
-
     private static OrderItemEntity mapToOrderItemEntity(OrderItemDTO orderItemDTO, ArticleRepository articleRepository) throws NoArticleFoundException {
         OrderItemEntity orderItemEntity = new OrderItemEntity();
-        if (articleRepository.existsById(orderItemDTO.getArticle())) {
-            orderItemEntity.setArticle(articleRepository.findById(orderItemDTO.getArticle()).get());
+        if (articleRepository.existsById(orderItemDTO.getArticleId())) {
+            orderItemEntity.setArticle(articleRepository.findById(orderItemDTO.getArticleId()).get());
         } else {
             throw new NoArticleFoundException();
         }

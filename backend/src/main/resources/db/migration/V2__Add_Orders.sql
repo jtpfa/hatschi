@@ -22,6 +22,7 @@ create table pcmr_order_items
     created_by       varchar(100),
     last_modified_by varchar(100),
     updated          datetime(6),
+    price            integer not null,
     quantity         integer not null check (quantity <= 99999999 AND quantity >= 0),
     article_id       bigint  not null,
     order_id         bigint  not null,

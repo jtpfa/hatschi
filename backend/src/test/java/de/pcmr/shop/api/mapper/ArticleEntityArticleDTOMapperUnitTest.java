@@ -81,11 +81,11 @@ class ArticleEntityArticleDTOMapperUnitTest {
 
     class When {
         void aArticleEntityIsMappedToArticleDTO(ArticleEntity articleEntity) {
-            articleDTO = ArticleEntityArticleDTOMapper.mapArticleEntityToArticleDTO(articleEntity);
+            articleDTO = ArticleMapper.mapArticleEntityToArticleDTO(articleEntity);
         }
 
         void aListOfArticleEntitiesIsMappedToAListOfArticleDTOs(List<ArticleEntity> articleEntities) {
-            articleDTOs = ArticleEntityArticleDTOMapper.mapListOfArticleEntitiesToListOfArticleDTO(articleEntities);
+            articleDTOs = ArticleMapper.mapListOfArticleEntitiesToListOfArticleDTO(articleEntities);
         }
     }
 

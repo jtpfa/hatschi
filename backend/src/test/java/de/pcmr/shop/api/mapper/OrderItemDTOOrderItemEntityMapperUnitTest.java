@@ -69,7 +69,7 @@ public class OrderItemDTOOrderItemEntityMapperUnitTest {
 
         void anOrderItemDto(long articleId, int quantity) {
             OrderItemDTO orderItemDTO = new OrderItemDTO();
-            orderItemDTO.setArticle(articleId);
+            orderItemDTO.setArticleId(articleId);
             orderItemDTO.setQuantity(quantity);
             orderItemDTOs.add(orderItemDTO);
         }
@@ -77,7 +77,7 @@ public class OrderItemDTOOrderItemEntityMapperUnitTest {
 
     class When {
         void anOrderItemDTOIsMappedToOrderItemEntity(List<OrderItemDTO> orderItemDTOs) throws NoArticleFoundException {
-            orderItemEntities = OrderItemDTOOrderItemEntityMapper.mapListToOrderItemEntityList(orderItemDTOs, articleRepository);
+            orderItemEntities = OrderItemMapper.mapListToOrderItemEntityList(orderItemDTOs, articleRepository);
         }
     }
 
@@ -88,7 +88,7 @@ public class OrderItemDTOOrderItemEntityMapperUnitTest {
 
         void theAttributesOfTheOrderItemsMatch(List<OrderItemEntity> orderItemEntities, List<OrderItemDTO> orderItemDTOs) {
             for (int i=0; i < orderItemEntities.size(); i++) {
-                assertEquals(orderItemDTOs.get(i).getArticle(), orderItemEntities.get(i).getArticle().getId());
+                assertEquals(orderItemDTOs.get(i).getArticleId(), orderItemEntities.get(i).getArticle().getId());
                 assertEquals(orderItemDTOs.get(i).getQuantity(), orderItemEntities.get(i).getQuantity());
             }
         }

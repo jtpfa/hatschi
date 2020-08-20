@@ -1,9 +1,6 @@
 package de.pcmr.shop.api.controller;
 
-import de.pcmr.shop.api.mapper.ArticleCreationDTOArticleEntityMapper;
-import de.pcmr.shop.api.mapper.ArticleDTOArticleEntityMapper;
-import de.pcmr.shop.api.mapper.ArticleEntityArticleDTOMapper;
-import de.pcmr.shop.api.mapper.ArticleEntityArticleShortDTOMapper;
+import de.pcmr.shop.api.mapper.*;
 import de.pcmr.shop.api.model.ArticleCreationDTO;
 import de.pcmr.shop.api.model.ArticleDTO;
 import de.pcmr.shop.api.model.ArticleShortDTO;
@@ -36,19 +33,19 @@ public class ArticleApiImpl implements ArticleApiI {
     @Override
     @GetMapping(value = "/article")
     public List<ArticleShortDTO> getArticles() {
-        return ArticleEntityArticleShortDTOMapper.mapListOfArticleEntityToListOfArticleShortDTO(articleService.getAllArticles());
+        return ArticleMapper.mapListOfArticleEntityToListOfArticleShortDTO(articleService.getAllArticles());
     }
 
     @Override
     @GetMapping(value = "/article/{id}")
     public ArticleDTO getArticle(@PathVariable long id) throws NoArticleFoundException {
-        return ArticleEntityArticleDTOMapper.mapArticleEntityToArticleDTO(articleService.getArticle(id));
+        return ArticleMapper.mapArticleEntityToArticleDTO(articleService.getArticle(id));
     }
 
     @Override
     @GetMapping(value = EMPLOYEE_ROLE_URI + "/article")
     public List<ArticleDTO> getArticlesFull() {
-        return ArticleEntityArticleDTOMapper.mapListOfArticleEntitiesToListOfArticleDTO(articleService.getAllArticles());
+        return ArticleMapper.mapListOfArticleEntitiesToListOfArticleDTO(articleService.getAllArticles());
     }
 
     @Override
@@ -57,7 +54,7 @@ public class ArticleApiImpl implements ArticleApiI {
         if (imageFile != null) {
             checkFileExtension(imageFile);
         }
-        articleService.createNewArticle(ArticleCreationDTOArticleEntityMapper.mapArticleCreationDTOToArticleEntity(articleCreationDTO), imageFile);
+        articleService.createNewArticle(ArticleMapper.mapArticleCreationDTOToArticleEntity(articleCreationDTO), imageFile);
     }
 
     @Override
@@ -66,7 +63,7 @@ public class ArticleApiImpl implements ArticleApiI {
         if (imageFile != null) {
             checkFileExtension(imageFile);
         }
-        articleService.updateArticle(ArticleDTOArticleEntityMapper.mapArticleDTOToArticleEntity(articleDTO), imageFile);
+        articleService.updateArticle(ArticleMapper.mapArticleDTOToArticleEntity(articleDTO), imageFile);
     }
 
     @Override

@@ -1,7 +1,8 @@
 package de.pcmr.shop.api.controller;
 
-import de.pcmr.shop.api.mapper.OrderCreationDTOOrderEntityMapper;
+import de.pcmr.shop.api.mapper.OrderMapper;
 import de.pcmr.shop.api.model.OrderCreationDTO;
+import de.pcmr.shop.api.model.OrderDTO;
 import de.pcmr.shop.exception.DuplicateOrderItemsException;
 import de.pcmr.shop.exception.NoArticleFoundException;
 import de.pcmr.shop.exception.NoCustomerFoundException;
@@ -9,18 +10,17 @@ import de.pcmr.shop.exception.NotEnoughArticlesOnStockException;
 import de.pcmr.shop.repository.ArticleRepository;
 import de.pcmr.shop.service.OrderServiceI;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.security.Principal;
+import java.util.List;
 
 @RestController
-@RequestMapping(OrderApiImpl.ORDER_URI)
+@RequestMapping("/api")
 public class OrderApiImpl implements OrderApiI {
-    public static final String ORDER_URI = "/api/customer/order";
+    public static final String ORDER_CUSTOMER_URI = "/customer/order";
+    public static final String ORDER_EMPLOYEE_URI = "/employee/order";
 
     private final OrderServiceI orderService;
     private final ArticleRepository articleRepository;
@@ -31,8 +31,13 @@ public class OrderApiImpl implements OrderApiI {
         this.articleRepository = articleRepository;
     }
 
-    @PostMapping
+    @PostMapping(ORDER_CUSTOMER_URI)
     public void placeOrder(@RequestBody @Valid OrderCreationDTO orderCreationDTO, Principal principal) throws NoArticleFoundException, NoCustomerFoundException, NotEnoughArticlesOnStockException, DuplicateOrderItemsException {
-        orderService.processOrder(OrderCreationDTOOrderEntityMapper.mapToOrderEntity(orderCreationDTO, articleRepository), principal);
+        orderService.processOrder(OrderMapper.mapCreationDTOToEntity(orderCreationDTO, articleRepository), principal);
+    }
+
+    @GetMapping(ORDER_EMPLOYEE_URI)
+    public List<OrderDTO> getAllOrders() {
+        return OrderMapper.mapListToDTOList(orderService.getAllOrders());
     }
 }

@@ -81,11 +81,11 @@ class ArticleEntityArticleShortDTOMapperUnitTest {
 
     class When {
         void aArticleEntityIsMappedToArticleShortDTO(ArticleEntity articleEntity) {
-            articleShortDTO = ArticleEntityArticleShortDTOMapper.mapArticleEntityToArticleShortDTO(articleEntity);
+            articleShortDTO = ArticleMapper.mapArticleEntityToArticleShortDTO(articleEntity);
         }
 
         void aArticleEntityListIsMappedToArticleShortDTOList(List<ArticleEntity> articleEntities) {
-            articleShortDTOs = ArticleEntityArticleShortDTOMapper.mapListOfArticleEntityToListOfArticleShortDTO(articleEntities);
+            articleShortDTOs = ArticleMapper.mapListOfArticleEntityToListOfArticleShortDTO(articleEntities);
         }
     }
 
