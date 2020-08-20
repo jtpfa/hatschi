@@ -14,7 +14,7 @@ public final class AddressEntityBuilder {
     private String city;
     private String country;
     private CustomerEntity customer;
-    private long id;
+    private Long id;
     private Date created;
     private Date updated;
     private String createdBy;

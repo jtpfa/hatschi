@@ -4,6 +4,7 @@ import de.pcmr.shop.domain.*;
 import de.pcmr.shop.exception.DuplicateOrderItemsException;
 import de.pcmr.shop.exception.NoCustomerFoundException;
 import de.pcmr.shop.exception.NotEnoughArticlesOnStockException;
+import de.pcmr.shop.repository.AddressRepository;
 import de.pcmr.shop.repository.ArticleRepository;
 import de.pcmr.shop.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,12 +23,14 @@ public class OrderServiceImpl implements OrderServiceI {
     private final ArticleRepository articleRepository;
     private final OrderRepository orderRepository;
     private final CustomerServiceI customerService;
+    private final AddressRepository addressRepository;
 
     @Autowired
-    public OrderServiceImpl(ArticleRepository articleRepository, OrderRepository orderRepository, CustomerServiceI customerService) {
+    public OrderServiceImpl(ArticleRepository articleRepository, OrderRepository orderRepository, CustomerServiceI customerService, AddressRepository addressRepository) {
         this.articleRepository = articleRepository;
         this.orderRepository = orderRepository;
         this.customerService = customerService;
+        this.addressRepository = addressRepository;
     }
 
     @Transactional

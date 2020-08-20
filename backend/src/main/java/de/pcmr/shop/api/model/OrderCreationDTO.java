@@ -1,5 +1,8 @@
 package de.pcmr.shop.api.model;
 
+import de.pcmr.shop.domain.PaymentMethodEnum;
+import de.pcmr.shop.domain.ShippingMethodEnum;
+
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.List;
@@ -11,6 +14,10 @@ public class OrderCreationDTO {
     private AddressDTO invoiceAddress;
     @NotNull
     private AddressDTO shippingAddress;
+    @NotNull
+    private PaymentMethodEnum paymentMethod;
+    @NotNull
+    private ShippingMethodEnum shippingMethod;
 
     public List<OrderItemDTO> getOrderItems() {
         return orderItems;
@@ -34,5 +41,21 @@ public class OrderCreationDTO {
 
     public void setShippingAddress(AddressDTO shippingAddress) {
         this.shippingAddress = shippingAddress;
+    }
+
+    public PaymentMethodEnum getPaymentMethod() {
+        return paymentMethod;
+    }
+
+    public void setPaymentMethod(PaymentMethodEnum paymentMethod) {
+        this.paymentMethod = paymentMethod;
+    }
+
+    public ShippingMethodEnum getShippingMethod() {
+        return shippingMethod;
+    }
+
+    public void setShippingMethod(ShippingMethodEnum shippingMethod) {
+        this.shippingMethod = shippingMethod;
     }
 }

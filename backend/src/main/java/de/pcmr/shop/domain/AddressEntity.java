@@ -2,6 +2,7 @@ package de.pcmr.shop.domain;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
+import java.util.Objects;
 
 import static de.pcmr.shop.domain.AbstractEntity.TABLE_PREFIX;
 
@@ -21,7 +22,7 @@ public class AddressEntity extends AbstractEntity {
     private String address;
 
     @Column(length = 255)
-    @Size(min = 1, max = 255, message = "Adresszusatz muss zwischen {min} und {max} Zeichen lang sein")
+    @Size(max = 255, message = "Adresszusatz darf maximal {max} Zeichen lang sein")
     private String additionalAddress;
 
     @Column(nullable = false)
@@ -102,5 +103,25 @@ public class AddressEntity extends AbstractEntity {
 
     public void setCustomer(CustomerEntity customer) {
         this.customer = customer;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        AddressEntity that = (AddressEntity) o;
+        return firstName.equals(that.firstName) &&
+                lastName.equals(that.lastName) &&
+                address.equals(that.address) &&
+                Objects.equals(additionalAddress, that.additionalAddress) &&
+                zip.equals(that.zip) &&
+                city.equals(that.city) &&
+                country.equals(that.country) &&
+                customer.equals(that.customer);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(firstName, lastName, address, additionalAddress, zip, city, country, customer);
     }
 }

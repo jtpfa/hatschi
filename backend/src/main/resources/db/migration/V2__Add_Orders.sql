@@ -37,6 +37,8 @@ create table pcmr_orders
     order_date          datetime(6) not null,
     order_status        integer     not null,
     paid                bit         not null,
+    payment_method      integer     not null,
+    shipping_method     integer     not null,
     customer_id         bigint      not null,
     invoice_address_id  bigint      not null,
     shipping_address_id bigint      not null,

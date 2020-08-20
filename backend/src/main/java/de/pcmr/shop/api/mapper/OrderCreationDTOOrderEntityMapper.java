@@ -2,7 +2,6 @@ package de.pcmr.shop.api.mapper;
 
 import de.pcmr.shop.api.model.OrderCreationDTO;
 import de.pcmr.shop.domain.OrderEntity;
-import de.pcmr.shop.domain.OrderStatusEnum;
 import de.pcmr.shop.exception.NoArticleFoundException;
 import de.pcmr.shop.repository.ArticleRepository;
 
@@ -11,6 +10,8 @@ public class OrderCreationDTOOrderEntityMapper {
         OrderEntity orderEntity = new OrderEntity();
         orderEntity.setInvoiceAddress(AddressDTOAddressEntityMapper.mapToAddressEntity(orderCreationDTO.getInvoiceAddress()));
         orderEntity.setShippingAddress(AddressDTOAddressEntityMapper.mapToAddressEntity(orderCreationDTO.getShippingAddress()));
+        orderEntity.setPaymentMethod(orderCreationDTO.getPaymentMethod());
+        orderEntity.setShippingMethod(orderCreationDTO.getShippingMethod());
         orderEntity.setOrderItems(OrderItemDTOOrderItemEntityMapper.mapListToOrderItemEntityList(orderCreationDTO.getOrderItems(), articleRepository));
 
         return orderEntity;
