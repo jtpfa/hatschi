@@ -1,5 +1,5 @@
 <template>
-    <order-overview-card :step-to-edit-data="0" :title="title">
+    <order-overview-card :step-to-edit-data="1" :title="title">
         <div class="row mb-2">
             <div class="col-sm-3 col-md-4 col-lg-3 col-xl-2">
                 <span class="font-weight-bold">Name:</span>
@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import OrderOverviewCard from '~/components/order/overview/card'
+import OrderOverviewCard from '~/components/order/steps/step3/card'
 
 export default {
     name: 'OrderOverviewAddress',

@@ -82,6 +82,12 @@ export default {
                                 }
                             })
                             .then(() => resolve())
+                            .catch(err => {
+                                this.error =
+                                    err.message ||
+                                    'Bitte Seite neu laden. Es gibt ein Problem mit mind. einem der Produkte.'
+                                reject()
+                            })
                     } catch (err) {
                         if (err.message.toLocaleLowerCase().includes('kein artikel')) {
                             this.cartChanged = true
@@ -102,7 +108,7 @@ export default {
             })
 
             await Promise.allSettled(results).then(() => {
-                if (!this.cartChanged) {
+                if (!this.cartChanged && !results.every(promise => promise === 'fulfilled')) {
                     this.$router.push({ path: '/bestellung', query: { step: 1 } })
                 }
             })

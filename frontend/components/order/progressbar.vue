@@ -86,5 +86,8 @@ export default {
 
 button.b-avatar {
     background: $primary;
+    box-shadow: 0 0 7px 1px rgba(0, 0, 11, 0.16);
+
+    // @todo hover state
 }
 </style>

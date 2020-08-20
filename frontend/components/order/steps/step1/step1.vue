@@ -7,15 +7,15 @@
 </template>
 
 <script>
-import OrderAddresses from '~/components/order/addresses'
-import OrderShippingMethod from '~/components/order/shippingMethod'
+import OrderAddresses from '~/components/order/steps/step1/addresses'
+import OrderShippingMethod from '~/components/order/steps/step1/shippingMethod'
 
 export default {
     name: 'OrderStep1',
     components: { OrderAddresses, OrderShippingMethod },
     computed: {
         shippingMethod() {
-            return this.$store.state.order.shippingMethod
+            return this.$store.state.order.shippingMethod.name
         },
     },
 }

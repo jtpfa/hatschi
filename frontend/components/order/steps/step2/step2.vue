@@ -7,8 +7,8 @@
 </template>
 
 <script>
-import OrderPaymentMethod from '~/components/order/paymentMethod'
-import OrderVouchers from '~/components/order/vouchers'
+import OrderPaymentMethod from '~/components/order/steps/step2/paymentMethod'
+import OrderVouchers from '~/components/order/steps/step2/vouchers'
 
 export default {
     name: 'OrderStep2',

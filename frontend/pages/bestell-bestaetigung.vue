@@ -15,7 +15,7 @@ export default {
     components: { OrderConfirmation, OrderProgressbar },
     mounted() {
         // this.$store.commit('shoppingcart/clearCart')
-        this.$store.commit('order/updateOrderInformation', { key: 'step', data: 0 })
+        this.$store.commit('order/updateOrderInformation', { key: 'step', data: 1 })
         this.$router.app.refresh()
     },
 }

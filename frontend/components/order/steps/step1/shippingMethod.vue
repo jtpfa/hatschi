@@ -5,13 +5,13 @@
             <span class="mandatory">*</span>
         </h2>
         <b-list-group>
-            <b-list-group-item v-for="method in availableMethods" :key="method.name + method.description">
+            <b-list-group-item v-for="method in availableMethods" :key="method.id">
                 <b-form-radio
                     v-model="selectedMethod"
                     name="shipping-methods"
                     required
                     :state="validState"
-                    :value="method.description + ' – ' + method.name"
+                    :value="{ id: method.id, name: method.name, description: method.description }"
                 >
                     <span class="shipping-key">{{ method.description }} – {{ method.name }}</span>
                     <br />
@@ -24,13 +24,23 @@
 
 <script>
 export default {
-    name: 'OrdershippingMethod',
+    name: 'OrderShippingMethod',
     data() {
         return {
             validState: null,
             availableMethods: [
-                { name: 'UPS', description: 'Standardversand', shippingTime: 'Lieferung innerhalb von 2-4 Werktagen' },
-                { name: 'DHL', description: 'Expressversand', shippingTime: 'Lieferung innerhalb von 1-2 Werktagen' },
+                {
+                    id: 'DEFAULT',
+                    name: 'UPS',
+                    description: 'Standardversand',
+                    shippingTime: 'Lieferung innerhalb von 2-4 Werktagen',
+                },
+                {
+                    id: 'EXPRESS',
+                    name: 'DHL',
+                    description: 'Expressversand',
+                    shippingTime: 'Lieferung innerhalb von 1-2 Werktagen',
+                },
             ],
         }
     },

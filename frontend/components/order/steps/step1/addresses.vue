@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import OrderAddressForm from '~/components/order/addressForm'
+import OrderAddressForm from '~/components/order/steps/step1/addressForm'
 
 export default {
     name: 'OrderAddresses',

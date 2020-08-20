@@ -1,14 +1,7 @@
 <template>
     <div>
         <h2>Deine Daten</h2>
-        <b-card-group class="mb-5" deck>
-            <order-overview-card :step-to-edit-data="0" title="Versandart">
-                {{ order.shippingMethod }}
-            </order-overview-card>
-            <order-overview-card :step-to-edit-data="1" title="Zahlungsart">
-                {{ order.paymentMethod }}
-            </order-overview-card>
-        </b-card-group>
+        <order-shipping-and-payment />
 
         <order-overview-address address-type="shipping" class="mb-5" title="Lieferadresse" />
 
@@ -29,13 +22,13 @@
 
 <script>
 import CartProducts from '~/components/cart/products'
-import OrderOverviewAddress from '~/components/order/overview/address'
-import OrderOverviewCard from '~/components/order/overview/card'
-import OrderOverviewVouchers from '~/components/order/overview/vouchers'
+import OrderOverviewAddress from '~/components/order/steps/step3/address'
+import OrderShippingAndPayment from '~/components/order/steps/step3/shippingAndPayment'
+import OrderOverviewVouchers from '~/components/order/steps/step3/vouchers'
 
 export default {
-    name: 'OrderOverview',
-    components: { OrderOverviewCard, CartProducts, OrderOverviewVouchers, OrderOverviewAddress },
+    name: 'OrderStep3',
+    components: { CartProducts, OrderOverviewVouchers, OrderOverviewAddress, OrderShippingAndPayment },
     computed: {
         order() {
             return this.$store.state.order
@@ -44,4 +37,4 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style scoped></style>

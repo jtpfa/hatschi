@@ -5,13 +5,13 @@
             <span class="mandatory">*</span>
         </h2>
         <b-list-group>
-            <b-list-group-item v-for="method in availableMethods" :key="method.name">
+            <b-list-group-item v-for="method in availableMethods" :key="method.id">
                 <b-form-radio
                     v-model="selectedMethod"
                     name="shipping-methods"
                     required
                     :state="validState"
-                    :value="method.description ? `${method.name} – ${method.description}` : method.name"
+                    :value="{ id: method.id, name: method.name, description: method.description }"
                 >
                     <span class="shipping-key">
                         {{ method.name }}{{ method.description ? ` – ${method.description}` : null }}
@@ -29,9 +29,9 @@ export default {
         return {
             validState: null,
             availableMethods: [
-                { name: 'Klarna', description: 'Kauf auf Rechnung' },
-                { name: 'Paypal', description: '' },
-                { name: 'Kreditkarte', description: '' },
+                { id: 'INVOICE', name: 'Klarna', description: 'Kauf auf Rechnung' },
+                { id: 'PAYPAL', name: 'Paypal', description: '' },
+                { id: 'CREDIT_CARD', name: 'Kreditkarte', description: '' },
             ],
         }
     },

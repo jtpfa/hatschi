@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import OrderOverviewCard from '~/components/order/overview/card'
+import OrderOverviewCard from '~/components/order/steps/step3/card'
 
 export default {
     name: 'OrderOverviewVouchers',
