@@ -1,23 +1,23 @@
 <template>
     <client-only>
         <b-container class="mt-5">
-            <order-progressbar class="position-relative mt-5" />
+            <order-progressbar v-if="step >= 1 && step <= 3" class="position-relative mt-5" />
             <b-form ref="form" novalidate @submit.prevent.stop="onSubmit">
                 <order-headline />
 
                 <div class="row mt-5">
                     <div class="col-md-7 mb-0">
-                        <order-step1 v-if="step === 0" />
+                        <order-step1 v-if="step === 1" />
 
-                        <order-step2 v-else-if="step === 1" />
+                        <order-step2 v-else-if="step === 2" />
 
-                        <order-step3 v-else-if="step === 2" />
+                        <order-step3 v-else-if="step === 3" />
 
-                        <template v-else-if="step < 0 || step > 3">
+                        <template v-else-if="step < 1 || step > 4">
                             <b-jumbotron
                                 bg-variant="light"
                                 class="my-5"
-                                header="Upps... Das hätte nicht passieren dürfen."
+                                header="Upps... Diesen Schritt gibt es nicht"
                                 :header-level="4"
                             >
                                 <p>
@@ -26,14 +26,16 @@
                                     <strong>nicht</strong>
                                     verloren!
                                 </p>
-                                <b-button @click="step = 0">Erneut versuchen</b-button>
+                                <b-button @click="goToInitialStep">
+                                    Zum ersten Schritt
+                                </b-button>
                             </b-jumbotron>
                         </template>
                     </div>
-                    <div v-if="step >= 0 && step <= 2" class="col-md-5">
+                    <div v-if="step >= 1 && step <= 3" class="col-md-5">
                         <cart-summary class="mb-5 mb-md-0" :error="error">
                             <b-button
-                                v-if="step === 2"
+                                v-if="step === 3"
                                 class="d-flex justify-content-center w-100 align-items-center my-3"
                                 :disabled="loading"
                                 size="lg"
@@ -47,7 +49,7 @@
                     </div>
                 </div>
 
-                <order-pagination :loading="loading" @back="stepBack" />
+                <order-pagination v-if="step >= 1 && step <= 3" :loading="loading" @back="stepBack" />
             </b-form>
         </b-container>
     </client-only>
@@ -105,7 +107,18 @@ export default {
     mounted() {
         if (this.$store.state.shoppingcart.cart.length === 0) {
             this.$router.push('/warenkorb')
+            return
         }
+
+        if (this.$route.query.step) {
+            this.step = +this.$route.query.step
+            this.$router.push({ path: '/bestellung', query: { step: this.$route.query.step } })
+        } else {
+            this.$router.push({ path: '/bestellung', query: { step: this.step } })
+        }
+    },
+    watchQuery(newQuery) {
+        this.step = +newQuery.step
     },
     methods: {
         async onSubmit(event) {
@@ -121,8 +134,8 @@ export default {
                 // because the next step would be validated as well
 
                 // eslint-disable-next-line no-lonely-if
-                if (this.step === 2) {
-                    await this.submitOrder()
+                if (this.step === 3) {
+                    // await this.submitOrder()
 
                     if (this.error.length > 0) {
                         this.loading = false
@@ -133,6 +146,7 @@ export default {
                     this.$router.push('/bestell-bestaetigung')
                 } else {
                     this.step += 1
+                    this.$router.push({ path: '/bestellung', query: { step: this.step } })
                 }
             }
             this.loading = false
@@ -140,6 +154,13 @@ export default {
         stepBack() {
             this.$refs.form.classList.remove('was-validated')
             this.step -= 1
+            this.$router.push({ path: '/bestellung', query: { step: this.step } })
+            this.$router.app.refresh()
+        },
+        goToInitialStep() {
+            this.step = 1
+            this.$router.push({ path: '/bestellung', query: { step: this.step } })
+            this.$router.app.refresh()
         },
         async submitOrder() {
             try {

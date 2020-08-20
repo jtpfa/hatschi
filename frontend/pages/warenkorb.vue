@@ -103,7 +103,7 @@ export default {
 
             await Promise.allSettled(results).then(() => {
                 if (!this.cartChanged) {
-                    this.$router.push('/bestellung')
+                    this.$router.push({ path: '/bestellung', query: { step: 1 } })
                 }
             })
         },

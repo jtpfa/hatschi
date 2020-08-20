@@ -7,14 +7,14 @@
                 :key="i"
                 badge-offset="-0.2rem"
                 badge-variant="success"
-                :button="step >= i && step < 3"
+                :button="step > i && step <= 3"
                 class="big-noodle"
                 size="3.5rem"
-                :variant="step + 1 >= i || ready ? 'primary' : 'outline-primary'"
-                @click="step = i - 1"
+                :variant="step >= i || ready ? 'primary' : 'outline-primary'"
+                @click="goToStep(i)"
             >
                 {{ i }}
-                <template v-if="step >= i || ready" v-slot:badge>&#10003;</template>
+                <template v-if="step > i || ready" v-slot:badge>&#10003;</template>
             </b-avatar>
         </div>
     </div>
@@ -40,18 +40,17 @@ export default {
         },
         progressBarValue() {
             if (!this.ready) {
-                if (this.step > 3) {
-                    return 0
-                }
-
-                if (this.step === 0) {
-                    return 1
-                }
-
-                return this.step * 2 + 1
+                return this.step * 2 - 1
             }
 
             return 6
+        },
+    },
+    methods: {
+        goToStep(step) {
+            this.step = step
+            this.$router.push({ path: '/bestellung', query: { step: this.step } })
+            this.$router.app.refresh()
         },
     },
 }
