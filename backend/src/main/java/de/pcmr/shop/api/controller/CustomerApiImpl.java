@@ -1,7 +1,6 @@
 package de.pcmr.shop.api.controller;
 
-import de.pcmr.shop.api.mapper.CustomerDetailsDTOCustomerEntityMapper;
-import de.pcmr.shop.api.mapper.CustomerEntityCustomerDetailsDTOMapper;
+import de.pcmr.shop.api.mapper.CustomerMapper;
 import de.pcmr.shop.api.model.CustomerDetailsDTO;
 import de.pcmr.shop.exception.CustomerAlreadyExistsException;
 import de.pcmr.shop.exception.NoCustomerFoundException;
@@ -31,12 +30,12 @@ public class CustomerApiImpl implements CustomerApiI {
     @Override
     @GetMapping
     public CustomerDetailsDTO getCustomer(Principal principal) throws NoCustomerFoundException {
-        return CustomerEntityCustomerDetailsDTOMapper.mapCustomerEntityToCustomerDetailsDto(customerService.getCurrentCustomer(principal));
+        return CustomerMapper.mapCustomerEntityToCustomerDetailsDto(customerService.getCurrentCustomer(principal));
     }
 
     @Override
     @PutMapping
     public void updateCustomer(@RequestBody @Valid CustomerDetailsDTO customerDetailsDTO, Principal principal) throws NoCustomerFoundException, KeycloakUnknownErrorException, KeycloakUserAlreadyExistsException, CustomerAlreadyExistsException, KeycloakEndpointNotFoundException, KeycloakUserIsNotAuthorizedException {
-        customerService.updateCurrentCustomer(CustomerDetailsDTOCustomerEntityMapper.mapCustomerDetailsDTOToCustomerEntity(customerDetailsDTO), principal);
+        customerService.updateCurrentCustomer(CustomerMapper.mapCustomerDetailsDTOToCustomerEntity(customerDetailsDTO), principal);
     }
 }

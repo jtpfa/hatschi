@@ -4,23 +4,23 @@ import javax.validation.constraints.NotNull;
 
 public class OrderItemDTO {
     @NotNull
-    private long article;
+    private Long articleId;
     @NotNull
-    private int quantity;
+    private Integer quantity;
 
-    public long getArticle() {
-        return article;
+    public Long getArticleId() {
+        return articleId;
     }
 
-    public void setArticle(long article) {
-        this.article = article;
+    public void setArticleId(Long articleId) {
+        this.articleId = articleId;
     }
 
-    public int getQuantity() {
+    public Integer getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(int quantity) {
+    public void setQuantity(Integer quantity) {
         this.quantity = quantity;
     }
 }

@@ -52,7 +52,7 @@ class ArticleDTOArticleEntityMapperUnitTest {
 
     class When {
         void aArticleDTOIsMappedTo(ArticleDTO articleDTO) {
-            articleEntity = ArticleDTOArticleEntityMapper.mapArticleDTOToArticleEntity(articleDTO);
+            articleEntity = ArticleMapper.mapArticleDTOToArticleEntity(articleDTO);
         }
     }
 

@@ -48,7 +48,7 @@ class CustomerRegistrationDTOCustomerEntityMapperUnitTest {
 
     class When {
         void aCustomerRegistrationDtoIsMappedToEntity(CustomerRegistrationDTO customerRegistrationDTO) {
-            customerEntity = CustomerRegistrationDTOCustomerEntityMapper.mapCustomerRegistrationDtoToCustomerEntity(customerRegistrationDTO);
+            customerEntity = CustomerMapper.mapCustomerRegistrationDtoToCustomerEntity(customerRegistrationDTO);
         }
     }
 

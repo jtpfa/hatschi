@@ -3,17 +3,18 @@ package de.pcmr.shop.api.model;
 import de.pcmr.shop.domain.PaymentMethodEnum;
 import de.pcmr.shop.domain.ShippingMethodEnum;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
 public class OrderCreationDTO {
     @NotEmpty
-    private List<OrderItemDTO> orderItems;
+    private List<@Valid OrderItemDTO> orderItems;
     @NotNull
-    private AddressDTO invoiceAddress;
+    private @Valid AddressDTO invoiceAddress;
     @NotNull
-    private AddressDTO shippingAddress;
+    private @Valid AddressDTO shippingAddress;
     @NotNull
     private PaymentMethodEnum paymentMethod;
     @NotNull

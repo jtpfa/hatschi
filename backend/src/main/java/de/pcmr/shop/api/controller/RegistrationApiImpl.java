@@ -1,6 +1,6 @@
 package de.pcmr.shop.api.controller;
 
-import de.pcmr.shop.api.mapper.CustomerRegistrationDTOCustomerEntityMapper;
+import de.pcmr.shop.api.mapper.CustomerMapper;
 import de.pcmr.shop.api.model.CustomerRegistrationDTO;
 import de.pcmr.shop.exception.CustomerAlreadyExistsException;
 import de.pcmr.shop.exception.keycloak.KeycloakEndpointNotFoundException;
@@ -32,6 +32,6 @@ public class RegistrationApiImpl implements RegistrationApiI {
     @Override
     @PostMapping
     public void registerCustomer(@RequestBody @Valid CustomerRegistrationDTO customerRegistrationDTO) throws KeycloakEndpointNotFoundException, KeycloakUserAlreadyExistsException, KeycloakUserIsNotAuthorizedException, CustomerAlreadyExistsException, KeycloakUnknownErrorException {
-        registrationService.registerCustomer(CustomerRegistrationDTOCustomerEntityMapper.mapCustomerRegistrationDtoToCustomerEntity(customerRegistrationDTO));
+        registrationService.registerCustomer(CustomerMapper.mapCustomerRegistrationDtoToCustomerEntity(customerRegistrationDTO));
     }
 }
