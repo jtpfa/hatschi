@@ -120,4 +120,13 @@ export class RestApi {
             body: JSON.stringify(orderAttributes),
         }).then(response => _handleResponse(response))
     }
+
+    getAllOrders(userToken) {
+        return fetch(`${this.baseUrl}employee/order`, {
+            method: 'GET',
+            headers: {
+                Authorization: userToken,
+            },
+        }).then(response => _handleResponse(response, true))
+    }
 }

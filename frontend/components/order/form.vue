@@ -52,6 +52,12 @@ export default {
         }
     },
     computed: {
+        cart() {
+            return this.$store.state.shoppingcart.cart
+        },
+        order() {
+            return this.$store.state.order
+        },
         step: {
             get() {
                 return this.$store.state.order.step
@@ -105,8 +111,8 @@ export default {
                 const orderItems = this.cart.map(item => {
                     return { articleId: item.id, quantity: item.quantity }
                 })
-                const paymentMethod = { paymentMethod: this.order.paymentMethod.id }
-                const shippingMethod = { shippingMethod: this.order.shippingMethod.id }
+                const paymentMethod = this.order.paymentMethod.id
+                const shippingMethod = this.order.shippingMethod.id
 
                 await this.$api.placeOrder(
                     { orderItems, shippingAddress, invoiceAddress, paymentMethod, shippingMethod },

@@ -36,6 +36,11 @@ export default {
             this.$auth.$storage.removeUniversal('redirect')
         }
     },
+    head() {
+        return {
+            title: 'Admin Dashboard - PC Masterrace',
+        }
+    },
 }
 </script>
 

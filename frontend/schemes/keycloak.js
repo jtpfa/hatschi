@@ -65,7 +65,7 @@ export default class KeyCloakScheme {
         }
 
         // remove last colon and whitespace from roles and add them to storage
-        this.$auth.$storage.setState('roles', roles.slice(0, -2))
+        this.$auth.$storage.setState('roles', roles.slice(0, -1))
     }
 
     mounted() {

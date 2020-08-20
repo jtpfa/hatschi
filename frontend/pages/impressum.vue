@@ -121,7 +121,7 @@
 export default {
     head() {
         return {
-            title: `PC Masterrace – ${this.$route.name.replace(/^\w/, c => c.toUpperCase())}`,
+            title: `${this.$route.name.replace(/^\w/, c => c.toUpperCase())} – PC Masterrace`,
         }
     },
 }

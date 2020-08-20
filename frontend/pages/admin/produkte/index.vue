@@ -1,6 +1,6 @@
 <template>
     <div>
-        <data-overview :dashboard="false" :fields="fields" type="product"></data-overview>
+        <data-overview :dashboard="false" :fields="fields" type="product" />
         <b-button class="float-right" to="/admin/produkte/anlegen" variant="primary">Produkt hinzufügen</b-button>
     </div>
 </template>

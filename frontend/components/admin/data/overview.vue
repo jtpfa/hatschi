@@ -29,9 +29,10 @@
                 />
             </template>
 
-            <template v-if="!dashboard" v-slot:cell(actions)>
+            <template v-if="!dashboard" v-slot:cell(actions)="row">
                 <b-button-group>
                     <b-button
+                        v-if="type !== 'order'"
                         v-b-tooltip.hover
                         class="action-button"
                         size="sm"
@@ -42,6 +43,7 @@
                         <icon-pen />
                     </b-button>
                     <b-button
+                        v-if="type !== 'order'"
                         v-b-tooltip.hover
                         class="action-button"
                         size="sm"
@@ -51,7 +53,18 @@
                     >
                         <icon-trash />
                     </b-button>
+                    <b-button v-if="type === 'order'" size="sm" @click="row.toggleDetails">
+                        {{ row.detailsShowing ? 'Hide' : 'Show' }} Details
+                    </b-button>
                 </b-button-group>
+            </template>
+
+            <template v-slot:row-details="row">
+                <b-card>
+                    <ul>
+                        <li v-for="(value, key) in row.item" :key="key">{{ key }}: {{ value }}</li>
+                    </ul>
+                </b-card>
             </template>
 
             <template v-slot:table-busy>
@@ -116,18 +129,25 @@ export default {
             required: true,
             validator(type) {
                 // The value must match one of these strings
-                return ['product', 'customer'].indexOf(type) !== -1
+                return ['product', 'customer', 'order'].indexOf(type) !== -1
             },
         },
     },
     async fetch() {
         try {
-            if (this.type === 'product') {
-                this.items = await this.$api.getAllProductsDetailedVersion(this.$auth.getToken('keycloak'))
-            } else if (this.type === 'customer') {
-                // @todo getAllCustomers
-            } else {
-                this.items = []
+            switch (this.type) {
+                case 'product':
+                    this.items = await this.$api.getAllProductsDetailedVersion(this.$auth.getToken('keycloak'))
+                    break
+                case 'customer':
+                    // @todo getAllCustomers
+                    break
+                case 'order':
+                    this.items = await this.$api.getAllOrders(this.$auth.getToken('keycloak'))
+                    break
+                default:
+                    this.items = []
+                    break
             }
         } catch (err) {
             this.fetchErrorMsg =

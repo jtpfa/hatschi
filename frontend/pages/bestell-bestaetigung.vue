@@ -14,9 +14,14 @@ export default {
     name: 'BestellBestaetigung',
     components: { OrderConfirmation, OrderProgressbar },
     mounted() {
-        // this.$store.commit('shoppingcart/clearCart')
+        this.$store.commit('shoppingcart/clearCart')
         this.$store.commit('order/updateOrderInformation', { key: 'step', data: 1 })
         this.$router.app.refresh()
+    },
+    head() {
+        return {
+            title: `${this.$route.name.replace(/^\w/, c => c.toUpperCase())} – PC Masterrace`,
+        }
     },
 }
 </script>

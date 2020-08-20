@@ -39,6 +39,11 @@ export default {
             this.$router.push({ path: '/bestellung', query: { step: this.step } })
         }
     },
+    head() {
+        return {
+            title: `PC Masterrace – ${this.$route.name.replace(/^\w/, c => c.toUpperCase())}`,
+        }
+    },
     watchQuery(newQuery) {
         this.step = +newQuery.step
     },
