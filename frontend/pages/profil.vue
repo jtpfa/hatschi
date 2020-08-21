@@ -4,16 +4,19 @@
             <profil-form />
 
             <h2>Bestellungen</h2>
+
+            <all-orders />
         </div>
     </b-container>
 </template>
 
 <script>
+import AllOrders from '~/components/shop/order'
 import ProfilForm from '~/components/shop/profil/form'
 
 export default {
     name: 'Profil',
-    components: { ProfilForm },
+    components: { AllOrders, ProfilForm },
     middleware: ['auth'],
     head() {
         return {

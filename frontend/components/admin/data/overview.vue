@@ -188,13 +188,13 @@ export default {
                     hideHeaderClose: false,
                     centered: true,
                 })
-                .then(value => {
+                .then(async value => {
                     if (value) {
-                        this.deleteData()
+                        await this.deleteData()
                     }
                 })
-                .catch(() => {
-                    this.error = 'Leider gab es ein Problem. Bitte später erneut versuchen.'
+                .catch(err => {
+                    this.error = err.message || 'Leider gab es ein Problem. Bitte später erneut versuchen.'
                 })
         },
         async deleteData() {
