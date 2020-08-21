@@ -50,7 +50,6 @@ export default {
         goToStep(step) {
             this.step = step
             this.$router.push({ path: '/bestellung', query: { step: this.step } })
-            this.$router.app.refresh()
         },
     },
 }

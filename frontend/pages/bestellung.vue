@@ -15,7 +15,7 @@ import OrderProgressbar from '~/components/order/progressbar'
 export default {
     name: 'Order',
     components: { OrderForm, OrderProgressbar },
-    middleware: 'auth',
+
     computed: {
         step: {
             get() {

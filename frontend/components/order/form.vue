@@ -72,7 +72,7 @@ export default {
             this.$refs.form.classList.remove('was-validated')
             this.step -= 1
             this.$router.push({ path: '/bestellung', query: { step: this.step } })
-            this.$router.app.refresh()
+            window.scrollTo(0, 0)
         },
         async onSubmit(event) {
             this.$refs.form.classList.remove('was-validated')
@@ -82,26 +82,30 @@ export default {
                 this.$refs.form.classList.add('was-validated')
                 event.preventDefault()
                 event.stopPropagation()
-            } else {
-                // do not show validation state if everything is fine
-                // because the next step would be validated as well
 
-                // eslint-disable-next-line no-lonely-if
-                if (this.step === 3) {
-                    await this.submitOrder()
+                this.loading = false
 
-                    if (this.error.length > 0) {
-                        this.loading = false
-                        return
-                    }
-
-                    this.step += 1
-                    this.$router.push('/bestell-bestaetigung')
-                } else {
-                    this.step += 1
-                    this.$router.push({ path: '/bestellung', query: { step: this.step } })
-                }
+                return
             }
+            // do not show validation state if everything is fine
+            // because the next step would be validated as well
+
+            if (this.step === 3) {
+                await this.submitOrder()
+
+                if (this.error.length > 0) {
+                    this.loading = false
+                    return
+                }
+
+                this.step += 1
+                this.$router.push('/bestell-bestaetigung')
+            } else {
+                this.step += 1
+                this.$router.push({ path: '/bestellung', query: { step: this.step } })
+                window.scrollTo(0, 0)
+            }
+
             this.loading = false
         },
         async submitOrder() {

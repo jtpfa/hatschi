@@ -28,7 +28,6 @@ export default {
         goToInitialStep() {
             this.step = 1
             this.$router.push({ path: '/bestellung', query: { step: this.step } })
-            this.$router.app.refresh()
         },
     },
 }

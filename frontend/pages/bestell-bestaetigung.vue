@@ -1,5 +1,5 @@
 <template>
-    <b-container class="my-5">
+    <b-container v-if="step !== 4" class="my-5">
         <order-progressbar class="position-relative mt-5" :ready="true" />
 
         <order-confirmation />
@@ -13,10 +13,19 @@ import OrderConfirmation from '~/components/order/steps/orderConfirmation'
 export default {
     name: 'BestellBestaetigung',
     components: { OrderConfirmation, OrderProgressbar },
+    computed: {
+        step() {
+            return this.$store.state.order.step
+        },
+    },
     mounted() {
-        this.$store.commit('shoppingcart/clearCart')
+        if (this.step !== 4) {
+            this.$router.push({ path: '/bestellung', query: { step: 1 } })
+        } else {
+            this.$store.commit('shoppingcart/clearCart')
+        }
+
         this.$store.commit('order/updateOrderInformation', { key: 'step', data: 1 })
-        this.$router.app.refresh()
     },
     head() {
         return {
