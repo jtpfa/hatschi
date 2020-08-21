@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import LoginForm from '~/components/login/form'
+import LoginForm from '~/components/general/login/form'
 
 export default {
     name: 'AuthLogin',

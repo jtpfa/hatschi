@@ -7,8 +7,8 @@
 </template>
 
 <script>
-import PageFooter from '~/components/layout/footer'
-import PageHeader from '~/components/layout/header'
+import PageFooter from '~/components/shop/layout/footer'
+import PageHeader from '~/components/shop/layout/header'
 
 export default {
     components: {

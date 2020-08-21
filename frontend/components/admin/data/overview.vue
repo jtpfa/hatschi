@@ -105,8 +105,8 @@
 <script>
 import ProductEdit from '~/components/admin/products/edit'
 import CustomerEdit from '~/components/admin/customers/edit'
-import IconPen from '~/components/icons/pen'
-import IconTrash from '~/components/icons/trash'
+import IconPen from '~/components/general/icons/pen'
+import IconTrash from '~/components/general/icons/trash'
 
 export default {
     name: 'DataOverview',

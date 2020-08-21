@@ -30,8 +30,8 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import CartProducts from '~/components/cart/products'
-import CartSummary from '~/components/cart/summary'
+import CartProducts from '~/components/shop/cart/products'
+import CartSummary from '~/components/shop/cart/summary'
 
 export default {
     components: { CartSummary, CartProducts },

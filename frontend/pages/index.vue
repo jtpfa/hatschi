@@ -14,17 +14,16 @@
         />
     </b-container>
 </template>
-
 <script>
-import HomeProductOverview from '~/components/home/productOverview'
-import HomeSearch from '~/components/home/search'
-import HomeStage from '~/components/home/stage'
+import HomeProductOverview from '~/components/shop/home/productOverview'
+import HomeSearch from '~/components/shop/home/search'
+import HomeStage from '~/components/shop/home/stage'
 
 export default {
     components: {
-        HomeSearch,
         HomeStage,
         HomeProductOverview,
+        HomeSearch,
     },
     async fetch() {
         try {

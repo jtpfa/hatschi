@@ -132,7 +132,7 @@
 </template>
 
 <script>
-import FormFieldFileUpload from '~/components/form-fields/fileUpload'
+import FormFieldFileUpload from '~/components/admin/form-fields/fileUpload'
 
 export default {
     name: 'CustomerEdit',

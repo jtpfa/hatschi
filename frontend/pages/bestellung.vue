@@ -7,14 +7,13 @@
         </b-container>
     </client-only>
 </template>
-
 <script>
-import OrderForm from '~/components/order/form'
-import OrderProgressbar from '~/components/order/progressbar'
+import OrderForm from '~/components/shop/order/form'
+import OrderProgressbar from '~/components/shop/order/progressbar'
 
 export default {
     name: 'Order',
-    components: { OrderForm, OrderProgressbar },
+    components: { OrderProgressbar, OrderForm },
 
     computed: {
         step: {

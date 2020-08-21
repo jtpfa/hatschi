@@ -147,10 +147,10 @@
 </template>
 
 <script>
-import FormFieldFileUpload from '~/components/form-fields/fileUpload'
+import FormFieldFileUpload from '~/components/admin/form-fields/fileUpload'
 // @todo export ckeditor to own component
 /* eslint global-require: "off" */
-import ButtonContainer from '~/components/layout/buttonContainer'
+import ButtonContainer from '~/components/general/layout/buttonContainer'
 
 let ckeditor
 let ClassicEditor = {}

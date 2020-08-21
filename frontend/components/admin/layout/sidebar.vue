@@ -14,10 +14,10 @@
 </template>
 
 <script>
-import IconBarcode from '~/components/icons/barcode'
-import IconCustomers from '~/components/icons/customers'
-import IconDashboard from '~/components/icons/dashboard'
-import IconOrders from '~/components/icons/orders'
+import IconBarcode from '~/components/general/icons/barcode'
+import IconCustomers from '~/components/general/icons/customers'
+import IconDashboard from '~/components/general/icons/dashboard'
+import IconOrders from '~/components/general/icons/orders'
 
 export default {
     name: 'AdminSidebar',

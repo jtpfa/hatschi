@@ -16,7 +16,7 @@
 <script>
 import AdminHeader from '~/components/admin/layout/header'
 import AdminSidebar from '~/components/admin/layout/sidebar'
-import LoginForm from '~/components/login/form'
+import LoginForm from '~/components/general/login/form'
 
 export default {
     name: 'Admin',

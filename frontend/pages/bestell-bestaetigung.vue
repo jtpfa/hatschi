@@ -7,8 +7,8 @@
 </template>
 
 <script>
-import OrderProgressbar from '~/components/order/progressbar'
-import OrderConfirmation from '~/components/order/steps/orderConfirmation'
+import OrderProgressbar from '~/components/shop/order/progressbar'
+import OrderConfirmation from '~/components/shop/order/steps/orderConfirmation'
 
 export default {
     name: 'BestellBestaetigung',

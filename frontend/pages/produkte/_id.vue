@@ -26,13 +26,13 @@
 </template>
 
 <script>
-import FetchContent from '~/components/layout/fetchContent'
-import productCard from '~/components/product/card'
-import productDetails from '~/components/product/details'
+import FetchContent from '~/components/shop/layout/fetchContent'
+import ProductCard from '~/components/shop/product/card'
+import ProductDetails from '~/components/shop/product/details'
 
 export default {
     name: 'Product',
-    components: { FetchContent, productCard, productDetails },
+    components: { ProductDetails, ProductCard, FetchContent },
     async fetch() {
         try {
             this.product = await this.$api.getProduct(this.$route.params.id)

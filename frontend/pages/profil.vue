@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import ProfilForm from '~/components/profil/form'
+import ProfilForm from '~/components/shop/profil/form'
 
 export default {
     name: 'Profil',
