@@ -14,8 +14,8 @@ public class OrderDTO {
     private String customerEmail;
     private List<OrderItemDetailsDTO> orderItems;
     private Boolean paid;
-    private AddressDTO invoiceAddress;
-    private AddressDTO shippingAddress;
+    private AddressCreationDTO invoiceAddress;
+    private AddressCreationDTO shippingAddress;
     private PaymentMethodEnum paymentMethod;
     private ShippingMethodEnum shippingMethod;
 
@@ -59,19 +59,19 @@ public class OrderDTO {
         this.paid = paid;
     }
 
-    public AddressDTO getInvoiceAddress() {
+    public AddressCreationDTO getInvoiceAddress() {
         return invoiceAddress;
     }
 
-    public void setInvoiceAddress(AddressDTO invoiceAddress) {
+    public void setInvoiceAddress(AddressCreationDTO invoiceAddress) {
         this.invoiceAddress = invoiceAddress;
     }
 
-    public AddressDTO getShippingAddress() {
+    public AddressCreationDTO getShippingAddress() {
         return shippingAddress;
     }
 
-    public void setShippingAddress(AddressDTO shippingAddress) {
+    public void setShippingAddress(AddressCreationDTO shippingAddress) {
         this.shippingAddress = shippingAddress;
     }
 

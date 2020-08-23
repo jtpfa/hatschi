@@ -2,9 +2,7 @@ package de.pcmr.shop.api.model;
 
 import javax.validation.constraints.NotNull;
 
-public class AddressDTO {
-    @NotNull
-    private Integer id;
+public class AddressCreationDTO {
     @NotNull
     private String firstName;
     @NotNull
@@ -73,13 +71,5 @@ public class AddressDTO {
 
     public void setCountry(String country) {
         this.country = country;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 }
