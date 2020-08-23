@@ -40,4 +40,9 @@ public class OrderApiImpl implements OrderApiI {
     public List<OrderDTO> getAllOrders() {
         return OrderMapper.mapListToDTOList(orderService.getAllOrders());
     }
+
+    @GetMapping(ORDER_CUSTOMER_URI)
+    public List<OrderDTO> getAllCustomerOrders(Principal principal) throws NoCustomerFoundException {
+        return OrderMapper.mapListToDTOList(orderService.getAllOrdersOfCustomer(principal));
+    }
 }
