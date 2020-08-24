@@ -137,28 +137,6 @@ export default class KeyCloakScheme {
         this.$auth.setUser(user)
     }
 
-    async logout(endpoint) {
-        // Only connect to logout endpoint if it's configured
-        if (this.options.endpoints.logout) {
-            const xhrData = { ...endpoint }
-
-            xhrData.headers = {
-                'Content-Type': 'application/x-www-form-urlencoded',
-            }
-
-            const urlencoded = new URLSearchParams()
-            urlencoded.append('client_id', this.options.client_id)
-            urlencoded.append('refresh_token', this.$auth.getRefreshToken(this.name))
-
-            xhrData.data = urlencoded
-
-            await this.$auth.requestWith(this.name, xhrData, this.options.endpoints.logout).catch(() => {})
-        }
-
-        // But reset regardless
-        return this.$auth.reset()
-    }
-
     async reset() {
         if (this.options.tokenRequired) {
             this._clearToken()
