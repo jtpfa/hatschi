@@ -1,6 +1,7 @@
 package de.pcmr.shop.service;
 
 import de.pcmr.shop.domain.*;
+import de.pcmr.shop.exception.AddressDoesNotBelongToUserException;
 import de.pcmr.shop.exception.DuplicateOrderItemsException;
 import de.pcmr.shop.exception.NoCustomerFoundException;
 import de.pcmr.shop.exception.NotEnoughArticlesOnStockException;
@@ -34,12 +35,14 @@ public class OrderServiceImpl implements OrderServiceI {
     }
 
     @Transactional
-    public void processOrder(@Valid OrderEntity orderEntity, Principal principal) throws NotEnoughArticlesOnStockException, DuplicateOrderItemsException, NoCustomerFoundException {
+    public void processOrder(@Valid OrderEntity orderEntity, Principal principal) throws NotEnoughArticlesOnStockException, DuplicateOrderItemsException, NoCustomerFoundException, AddressDoesNotBelongToUserException {
         validateNoDuplicateItems(orderEntity);
         checkAndReduceStockOfOrder(orderEntity);
         calculateOrderItemPrices(orderEntity);
 
         CustomerEntity currentCustomer = customerService.getCurrentCustomer(principal);
+        checkIfAddressBelongsToUser(orderEntity, currentCustomer);
+
         orderEntity.setCustomer(currentCustomer);
         orderEntity.getInvoiceAddress().setCustomer(currentCustomer);
         orderEntity.getShippingAddress().setCustomer(currentCustomer);
@@ -86,6 +89,13 @@ public class OrderServiceImpl implements OrderServiceI {
         Set<ArticleEntity> articleEntitySet = new HashSet<>(articleEntities);
         if (articleEntitySet.size() < articleEntities.size()) {
             throw new DuplicateOrderItemsException();
+        }
+    }
+
+    private void checkIfAddressBelongsToUser(OrderEntity orderEntity, CustomerEntity currentCustomer) throws AddressDoesNotBelongToUserException {
+        if (!orderEntity.getShippingAddress().getCustomer().equals(currentCustomer)
+                || !orderEntity.getInvoiceAddress().getCustomer().equals(currentCustomer)) {
+            throw new AddressDoesNotBelongToUserException();
         }
     }
 }

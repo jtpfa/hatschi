@@ -3,7 +3,9 @@ package de.pcmr.shop.api.mapper;
 import de.pcmr.shop.api.model.OrderCreationDTO;
 import de.pcmr.shop.api.model.OrderDTO;
 import de.pcmr.shop.domain.OrderEntity;
+import de.pcmr.shop.exception.NoAddressFoundException;
 import de.pcmr.shop.exception.NoArticleFoundException;
+import de.pcmr.shop.repository.AddressRepository;
 import de.pcmr.shop.repository.ArticleRepository;
 import org.modelmapper.ModelMapper;
 
@@ -24,14 +26,23 @@ public class OrderMapper {
         return modelMapper.map(orderEntity, OrderDTO.class);
     }
 
-    public static OrderEntity mapCreationDTOToEntity(OrderCreationDTO orderCreationDTO, ArticleRepository articleRepository) throws NoArticleFoundException {
+    public static OrderEntity mapCreationDTOToEntity(OrderCreationDTO orderCreationDTO, ArticleRepository articleRepository, AddressRepository addressRepository) throws NoArticleFoundException, NoAddressFoundException {
         OrderEntity orderEntity = new OrderEntity();
-        orderEntity.setInvoiceAddress(AddressMapper.mapToAddressEntity(orderCreationDTO.getInvoiceAddress()));
-        orderEntity.setShippingAddress(AddressMapper.mapToAddressEntity(orderCreationDTO.getShippingAddress()));
+        checkIfAddressExists(orderCreationDTO.getInvoiceAddressId(), addressRepository);
+        checkIfAddressExists(orderCreationDTO.getShippingAddressId(), addressRepository);
+
+        orderEntity.setInvoiceAddress(addressRepository.findById(orderCreationDTO.getInvoiceAddressId()).get());
+        orderEntity.setShippingAddress(addressRepository.findById(orderCreationDTO.getShippingAddressId()).get());
         orderEntity.setPaymentMethod(orderCreationDTO.getPaymentMethod());
         orderEntity.setShippingMethod(orderCreationDTO.getShippingMethod());
         orderEntity.setOrderItems(OrderItemMapper.mapListToOrderItemEntityList(orderCreationDTO.getOrderItems(), articleRepository));
 
         return orderEntity;
+    }
+
+    private static void checkIfAddressExists(Long addressId, AddressRepository addressRepository) throws NoAddressFoundException {
+        if (!addressRepository.existsById(addressId)) {
+            throw new NoAddressFoundException(addressId);
+        }
     }
 }

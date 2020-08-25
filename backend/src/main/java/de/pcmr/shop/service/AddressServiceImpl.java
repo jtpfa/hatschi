@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class AddressServiceImpl implements AddressServiceI {
@@ -29,7 +30,7 @@ public class AddressServiceImpl implements AddressServiceI {
     @Override
     public List<AddressEntity> getAddressesOfCustomer(Principal principal) throws NoCustomerFoundException {
         CustomerEntity customerEntity = customerService.getCurrentCustomer(principal);
-        return customerEntity.getAddresses();
+        return customerEntity.getAddresses().stream().filter(AddressEntity::isActive).collect(Collectors.toList());
     }
 
     @Override
@@ -38,6 +39,7 @@ public class AddressServiceImpl implements AddressServiceI {
         if (addressRepository.existsById(addressEntity.getId())) {
             AddressEntity currentAddressEntity = addressRepository.findById(addressEntity.getId()).get();
             checkIfUserIsAuthorized(currentAddressEntity, customerEntity);
+            checkIfAddressIsInactive(currentAddressEntity);
             addressRepository.save(addressEntity);
         } else {
             throw new NoAddressFoundException(addressEntity.getId());
@@ -56,7 +58,8 @@ public class AddressServiceImpl implements AddressServiceI {
         if (addressRepository.existsById(addressId)) {
             AddressEntity currentAddressEntity = addressRepository.findById(addressId).get();
             checkIfUserIsAuthorized(currentAddressEntity, customerEntity);
-            addressRepository.deleteById(addressId);
+            checkIfAddressIsInactive(currentAddressEntity);
+            currentAddressEntity.setActive(false);
         } else {
             throw new NoAddressFoundException(addressId);
         }
@@ -65,6 +68,12 @@ public class AddressServiceImpl implements AddressServiceI {
     private void checkIfUserIsAuthorized(AddressEntity addressEntity, CustomerEntity customerEntity) throws AddressDoesNotBelongToUserException {
         if (!addressEntity.getCustomer().equals(customerEntity)) {
             throw new AddressDoesNotBelongToUserException();
+        }
+    }
+
+    private void checkIfAddressIsInactive(AddressEntity addressEntity) throws NoAddressFoundException {
+        if (!addressEntity.isActive()) {
+            throw new NoAddressFoundException(addressEntity.getId());
         }
     }
 }

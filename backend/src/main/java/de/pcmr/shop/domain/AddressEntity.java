@@ -1,6 +1,7 @@
 package de.pcmr.shop.domain;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Objects;
 
@@ -36,6 +37,10 @@ public class AddressEntity extends AbstractEntity {
     @Column(nullable = false)
     @Size(min = 1, max = 100, message = "Land muss zwischen {min} und {max} Zeichen lang sein")
     private String country;
+
+    @Column(nullable = false)
+    @NotNull
+    private Boolean active = true;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(nullable = false)
@@ -105,6 +110,14 @@ public class AddressEntity extends AbstractEntity {
         this.customer = customer;
     }
 
+    public Boolean isActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -117,11 +130,12 @@ public class AddressEntity extends AbstractEntity {
                 zip.equals(that.zip) &&
                 city.equals(that.city) &&
                 country.equals(that.country) &&
-                customer.equals(that.customer);
+                customer.equals(that.customer) &&
+                active.equals(that.active);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(firstName, lastName, address, additionalAddress, zip, city, country, customer);
+        return Objects.hash(firstName, lastName, address, additionalAddress, zip, city, country, customer, active);
     }
 }
