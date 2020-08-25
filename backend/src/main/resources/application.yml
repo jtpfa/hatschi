@@ -34,8 +34,3 @@ keycloak:
   bearer-only: true
   principal-attribute: preferred_username
   cors: true
-
-
-
-
-

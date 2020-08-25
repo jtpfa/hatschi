@@ -40,6 +40,7 @@ public class AddressServiceImpl implements AddressServiceI {
             AddressEntity currentAddressEntity = addressRepository.findById(addressEntity.getId()).get();
             checkIfUserIsAuthorized(currentAddressEntity, customerEntity);
             checkIfAddressIsInactive(currentAddressEntity);
+            addressEntity.setCustomer(customerEntity);
             addressRepository.save(addressEntity);
         } else {
             throw new NoAddressFoundException(addressEntity.getId());

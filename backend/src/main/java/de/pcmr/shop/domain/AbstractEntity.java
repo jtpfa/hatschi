@@ -20,12 +20,13 @@ public abstract class AbstractEntity {
     private Long id;
 
     @CreationTimestamp
+    @Column(updatable = false)
     private Date created;
 
     @UpdateTimestamp
     private Date updated;
 
-    @Column(length = 100)
+    @Column(length = 100, updatable = false)
     @CreatedBy
     private String createdBy;
 

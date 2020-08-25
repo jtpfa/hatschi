@@ -39,13 +39,13 @@ public class AddressApiImpl implements AddressApiI {
 
     @Override
     @PutMapping(CUSTOMER_ADDRESS_URI + "/{id}")
-    public void editAddress(@PathVariable Long addressId, @RequestBody @Valid AddressCreationDTO addressCreationDTO, Principal principal) throws AddressDoesNotBelongToUserException, NoCustomerFoundException, NoAddressFoundException {
-        addressService.editAddressIfAuthenticated(AddressMapper.mapToAddressEntity(addressCreationDTO, addressId), principal);
+    public void editAddress(@PathVariable Long id, @RequestBody @Valid AddressCreationDTO addressCreationDTO, Principal principal) throws AddressDoesNotBelongToUserException, NoCustomerFoundException, NoAddressFoundException {
+        addressService.editAddressIfAuthenticated(AddressMapper.mapToAddressEntity(addressCreationDTO, id), principal);
     }
 
     @Override
     @DeleteMapping(CUSTOMER_ADDRESS_URI + "/{id}")
-    public void deleteAddress(@PathVariable Long addressId, Principal principal) throws NoCustomerFoundException, AddressDoesNotBelongToUserException, NoAddressFoundException {
-        addressService.deleteAddress(addressId, principal);
+    public void deleteAddress(@PathVariable Long id, Principal principal) throws NoCustomerFoundException, AddressDoesNotBelongToUserException, NoAddressFoundException {
+        addressService.deleteAddress(id, principal);
     }
 }
