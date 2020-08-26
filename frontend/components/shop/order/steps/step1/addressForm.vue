@@ -63,9 +63,7 @@
                         trim
                     />
 
-                    <b-form-invalid-feedback id="input-live-feedback">
-                        Bitte gib eine PLZ an.
-                    </b-form-invalid-feedback>
+                    <b-form-invalid-feedback id="input-live-feedback">Bitte gib eine PLZ an.</b-form-invalid-feedback>
                 </div>
 
                 <div class="mb-4 col-sm-8" role="group">
@@ -84,9 +82,7 @@
                     />
                 </div>
 
-                <b-form-invalid-feedback id="input-live-feedback">
-                    Bitte gib eine Stadt an.
-                </b-form-invalid-feedback>
+                <b-form-invalid-feedback id="input-live-feedback">Bitte gib eine Stadt an.</b-form-invalid-feedback>
             </div>
 
             <div class="row">
@@ -133,9 +129,7 @@
 
             <div class="row">
                 <div class="mb-4 col-sm-4 col-xl-3" role="group">
-                    <label :for="`${addressType}-additional-address`">
-                        Adresszusatz
-                    </label>
+                    <label :for="`${addressType}-additional-address`">Adresszusatz</label>
                     <b-form-input
                         :id="`${addressType}-additional-address`"
                         v-model="additionalAddress"
@@ -165,9 +159,7 @@
                         trim
                     />
 
-                    <b-form-invalid-feedback id="input-live-feedback">
-                        Bitte gib ein Land an.
-                    </b-form-invalid-feedback>
+                    <b-form-invalid-feedback id="input-live-feedback">Bitte gib ein Land an.</b-form-invalid-feedback>
                 </div>
             </div>
         </b-card>

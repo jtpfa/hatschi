@@ -45,9 +45,7 @@
                     trim
                 />
 
-                <b-form-invalid-feedback id="input-live-feedback">
-                    Bitte Beschreibung angeben.
-                </b-form-invalid-feedback>
+                <b-form-invalid-feedback id="input-live-feedback">Bitte Beschreibung angeben.</b-form-invalid-feedback>
             </div>
             <div class="mb-4" role="group">
                 <label for="details">
@@ -64,9 +62,7 @@
                     trim
                 />
 
-                <b-form-invalid-feedback id="input-live-feedback">
-                    Bitte Details angeben.
-                </b-form-invalid-feedback>
+                <b-form-invalid-feedback id="input-live-feedback">Bitte Details angeben.</b-form-invalid-feedback>
             </div>
 
             <!-- @todo price as in add product component -->
@@ -87,9 +83,7 @@
                     />
                 </b-input-group>
 
-                <b-form-invalid-feedback id="input-live-feedback">
-                    Bitte Preis angeben.
-                </b-form-invalid-feedback>
+                <b-form-invalid-feedback id="input-live-feedback">Bitte Preis angeben.</b-form-invalid-feedback>
             </div>
             <div class="mb-4" role="group">
                 <label for="stock">
@@ -107,9 +101,7 @@
                     type="number"
                 />
 
-                <b-form-invalid-feedback id="input-live-feedback">
-                    Bitte Bestand angeben.
-                </b-form-invalid-feedback>
+                <b-form-invalid-feedback id="input-live-feedback">Bitte Bestand angeben.</b-form-invalid-feedback>
             </div>
             <!-- @todo insert ckeditor; add preview of current image if available-->
             <form-field-file-upload ref="fileInput" :replace="true" />
@@ -120,9 +112,7 @@
         <template v-slot:modal-footer="{ ok, cancel }">
             <!-- @todo remove modal footer and insert buttons in form to submit with enter -->
             <!-- Emulate built in modal footer ok and cancel button actions -->
-            <b-button :disabled="loading" size="sm" variant="danger" @click="cancel()">
-                Schließen
-            </b-button>
+            <b-button :disabled="loading" size="sm" variant="danger" @click="cancel()">Schließen</b-button>
             <b-button :disabled="loading" size="sm" variant="success" @click="ok()">
                 <b-spinner v-if="loading" small></b-spinner>
                 Speichern

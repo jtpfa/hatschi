@@ -15,19 +15,13 @@
             </span>
         </template>
 
-        <b-dropdown-item to="profil">
-            Profil
-        </b-dropdown-item>
+        <b-dropdown-item to="profil">Profil</b-dropdown-item>
 
-        <b-dropdown-item to="bestellungen">
-            Bestellungen
-        </b-dropdown-item>
+        <b-dropdown-item to="bestellungen">Bestellungen</b-dropdown-item>
 
         <b-dropdown-divider></b-dropdown-divider>
 
-        <b-dropdown-item @click="logout">
-            Abmelden
-        </b-dropdown-item>
+        <b-dropdown-item @click="logout">Abmelden</b-dropdown-item>
     </b-nav-item-dropdown>
 </template>
 

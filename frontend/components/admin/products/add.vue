@@ -38,9 +38,7 @@
                         trim
                     />
 
-                    <b-form-invalid-feedback id="input-live-feedback">
-                        Beschreibung angeben.
-                    </b-form-invalid-feedback>
+                    <b-form-invalid-feedback id="input-live-feedback">Beschreibung angeben.</b-form-invalid-feedback>
                 </div>
 
                 <div class="mb-4" role="group">
@@ -58,9 +56,7 @@
                         trim
                     />
 
-                    <b-form-invalid-feedback id="input-live-feedback">
-                        Details angeben.
-                    </b-form-invalid-feedback>
+                    <b-form-invalid-feedback id="input-live-feedback">Details angeben.</b-form-invalid-feedback>
                 </div>
 
                 <div class="mb-4" role="group">
@@ -79,9 +75,7 @@
                         tag-name="textarea"
                     ></ckeditor>
 
-                    <b-form-invalid-feedback id="input-live-feedback">
-                        Details angeben.
-                    </b-form-invalid-feedback>
+                    <b-form-invalid-feedback id="input-live-feedback">Details angeben.</b-form-invalid-feedback>
                 </div>
 
                 <div class="mb-4" role="group">
@@ -111,9 +105,7 @@
                         <b-input-group-append is-text>€</b-input-group-append>
                     </b-input-group>
 
-                    <b-form-invalid-feedback id="input-live-feedback">
-                        Preis angeben.
-                    </b-form-invalid-feedback>
+                    <b-form-invalid-feedback id="input-live-feedback">Preis angeben.</b-form-invalid-feedback>
                 </div>
 
                 <div class="mb-4" role="group">
@@ -131,9 +123,7 @@
                         type="number"
                     />
 
-                    <b-form-invalid-feedback id="input-live-feedback">
-                        Lagerbestand angeben.
-                    </b-form-invalid-feedback>
+                    <b-form-invalid-feedback id="input-live-feedback">Lagerbestand angeben.</b-form-invalid-feedback>
                 </div>
 
                 <form-field-file-upload ref="fileInput" />

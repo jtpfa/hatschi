@@ -5,9 +5,7 @@
             <strong>nicht</strong>
             verloren!
         </p>
-        <b-button @click="goToInitialStep">
-            Zum ersten Schritt
-        </b-button>
+        <b-button @click="goToInitialStep">Zum ersten Schritt</b-button>
     </b-jumbotron>
 </template>
 

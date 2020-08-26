@@ -16,9 +16,7 @@
                     trim
                 />
 
-                <b-form-invalid-feedback id="input-live-feedback">
-                    Bitte Vornamen angeben.
-                </b-form-invalid-feedback>
+                <b-form-invalid-feedback id="input-live-feedback">Bitte Vornamen angeben.</b-form-invalid-feedback>
             </div>
             <div class="mb-4" role="group">
                 <label for="name">
@@ -35,20 +33,14 @@
                     trim
                 />
 
-                <b-form-invalid-feedback id="input-live-feedback">
-                    Bitte Nachnamen angeben.
-                </b-form-invalid-feedback>
+                <b-form-invalid-feedback id="input-live-feedback">Bitte Nachnamen angeben.</b-form-invalid-feedback>
             </div>
         </b-form>
 
         <template v-slot:modal-footer="{ ok, cancel }">
             <!-- Emulate built in modal footer ok and cancel button actions -->
-            <b-button size="sm" variant="danger" @click="cancel()">
-                Schließen
-            </b-button>
-            <b-button size="sm" variant="success" @click="ok()">
-                Speichern
-            </b-button>
+            <b-button size="sm" variant="danger" @click="cancel()">Schließen</b-button>
+            <b-button size="sm" variant="success" @click="ok()">Speichern</b-button>
         </template>
     </b-modal>
 </template>
