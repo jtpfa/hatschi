@@ -1,13 +1,19 @@
 <template>
     <div>
         <b-alert :show="fetchErrorMsg.length > 0" variant="warning">{{ fetchErrorMsg }}</b-alert>
-        {{ orders }}
+
+        <b-card v-for="item in orders" :key="item.id">
+            <template v-slot:header class="d-flex flex-column flex-md-row">
+                <h2>Blubdiblub</h2>
+            </template>
+            {{ item }}
+        </b-card>
     </div>
 </template>
 
 <script>
 export default {
-    name: 'AllOrders',
+    name: 'CustomerRelatedOrders',
     async fetch() {
         try {
             this.orders = await this.$api.getAllOrdersOfCustomer(this.$auth.getToken('keycloak'))

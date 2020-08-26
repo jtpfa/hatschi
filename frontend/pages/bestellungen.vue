@@ -1,17 +1,17 @@
 <template>
-    <b-container class="d-flex justify-content-center my-5">
-        <div class="col-12 col-sm-10 col-md-6 col-xl-5">
-            <profil-form />
-        </div>
+    <b-container class="my-5">
+        <h1>Bestellungen</h1>
+
+        <customer-related-orders />
     </b-container>
 </template>
 
 <script>
-import ProfilForm from '~/components/shop/profil/form'
+import CustomerRelatedOrders from '~/components/shop/account/orders'
 
 export default {
-    name: 'Profil',
-    components: { ProfilForm },
+    name: 'Bestellungen',
+    components: { CustomerRelatedOrders },
     middleware: ['auth'],
     head() {
         return {
