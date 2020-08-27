@@ -34,7 +34,7 @@ public class OrderServiceImpl implements OrderServiceI {
         this.addressRepository = addressRepository;
     }
 
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void processOrder(@Valid OrderEntity orderEntity, Principal principal) throws NotEnoughArticlesOnStockException, DuplicateOrderItemsException, NoCustomerFoundException, AddressDoesNotBelongToUserException {
         validateNoDuplicateItems(orderEntity);
         checkAndReduceStockOfOrder(orderEntity);
@@ -98,8 +98,8 @@ public class OrderServiceImpl implements OrderServiceI {
     }
 
     private void checkIfAddressBelongsToUser(OrderEntity orderEntity, CustomerEntity currentCustomer) throws AddressDoesNotBelongToUserException {
-        if (!orderEntity.getShippingAddress().getCustomer().equals(currentCustomer)
-                || !orderEntity.getInvoiceAddress().getCustomer().equals(currentCustomer)) {
+        if (!orderEntity.getShippingAddress().getCustomer().getId().equals(currentCustomer.getId())
+                || !orderEntity.getInvoiceAddress().getCustomer().getId().equals(currentCustomer.getId())) {
             throw new AddressDoesNotBelongToUserException();
         }
     }
