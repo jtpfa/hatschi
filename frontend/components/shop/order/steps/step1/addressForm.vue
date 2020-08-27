@@ -158,91 +158,16 @@ export default {
             },
         },
     },
-    computed: {
-        firstName: {
-            get() {
-                return this.$store.state.order[`${this.addressType}Address`].firstName
-            },
-            set(firstName) {
-                this.$store.commit('order/updateOrderInformation', {
-                    address: `${this.addressType}Address`,
-                    key: 'firstName',
-                    data: firstName,
-                })
-            },
-        },
-        lastName: {
-            get() {
-                return this.$store.state.order[`${this.addressType}Address`].lastName
-            },
-            set(lastName) {
-                this.$store.commit('order/updateOrderInformation', {
-                    address: `${this.addressType}Address`,
-                    key: 'lastName',
-                    data: lastName,
-                })
-            },
-        },
-        zip: {
-            get() {
-                return this.$store.state.order[`${this.addressType}Address`].zip
-            },
-            set(zip) {
-                this.$store.commit('order/updateOrderInformation', {
-                    address: `${this.addressType}Address`,
-                    key: 'zip',
-                    data: zip,
-                })
-            },
-        },
-        city: {
-            get() {
-                return this.$store.state.order[`${this.addressType}Address`].city
-            },
-            set(city) {
-                this.$store.commit('order/updateOrderInformation', {
-                    address: `${this.addressType}Address`,
-                    key: 'city',
-                    data: city,
-                })
-            },
-        },
-        address: {
-            get() {
-                return this.$store.state.order[`${this.addressType}Address`].address
-            },
-            set(address) {
-                this.$store.commit('order/updateOrderInformation', {
-                    address: `${this.addressType}Address`,
-                    key: 'address',
-                    data: address,
-                })
-            },
-        },
-        additionalAddress: {
-            get() {
-                return this.$store.state.order[`${this.addressType}Address`].additionalAddress
-            },
-            set(additionalAddress) {
-                this.$store.commit('order/updateOrderInformation', {
-                    address: `${this.addressType}Address`,
-                    key: 'additionalAddress',
-                    data: additionalAddress,
-                })
-            },
-        },
-        country: {
-            get() {
-                return this.$store.state.order[`${this.addressType}Address`].country
-            },
-            set(country) {
-                this.$store.commit('order/updateOrderInformation', {
-                    address: `${this.addressType}Address`,
-                    key: 'country',
-                    data: country,
-                })
-            },
-        },
+    data() {
+        return {
+            firstName: this.$auth.user.firstName,
+            lastName: this.$auth.user.lastName,
+            zip: '',
+            city: '',
+            address: '',
+            additionalAddress: '',
+            country: '',
+        }
     },
 }
 </script>

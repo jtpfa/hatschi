@@ -62,8 +62,7 @@ export default {
             return this.$store.state.order
         },
         addressId() {
-            // array index starts at 0, our product ids at 1
-            return +this.order[`${this.addressType}Address`] - 1
+            return +this.order[`${this.addressType}Address`]
         },
     },
 }

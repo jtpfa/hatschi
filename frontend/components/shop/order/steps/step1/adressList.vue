@@ -2,20 +2,20 @@
     <div>
         <h2>
             {{ addressType === 'shipping' ? 'Lieferadresse' : 'Rechnungsadresse' }} auswählen
-            <span v-if="addressType === 'shipping'" class="mandatory">*</span>
+            <span class="mandatory">*</span>
         </h2>
         <b-list-group>
-            <b-list-group-item v-for="item in addresses" :key="item.id">
+            <b-list-group-item v-for="(item, index) in addresses" :key="item.id">
                 <b-form-radio
                     v-model="selectedAddress"
                     :name="`${addressType}-address`"
-                    :required="addressType === 'shipping'"
+                    :required="addressType === 'shipping' || differentInvoiceAddress"
                     :state="validState"
-                    :value="item.id"
+                    :value="index"
                 >
                     <span>{{ item.firstName }} {{ item.lastName }}</span>
                     <br />
-                    <span>
+                    <span class="text-muted">
                         {{ item.address }}, {{ item.zip }} {{ item.city }},
                         {{ item.additionalAddress.length > 0 ? `${item.additionalAddress},` : null }} {{ item.country }}
                     </span>
@@ -57,6 +57,9 @@ export default {
         },
         addresses() {
             return this.$store.state.order.addresses
+        },
+        differentInvoiceAddress() {
+            return this.$store.state.order.differentInvoiceAddress
         },
     },
 }

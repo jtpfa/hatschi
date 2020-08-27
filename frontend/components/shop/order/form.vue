@@ -4,7 +4,7 @@
 
         <div class="row mt-5">
             <div class="col-md-7 mb-0">
-                <order-step1 v-if="step === 1" />
+                <order-step1 v-if="step === 1" :fetch-error-msg="fetchErrorMsg" />
 
                 <order-step2 v-else-if="step === 2" />
 

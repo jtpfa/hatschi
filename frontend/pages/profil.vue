@@ -6,7 +6,7 @@
                     <b-tab title="Persönliche Daten">
                         <account-profil />
                     </b-tab>
-                    <b-tab lazy title="Adressen">
+                    <b-tab title="Adressen">
                         <h2 class="my-3">Aktuell hinterlegte Adressen</h2>
                         <account-show-all-addresses />
 

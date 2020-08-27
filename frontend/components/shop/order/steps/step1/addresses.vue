@@ -1,12 +1,18 @@
 <template>
     <div>
         <order-adress-list address-type="shipping" />
+        <slot />
+        <b-button v-if="addresses.length === 0" to="/profil" variant="primary">Neue Adresse hinzufügen</b-button>
 
         <b-form-checkbox v-model="differentInvoiceAddress" class="my-5" name="differentInvoiceAddress" size="lg" switch>
             Rechnungsadresse weicht von der Lieferadresse ab
         </b-form-checkbox>
 
-        <order-adress-list v-if="differentInvoiceAddress" address-type="invoice" />
+        <template v-if="differentInvoiceAddress">
+            <order-adress-list address-type="invoice" />
+            <slot />
+            <b-button v-if="addresses.length === 0" to="/profil" variant="primary">Neue Adresse hinzufügen</b-button>
+        </template>
     </div>
 </template>
 
@@ -27,6 +33,9 @@ export default {
                     data: differentInvoiceAddress,
                 })
             },
+        },
+        addresses() {
+            return this.$store.state.order.addresses
         },
     },
 }
