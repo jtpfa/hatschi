@@ -62,7 +62,7 @@ export default {
             return this.$store.state.order
         },
         addressId() {
-            return +this.order[`${this.addressType}Address`]
+            return +this.order[`${this.addressType}Address`].index
         },
     },
 }

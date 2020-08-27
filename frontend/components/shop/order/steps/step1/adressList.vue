@@ -11,7 +11,7 @@
                     :name="`${addressType}-address`"
                     :required="addressType === 'shipping' || differentInvoiceAddress"
                     :state="validState"
-                    :value="index"
+                    :value="{ id: item.id, index }"
                 >
                     <span>{{ item.firstName }} {{ item.lastName }}</span>
                     <br />

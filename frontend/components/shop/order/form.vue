@@ -127,10 +127,10 @@ export default {
                 await this.$api.placeOrder(
                     {
                         orderItems,
-                        shippingAddressId: this.order.shippingAddress,
+                        shippingAddressId: this.order.shippingAddress.id,
                         invoiceAddressId: this.order.differentInvoiceAddress
-                            ? this.order.invoiceAddress
-                            : this.order.shippingAddress,
+                            ? this.order.invoiceAddress.id
+                            : this.order.shippingAddress.id,
                         paymentMethod: this.order.paymentMethod.id,
                         shippingMethod: this.order.shippingMethod.id,
                     },

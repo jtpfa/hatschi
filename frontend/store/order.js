@@ -1,13 +1,19 @@
 export const state = () => ({
+    addresses: [],
     shippingMethod: {
         id: '',
         name: '',
         description: '',
     },
-    addresses: [],
-    shippingAddress: -1,
+    shippingAddress: {
+        id: -1,
+        index: -1,
+    },
     differentInvoiceAddress: false,
-    invoiceAddress: -1,
+    invoiceAddress: {
+        id: -1,
+        index: -1,
+    },
     paymentMethod: {
         id: '',
         name: '',
