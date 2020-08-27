@@ -45,9 +45,19 @@ import OrderStep3 from '~/components/shop/order/steps/step3/step3'
 export default {
     name: 'OrderForm',
     components: { OrderStep3, OrderStep2, OrderStep1, OrderInvalidState, OrderPagination, OrderHeadline, CartSummary },
+    async fetch() {
+        try {
+            const addresses = await this.$api.getAddressesOfCustomer(this.$auth.getToken('keycloak'))
+            this.$store.commit('order/updateOrderInformation', { key: 'addresses', data: addresses })
+        } catch (err) {
+            this.fetchErrorMsg =
+                err.message || 'Leider gab es ein Problem beim Laden der Daten. Bitte später erneut versuchen.'
+        }
+    },
     data() {
         return {
             loading: false,
+            fetchErrorMsg: '',
             error: '',
         }
     },
@@ -110,31 +120,24 @@ export default {
         },
         async submitOrder() {
             try {
-                const shippingAddress = this.getAddress('shipping')
-                const invoiceAddress = this.order.differentInvoiceAddress ? this.getAddress('invoice') : shippingAddress
                 const orderItems = this.cart.map(item => {
                     return { articleId: item.id, quantity: item.quantity }
                 })
-                const paymentMethod = this.order.paymentMethod.id
-                const shippingMethod = this.order.shippingMethod.id
 
                 await this.$api.placeOrder(
-                    { orderItems, shippingAddress, invoiceAddress, paymentMethod, shippingMethod },
+                    {
+                        orderItems,
+                        shippingAddressId: this.order.shippingAddress,
+                        invoiceAddressId: this.order.differentInvoiceAddress
+                            ? this.order.invoiceAddress
+                            : this.order.shippingAddress,
+                        paymentMethod: this.order.paymentMethod.id,
+                        shippingMethod: this.order.shippingMethod.id,
+                    },
                     this.$auth.getToken('keycloak')
                 )
             } catch (err) {
                 this.error = err.message || 'Leider gab es ein Problem. Bitte später erneut versuchen.'
-            }
-        },
-        getAddress(addressType) {
-            return {
-                firstName: this.order[`${addressType}Address`].firstName,
-                lastName: this.order[`${addressType}Address`].lastName,
-                address: this.order[`${addressType}Address`].address,
-                additionalAddress: this.order[`${addressType}Address`].additionalAddress,
-                zip: this.order[`${addressType}Address`].zip,
-                city: this.order[`${addressType}Address`].city,
-                country: this.order[`${addressType}Address`].country,
             }
         },
     },

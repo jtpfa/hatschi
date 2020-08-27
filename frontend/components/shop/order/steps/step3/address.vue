@@ -6,7 +6,8 @@
             </div>
             <div class="col-sm-9 col-md-8 col-lg-9 col-xl-10">
                 <b-card-text text-tag="span">
-                    {{ order[`${addressType}Address`].firstName }} {{ order[`${addressType}Address`].lastName }}
+                    {{ order.addresses[addressId].firstName }}
+                    {{ order.addresses[addressId].lastName }}
                 </b-card-text>
             </div>
         </div>
@@ -16,19 +17,20 @@
             </div>
             <div class="col-sm-9 col-md-8 col-lg-9 col-xl-10">
                 <b-card-text text-tag="span">
-                    {{ order[`${addressType}Address`].address }}
+                    {{ order.addresses[addressId].address }}
                 </b-card-text>
                 <br />
                 <b-card-text text-tag="span">
-                    {{ order[`${addressType}Address`].zip }} {{ order[`${addressType}Address`].city }}
+                    {{ order.addresses[addressId].zip }}
+                    {{ order.addresses[addressId].city }}
                 </b-card-text>
                 <br />
-                <b-card-text v-if="order[`${addressType}Address`].additionalAddress" text-tag="span">
-                    {{ order[`${addressType}Address`].additionalAddress }}
+                <b-card-text v-if="order.addresses[addressId].additionalAddress" text-tag="span">
+                    {{ order.addresses[addressId].additionalAddress }}
                 </b-card-text>
-                <br v-if="order[`${addressType}Address`].additionalAddress" />
+                <br v-if="order.addresses[addressId].additionalAddress" />
                 <b-card-text text-tag="span">
-                    {{ order[`${addressType}Address`].country }}
+                    {{ order.addresses[addressId].country }}
                 </b-card-text>
             </div>
         </div>
@@ -58,6 +60,10 @@ export default {
     computed: {
         order() {
             return this.$store.state.order
+        },
+        addressId() {
+            // array index starts at 0, our product ids at 1
+            return +this.order[`${this.addressType}Address`] - 1
         },
     },
 }
