@@ -16,7 +16,7 @@
             </div>
             <div class="col-sm-9 col-md-8 col-lg-9 col-xl-10">
                 <b-card-text text-tag="span">
-                    {{ order[`${addressType}Address`].street }} {{ order[`${addressType}Address`].number }}
+                    {{ order[`${addressType}Address`].address }}
                 </b-card-text>
                 <br />
                 <b-card-text text-tag="span">

@@ -84,43 +84,23 @@
             </div>
 
             <div class="row">
-                <div class="mb-4 col-sm-8 col-xl-9" role="group">
-                    <label for="street">
-                        Straße
+                <div class="mb-4 col-12" role="group">
+                    <label for="address">
+                        Straße und Hausnr.
                         <span class="mandatory">*</span>
                     </label>
                     <b-form-input
-                        id="street"
-                        v-model="street"
+                        id="address"
+                        v-model="address"
                         aria-describedby="input-live-feedback"
-                        pattern="^.{1,245}$"
-                        placeholder="Straße"
+                        pattern="^.{1,255}$"
+                        placeholder="Straße und Hausnr."
                         required
                         trim
                     />
 
                     <b-form-invalid-feedback id="input-live-feedback">
-                        Bitte gib eine Straße an.
-                    </b-form-invalid-feedback>
-                </div>
-
-                <div class="mb-4 col-sm-4 col-xl-3" role="group">
-                    <label for="number">
-                        Hausnr.
-                        <span class="mandatory">*</span>
-                    </label>
-                    <b-form-input
-                        id="number"
-                        v-model="number"
-                        aria-describedby="input-live-feedback"
-                        pattern="^.{1,10}$"
-                        placeholder="Hausnr."
-                        required
-                        trim
-                    />
-
-                    <b-form-invalid-feedback id="input-live-feedback">
-                        Bitte gib eine Hausnummer an.
+                        Bitte gib eine Straße inkl. Hausnr. an.
                     </b-form-invalid-feedback>
                 </div>
             </div>
@@ -176,12 +156,11 @@ export default {
     components: { ButtonContainer },
     data() {
         return {
-            firstName: '',
-            lastName: '',
+            firstName: this.$auth.user.firstName,
+            lastName: this.$auth.user.lastName,
             zip: '',
             city: '',
-            street: '',
-            number: '',
+            address: '',
             additionalAddress: '',
             country: '',
             loading: false,
@@ -195,7 +174,7 @@ export default {
                     {
                         firstName: this.firstName,
                         lastName: this.lastName,
-                        address: `${this.street} ${this.number}`,
+                        address: this.address,
                         additionalAddress: this.additionalAddress,
                         zip: this.zip,
                         city: this.city,
@@ -229,8 +208,7 @@ export default {
             this.lastName = ''
             this.zip = ''
             this.city = ''
-            this.street = ''
-            this.number = ''
+            this.address = ''
             this.additionalAddress = ''
             this.country = ''
         },

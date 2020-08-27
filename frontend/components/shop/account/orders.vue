@@ -2,6 +2,8 @@
     <div>
         <b-alert :show="fetchErrorMsg.length > 0" variant="warning">{{ fetchErrorMsg }}</b-alert>
 
+        <b-alert :show="orders.length === 0" variant="info">Keine Bestellungen getätigt.</b-alert>
+
         <b-card v-for="item in orders" :key="item.id">
             <template v-slot:header class="d-flex flex-column flex-md-row">
                 <h2>Blubdiblub</h2>

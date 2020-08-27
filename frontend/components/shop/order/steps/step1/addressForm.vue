@@ -85,43 +85,23 @@
             </div>
 
             <div class="row">
-                <div class="mb-4 col-sm-8 col-xl-9" role="group">
-                    <label :for="`${addressType}-street`">
-                        Straße
+                <div class="mb-4 col-12" role="group">
+                    <label :for="`${addressType}-address`">
+                        Straße und Hausnr.
                         <span class="mandatory">*</span>
                     </label>
                     <b-form-input
-                        :id="`${addressType}-street`"
-                        v-model="street"
+                        :id="`${addressType}-address`"
+                        v-model="address"
                         aria-describedby="input-live-feedback"
-                        pattern="^.{1,245}$"
-                        placeholder="Straße"
+                        pattern="^.{1,255}$"
+                        placeholder="Straße und Hausnr."
                         required
                         trim
                     />
 
                     <b-form-invalid-feedback id="input-live-feedback">
-                        Bitte gib eine Straße an.
-                    </b-form-invalid-feedback>
-                </div>
-
-                <div class="mb-4 col-sm-4 col-xl-3" role="group">
-                    <label :for="`${addressType}-number`">
-                        Hausnr.
-                        <span class="mandatory">*</span>
-                    </label>
-                    <b-form-input
-                        :id="`${addressType}-number`"
-                        v-model="number"
-                        aria-describedby="input-live-feedback"
-                        pattern="^.{1,10}$"
-                        placeholder="Hausnr."
-                        required
-                        trim
-                    />
-
-                    <b-form-invalid-feedback id="input-live-feedback">
-                        Bitte gib eine Hausnummer an.
+                        Bitte gib eine Straße inkl. Hausnr. an.
                     </b-form-invalid-feedback>
                 </div>
             </div>
@@ -227,27 +207,15 @@ export default {
                 })
             },
         },
-        street: {
+        address: {
             get() {
-                return this.$store.state.order[`${this.addressType}Address`].street
+                return this.$store.state.order[`${this.addressType}Address`].address
             },
-            set(street) {
+            set(address) {
                 this.$store.commit('order/updateOrderInformation', {
                     address: `${this.addressType}Address`,
-                    key: 'street',
-                    data: street,
-                })
-            },
-        },
-        number: {
-            get() {
-                return this.$store.state.order[`${this.addressType}Address`].number
-            },
-            set(number) {
-                this.$store.commit('order/updateOrderInformation', {
-                    address: `${this.addressType}Address`,
-                    key: 'number',
-                    data: number,
+                    key: 'address',
+                    data: address,
                 })
             },
         },

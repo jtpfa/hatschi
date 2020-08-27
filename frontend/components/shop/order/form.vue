@@ -130,7 +130,7 @@ export default {
             return {
                 firstName: this.order[`${addressType}Address`].firstName,
                 lastName: this.order[`${addressType}Address`].lastName,
-                address: `${this.order[`${addressType}Address`].street} ${this.order[`${addressType}Address`].number}`,
+                address: this.order[`${addressType}Address`].address,
                 additionalAddress: this.order[`${addressType}Address`].additionalAddress,
                 zip: this.order[`${addressType}Address`].zip,
                 city: this.order[`${addressType}Address`].city,
