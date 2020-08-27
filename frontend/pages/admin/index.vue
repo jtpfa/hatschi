@@ -11,10 +11,8 @@
         <h2>Kunden</h2>
         <data-overview class="mb-5" :dashboard="true" :fields="userFields" type="customer"></data-overview>
 
-        <template v-if="accessGranted">
-            <h2>Mitarbeiter</h2>
-            <data-overview class="mb-5" :dashboard="true" :fields="userFields" type="employee"></data-overview>
-        </template>
+        <h2>Mitarbeiter</h2>
+        <data-overview class="mb-5" :dashboard="true" :fields="userFields" type="employee"></data-overview>
     </div>
 </template>
 
@@ -27,7 +25,6 @@ export default {
     layout: 'admin',
     data() {
         return {
-            accessGranted: false,
             productFields: [
                 { key: 'name', label: 'Artikelbezeichnung', sortable: true },
                 { key: 'description', label: 'Beschreibung', sortable: true },
@@ -64,9 +61,6 @@ export default {
                 { key: 'actions', label: '', sortable: false },
             ],
         }
-    },
-    mounted() {
-        this.accessGranted = this.$auth.$state.roles?.includes('admin')
     },
 }
 </script>
