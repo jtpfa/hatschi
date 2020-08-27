@@ -2,7 +2,7 @@
     <b-container>
         <home-stage />
 
-        <home-filter class="mb-5 top-seller-filter" @filtered="filterProducts($event)" />
+        <home-filter class="mb-5 top-seller-filter" @filtered="filterProducts($event)" @sort="sortProducts($event)" />
 
         <home-product-overview
             :error="error"
@@ -45,6 +45,28 @@ export default {
                     product.name.toLocaleLowerCase().includes(searchParam) ||
                     product.description.toLocaleLowerCase().includes(searchParam)
             )
+        },
+        sortProducts(sortParam) {
+            if (!this.filtered) {
+                // deep clone the products array
+                this.filteredProducts = JSON.parse(JSON.stringify(this.products))
+            }
+            this.filtered = true
+            this.filteredProducts.sort((a, b) => {
+                if (sortParam.key === 'price') {
+                    if (sortParam.order === 'asc') {
+                        return a.price - b.price
+                    }
+
+                    return b.price - a.price
+                }
+
+                if (sortParam.order === 'asc') {
+                    return a.name.toLocaleLowerCase().localeCompare(b.name.toLocaleLowerCase())
+                }
+
+                return b.name.toLocaleLowerCase().localeCompare(a.name.toLocaleLowerCase())
+            })
         },
     },
 }
