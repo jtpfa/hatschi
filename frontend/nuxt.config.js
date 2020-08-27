@@ -104,10 +104,12 @@ export default {
             'http://auth.pcmr.de:8080/auth/realms/pcmr/protocol/openid-connect/logout',
     },
     auth: {
+        plugins: [{ src: '~/schemes/refresh', ssr: false }],
         strategies: {
             keycloak: {
                 _scheme: '~/schemes/keycloak',
                 token_key: 'access_token',
+                token_type: 'Bearer',
                 grant_type: 'password',
                 client_id: 'pcmr',
                 token: {

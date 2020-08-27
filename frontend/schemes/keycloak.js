@@ -2,7 +2,6 @@ import jwtDecode from 'jwt-decode'
 
 const DEFAULTS = {
     tokenRequired: true,
-    tokenType: 'Bearer',
     globalToken: true,
     tokenName: 'Authorization',
     autoFetchUser: true,
@@ -111,7 +110,7 @@ export default class KeyCloakScheme {
     }
 
     async setUserToken(accessToken, refreshToken) {
-        const token = this.options.tokenType ? `${this.options.tokenType} ${accessToken}` : accessToken
+        const token = this.options.token_type ? `${this.options.token_type} ${accessToken}` : accessToken
         this.$auth.setToken(this.name, token)
         this._setToken(token)
 
