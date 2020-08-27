@@ -1,8 +1,11 @@
 <template>
-    <div>
+    <fetch-content v-if="$fetchState.pending" :size="6" />
+    <div v-else>
         <b-alert v-if="fetchErrorMsg.length > 0" :show="true" variant="warning">{{ fetchErrorMsg }}</b-alert>
 
-        <b-alert v-else-if="!addresses" :show="true" variant="warning">Keine Adressen hinterlegt</b-alert>
+        <b-alert v-else-if="addresses.length === 0" :show="true" variant="warning">
+            Keine Adressen hinterlegt. Lege deine erste Adresse an:
+        </b-alert>
 
         <div v-else>
             <b-alert :show="error.length > 0" variant="danger">{{ error }}</b-alert>
@@ -15,39 +18,20 @@
                             <b-button variant="white" @click="deleteAddress(item.id)">
                                 <icon-trash class="delete" />
                             </b-button>
-                            <b-button variant="white"><icon-pen class="edit" /></b-button>
+                            <b-button v-b-toggle="`overview-${item.id}`" variant="white">
+                                <icon-pen class="edit" />
+                            </b-button>
                         </div>
                     </div>
                 </template>
 
-                <div class="row mb-2">
-                    <div class="col-sm-3 col-md-4 col-lg-3">
-                        <span class="font-weight-bold">Name:</span>
-                    </div>
-                    <div class="col-sm-9 col-md-8 col-lg-9">
-                        <b-card-text text-tag="span">{{ item.firstName }} {{ item.lastName }}</b-card-text>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-3 col-md-4 col-lg-3">
-                        <span class="font-weight-bold">Anschrift:</span>
-                    </div>
-                    <div class="col-sm-9 col-md-8 col-lg-9">
-                        <b-card-text text-tag="span">
-                            {{ item.address }}
-                        </b-card-text>
-                        <br />
-                        <b-card-text text-tag="span">{{ item.zip }} {{ item.city }}</b-card-text>
-                        <br />
-                        <b-card-text v-if="item.additionalAddress" text-tag="span">
-                            {{ item.additionalAddress }}
-                        </b-card-text>
-                        <br v-if="item.additionalAddress" />
-                        <b-card-text text-tag="span">
-                            {{ item.country }}
-                        </b-card-text>
-                    </div>
-                </div>
+                <b-collapse :id="`overview-${item.id}`" visible>
+                    <account-address-details :address="item" />
+                </b-collapse>
+
+                <b-collapse :id="`overview-${item.id}`">
+                    <account-edit-address :address="Object.assign({}, item)" />
+                </b-collapse>
             </b-card>
         </div>
     </div>
@@ -56,10 +40,13 @@
 <script>
 import IconPen from '~/components/general/icons/pen'
 import IconTrash from '~/components/general/icons/trash'
+import AccountAddressDetails from '~/components/shop/account/address/details'
+import AccountEditAddress from '~/components/shop/account/address/edit'
+import FetchContent from '~/components/shop/layout/fetchContent'
 
 export default {
     name: 'AccountShowAllAdresses',
-    components: { IconTrash, IconPen },
+    components: { FetchContent, AccountEditAddress, AccountAddressDetails, IconTrash, IconPen },
     async fetch() {
         try {
             this.addresses = await this.$api.getAddressesOfCustomer(this.$auth.getToken('keycloak'))

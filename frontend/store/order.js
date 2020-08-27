@@ -4,27 +4,10 @@ export const state = () => ({
         name: '',
         description: '',
     },
-    shippingAddress: {
-        firstName: '',
-        lastName: '',
-        zip: '',
-        city: '',
-        street: '',
-        number: '',
-        country: '',
-        additionalAddress: '',
-    },
+    addresses: [],
+    shippingAddress: -1,
     differentInvoiceAddress: false,
-    invoiceAddress: {
-        firstName: '',
-        lastName: '',
-        zip: '',
-        city: '',
-        street: '',
-        number: '',
-        country: '',
-        additionalAddress: '',
-    },
+    invoiceAddress: -1,
     paymentMethod: {
         id: '',
         name: '',
@@ -37,10 +20,6 @@ export const state = () => ({
 
 export const mutations = {
     updateOrderInformation: (state, payload) => {
-        if (payload.address && payload.key) {
-            state[payload.address][payload.key] = payload.data
-        } else {
-            state[payload.key] = payload.data
-        }
+        state[payload.key] = payload.data
     },
 }
