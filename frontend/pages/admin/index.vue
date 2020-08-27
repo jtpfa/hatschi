@@ -5,11 +5,14 @@
         <h2 class="mb-4">Produkte</h2>
         <data-overview class="mb-5" :dashboard="true" :fields="productFields" type="product"></data-overview>
 
-        <h2>Kunden</h2>
-        <data-overview class="mb-5" :dashboard="true" :fields="customerFields" type="customer"></data-overview>
-
         <h2>Bestellungen</h2>
         <data-overview class="mb-5" :dashboard="true" :fields="orderFields" type="order"></data-overview>
+
+        <h2>Kunden</h2>
+        <data-overview class="mb-5" :dashboard="true" :fields="userFields" type="customer"></data-overview>
+
+        <h2>Mitarbeiter</h2>
+        <data-overview class="mb-5" :dashboard="true" :fields="userFields" type="employee"></data-overview>
     </div>
 </template>
 
@@ -40,7 +43,7 @@ export default {
                 { key: 'image', label: 'Bild', sortable: false },
                 { key: 'actions', label: '', sortable: false },
             ],
-            customerFields: [
+            userFields: [
                 { key: 'firstName', label: 'Vorname', sortable: true },
                 { key: 'lastName', label: 'Nachname', sortable: true },
                 { key: 'actions', label: '', sortable: false },
