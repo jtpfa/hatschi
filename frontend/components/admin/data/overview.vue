@@ -30,9 +30,9 @@
             </template>
 
             <template v-if="!dashboard" v-slot:cell(actions)="row">
-                <b-button-group>
+                <b-button-group class="float-right">
                     <b-button
-                        v-if="type !== 'order'"
+                        v-if="type !== 'order' && isAllowedToEdit"
                         v-b-tooltip.hover
                         class="action-button"
                         size="sm"
@@ -43,7 +43,7 @@
                         <icon-pen />
                     </b-button>
                     <b-button
-                        v-if="type !== 'order'"
+                        v-if="type !== 'order' && isAllowedToDelete"
                         v-b-tooltip.hover
                         class="action-button"
                         size="sm"
@@ -129,7 +129,7 @@ export default {
             required: true,
             validator(type) {
                 // The value must match one of these strings
-                return ['product', 'customer', 'order'].indexOf(type) !== -1
+                return ['product', 'customer', 'employee', 'order'].indexOf(type) !== -1
             },
         },
     },
@@ -140,7 +140,18 @@ export default {
                     this.items = await this.$api.getAllProductsDetailedVersion(this.$auth.getToken('keycloak'))
                     break
                 case 'customer':
-                    // @todo getAllCustomers
+                    this.items = [
+                        { id: 1, firstName: 'Dickerson', lastName: 'Macdonald' },
+                        { id: 2, firstName: 'Larsen', lastName: 'Shaw' },
+                        { id: 3, firstName: 'Geneva', lastName: 'Wilson' },
+                    ]
+                    break
+                case 'employee':
+                    this.items = [
+                        { id: 1, firstName: 'Peter', lastName: 'Pan' },
+                        { id: 2, firstName: 'Hans', lastName: 'Wurst' },
+                        { id: 3, firstName: 'Jürgen', lastName: 'Müller' },
+                    ]
                     break
                 case 'order':
                     this.items = await this.$api.getAllOrders(this.$auth.getToken('keycloak'))
@@ -169,6 +180,18 @@ export default {
     computed: {
         rows() {
             return this.items.length
+        },
+        isAllowedToEdit() {
+            return (
+                ['product', 'customer'].includes(this.type) ||
+                (this.type === 'employee' && this.$auth.$state.roles?.includes('admin'))
+            )
+        },
+        isAllowedToDelete() {
+            return (
+                this.type === 'product' ||
+                (['customer', 'employee'].includes(this.type) && this.$auth.$state.roles?.includes('admin'))
+            )
         },
     },
     methods: {
