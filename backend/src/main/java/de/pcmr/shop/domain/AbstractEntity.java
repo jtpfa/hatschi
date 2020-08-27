@@ -8,6 +8,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Objects;
 
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
@@ -20,12 +21,13 @@ public abstract class AbstractEntity {
     private Long id;
 
     @CreationTimestamp
+    @Column(updatable = false)
     private Date created;
 
     @UpdateTimestamp
     private Date updated;
 
-    @Column(length = 100)
+    @Column(length = 100, updatable = false)
     @CreatedBy
     private String createdBy;
 

@@ -1,8 +1,10 @@
 <template>
     <div>
-        <b-alert :show="fetchErrorMsg.length > 0" variant="warning">{{ fetchErrorMsg }}</b-alert>
+        <b-alert v-if="fetchErrorMsg.length > 0" :show="true" variant="warning">{{ fetchErrorMsg }}</b-alert>
 
-        <b-card v-for="item in orders" :key="item.id">
+        <b-alert v-else-if="orders.length === 0" :show="true" variant="info">Keine Bestellungen getätigt.</b-alert>
+
+        <b-card v-for="item in orders" v-else :key="item.id">
             <template v-slot:header class="d-flex flex-column flex-md-row">
                 <h2>Blubdiblub</h2>
             </template>
@@ -13,7 +15,7 @@
 
 <script>
 export default {
-    name: 'CustomerRelatedOrders',
+    name: 'AccountOrders',
     async fetch() {
         try {
             this.orders = await this.$api.getAllOrdersOfCustomer(this.$auth.getToken('keycloak'))

@@ -6,13 +6,14 @@ import de.pcmr.shop.exception.DuplicateOrderItemsException;
 import de.pcmr.shop.exception.NoArticleFoundException;
 import de.pcmr.shop.exception.NoCustomerFoundException;
 import de.pcmr.shop.exception.NotEnoughArticlesOnStockException;
+import de.pcmr.shop.exception.*;
 
 import javax.validation.Valid;
 import java.security.Principal;
 import java.util.List;
 
 public interface OrderApiI {
-    void placeOrder(@Valid OrderCreationDTO orderCreationDTO, Principal principal) throws NoArticleFoundException, NoCustomerFoundException, NotEnoughArticlesOnStockException, DuplicateOrderItemsException;
+    void placeOrder(@Valid OrderCreationDTO orderCreationDTO, Principal principal) throws NoArticleFoundException, NoCustomerFoundException, NotEnoughArticlesOnStockException, DuplicateOrderItemsException, NoAddressFoundException, AddressDoesNotBelongToUserException;
     List<OrderDTO> getAllOrders();
     List<OrderDTO> getAllCustomerOrders(Principal principal) throws NoCustomerFoundException;
 }

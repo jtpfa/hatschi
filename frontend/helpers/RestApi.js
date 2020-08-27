@@ -138,4 +138,45 @@ export class RestApi {
             },
         }).then(response => _handleResponse(response, true))
     }
+
+    getAddressesOfCustomer(userToken) {
+        return fetch(`${this.baseUrl}customer/address`, {
+            method: 'GET',
+            headers: {
+                Authorization: userToken,
+            },
+        }).then(response => _handleResponse(response, true))
+    }
+
+    addCustomerAddress(addressAttributes, userToken) {
+        return fetch(`${this.baseUrl}customer/address`, {
+            method: 'POST',
+            headers: {
+                'Content-type': 'application/json; charset=UTF-8',
+                Authorization: userToken,
+            },
+            body: JSON.stringify(addressAttributes),
+        }).then(response => _handleResponse(response))
+    }
+
+    deleteCustomerAddress(addressId, userToken) {
+        return fetch(`${this.baseUrl}customer/address/${addressId}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-type': 'application/json; charset=UTF-8',
+                Authorization: userToken,
+            },
+        }).then(response => _handleResponse(response))
+    }
+
+    editCustomerAddress(addressAttributes, addressId, userToken) {
+        return fetch(`${this.baseUrl}customer/address/${addressId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-type': 'application/json; charset=UTF-8',
+                Authorization: userToken,
+            },
+            body: JSON.stringify(addressAttributes),
+        }).then(response => _handleResponse(response))
+    }
 }

@@ -13,6 +13,7 @@ public final class AddressEntityBuilder {
     private String zip;
     private String city;
     private String country;
+    private Boolean active = true;
     private CustomerEntity customer;
     private Long id;
     private Date created;
@@ -62,7 +63,17 @@ public final class AddressEntityBuilder {
         return this;
     }
 
-    public AddressEntityBuilder withId(long id) {
+    public AddressEntityBuilder withActive(Boolean active) {
+        this.active = active;
+        return this;
+    }
+
+    public AddressEntityBuilder withCustomer(CustomerEntity customer) {
+        this.customer = customer;
+        return this;
+    }
+
+    public AddressEntityBuilder withId(Long id) {
         this.id = id;
         return this;
     }
@@ -96,6 +107,8 @@ public final class AddressEntityBuilder {
         addressEntity.setZip(zip);
         addressEntity.setCity(city);
         addressEntity.setCountry(country);
+        addressEntity.setActive(active);
+        addressEntity.setCustomer(customer);
         addressEntity.setId(id);
         addressEntity.setCreated(created);
         addressEntity.setUpdated(updated);

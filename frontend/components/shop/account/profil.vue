@@ -75,7 +75,7 @@
 
             <b-alert class="mt-3" :show="error.length > 0" variant="danger">{{ error }}</b-alert>
 
-            <button-container :loading="loading" text="Speichern" />
+            <button-container :loading="loading" text="Profildaten ändern" />
         </b-form>
     </div>
 </template>
@@ -83,7 +83,7 @@
 import ButtonContainer from '~/components/general/layout/buttonContainer'
 
 export default {
-    name: 'ProfilForm',
+    name: 'AccountProfil',
     components: { ButtonContainer },
     data() {
         return {

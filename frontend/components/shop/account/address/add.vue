@@ -1,15 +1,14 @@
 <template>
-    <div>
-        <h2>{{ addressType === 'shipping' ? 'Lieferadresse' : 'Rechnungsadresse' }} angeben</h2>
+    <b-form ref="form" novalidate @submit.prevent="onSubmit">
         <b-card>
             <div class="row">
                 <div class="mb-4 col-xl-6" role="group">
-                    <label :for="`${addressType}-firstName`">
+                    <label for="firstName">
                         Vorname
                         <span class="mandatory">*</span>
                     </label>
                     <b-form-input
-                        :id="`${addressType}-firstName`"
+                        id="firstName"
                         v-model="firstName"
                         aria-describedby="input-live-feedback"
                         autocomplete="given-name"
@@ -25,12 +24,12 @@
                 </div>
 
                 <div class="mb-4 col-xl-6" role="group">
-                    <label :for="`${addressType}-lastName`">
+                    <label for="lastName">
                         Nachname
                         <span class="mandatory">*</span>
                     </label>
                     <b-form-input
-                        :id="`${addressType}-lastName`"
+                        id="lastName"
                         v-model="lastName"
                         aria-describedby="input-live-feedback"
                         autocomplete="family-name"
@@ -48,12 +47,12 @@
 
             <div class="row">
                 <div class="mb-4 col-sm-4" role="group">
-                    <label :for="`${addressType}-zip`">
+                    <label for="zip">
                         PLZ
                         <span class="mandatory">*</span>
                     </label>
                     <b-form-input
-                        :id="`${addressType}-zip`"
+                        id="zip"
                         v-model="zip"
                         aria-describedby="input-live-feedback"
                         pattern="^.{1,50}$"
@@ -66,12 +65,12 @@
                 </div>
 
                 <div class="mb-4 col-sm-8" role="group">
-                    <label :for="`${addressType}-city`">
+                    <label for="city">
                         Stadt
                         <span class="mandatory">*</span>
                     </label>
                     <b-form-input
-                        :id="`${addressType}-city`"
+                        id="city"
                         v-model="city"
                         aria-describedby="input-live-feedback"
                         pattern="^.{1,100}$"
@@ -86,12 +85,12 @@
 
             <div class="row">
                 <div class="mb-4 col-12" role="group">
-                    <label :for="`${addressType}-address`">
+                    <label for="address">
                         Straße und Hausnr.
                         <span class="mandatory">*</span>
                     </label>
                     <b-form-input
-                        :id="`${addressType}-address`"
+                        id="address"
                         v-model="address"
                         aria-describedby="input-live-feedback"
                         pattern="^.{1,255}$"
@@ -108,9 +107,9 @@
 
             <div class="row">
                 <div class="mb-4 col-sm-4 col-xl-3" role="group">
-                    <label :for="`${addressType}-additional-address`">Adresszusatz</label>
+                    <label for="additionalAddress">Adresszusatz</label>
                     <b-form-input
-                        :id="`${addressType}-additional-address`"
+                        id="additionalAddress"
                         v-model="additionalAddress"
                         aria-describedby="input-live-feedback"
                         pattern="^.{1,255}$"
@@ -124,12 +123,12 @@
                 </div>
 
                 <div class="mb-4 col-sm-8 col-xl-9" role="group">
-                    <label :for="`${addressType}-country`">
+                    <label for="country">
                         Land
                         <span class="mandatory">*</span>
                     </label>
                     <b-form-input
-                        :id="`${addressType}-country`"
+                        id="country"
                         v-model="country"
                         aria-describedby="input-live-feedback"
                         pattern="^.{1,50}$"
@@ -141,23 +140,20 @@
                     <b-form-invalid-feedback id="input-live-feedback">Bitte gib ein Land an.</b-form-invalid-feedback>
                 </div>
             </div>
+
+            <b-alert class="mt-3" :show="error.length > 0" variant="danger">{{ error }}</b-alert>
+
+            <button-container :loading="loading" text="Adresse hinzufügen" />
         </b-card>
-    </div>
+    </b-form>
 </template>
 
 <script>
+import ButtonContainer from '~/components/general/layout/buttonContainer'
+
 export default {
-    name: 'OrderAddressForm',
-    props: {
-        addressType: {
-            type: String,
-            required: true,
-            validator(type) {
-                // The value must match one of these strings
-                return ['shipping', 'invoice'].indexOf(type) !== -1
-            },
-        },
-    },
+    name: 'AccountAddAddress',
+    components: { ButtonContainer },
     data() {
         return {
             firstName: this.$auth.user.firstName,
@@ -167,13 +163,57 @@ export default {
             address: '',
             additionalAddress: '',
             country: '',
+            loading: false,
+            error: '',
         }
+    },
+    methods: {
+        async addAddress() {
+            try {
+                await this.$api.addCustomerAddress(
+                    {
+                        firstName: this.firstName,
+                        lastName: this.lastName,
+                        address: this.address,
+                        additionalAddress: this.additionalAddress,
+                        zip: this.zip,
+                        city: this.city,
+                        country: this.country,
+                    },
+                    this.$auth.getToken('keycloak')
+                )
+                this.clearForm()
+                this.$root.$emit('bv::toggle::collapse', 'new-address')
+                this.$router.app.refresh()
+            } catch (err) {
+                this.error = err.message || 'Leider gab es ein Problem. Bitte später erneut versuchen.'
+            }
+        },
+        async onSubmit(event) {
+            this.loading = true
+            this.error = ''
+            if (!this.$refs.form.checkValidity()) {
+                this.$refs.form.classList.add('was-validated')
+                event.preventDefault()
+                event.stopPropagation()
+            } else {
+                this.$refs.form.classList.add('was-validated')
+                await this.addAddress()
+            }
+            this.loading = false
+        },
+        clearForm() {
+            this.$refs.form.classList.remove('was-validated')
+            this.firstName = ''
+            this.lastName = ''
+            this.zip = ''
+            this.city = ''
+            this.address = ''
+            this.additionalAddress = ''
+            this.country = ''
+        },
     },
 }
 </script>
 
-<style lang="scss" scoped>
-label {
-    font-size: 1.25rem;
-}
-</style>
+<style scoped></style>

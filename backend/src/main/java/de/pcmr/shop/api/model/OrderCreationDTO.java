@@ -12,9 +12,9 @@ public class OrderCreationDTO {
     @NotEmpty
     private List<@Valid OrderItemDTO> orderItems;
     @NotNull
-    private @Valid AddressDTO invoiceAddress;
+    private Long invoiceAddressId;
     @NotNull
-    private @Valid AddressDTO shippingAddress;
+    private Long shippingAddressId;
     @NotNull
     private PaymentMethodEnum paymentMethod;
     @NotNull
@@ -28,20 +28,20 @@ public class OrderCreationDTO {
         this.orderItems = orderItems;
     }
 
-    public AddressDTO getInvoiceAddress() {
-        return invoiceAddress;
+    public Long getInvoiceAddressId() {
+        return invoiceAddressId;
     }
 
-    public void setInvoiceAddress(AddressDTO invoiceAddress) {
-        this.invoiceAddress = invoiceAddress;
+    public void setInvoiceAddressId(Long invoiceAddressId) {
+        this.invoiceAddressId = invoiceAddressId;
     }
 
-    public AddressDTO getShippingAddress() {
-        return shippingAddress;
+    public Long getShippingAddressId() {
+        return shippingAddressId;
     }
 
-    public void setShippingAddress(AddressDTO shippingAddress) {
-        this.shippingAddress = shippingAddress;
+    public void setShippingAddressId(Long shippingAddressId) {
+        this.shippingAddressId = shippingAddressId;
     }
 
     public PaymentMethodEnum getPaymentMethod() {
