@@ -7,9 +7,7 @@
                 der 4K Auflösung jedes Detail sichtbar.
             </p>
         </div>
-        <b-button class="w-100" variant="primary">
-            Zum Produkt
-        </b-button>
+        <b-button class="w-100" variant="primary">Zum Produkt</b-button>
     </div>
 </template>
 

@@ -8,7 +8,7 @@
 
                 <b-collapse id="nav-collapse" is-nav>
                     <!-- Right aligned nav items -->
-                    <b-navbar-nav class="ml-auto mb-3 mb-md-0">
+                    <b-navbar-nav class="ml-auto mb-2 mb-md-0">
                         <header-nav-shopping-cart />
                         <header-nav-user-status />
                     </b-navbar-nav>

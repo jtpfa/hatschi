@@ -56,6 +56,11 @@ public class OrderServiceImpl implements OrderServiceI {
         return orderRepository.findAll();
     }
 
+    public List<OrderEntity> getAllOrdersOfCustomer(Principal principal) throws NoCustomerFoundException {
+        CustomerEntity customerEntity = customerService.getCurrentCustomer(principal);
+        return orderRepository.findByCustomer(customerEntity);
+    }
+
     private void checkAndReduceStockOfOrder(OrderEntity orderEntity) throws NotEnoughArticlesOnStockException {
         for (OrderItemEntity orderItemEntity : orderEntity.getOrderItems()) {
             checkStockOfOrderItem(orderItemEntity);

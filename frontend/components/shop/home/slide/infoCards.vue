@@ -1,16 +1,10 @@
 <template>
     <div class="big-noodle mt-3 mt-sm-5 mb-4 mb-sm-5">
         <div class="info-cards">
-            <span class="product-name d-block bg-white text-primary text-center px-3 py-1 mb-3">
-                Acer-Predator
-            </span>
+            <span class="product-name d-block bg-white text-primary text-center px-3 py-1 mb-3">Acer-Predator</span>
             <div class="features d-block text-center">
-                <span class="d-inline-block text-white feature-one px-3 py-1">
-                    4k
-                </span>
-                <span class="d-inline-block text-white feature-two px-3 py-1">
-                    HDR-600
-                </span>
+                <span class="d-inline-block text-white feature-one px-3 py-1">4k</span>
+                <span class="d-inline-block text-white feature-two px-3 py-1">HDR-600</span>
             </div>
         </div>
     </div>

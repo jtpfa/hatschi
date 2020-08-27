@@ -126,8 +126,10 @@ export default {
             this.loading = false
         },
         async login() {
-            await this.$auth.logout()
-            this.$router.push('/auth/login')
+            window.location.href = `${this.$config.keycloakLogoutEndpoint}?redirect_uri=${encodeURI(
+                `${this.$config.baseURL}/auth/login`
+            )}`
+            this.$auth.reset()
         },
     },
 }

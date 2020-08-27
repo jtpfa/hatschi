@@ -1,9 +1,9 @@
 .nav-icon {
+    color: $primary !important; // override bootstrap default
     text-decoration: none;
     transition: opacity 0.3s ease-in-out;
 
     &:hover {
-        color: $primary;
         text-decoration: none;
         opacity: 0.8;
         cursor: pointer;

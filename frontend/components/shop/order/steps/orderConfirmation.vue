@@ -6,9 +6,7 @@
         :header-level="1"
         text-variant="white"
     >
-        <p>
-            Vielen Dank für deinen Einkauf. Wir kümmern uns nun um deine Bestellung.
-        </p>
+        <p>Vielen Dank für deinen Einkauf. Wir kümmern uns nun um deine Bestellung.</p>
     </b-jumbotron>
 </template>
 
