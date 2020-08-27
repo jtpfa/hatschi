@@ -2,7 +2,7 @@
     <client-only>
         <div>
             <b-navbar class="bg-white header-nav" toggleable="md" type="light">
-                <page-logo />
+                <page-logo header />
 
                 <b-navbar-toggle target="nav-collapse" />
 

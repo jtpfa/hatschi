@@ -104,7 +104,7 @@ export default {
             'http://auth.pcmr.de:8080/auth/realms/pcmr/protocol/openid-connect/logout',
     },
     auth: {
-        plugins: [{ src: '~/schemes/refresh', ssr: false }],
+        plugins: [{ src: '~/plugins/refreshToken', ssr: false }],
         strategies: {
             keycloak: {
                 _scheme: '~/schemes/keycloak',

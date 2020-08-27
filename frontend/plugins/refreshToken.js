@@ -1,5 +1,5 @@
 /*
-  Refresh keycloak's access
+  Refresh keycloak's access token
   This is a refactored and es6-conform version of
   https://gist.github.com/robsontenorio/d1e56c5bc5bc391ba0791be77419a68c
  */
@@ -54,7 +54,7 @@ export default function refresh({ app }) {
             $axios.setToken(token)
         } catch (error) {
             $auth.logout()
-            throw new Error('Error while refreshing token')
+            throw new Error(`Error while refreshing token: ${error}`)
         }
     }, refreshInterval)
 }
