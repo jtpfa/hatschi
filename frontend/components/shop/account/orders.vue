@@ -13,7 +13,7 @@
 
 <script>
 export default {
-    name: 'CustomerRelatedOrders',
+    name: 'AccountOrders',
     async fetch() {
         try {
             this.orders = await this.$api.getAllOrdersOfCustomer(this.$auth.getToken('keycloak'))

@@ -2,16 +2,16 @@
     <b-container class="my-5">
         <h1>Bestellungen</h1>
 
-        <customer-related-orders />
+        <account-orders />
     </b-container>
 </template>
 
 <script>
-import CustomerRelatedOrders from '~/components/shop/account/orders'
+import AccountOrders from '~/components/shop/account/orders'
 
 export default {
     name: 'Bestellungen',
-    components: { CustomerRelatedOrders },
+    components: { AccountOrders },
     middleware: ['auth'],
     head() {
         return {

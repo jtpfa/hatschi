@@ -22,6 +22,14 @@
                 <b-card-text text-tag="span">
                     {{ order[`${addressType}Address`].zip }} {{ order[`${addressType}Address`].city }}
                 </b-card-text>
+                <br />
+                <b-card-text v-if="order[`${addressType}Address`].additionalAddress" text-tag="span">
+                    {{ order[`${addressType}Address`].additionalAddress }}
+                </b-card-text>
+                <br v-if="order[`${addressType}Address`].additionalAddress" />
+                <b-card-text text-tag="span">
+                    {{ order[`${addressType}Address`].country }}
+                </b-card-text>
             </div>
         </div>
     </order-overview-card>
