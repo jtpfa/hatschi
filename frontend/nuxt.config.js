@@ -1,5 +1,5 @@
 export default {
-    mode: 'spa',
+    mode: 'universal',
     /*
      ** Headers of the page
      */
@@ -35,7 +35,7 @@ export default {
         { src: '~/plugins/currency', ssr: true },
         { src: '~/plugins/text-crop', ssr: true },
         { src: '~/plugins/image-src-set', ssr: true },
-        { src: '~/plugins/vuex-persistedstate', ssr: false },
+        { src: '~/plugins/vuex-persist', ssr: false },
     ],
     /*
      ** Nuxt.js dev-modules

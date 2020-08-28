@@ -1,6 +1,6 @@
 {
   "name": "pcmr",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "PC Masterrace",
   "author": "Aleksandar Vuk Jovanovic, Fynn Lohse, Jonas Pfannkuche, Tayfun Gülbasi, Vera Meermeier",
   "private": true,
@@ -46,7 +46,7 @@
     "nuxt": "^2.14.4",
     "sass-loader": "^10.0.1",
     "vue-currency-filter": "^5.1.1",
-    "vuex-persistedstate": "^3.1.0"
+    "vuex-persist": "^2.2.0"
   },
   "devDependencies": {
     "@nuxt/types": "^2.14.4",
