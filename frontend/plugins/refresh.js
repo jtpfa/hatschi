@@ -27,12 +27,7 @@ export default function refresh({ app }) {
 
     // calculate timeout before token expiration (75% from expiration time)
     const tokenParsed = jwtDecode.call(this, token)
-    let refreshInterval = (tokenParsed.exp * 1000 - Date.now()) * 0.75
-
-    // Limit 10 seconds (avoid self attack)
-    if (refreshInterval < 10000) {
-        refreshInterval = 10000
-    }
+    const refreshInterval = (tokenParsed.exp * 1000 - Date.now()) * 0.75
 
     // keep refreshing token before expiration time
     setInterval(async () => {
