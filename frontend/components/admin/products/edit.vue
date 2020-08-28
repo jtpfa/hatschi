@@ -47,23 +47,8 @@
 
                 <b-form-invalid-feedback id="input-live-feedback">Bitte Beschreibung angeben.</b-form-invalid-feedback>
             </div>
-            <div class="mb-4" role="group">
-                <label for="details">
-                    Details
-                    <span class="mandatory">*</span>
-                </label>
-                <b-form-input
-                    id="details"
-                    v-model="product.details"
-                    aria-describedby="input-live-feedback"
-                    pattern="^.{4,32768}$"
-                    placeholder="Details"
-                    required
-                    trim
-                />
 
-                <b-form-invalid-feedback id="input-live-feedback">Bitte Details angeben.</b-form-invalid-feedback>
-            </div>
+            <form-field-editor ref="editorDetails" :current-details="product.details" />
 
             <!-- @todo price as in add product component -->
             <div class="mb-4" role="group">
@@ -103,7 +88,7 @@
 
                 <b-form-invalid-feedback id="input-live-feedback">Bitte Bestand angeben.</b-form-invalid-feedback>
             </div>
-            <!-- @todo insert ckeditor; add preview of current image if available-->
+
             <form-field-file-upload ref="fileInput" :replace="true" />
 
             <b-alert class="my-3" :show="error.length > 0" variant="danger">{{ error }}</b-alert>
@@ -122,11 +107,12 @@
 </template>
 
 <script>
+import FormFieldEditor from '~/components/admin/form-fields/editor'
 import FormFieldFileUpload from '~/components/admin/form-fields/fileUpload'
 
 export default {
     name: 'CustomerEdit',
-    components: { FormFieldFileUpload },
+    components: { FormFieldEditor, FormFieldFileUpload },
     props: {
         product: {
             type: Object,
@@ -151,7 +137,7 @@ export default {
                         id: this.product.id,
                         name: this.product.name,
                         description: this.product.description,
-                        details: this.product.details,
+                        details: this.$refs.editorDetails.details,
                         price: +this.product.price,
                         stock: +this.product.stock,
                     },
@@ -168,7 +154,7 @@ export default {
         async onSubmit(event) {
             this.loading = true
             this.error = ''
-            if (!this.$refs.form.checkValidity()) {
+            if (!this.$refs.form.checkValidity() || !this.$refs.editorDetails.isValid()) {
                 this.$refs.form.classList.add('was-validated')
                 event.preventDefault()
             } else {
