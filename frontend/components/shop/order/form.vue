@@ -99,6 +99,9 @@ export default {
             }
             // do not show validation state if everything is fine
             // because the next step would be validated as well
+            if (this.step === 1) {
+                console.log(this.$store.state.order.shippingAddress.id)
+            }
 
             if (this.step === 3) {
                 await this.submitOrder()

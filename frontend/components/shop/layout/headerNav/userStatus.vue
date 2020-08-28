@@ -15,9 +15,9 @@
             </span>
         </template>
 
-        <b-dropdown-item to="profil">Profil</b-dropdown-item>
+        <b-dropdown-item to="/profil">Profil</b-dropdown-item>
 
-        <b-dropdown-item to="bestellungen">Bestellungen</b-dropdown-item>
+        <b-dropdown-item to="/bestellungen">Bestellungen</b-dropdown-item>
 
         <b-dropdown-divider></b-dropdown-divider>
 

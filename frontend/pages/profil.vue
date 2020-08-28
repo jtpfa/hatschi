@@ -3,9 +3,6 @@
         <div class="px-0 col-sm-11 col-md-8 col-xl-6">
             <b-card class="w-100" no-body title="Card Title">
                 <b-tabs card justified>
-                    <b-tab title="Persönliche Daten">
-                        <account-profil />
-                    </b-tab>
                     <b-tab title="Adressen">
                         <h2 class="my-3">Aktuell hinterlegte Adressen</h2>
                         <account-show-all-addresses />
@@ -16,6 +13,9 @@
                             <h2 class="mt-5 mb-3">Adresse anlegen</h2>
                             <account-add-address />
                         </b-collapse>
+                    </b-tab>
+                    <b-tab title="Persönliche Daten">
+                        <account-profil />
                     </b-tab>
                 </b-tabs>
             </b-card>

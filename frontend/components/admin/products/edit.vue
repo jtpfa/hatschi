@@ -142,14 +142,18 @@ export default {
     computed: {
         priceEur: {
             get() {
-                const price = this.product.price.toString()
-                let eur = price.slice(0, price.length - 2)
+                if (this.product.price) {
+                    const price = this.product.price.toString()
+                    let eur = price.slice(0, price?.length - 2)
 
-                if (eur.length === 0) {
-                    eur = 0
+                    if (eur.length === 0) {
+                        eur = 0
+                    }
+
+                    return eur
                 }
 
-                return eur
+                return -1
             },
             set(eur) {
                 this.product.price = eur + this.priceCt
@@ -157,13 +161,17 @@ export default {
         },
         priceCt: {
             get() {
-                let ct = this.product.price.toString().slice(-2)
+                if (this.product.price) {
+                    let ct = this.product.price.toString().slice(-2)
 
-                if (ct.length === 1) {
-                    ct = `${ct}0`
+                    if (ct.length === 1) {
+                        ct = `${ct}0`
+                    }
+
+                    return ct
                 }
 
-                return ct
+                return -1
             },
             set(ct) {
                 this.product.price = `${this.priceEur}${ct.length === 1 ? `0${ct}` : `${ct}`}`

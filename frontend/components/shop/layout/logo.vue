@@ -2,7 +2,11 @@
     <b-navbar-brand class="d-flex justify-content-center align-items-center" href="/" title="Zur Startseite von PC-MR">
         <icon-logo aria-label="Logo von PC-MR" class="mr-3" />
 
-        <span v-if="header" class="big-noodle name text-dark">PCMR</span>
+        <span v-if="header" class="big-noodle name text-dark">
+            <span class="name-short">PCMR</span>
+            <br />
+            <span class="name-long">PC Masterrace</span>
+        </span>
         <span v-else class="big-noodle description text-light">
             Dein Online-
             <br />
@@ -44,8 +48,13 @@ export default {
     }
 }
 
-.name {
+.name-short {
     font-size: 3.25rem;
+    line-height: 1;
+}
+
+.name-long {
+    font-size: 1rem;
 }
 
 .description {
