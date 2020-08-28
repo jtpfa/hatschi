@@ -50,26 +50,36 @@
 
             <form-field-editor ref="editorDetails" :current-details="product.details" />
 
-            <!-- @todo price as in add product component -->
             <div class="mb-4" role="group">
                 <label for="price">
                     Preis
                     <span class="mandatory">*</span>
                 </label>
-                <b-input-group id="price" append="ct">
+                <b-input-group id="price" prepend="Euro und Cent">
                     <b-form-input
-                        v-model="product.price"
+                        v-model="priceEur"
                         aria-describedby="input-live-feedback"
                         min="0"
-                        placeholder="Preis"
                         required
                         trim
                         type="number"
                     />
+                    <b-input-group-text>,</b-input-group-text>
+                    <b-form-input
+                        v-model="priceCt"
+                        aria-describedby="input-live-feedback"
+                        max="99"
+                        min="0"
+                        required
+                        trim
+                        type="number"
+                    />
+                    <b-input-group-append is-text>€</b-input-group-append>
                 </b-input-group>
 
-                <b-form-invalid-feedback id="input-live-feedback">Bitte Preis angeben.</b-form-invalid-feedback>
+                <b-form-invalid-feedback id="input-live-feedback">Preis angeben.</b-form-invalid-feedback>
             </div>
+
             <div class="mb-4" role="group">
                 <label for="stock">
                     Lagerbestand
@@ -128,6 +138,37 @@ export default {
             error: '',
             loading: false,
         }
+    },
+    computed: {
+        priceEur: {
+            get() {
+                const price = this.product.price.toString()
+                let eur = price.slice(0, price.length - 2)
+
+                if (eur.length === 0) {
+                    eur = 0
+                }
+
+                return eur
+            },
+            set(eur) {
+                this.product.price = eur + this.priceCt
+            },
+        },
+        priceCt: {
+            get() {
+                let ct = this.product.price.toString().slice(-2)
+
+                if (ct.length === 1) {
+                    ct = `${ct}0`
+                }
+
+                return ct
+            },
+            set(ct) {
+                this.product.price = `${this.priceEur}${ct.length === 1 ? `0${ct}` : `${ct}`}`
+            },
+        },
     },
     methods: {
         async editProduct() {

@@ -39,7 +39,7 @@ export default {
     },
     data() {
         return {
-            details: '',
+            details: this.currentDetails || '',
             editor: {
                 editor: ClassicEditor,
                 config: {
@@ -75,7 +75,11 @@ export default {
     },
     methods: {
         isValid() {
-            return /^.{4,32768}$/.test(this.details)
+            if (this.currentDetails.length <= 0) {
+                return /^.{4,32768}$/.test(this.details)
+            }
+
+            return /^.{4,32768}$/.test(this.currentDetails)
         },
     },
 }

@@ -17,7 +17,6 @@
             :responsive="true"
             show-empty
             :sort-by="sortBy"
-            @row-hovered="setCurrentItem"
         >
             <template v-slot:cell(image)="row">
                 <b-img-lazy
@@ -38,7 +37,7 @@
                         size="sm"
                         title="Bearbeiten"
                         variant="primary"
-                        @click="$bvModal.show(`modal-edit-${type}`)"
+                        @click="showEditModal(row.item)"
                     >
                         <icon-pen />
                     </b-button>
@@ -49,7 +48,7 @@
                         size="sm"
                         title="Löschen"
                         variant="danger"
-                        @click="showMsgBoxConfirmDeletion"
+                        @click="confirmDeletion(row.item)"
                     >
                         <icon-trash />
                     </b-button>
@@ -195,10 +194,11 @@ export default {
         },
     },
     methods: {
-        setCurrentItem(item) {
+        showEditModal(item) {
             this.currentItem = item
+            this.$bvModal.show(`modal-edit-${this.type}`)
         },
-        showMsgBoxConfirmDeletion() {
+        confirmDeletion(item) {
             this.$bvModal
                 .msgBoxConfirm(`Soll der Datensatz wirklich gelöscht werden?`, {
                     title: 'Löschen bestätigen',
@@ -213,17 +213,17 @@ export default {
                 })
                 .then(async value => {
                     if (value) {
-                        await this.deleteData()
+                        await this.deleteData(item)
                     }
                 })
                 .catch(err => {
                     this.error = err.message || 'Leider gab es ein Problem. Bitte später erneut versuchen.'
                 })
         },
-        async deleteData() {
+        async deleteData(item) {
             if (this.type === 'product') {
                 try {
-                    await this.$api.deleteProduct(this.currentItem.id, this.$auth.getToken('keycloak'))
+                    await this.$api.deleteProduct(item.id, this.$auth.getToken('keycloak'))
                     this.$router.app.refresh()
                 } catch (err) {
                     this.error =
