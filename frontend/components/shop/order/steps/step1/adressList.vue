@@ -20,6 +20,7 @@
                         {{ item.additionalAddress.length > 0 ? `${item.additionalAddress},` : null }} {{ item.country }}
                     </span>
                 </b-form-radio>
+                <b-form-radio class="d-none" :name="`${addressType}-address`" />
             </b-list-group-item>
         </b-list-group>
     </div>

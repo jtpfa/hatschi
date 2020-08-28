@@ -7,7 +7,7 @@
         <b-avatar class="mr-2 mr-md-0" variant="primary" />
         Login
     </span>
-    <b-nav-item-dropdown v-else lazy no-caret right>
+    <b-nav-item-dropdown v-else no-caret right>
         <template slot="button-content">
             <span class="d-flex align-items-center flex-md-column nav-icon big-noodle text-primary">
                 <b-avatar class="mr-2 mr-md-0" variant="primary" />
