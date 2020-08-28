@@ -153,4 +153,9 @@ export default {
         }
     }
 }
+
+// show on top of bootstrap modal (1040)
+.ck.ck-balloon-panel {
+    z-index: 1050;
+}
 </style>

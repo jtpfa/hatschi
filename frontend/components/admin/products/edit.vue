@@ -6,6 +6,7 @@
         lazy
         :no-close-on-backdrop="loading"
         :no-close-on-esc="loading"
+        no-enforce-focus
         scrollable
         title="Produktdaten bearbeiten"
         @ok.prevent="onSubmit"
