@@ -90,6 +90,7 @@ export default {
 
         babel: {
             plugins: ['@babel/plugin-proposal-throw-expressions'],
+            compact: true,
         },
     },
     publicRuntimeConfig: {

@@ -34,7 +34,7 @@
   },
   "dependencies": {
     "@babel/plugin-proposal-throw-expressions": "^7.10.4",
-    "@ckeditor/ckeditor5-build-classic": "^21.0.0",
+    "@ckeditor/ckeditor5-build-classic": "^22.0.0",
     "@ckeditor/ckeditor5-vue": "^1.0.1",
     "@nuxtjs/auth": "^4.9.1",
     "@nuxtjs/axios": "^5.12.2",
@@ -43,13 +43,13 @@
     "bootstrap-vue": "^2.16.0",
     "jwt-decode": "^2.2.0",
     "node-sass": "^4.14.1",
-    "nuxt": "^2.14.3",
+    "nuxt": "^2.14.4",
     "sass-loader": "^10.0.1",
     "vue-currency-filter": "^5.1.1",
     "vuex-persist": "^2.2.0"
   },
   "devDependencies": {
-    "@nuxt/types": "^2.14.3",
+    "@nuxt/types": "^2.14.4",
     "babel-eslint": "^10.1.0",
     "eslint": "^7.7.0",
     "eslint-config-airbnb-base": "^14.2.0",
