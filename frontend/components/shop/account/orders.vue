@@ -1,5 +1,6 @@
 <template>
-    <div>
+    <fetch-content v-if="$fetchState.pending" :size="6" />
+    <div v-else>
         <b-alert v-if="fetchErrorMsg.length > 0" :show="true" variant="warning">{{ fetchErrorMsg }}</b-alert>
 
         <b-alert v-else-if="orders.length === 0" :show="true" variant="info">Keine Bestellungen getätigt.</b-alert>
@@ -14,8 +15,11 @@
 </template>
 
 <script>
+import FetchContent from '~/components/shop/layout/fetchContent'
+
 export default {
     name: 'AccountOrders',
+    components: { FetchContent },
     async fetch() {
         try {
             this.orders = await this.$api.getAllOrdersOfCustomer(this.$auth.getToken('keycloak'))

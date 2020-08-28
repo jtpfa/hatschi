@@ -2,6 +2,11 @@
   Refresh keycloak's access token
   This is a refactored and es6-conform version of
   https://gist.github.com/robsontenorio/d1e56c5bc5bc391ba0791be77419a68c
+  
+  Two main things have been changed:
+  1. We use the jqt-decode module instead of robson's selfmade decode function
+  2. We fetch the user after a successful access token refreshing so we can use
+     the user attributes as placeholders in forms
  */
 import jwtDecode from 'jwt-decode'
 
@@ -47,6 +52,7 @@ export default function refresh({ app }) {
             $auth.setToken(strategy, token)
             $auth.setRefreshToken(strategy, refreshToken)
             $axios.setToken(token)
+            await $auth.fetchUser()
         } catch (error) {
             $auth.logout()
             throw new Error('Error while refreshing token')

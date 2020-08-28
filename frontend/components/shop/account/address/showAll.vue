@@ -66,6 +66,14 @@ export default {
         async deleteAddress(event) {
             try {
                 await this.$api.deleteCustomerAddress(event, this.$auth.getToken('keycloak'))
+                this.$store.commit('order/updateOrderInformation', {
+                    key: 'shippingAddress',
+                    data: { id: -1, index: -1 },
+                })
+                this.$store.commit('order/updateOrderInformation', {
+                    key: 'invoiceAddress',
+                    data: { id: -1, index: -1 },
+                })
                 this.$router.app.refresh()
             } catch (err) {
                 this.error =

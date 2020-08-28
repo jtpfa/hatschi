@@ -9,7 +9,7 @@
                 <b-form-radio
                     v-model="selectedAddress"
                     :name="`${addressType}-address`"
-                    :required="addressType === 'shipping' || differentInvoiceAddress"
+                    required
                     :state="validState"
                     :value="{ id: item.id, index }"
                 >
@@ -20,7 +20,9 @@
                         {{ item.additionalAddress.length > 0 ? `${item.additionalAddress},` : null }} {{ item.country }}
                     </span>
                 </b-form-radio>
-                <b-form-radio class="d-none" :name="`${addressType}-address`" />
+            </b-list-group-item>
+            <b-list-group-item class="d-none">
+                <b-form-radio class="d-none" :name="`${addressType}-address`" required :state="validState" />
             </b-list-group-item>
         </b-list-group>
     </div>
@@ -58,9 +60,6 @@ export default {
         },
         addresses() {
             return this.$store.state.order.addresses
-        },
-        differentInvoiceAddress() {
-            return this.$store.state.order.differentInvoiceAddress
         },
     },
 }
