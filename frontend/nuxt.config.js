@@ -33,8 +33,9 @@ export default {
     plugins: [
         { src: '~/plugins/api', ssr: true },
         { src: '~/plugins/currency', ssr: true },
-        { src: '~/plugins/text-crop', ssr: true },
+        { src: '~/plugins/date-format', ssr: true },
         { src: '~/plugins/image-src-set', ssr: true },
+        { src: '~/plugins/text-crop', ssr: true },
         { src: '~/plugins/vuex-persist', ssr: false },
     ],
     /*
@@ -49,17 +50,6 @@ export default {
         '@nuxtjs/style-resources',
         // Doc: https://bootstrap-vue.js.org/docs/
         'bootstrap-vue/nuxt',
-        [
-            'vue-currency-filter/nuxt',
-            {
-                symbol: '€',
-                thousandsSeparator: '.',
-                fractionCount: 2,
-                fractionSeparator: ',',
-                symbolPosition: 'end',
-                symbolSpacing: true,
-            },
-        ],
         '@nuxtjs/axios',
         '@nuxtjs/auth',
     ],

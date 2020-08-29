@@ -20,7 +20,7 @@
                 <b-td>{{ item.name }}</b-td>
                 <b-td class="text-center">{{ item.quantity }}</b-td>
                 <b-td class="text-right">
-                    {{ $currencyConverter.insertFractionForEuroConversion(item.price * item.quantity) | currency }}
+                    {{ $currencyConverter.convertCentsToEuro(item.price * item.quantity) }}
                 </b-td>
             </b-tr>
         </b-tbody>
@@ -31,7 +31,7 @@
                     <span class="text-muted small">(inkl. MwSt)</span>
                 </b-td>
                 <b-td class="text-right">
-                    {{ $currencyConverter.insertFractionForEuroConversion(cartTotal) | currency }}
+                    {{ $currencyConverter.convertCentsToEuro(cartTotal) }}
                 </b-td>
             </b-tr>
         </b-tfoot>

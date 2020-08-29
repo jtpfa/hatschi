@@ -21,7 +21,7 @@
         </div>
         <div class="w-100">
             <b-card-text class="product-price mb-0 font-weight-bold text-primary big-noodle">
-                {{ $currencyConverter.insertFractionForEuroConversion(product.price) | currency }}
+                {{ $currencyConverter.convertCentsToEuro(product.price) }}
             </b-card-text>
         </div>
         <b-link class="stretched-link" :title="`Detailseite von ${product.name}`" :to="`/produkte/${product.id}`" />

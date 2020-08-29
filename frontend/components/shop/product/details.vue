@@ -25,7 +25,7 @@
                 <div class="d-flex justify-content-between align-items-end flex-column flex-sm-row mt-5">
                     <div class="price-information mb-2 mb-sm-0">
                         <span class="price big-noodle oblique text-dark">
-                            {{ $currencyConverter.insertFractionForEuroConversion(product.price) | currency }}
+                            {{ $currencyConverter.convertCentsToEuro(product.price) }}
                         </span>
                         <span class="text-muted">inkl. MwSt.</span>
                         <span class="text-muted">zzgl. Versandkosten</span>

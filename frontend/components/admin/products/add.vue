@@ -52,6 +52,7 @@
                         <b-form-input
                             v-model="priceEur"
                             aria-describedby="input-live-feedback"
+                            max="999999"
                             min="0"
                             required
                             trim

@@ -31,7 +31,7 @@
             <template v-if="!dashboard" v-slot:cell(actions)="row">
                 <b-button-group class="float-right">
                     <b-button
-                        v-if="type !== 'order' && isAllowedToEdit"
+                        v-if="type !== 'order' && userIsAllowedToEdit"
                         v-b-tooltip.hover
                         class="action-button"
                         size="sm"
@@ -42,7 +42,7 @@
                         <icon-pen />
                     </b-button>
                     <b-button
-                        v-if="type !== 'order' && isAllowedToDelete"
+                        v-if="type !== 'order' && userIsAllowedToDelete"
                         v-b-tooltip.hover
                         class="action-button"
                         size="sm"
@@ -52,18 +52,7 @@
                     >
                         <icon-trash />
                     </b-button>
-                    <b-button v-if="type === 'order'" size="sm" @click="row.toggleDetails">
-                        {{ row.detailsShowing ? 'Hide' : 'Show' }} Details
-                    </b-button>
                 </b-button-group>
-            </template>
-
-            <template v-slot:row-details="row">
-                <b-card>
-                    <ul>
-                        <li v-for="(value, key) in row.item" :key="key">{{ key }}: {{ value }}</li>
-                    </ul>
-                </b-card>
             </template>
 
             <template v-slot:table-busy>
@@ -87,17 +76,9 @@
             :total-rows="rows"
         ></b-pagination>
 
-        <customer-edit
-            v-if="type === 'customer'"
-            :customer="Object.assign({}, currentItem)"
-            modal-id="modal-edit-customer"
-        />
+        <customer-edit v-if="type === 'customer'" :customer="currentItem" modal-id="modal-edit-customer" />
 
-        <product-edit
-            v-else-if="type === 'product'"
-            modal-id="modal-edit-product"
-            :product="Object.assign({}, currentItem)"
-        />
+        <product-edit v-else-if="type === 'product'" modal-id="modal-edit-product" :product="currentItem" />
     </div>
 </template>
 
@@ -164,7 +145,6 @@ export default {
                 err.message || 'Leider gab es ein Problem beim Laden der Daten. Bitte später erneut versuchen.'
         }
     },
-    fetchOnServer: false,
     data() {
         return {
             perPage: 5,
@@ -180,25 +160,32 @@ export default {
         rows() {
             return this.items.length
         },
-        isAllowedToEdit() {
+        userIsAllowedToEdit() {
             return (
                 ['product', 'customer'].includes(this.type) ||
                 (this.type === 'employee' && this.$auth.$state.roles?.includes('admin'))
             )
         },
-        isAllowedToDelete() {
+        userIsAllowedToDelete() {
             return (
                 this.type === 'product' ||
                 (['customer', 'employee'].includes(this.type) && this.$auth.$state.roles?.includes('admin'))
             )
         },
     },
+    activated() {
+        // Call fetch again if last fetch more than 30 sec ago
+        if (this.$fetchState.timestamp <= Date.now() - 30000) {
+            this.$fetch()
+        }
+    },
     methods: {
         showEditModal(item) {
-            this.currentItem = item
+            this.currentItem = { ...item }
             this.$bvModal.show(`modal-edit-${this.type}`)
         },
         confirmDeletion(item) {
+            this.currentItem = { ...item }
             this.$bvModal
                 .msgBoxConfirm(`Soll der Datensatz wirklich gelöscht werden?`, {
                     title: 'Löschen bestätigen',
@@ -213,7 +200,7 @@ export default {
                 })
                 .then(async value => {
                     if (value) {
-                        await this.deleteData(item)
+                        await this.deleteData(this.currentItem)
                     }
                 })
                 .catch(err => {
@@ -255,5 +242,9 @@ export default {
     width: 1.25rem;
     height: auto;
     fill: $white;
+}
+
+::v-deep table td {
+    white-space: pre-line;
 }
 </style>

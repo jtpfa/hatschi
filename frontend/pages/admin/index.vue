@@ -27,38 +27,41 @@ export default {
         return {
             productFields: [
                 { key: 'name', label: 'Artikelbezeichnung', sortable: true },
-                { key: 'description', label: 'Beschreibung', sortable: true },
-                { key: 'details', label: 'Details', sortable: true },
                 {
                     key: 'price',
                     label: 'Preis',
                     formatter: price => {
-                        return this.$options.filters.currency(
-                            this.$currencyConverter.insertFractionForEuroConversion(price)
-                        )
+                        return this.$currencyConverter.convertCentsToEuro(price)
                     },
                     sortable: true,
                 },
                 { key: 'stock', label: 'Lagerbestand', sortable: true },
                 { key: 'image', label: 'Bild', sortable: false },
-                { key: 'actions', label: '', sortable: false },
             ],
             userFields: [
                 { key: 'firstName', label: 'Vorname', sortable: true },
                 { key: 'lastName', label: 'Nachname', sortable: true },
-                { key: 'actions', label: '', sortable: false },
             ],
             orderFields: [
                 {
                     key: 'orderDate',
                     label: 'Datum',
-                    formatter: date => new Date(date),
+                    formatter: date => this.$dateFormatter.toDateString(date),
+                    sortable: true,
+                },
+                {
+                    key: 'orderStatus',
+                    label: 'Status',
+                    formatter: status => (status === 'OPEN' ? 'Offen' : 'Geliefert'),
                     sortable: true,
                 },
                 { key: 'customerEmail', label: 'Kunde', sortable: true },
-                { key: 'paid', label: 'Bezahlt', sortable: true },
-                { key: 'orderItems', label: 'Bestellte Ware(n)', sortable: true },
-                { key: 'actions', label: '', sortable: false },
+                {
+                    key: 'paid',
+                    label: 'Bezahlt',
+                    formatter: paid => (paid ? 'Ja' : 'Nein'),
+                    sortable: true,
+                },
             ],
         }
     },

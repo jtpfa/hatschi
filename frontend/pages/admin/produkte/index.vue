@@ -21,9 +21,7 @@ export default {
                     key: 'price',
                     label: 'Preis',
                     formatter: price => {
-                        return this.$options.filters.currency(
-                            this.$currencyConverter.insertFractionForEuroConversion(price)
-                        )
+                        return this.$currencyConverter.convertCentsToEuro(price)
                     },
                     sortable: true,
                 },
