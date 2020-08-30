@@ -10,7 +10,7 @@
 
                 <order-step3 v-else-if="step === 3" />
 
-                <order-invalid-state v-else-if="step < 1 || step > 4" />
+                <order-invalid-state v-else-if="step < 1 || step > 3" />
             </div>
             <div v-if="step >= 1 && step <= 3" class="col-md-5">
                 <cart-summary class="mb-5 mb-md-0" :error="error">
@@ -108,7 +108,6 @@ export default {
                     return
                 }
 
-                this.step += 1
                 this.$router.push('/bestell-bestaetigung')
             } else {
                 this.step += 1

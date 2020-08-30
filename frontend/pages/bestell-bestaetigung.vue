@@ -19,7 +19,7 @@ export default {
         },
     },
     mounted() {
-        if (this.step !== 4) {
+        if (this.step !== 3) {
             this.$router.push({ path: '/bestellung', query: { step: 1 } })
         } else {
             this.$store.commit('shoppingcart/clearCart')

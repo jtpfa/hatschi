@@ -24,6 +24,9 @@ export default {
                 this.$store.commit('order/updateOrderInformation', { key: 'step', data: step })
             },
         },
+        order() {
+            return this.$store.state.order
+        },
     },
     mounted() {
         if (this.$store.state.shoppingcart.cart.length === 0) {
@@ -33,6 +36,20 @@ export default {
 
         if (this.$route.query.step) {
             this.step = +this.$route.query.step
+
+            if (
+                (this.step === 2 || this.step === 3) &&
+                (this.order.shippingMethod.id.length === 0 || this.order.shippingAddress.id === -1)
+            ) {
+                this.step = 1
+                this.$router.push({ path: '/bestellung', query: { step: this.step } })
+            }
+
+            if (this.step === 3 && this.order.paymentMethod.id.length === 0) {
+                this.step = 2
+                this.$router.push({ path: '/bestellung', query: { step: this.step } })
+            }
+
             this.$router.push({ path: '/bestellung', query: { step: this.$route.query.step } })
         } else {
             this.$router.push({ path: '/bestellung', query: { step: this.step } })
@@ -43,8 +60,8 @@ export default {
             title: `PC Masterrace – ${this.$route.name.replace(/^\w/, c => c.toUpperCase())}`,
         }
     },
-    watchQuery(newQuery) {
-        this.step = +newQuery.step
+    watchQuery(query) {
+        this.step = +query.step
     },
 }
 </script>

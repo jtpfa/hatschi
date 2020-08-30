@@ -1,21 +1,15 @@
 <template>
     <div>
-        <order-adress-list address-type="shipping" />
+        <order-adress-list v-if="fetchErrorMsg.length === 0" address-type="shipping" />
         <slot />
-        <b-button class="my-4" to="/profil" variant="primary">
-            {{ addresses.length === 0 ? 'Neue Adresse hinzufügen' : 'Adressen verwalten' }}
-        </b-button>
 
         <b-form-checkbox v-model="differentInvoiceAddress" class="my-5" name="differentInvoiceAddress" size="lg" switch>
             Rechnungsadresse weicht von der Lieferadresse ab
         </b-form-checkbox>
 
         <template v-if="differentInvoiceAddress">
-            <order-adress-list address-type="invoice" />
+            <order-adress-list v-if="fetchErrorMsg.length === 0" address-type="invoice" />
             <slot />
-            <b-button class="my-4" to="/profil" variant="primary">
-                {{ addresses.length === 0 ? 'Neue Adresse hinzufügen' : 'Adressen verwalten' }}
-            </b-button>
         </template>
     </div>
 </template>
@@ -26,6 +20,12 @@ import OrderAdressList from '~/components/shop/order/steps/step1/adressList'
 export default {
     name: 'OrderAddresses',
     components: { OrderAdressList },
+    props: {
+        fetchErrorMsg: {
+            type: String,
+            default: '',
+        },
+    },
     computed: {
         differentInvoiceAddress: {
             get() {
@@ -37,9 +37,6 @@ export default {
                     data: differentInvoiceAddress,
                 })
             },
-        },
-        addresses() {
-            return this.$store.state.order.addresses
         },
     },
 }
