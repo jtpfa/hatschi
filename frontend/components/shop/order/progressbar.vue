@@ -74,7 +74,6 @@ export default {
 .b-avatar {
     font-size: 1.75rem;
     box-shadow: none;
-    transition: 0.2s all ease;
 }
 
 .badge-outline-primary {
@@ -86,7 +85,10 @@ export default {
 button.b-avatar {
     background: $primary;
     box-shadow: 0 0 7px 1px rgba(0, 0, 11, 0.16);
+    transition: 0.3s all ease;
 
-    // @todo hover state
+    &:hover {
+        transform: scale(1.25);
+    }
 }
 </style>
