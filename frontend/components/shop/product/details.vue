@@ -62,7 +62,7 @@ export default {
     computed: {
         ...mapGetters({ productQuantity: 'shoppingcart/productQuantity' }),
         shippingInformation() {
-            return !this.orderable ? 'Nicht mehr auf Lager' : 'Lieferbar in 3-4 Werktagen'
+            return !this.orderable ? 'Nicht mehr auf Lager' : 'Lieferbar in 1-2 Werktagen'
         },
         orderable() {
             return this.product.stock > 0 && this.productQuantity(this.product.id) < this.product.stock
