@@ -6,6 +6,7 @@ import de.pcmr.shop.exception.UploadedImageResolutionTooLowException;
 import de.pcmr.shop.repository.ArticleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -44,6 +45,7 @@ public class ArticleServiceImpl implements ArticleServiceI {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void createNewArticle(@Valid ArticleEntity articleEntity, MultipartFile imageFile) throws NoArticleFoundException, UploadedImageResolutionTooLowException, IOException {
         articleEntity = articleRepository.save(articleEntity);
         if (imageFile != null) {
@@ -52,6 +54,7 @@ public class ArticleServiceImpl implements ArticleServiceI {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void updateArticle(@Valid ArticleEntity articleEntity, MultipartFile imageFile) throws NoArticleFoundException, IOException, UploadedImageResolutionTooLowException {
         if (articleRepository.existsById(articleEntity.getId())) {
             articleEntity = articleRepository.save(articleEntity);
@@ -62,6 +65,7 @@ public class ArticleServiceImpl implements ArticleServiceI {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void deleteArticle(long articleId) throws NoArticleFoundException, IOException {
         if (articleRepository.existsById(articleId)) {
             articleImageService.deleteArticleImages(articleId);
