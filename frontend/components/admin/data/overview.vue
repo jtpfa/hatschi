@@ -163,13 +163,13 @@ export default {
         userIsAllowedToEdit() {
             return (
                 ['product', 'customer'].includes(this.type) ||
-                (this.type === 'employee' && this.$auth.$state.roles?.includes('admin'))
+                (this.type === 'employee' && this.$auth.$state.roles.includes('admin'))
             )
         },
         userIsAllowedToDelete() {
             return (
                 this.type === 'product' ||
-                (['customer', 'employee'].includes(this.type) && this.$auth.$state.roles?.includes('admin'))
+                (['customer', 'employee'].includes(this.type) && this.$auth.$state.roles.includes('admin'))
             )
         },
     },
