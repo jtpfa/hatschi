@@ -20,7 +20,6 @@
 import DataOverview from '~/components/admin/data/overview'
 
 export default {
-    name: 'Index',
     components: { DataOverview },
     layout: 'dashboard',
     data() {

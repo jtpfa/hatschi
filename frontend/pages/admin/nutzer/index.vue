@@ -6,7 +6,7 @@
         <data-overview :dashboard="false" :fields="userFields" type="customer"></data-overview>
 
         <h2>Mitarbeiter</h2>
-        <data-overview :dashboard="false" :fields="userFields" type="customer"></data-overview>
+        <data-overview :dashboard="false" :fields="userFields" type="employee"></data-overview>
     </main>
 </template>
 

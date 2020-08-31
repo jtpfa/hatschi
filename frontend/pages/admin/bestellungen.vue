@@ -8,7 +8,6 @@
 import DataOverview from '~/components/admin/data/overview'
 
 export default {
-    name: 'Bestellungen',
     components: { DataOverview },
     layout: 'dashboard',
     data() {

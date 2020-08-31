@@ -188,4 +188,24 @@ export class RestApi {
             },
         }).then(response => _handleResponse(response, true))
     }
+
+    getEmployees(userToken) {
+        return fetch(`${this.baseUrl}employee/employee`, {
+            method: 'GET',
+            headers: {
+                Authorization: userToken,
+            },
+        }).then(response => _handleResponse(response, true))
+    }
+
+    editCustomer(customerAttributes, username, userToken) {
+        return fetch(`${this.baseUrl}employee/customer/${username}`, {
+            method: 'PUT',
+            headers: {
+                'Content-type': 'application/json; charset=UTF-8',
+                Authorization: userToken,
+            },
+            body: JSON.stringify(customerAttributes),
+        }).then(response => _handleResponse(response))
+    }
 }

@@ -116,12 +116,7 @@ export default {
         baseURL: process.env.PCMR_BASE_URL_PROD || 'http://localhost:3000',
         restApiBaseUrl: process.env.PCMR_REST_API_PROD || 'http://localhost:8090/api/',
         mediaUrl: process.env.PCMR_MEDIA_API_PROD || 'http://localhost:8090/media/article/',
-        keycloakTokenEndpoint:
-            process.env.KEYCLOAK_TOKEN_ENDPOINT_PROD ||
-            'http://auth.pcmr.de:8080/auth/realms/pcmr/protocol/openid-connect/token',
-        keycloakLogoutEndpoint:
-            process.env.KEYCLOAK_LOGOUT_ENDPOINT_PROD ||
-            'http://auth.pcmr.de:8080/auth/realms/pcmr/protocol/openid-connect/logout',
+        keycloakEndpoint: process.env.KEYCLOAK_ENDPOINT_PROD || 'http://auth.pcmr.de:8080/auth/realms/pcmr/',
     },
     auth: {
         plugins: [{ src: '~/plugins/refresh', ssr: false }],

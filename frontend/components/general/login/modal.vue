@@ -15,10 +15,6 @@ export default {
             type: String,
             default: '',
         },
-        hasAccess: {
-            type: Boolean,
-            default: false,
-        },
     },
 }
 </script>

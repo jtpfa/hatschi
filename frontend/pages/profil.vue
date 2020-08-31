@@ -29,7 +29,6 @@ import AccountProfil from '~/components/shop/account/profil'
 import AccountShowAllAddresses from '~/components/shop/account/address/showAll'
 
 export default {
-    name: 'Profil',
     components: { AccountAddAddress, AccountShowAllAddresses, AccountProfil },
     middleware: ['auth'],
     head() {
