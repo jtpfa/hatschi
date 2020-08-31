@@ -1,9 +1,9 @@
 <template>
-    <b-container v-if="step !== 4" class="my-5">
+    <main v-if="step !== 4" class="container my-5">
         <order-progressbar class="position-relative mt-5" :ready="true" />
 
         <order-confirmation />
-    </b-container>
+    </main>
 </template>
 
 <script>

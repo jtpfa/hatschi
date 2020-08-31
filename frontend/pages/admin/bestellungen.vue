@@ -1,7 +1,7 @@
 <template>
-    <div>
+    <main>
         <data-overview :dashboard="false" :fields="fields" type="order" />
-    </div>
+    </main>
 </template>
 
 <script>

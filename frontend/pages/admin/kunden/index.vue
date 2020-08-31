@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <main>
         <h1 class="mb-5">Nutzerverwaltung</h1>
 
         <h2 class="mb-4">Kunden</h2>
@@ -7,7 +7,7 @@
 
         <h2>Mitarbeiter</h2>
         <data-overview :dashboard="false" :fields="userFields" type="customer"></data-overview>
-    </div>
+    </main>
 </template>
 
 <script>

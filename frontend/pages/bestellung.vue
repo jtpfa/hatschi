@@ -1,10 +1,10 @@
 <template>
     <client-only>
-        <b-container class="mt-5">
+        <main class="container mt-5">
             <order-progressbar v-if="step >= 1 && step <= 3" class="position-relative mt-5" />
 
             <order-form />
-        </b-container>
+        </main>
     </client-only>
 </template>
 <script>

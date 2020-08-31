@@ -1,5 +1,5 @@
 <template>
-    <b-container>
+    <main class="container">
         <home-stage />
 
         <home-filter class="mb-5 top-seller-filter" @filtered="filterProducts($event)" @sort="sortProducts($event)" />
@@ -9,7 +9,7 @@
             :products="!filtered ? products : filteredProducts"
             :state="$fetchState.pending"
         />
-    </b-container>
+    </main>
 </template>
 <script>
 import HomeProductOverview from '~/components/shop/home/productOverview'

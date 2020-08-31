@@ -1,6 +1,6 @@
 <template>
     <client-only>
-        <b-container>
+        <main class="container">
             <template v-if="cartCountElements > 0">
                 <div class="row my-5">
                     <div class="col-md-7 mb-5 mb-md-0">
@@ -24,7 +24,7 @@
                     :header-level="4"
                 ></b-jumbotron>
             </template>
-        </b-container>
+        </main>
     </client-only>
 </template>
 

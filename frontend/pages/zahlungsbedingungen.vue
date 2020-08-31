@@ -1,5 +1,5 @@
 <template>
-    <b-container class="my-5">
+    <main class="container my-5">
         <h1>Zahlung und Versand</h1>
         <p>Es gelten folgende Bedingungen:</p>
         <p><strong>Versandbedingungen</strong></p>
@@ -33,7 +33,7 @@
             <br />
             Bei Fragen finden Sie unsere Kontaktdaten im Impressum.
         </p>
-    </b-container>
+    </main>
 </template>
 
 <script>

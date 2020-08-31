@@ -1,8 +1,8 @@
 <template>
-    <b-container>
+    <main class="container">
         <h1 class="my-5">Kontakt</h1>
         <b-button href="mailto:test@mail.de" variant="primary">E-Mail schreiben</b-button>
-    </b-container>
+    </main>
 </template>
 
 <script>

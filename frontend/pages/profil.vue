@@ -1,5 +1,5 @@
 <template>
-    <b-container class="d-flex justify-content-center my-5">
+    <main class="container d-flex justify-content-center my-5">
         <div class="px-0 col-sm-11 col-md-8 col-xl-6">
             <b-card class="w-100" no-body title="Card Title">
                 <b-tabs card justified>
@@ -20,7 +20,7 @@
                 </b-tabs>
             </b-card>
         </div>
-    </b-container>
+    </main>
 </template>
 
 <script>

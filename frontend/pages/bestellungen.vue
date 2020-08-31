@@ -1,9 +1,9 @@
 <template>
-    <b-container class="my-5">
+    <main class="container my-5">
         <h1>Bestellungen</h1>
 
         <account-orders />
-    </b-container>
+    </main>
 </template>
 
 <script>
