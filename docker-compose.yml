@@ -97,6 +97,7 @@ services:
       - dhparam:/etc/nginx/dhparam
       - vhost:/etc/nginx/vhost.d
       - html:/usr/share/nginx/html
+      - ./config/proxy.conf:/etc/nginx/conf.d/proxy.conf:ro
       - /var/run/docker.sock:/tmp/docker.sock
     labels:
       - "com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy"
