@@ -33,34 +33,36 @@
 
                 <p class="big-noodle order">Sortierung</p>
 
-                <div class="row">
-                    <div class="col d-flex justify-content-center align-items-center big-noodle">
-                        <span class="sort-indicator">Name</span>
+                <div class="col-md-6 col-xl-4">
+                    <div class="row">
+                        <div class="col d-flex justify-content-center align-items-center big-noodle">
+                            <span class="sort-indicator">Name</span>
+                        </div>
+                        <div class="col d-flex justify-content-center align-items-center big-noodle">
+                            <span class="sort-indicator">Preis</span>
+                        </div>
                     </div>
-                    <div class="col d-flex justify-content-center align-items-center big-noodle">
-                        <span class="sort-indicator">Preis</span>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col d-flex justify-content-center">
-                        <b-button variant="secondary" @click="$emit('sort', { key: 'name', order: 'asc' })">
-                            &uarr;
-                        </b-button>
-                    </div>
-                    <div class="col d-flex justify-content-center">
-                        <b-button variant="secondary" @click="$emit('sort', { key: 'name', order: 'desc' })">
-                            &darr;
-                        </b-button>
-                    </div>
-                    <div class="col d-flex justify-content-center">
-                        <b-button variant="secondary" @click="$emit('sort', { key: 'price', order: 'asc' })">
-                            &uarr;
-                        </b-button>
-                    </div>
-                    <div class="col d-flex justify-content-center">
-                        <b-button variant="secondary" @click="$emit('sort', { key: 'price', order: 'desc' })">
-                            &darr;
-                        </b-button>
+                    <div class="row">
+                        <div class="col d-flex justify-content-center">
+                            <b-button variant="outline-primary" @click="$emit('sort', { key: 'name', order: 'asc' })">
+                                &uarr;
+                            </b-button>
+                        </div>
+                        <div class="col d-flex justify-content-center">
+                            <b-button variant="outline-primary" @click="$emit('sort', { key: 'name', order: 'desc' })">
+                                &darr;
+                            </b-button>
+                        </div>
+                        <div class="col d-flex justify-content-center">
+                            <b-button variant="outline-primary" @click="$emit('sort', { key: 'price', order: 'asc' })">
+                                &uarr;
+                            </b-button>
+                        </div>
+                        <div class="col d-flex justify-content-center">
+                            <b-button variant="outline-primary" @click="$emit('sort', { key: 'price', order: 'desc' })">
+                                &darr;
+                            </b-button>
+                        </div>
                     </div>
                 </div>
             </b-card>
