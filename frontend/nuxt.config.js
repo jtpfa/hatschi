@@ -122,7 +122,11 @@ export default {
         keycloakLogoutEndpoint:
             process.env.KEYCLOAK_LOGOUT_ENDPOINT_PROD ||
             'http://auth.pcmr.de:8080/auth/realms/pcmr/protocol/openid-connect/logout',
+        keycloakChangePasswordEndpoint:
+            process.env.KEYCLOAK_CHANGE_PASSWORD_ENDPOINT_PROD ||
+            'http://auth.pcmr.de:8080/auth/realms/pcmr/accounts/credentials/password',
     },
+    // @todo change keycloak api endpoint to one
     auth: {
         plugins: [{ src: '~/plugins/refresh', ssr: false }],
         strategies: {

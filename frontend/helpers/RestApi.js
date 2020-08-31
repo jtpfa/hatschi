@@ -10,8 +10,9 @@ const _handleResponse = (response, needJsonOutput = false) => {
 }
 
 export class RestApi {
-    constructor(baseUrl) {
+    constructor(baseUrl, keycloak) {
         this.baseUrl = baseUrl
+        this.keycloakUrl = keycloak
     }
 
     signUp(userAttributes) {
@@ -177,6 +178,17 @@ export class RestApi {
                 Authorization: userToken,
             },
             body: JSON.stringify(addressAttributes),
+        }).then(response => _handleResponse(response))
+    }
+
+    changeUserPassword(passwords, userToken) {
+        return fetch(`${this.keycloakUrl}`, {
+            method: 'POST',
+            headers: {
+                'Content-type': 'application/json; charset=UTF-8',
+                Authorization: userToken,
+            },
+            body: JSON.stringify(passwords),
         }).then(response => _handleResponse(response))
     }
 }
