@@ -31,16 +31,19 @@ public class OrderApiImpl implements OrderApiI {
         this.addressRepository = addressRepository;
     }
 
+    @Override
     @PostMapping(ORDER_CUSTOMER_URI)
     public void placeOrder(@RequestBody @Valid OrderCreationDTO orderCreationDTO, Principal principal) throws NoArticleFoundException, NoCustomerFoundException, NotEnoughArticlesOnStockException, DuplicateOrderItemsException, NoAddressFoundException, AddressDoesNotBelongToUserException {
         orderService.processOrder(OrderMapper.mapCreationDTOToEntity(orderCreationDTO, articleRepository, addressRepository), principal);
     }
 
+    @Override
     @GetMapping(ORDER_EMPLOYEE_URI)
     public List<OrderDTO> getAllOrders() {
         return OrderMapper.mapListToDTOList(orderService.getAllOrders());
     }
 
+    @Override
     @GetMapping(ORDER_CUSTOMER_URI)
     public List<OrderDTO> getAllCustomerOrders(Principal principal) throws NoCustomerFoundException {
         return OrderMapper.mapListToDTOList(orderService.getAllOrdersOfCustomer(principal));

@@ -21,33 +21,32 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api")
-public class EmployeeApiImpl implements EmployeeApiI {
-    private static final String EMPLOYEE_EMPLOYEE_URI = "/employee/employee";
-    private static final String EMPLOYEE_ADMIN_URI = "/admin/employee";
+public class AdminApiImpl implements AdminApiI {
+    private static final String ADMIN_ADMIN_URI = "/admin/admin";
 
-    private final KeycloakServiceI keycloakService;
     private final CustomerServiceI customerService;
+    private final KeycloakServiceI keycloakService;
 
     @Autowired
-    public EmployeeApiImpl(KeycloakServiceI keycloakService, CustomerServiceI customerService) {
-        this.keycloakService = keycloakService;
+    public AdminApiImpl(CustomerServiceI customerService, KeycloakServiceI keycloakService) {
         this.customerService = customerService;
+        this.keycloakService = keycloakService;
     }
 
     @Override
-    @GetMapping(EMPLOYEE_EMPLOYEE_URI)
-    public List<CustomerDetailsDTO> getAllCustomers() throws KeycloakUnknownErrorException, KeycloakUserAlreadyExistsException, KeycloakEndpointNotFoundException, KeycloakUserIsNotAuthorizedException {
-        return CustomerMapper.mapUserRepresentationListToCustomerDtoList(keycloakService.findAllKeycloakUsersWithRole(CustomerRoleEnum.EMPLOYEE));
+    @GetMapping(ADMIN_ADMIN_URI)
+    public List<CustomerDetailsDTO> getAllAdmins() throws KeycloakUnknownErrorException, KeycloakUserAlreadyExistsException, KeycloakEndpointNotFoundException, KeycloakUserIsNotAuthorizedException {
+        return CustomerMapper.mapUserRepresentationListToCustomerDtoList(keycloakService.findAllKeycloakUsersWithRole(CustomerRoleEnum.ADMIN));
     }
 
     @Override
-    @PutMapping(EMPLOYEE_ADMIN_URI + "/{email:.+}")
+    @PutMapping(ADMIN_ADMIN_URI + "/{email:.+}")
     public void updateEmployee(@PathVariable String email, @RequestBody @Valid CustomerDetailsRoleDTO customerDetailsRoleDTO) throws NotAuthorizedException, CustomerAlreadyExistsException, KeycloakEndpointNotFoundException, NoCustomerFoundException, KeycloakUserIsNotAuthorizedException, KeycloakUnknownErrorException, KeycloakUserAlreadyExistsException {
         customerService.updateCustomer(email, CustomerMapper.mapCustomerDetailsDTOToCustomerEntity(customerDetailsRoleDTO), CustomerRoleEnum.ADMIN, customerDetailsRoleDTO.getCustomerRoleEnum());
     }
 
     @Override
-    @DeleteMapping(EMPLOYEE_ADMIN_URI + "/{email:.+}")
+    @DeleteMapping(ADMIN_ADMIN_URI + "/{email:.+}")
     public void deleteEmployee(@PathVariable String email) throws KeycloakEndpointNotFoundException, NotAuthorizedException, NoCustomerFoundException, KeycloakUserIsNotAuthorizedException, KeycloakUnknownErrorException, KeycloakUserAlreadyExistsException {
         customerService.deleteCustomer(email, CustomerRoleEnum.ADMIN);
     }
