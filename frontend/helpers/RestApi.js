@@ -179,4 +179,13 @@ export class RestApi {
             body: JSON.stringify(addressAttributes),
         }).then(response => _handleResponse(response))
     }
+
+    getCustomers(userToken) {
+        return fetch(`${this.baseUrl}employee/customer`, {
+            method: 'GET',
+            headers: {
+                Authorization: userToken,
+            },
+        }).then(response => _handleResponse(response, true))
+    }
 }

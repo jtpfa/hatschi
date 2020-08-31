@@ -22,7 +22,7 @@ import DataOverview from '~/components/admin/data/overview'
 export default {
     name: 'Index',
     components: { DataOverview },
-    layout: 'admin',
+    layout: 'dashboard',
     data() {
         return {
             productFields: [
@@ -39,6 +39,7 @@ export default {
                 { key: 'image', label: 'Bild', sortable: false },
             ],
             userFields: [
+                { key: 'email', label: 'E-Mail', sortable: true },
                 { key: 'firstName', label: 'Vorname', sortable: true },
                 { key: 'lastName', label: 'Nachname', sortable: true },
             ],

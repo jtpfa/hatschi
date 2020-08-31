@@ -9,7 +9,7 @@
         </div>
     </div>
     <div v-else class="d-flex justify-content-center align-items-center vh-100">
-        <login-form :login-page="true" />
+        <login-form :dashboard="true" :login-page="true" />
     </div>
 </template>
 

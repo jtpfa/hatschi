@@ -11,7 +11,7 @@ import ProductAdd from '~/components/admin/products/add'
 
 export default {
     components: { ProductAdd },
-    layout: 'admin',
+    layout: 'dashboard',
 }
 </script>
 

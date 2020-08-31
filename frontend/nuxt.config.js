@@ -75,7 +75,7 @@ export default {
                 cookies: ['cookie_control_consent', 'cookie_control_enabled_cookies'],
             },
             {
-                name: 'Cookies Authentifizierung',
+                name: 'Authentifizierungscookies',
                 description: 'für den Login und geschützte Bereiche.',
                 cookies: ['auth.strategy', 'auth._token.keycloak', 'auth._refresh_token.keycloak'],
             },

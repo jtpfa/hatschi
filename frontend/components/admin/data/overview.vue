@@ -120,11 +120,7 @@ export default {
                     this.items = await this.$api.getAllProductsDetailedVersion(this.$auth.getToken('keycloak'))
                     break
                 case 'customer':
-                    this.items = [
-                        { id: 1, firstName: 'Dickerson', lastName: 'Macdonald' },
-                        { id: 2, firstName: 'Larsen', lastName: 'Shaw' },
-                        { id: 3, firstName: 'Geneva', lastName: 'Wilson' },
-                    ]
+                    this.items = await this.$api.getCustomers(this.$auth.getToken('keycloak'))
                     break
                 case 'employee':
                     this.items = [
