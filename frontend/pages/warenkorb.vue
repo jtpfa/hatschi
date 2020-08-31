@@ -83,26 +83,26 @@ export default {
                             })
                             .then(() => resolve())
                             .catch(err => {
-                                this.error =
-                                    err.message ||
-                                    'Bitte Seite neu laden. Es gibt ein Problem mit mind. einem der Produkte.'
-                                reject()
+                                if (err.message.toLocaleLowerCase().includes('kein artikel')) {
+                                    this.cartChanged = true
+                                    this.$store.commit('shoppingcart/removeAllFromCart', item)
+                                    this.generateToastMessage(
+                                        'Es gab eine Änderung des Warenkorbs',
+                                        `Wir mussten leider "${item.name}" aus deinem Warenkorb entfernen, da dieser Artikel nicht mehr verfügbar ist.`,
+                                        'danger'
+                                    )
+                                    reject()
+                                } else {
+                                    this.error =
+                                        err.message ||
+                                        'Bitte Seite neu laden. Es gibt ein Problem mit mind. einem der Produkte.'
+                                    reject()
+                                }
                             })
                     } catch (err) {
-                        if (err.message.toLocaleLowerCase().includes('kein artikel')) {
-                            this.cartChanged = true
-                            this.$store.commit('shoppingcart/removeAllFromCart', item)
-                            this.generateToastMessage(
-                                'Es gab eine Änderung des Warenkorbs',
-                                `Wir mussten leider "${item.name}" aus deinem Warenkorb entfernen, da dieser Artikel nicht mehr verfügbar ist.`,
-                                'danger'
-                            )
-                        } else {
-                            this.error =
-                                err.message ||
-                                'Bitte Seite neu laden. Es gibt ein Problem mit mind. einem der Produkte.'
-                            reject()
-                        }
+                        this.error =
+                            err.message || 'Bitte Seite neu laden. Es gibt ein Problem mit mind. einem der Produkte.'
+                        reject()
                     }
                 })
             })

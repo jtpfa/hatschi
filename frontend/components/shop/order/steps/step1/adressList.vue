@@ -4,7 +4,10 @@
             {{ addressType === 'shipping' ? 'Lieferadresse' : 'Rechnungsadresse' }} auswählen
             <span class="mandatory">*</span>
         </h2>
-        <b-list-group>
+
+        <b-alert v-if="fetchErrorMsg.length > 0" :show="true" variant="warning">{{ fetchErrorMsg }}</b-alert>
+
+        <b-list-group v-else>
             <b-list-group-item v-for="(item, index) in addresses" :key="item.id">
                 <b-form-radio
                     v-model="selectedAddress"
@@ -25,6 +28,10 @@
                 <b-form-radio class="d-none" :name="`${addressType}-address`" required :state="validState" />
             </b-list-group-item>
         </b-list-group>
+
+        <b-button class="my-4" to="/profil" variant="primary">
+            {{ addresses.length === 0 ? 'Neue Adresse hinzufügen' : 'Adressen verwalten' }}
+        </b-button>
     </div>
 </template>
 
@@ -39,6 +46,10 @@ export default {
                 // The value must match one of these strings
                 return ['shipping', 'invoice'].indexOf(type) !== -1
             },
+        },
+        fetchErrorMsg: {
+            type: String,
+            default: '',
         },
     },
     data() {
