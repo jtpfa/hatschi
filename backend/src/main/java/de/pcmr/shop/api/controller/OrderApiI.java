@@ -2,10 +2,6 @@ package de.pcmr.shop.api.controller;
 
 import de.pcmr.shop.api.model.OrderCreationDTO;
 import de.pcmr.shop.api.model.OrderDTO;
-import de.pcmr.shop.exception.DuplicateOrderItemsException;
-import de.pcmr.shop.exception.NoArticleFoundException;
-import de.pcmr.shop.exception.NoCustomerFoundException;
-import de.pcmr.shop.exception.NotEnoughArticlesOnStockException;
 import de.pcmr.shop.exception.*;
 
 import javax.validation.Valid;

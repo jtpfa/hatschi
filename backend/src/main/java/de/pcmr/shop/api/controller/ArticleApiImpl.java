@@ -1,6 +1,6 @@
 package de.pcmr.shop.api.controller;
 
-import de.pcmr.shop.api.mapper.*;
+import de.pcmr.shop.api.mapper.ArticleMapper;
 import de.pcmr.shop.api.model.ArticleCreationDTO;
 import de.pcmr.shop.api.model.ArticleDTO;
 import de.pcmr.shop.api.model.ArticleShortDTO;

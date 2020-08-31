@@ -16,13 +16,13 @@ public class AddressMapper {
 
     public static AddressEntity mapToAddressEntity(AddressCreationDTO addressCreationDTO) {
         AddressEntity addressEntity = new AddressEntity();
-        addressEntity.setFirstName(ValidationUtils.validateNoHtml(addressCreationDTO.getFirstName()));
-        addressEntity.setLastName(ValidationUtils.validateNoHtml(addressCreationDTO.getLastName()));
-        addressEntity.setAddress(ValidationUtils.validateNoHtml(addressCreationDTO.getAddress()));
-        addressEntity.setCity(ValidationUtils.validateNoHtml(addressCreationDTO.getCity()));
-        addressEntity.setZip(ValidationUtils.validateNoHtml(addressCreationDTO.getZip()));
-        addressEntity.setAdditionalAddress(ValidationUtils.validateNoHtml(addressCreationDTO.getAdditionalAddress()));
-        addressEntity.setCountry(ValidationUtils.validateNoHtml(addressCreationDTO.getCountry()));
+        addressEntity.setFirstName(ValidationUtils.validateNoHtml(addressCreationDTO.getFirstName()).trim());
+        addressEntity.setLastName(ValidationUtils.validateNoHtml(addressCreationDTO.getLastName()).trim());
+        addressEntity.setAddress(ValidationUtils.validateNoHtml(addressCreationDTO.getAddress()).trim());
+        addressEntity.setCity(ValidationUtils.validateNoHtml(addressCreationDTO.getCity()).trim());
+        addressEntity.setZip(ValidationUtils.validateNoHtml(addressCreationDTO.getZip()).trim());
+        addressEntity.setAdditionalAddress(ValidationUtils.validateNoHtml(addressCreationDTO.getAdditionalAddress()).trim());
+        addressEntity.setCountry(ValidationUtils.validateNoHtml(addressCreationDTO.getCountry()).trim());
 
         return addressEntity;
     }

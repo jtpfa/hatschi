@@ -1,14 +1,10 @@
 package de.pcmr.shop.domain;
 
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.util.List;
-import java.util.Objects;
 
 import static de.pcmr.shop.domain.AbstractEntity.TABLE_PREFIX;
 

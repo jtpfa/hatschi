@@ -1,10 +1,12 @@
 package de.pcmr.shop.service;
 
 import de.pcmr.shop.domain.CustomerEntity;
+import de.pcmr.shop.domain.CustomerRoleEnum;
 import de.pcmr.shop.exception.keycloak.KeycloakEndpointNotFoundException;
 import de.pcmr.shop.exception.keycloak.KeycloakUnknownErrorException;
 import de.pcmr.shop.exception.keycloak.KeycloakUserAlreadyExistsException;
 import de.pcmr.shop.exception.keycloak.KeycloakUserIsNotAuthorizedException;
+import de.pcmr.shop.service.model.KeycloakUserRepresentation;
 import org.keycloak.admin.client.CreatedResponseUtil;
 import org.keycloak.admin.client.Keycloak;
 import org.keycloak.admin.client.KeycloakBuilder;
@@ -12,6 +14,7 @@ import org.keycloak.admin.client.resource.RealmResource;
 import org.keycloak.admin.client.resource.UserResource;
 import org.keycloak.admin.client.resource.UsersResource;
 import org.keycloak.representations.idm.CredentialRepresentation;
+import org.keycloak.representations.idm.RoleRepresentation;
 import org.keycloak.representations.idm.UserRepresentation;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -20,8 +23,11 @@ import javax.annotation.PostConstruct;
 import javax.ws.rs.ClientErrorException;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class KeycloakServiceImpl implements KeycloakServiceI {
@@ -76,13 +82,7 @@ public class KeycloakServiceImpl implements KeycloakServiceI {
             RealmResource realmResource = keycloak.realm(keycloakRealm);
             UsersResource usersResource = realmResource.users();
 
-            List<UserRepresentation> keycloakUserList = usersResource.search(currentUsername);
-
-            if (keycloakUserList.size() != 1) {
-                throw new IllegalStateException();
-            }
-
-            UserRepresentation userRepresentation = keycloakUserList.get(0);
+            UserRepresentation userRepresentation = findUserByEmail(currentUsername, usersResource);
             userRepresentation.setUsername(customerEntity.getEmail());
             userRepresentation.setEmail(customerEntity.getEmail());
             userRepresentation.setFirstName(customerEntity.getFirstName());
@@ -92,6 +92,75 @@ public class KeycloakServiceImpl implements KeycloakServiceI {
             userResource.update(userRepresentation);
         } catch (ClientErrorException ex) {
             handleWebApplicationException(ex);
+        }
+    }
+
+    @Override
+    public List<UserRepresentation> findAllKeycloakUsersWithRole(CustomerRoleEnum roleEnum) throws KeycloakEndpointNotFoundException, KeycloakUnknownErrorException, KeycloakUserAlreadyExistsException, KeycloakUserIsNotAuthorizedException {
+        try {
+            RealmResource realmResource = keycloak.realm(keycloakRealm);
+            return getUserListBasedOnRole(roleEnum, realmResource);
+        } catch (ClientErrorException ex) {
+            handleWebApplicationException(ex);
+        } return null;
+    }
+
+    @Override
+    public CustomerRoleEnum getRoleOfCustomer(CustomerEntity customerEntity) throws KeycloakEndpointNotFoundException, KeycloakUnknownErrorException, KeycloakUserAlreadyExistsException, KeycloakUserIsNotAuthorizedException {
+        try {
+            RealmResource realmResource = keycloak.realm(keycloakRealm);
+            UsersResource usersResource = realmResource.users();
+
+            UserRepresentation userRepresentation = findUserByEmail(customerEntity.getEmail(), usersResource);
+            UserResource userResource = usersResource.get(userRepresentation.getId());
+            List<RoleRepresentation> userRoles = userResource.roles().realmLevel().listEffective();
+
+            List<CustomerRoleEnum> customerRoles = CustomerRoleEnum.getFromStringList(userRoles.stream().map(RoleRepresentation::getName).collect(Collectors.toList()));
+
+            if (customerRoles.contains(CustomerRoleEnum.ADMIN)) {
+                return CustomerRoleEnum.ADMIN;
+            } else if (customerRoles.contains(CustomerRoleEnum.EMPLOYEE)) {
+                return CustomerRoleEnum.EMPLOYEE;
+            } else {
+                return CustomerRoleEnum.CUSTOMER;
+            }
+
+        } catch (ClientErrorException ex) {
+            handleWebApplicationException(ex);
+        } return null;
+    }
+
+    private UserRepresentation findUserByEmail(String email, UsersResource usersResource) {
+        List<UserRepresentation> keycloakUserList = usersResource.search(email);
+        if (keycloakUserList.size() != 1) {
+            throw new IllegalStateException();
+        }
+        return keycloakUserList.get(0);
+    }
+
+    private List<UserRepresentation> getUserListBasedOnRole(CustomerRoleEnum roleEnum, RealmResource realmResource) {
+        switch (roleEnum) {
+            case CUSTOMER: {
+                Set<KeycloakUserRepresentation> customerSet = realmResource.roles().get(roleEnum.toString()).getRoleUserMembers()
+                        .parallelStream().map(KeycloakUserRepresentation::new).collect(Collectors.toSet());
+                Set<KeycloakUserRepresentation> employeeSet = realmResource.roles().get(CustomerRoleEnum.EMPLOYEE.toString()).getRoleUserMembers()
+                        .parallelStream().map(KeycloakUserRepresentation::new).collect(Collectors.toSet());
+                customerSet.removeAll(employeeSet);
+                return new ArrayList<>(customerSet);
+            }
+            case EMPLOYEE: {
+                Set<KeycloakUserRepresentation> employeeSet = realmResource.roles().get(roleEnum.toString()).getRoleUserMembers()
+                        .parallelStream().map(KeycloakUserRepresentation::new).collect(Collectors.toSet());
+                Set<KeycloakUserRepresentation> adminSet = realmResource.roles().get(CustomerRoleEnum.ADMIN.toString()).getRoleUserMembers()
+                        .parallelStream().map(KeycloakUserRepresentation::new).collect(Collectors.toSet());
+                employeeSet.removeAll(adminSet);
+                return new ArrayList<>(employeeSet);
+            }
+            default:
+                Set<KeycloakUserRepresentation> adminSet = realmResource.roles().get(roleEnum.toString()).getRoleUserMembers()
+                        .parallelStream().map(KeycloakUserRepresentation::new).collect(Collectors.toSet());
+                adminSet.removeIf(e -> e.getEmail() == null);
+                return new ArrayList<>(adminSet);
         }
     }
 
