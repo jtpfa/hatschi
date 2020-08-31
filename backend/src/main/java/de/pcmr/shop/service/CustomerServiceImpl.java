@@ -50,6 +50,7 @@ public class CustomerServiceImpl implements CustomerServiceI {
         customerRepository.save(currentCustomerEntity);
     }
 
+    @Override
     @Transactional(rollbackFor = Exception.class)
     public void updateCustomer(String email, @Valid CustomerEntity customerEntity, CustomerRoleEnum roleOfCallingPrincipal) throws CustomerAlreadyExistsException, KeycloakUnknownErrorException, KeycloakUserAlreadyExistsException, KeycloakEndpointNotFoundException, KeycloakUserIsNotAuthorizedException, NoCustomerFoundException, NotAuthorizedException {
         CustomerEntity currentCustomerEntity = customerRepository.findByEmail(email).orElseThrow(NoCustomerFoundException::new);
@@ -63,6 +64,19 @@ public class CustomerServiceImpl implements CustomerServiceI {
             currentCustomerEntity.setFirstName(customerEntity.getFirstName());
             currentCustomerEntity.setLastName(customerEntity.getLastName());
             customerRepository.save(currentCustomerEntity);
+        } else {
+            throw new NotAuthorizedException();
+        }
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void deleteCustomer(String email, CustomerRoleEnum roleOfCallingPrincipal) throws NoCustomerFoundException, KeycloakUnknownErrorException, KeycloakUserAlreadyExistsException, KeycloakEndpointNotFoundException, KeycloakUserIsNotAuthorizedException, NotAuthorizedException {
+        CustomerEntity currentCustomerEntity = customerRepository.findByEmail(email).orElseThrow(NoCustomerFoundException::new);
+
+        if (keycloakService.getRoleOfCustomer(currentCustomerEntity).compareTo(roleOfCallingPrincipal) < 0) {
+            keycloakService.deleteCustomerByEmail(email);
+            customerRepository.delete(currentCustomerEntity);
         } else {
             throw new NotAuthorizedException();
         }

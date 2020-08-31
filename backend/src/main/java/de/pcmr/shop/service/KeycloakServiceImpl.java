@@ -2,6 +2,7 @@ package de.pcmr.shop.service;
 
 import de.pcmr.shop.domain.CustomerEntity;
 import de.pcmr.shop.domain.CustomerRoleEnum;
+import de.pcmr.shop.exception.NotAuthorizedException;
 import de.pcmr.shop.exception.keycloak.KeycloakEndpointNotFoundException;
 import de.pcmr.shop.exception.keycloak.KeycloakUnknownErrorException;
 import de.pcmr.shop.exception.keycloak.KeycloakUserAlreadyExistsException;
@@ -128,6 +129,23 @@ public class KeycloakServiceImpl implements KeycloakServiceI {
         } catch (ClientErrorException ex) {
             handleWebApplicationException(ex);
         } return null;
+    }
+
+    @Override
+    public void deleteCustomerByEmail(String email) throws KeycloakEndpointNotFoundException, KeycloakUnknownErrorException, KeycloakUserAlreadyExistsException, KeycloakUserIsNotAuthorizedException, NotAuthorizedException {
+        try {
+            RealmResource realmResource = keycloak.realm(keycloakRealm);
+            UsersResource usersResource = realmResource.users();
+
+            if (email.equals(keycloakRegistrationUser)) {
+                throw new NotAuthorizedException();
+            }
+
+            UserRepresentation userRepresentation = findUserByEmail(email, usersResource);
+            usersResource.delete(userRepresentation.getId());
+        } catch (ClientErrorException ex) {
+            handleWebApplicationException(ex);
+        }
     }
 
     private UserRepresentation findUserByEmail(String email, UsersResource usersResource) {
