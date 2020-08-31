@@ -12,6 +12,7 @@ import PageFooter from '~/components/shop/layout/footer'
 import PageHeader from '~/components/shop/layout/header'
 
 export default {
+    name: 'Default',
     components: {
         PageFooter,
         PageHeader,
