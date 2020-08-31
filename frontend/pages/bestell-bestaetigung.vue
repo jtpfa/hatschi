@@ -1,9 +1,9 @@
 <template>
-    <b-container v-if="step !== 4" class="my-5">
+    <main v-if="step !== 4" class="container my-5">
         <order-progressbar class="position-relative mt-5" :ready="true" />
 
         <order-confirmation />
-    </b-container>
+    </main>
 </template>
 
 <script>
@@ -19,7 +19,7 @@ export default {
         },
     },
     mounted() {
-        if (this.step !== 4) {
+        if (this.step !== 3) {
             this.$router.push({ path: '/bestellung', query: { step: 1 } })
         } else {
             this.$store.commit('shoppingcart/clearCart')

@@ -1,9 +1,13 @@
 <template>
-    <div class="d-flex justify-content-center align-items-center">
-        <b-navbar-brand href="/" title="Zur Startseite von PC-MR">
-            <icon-logo aria-label="Logo von PC-MR" />
-        </b-navbar-brand>
-        <span class="big-noodle description" :class="{ 'text-light': darkBackground, 'text-dark': !darkBackground }">
+    <b-navbar-brand class="d-flex justify-content-center align-items-center" href="/" title="Zur Startseite von PC-MR">
+        <icon-logo aria-label="Logo von PC-MR" class="mr-3" />
+
+        <span v-if="header" class="big-noodle name text-dark">
+            <span class="name-short">PCMR</span>
+            <br />
+            <span class="name-long">PC Masterrace</span>
+        </span>
+        <span v-else class="big-noodle description text-light">
             Dein Online-
             <br />
             Shop Für
@@ -11,7 +15,7 @@
             PC-Equipment
             <br />
         </span>
-    </div>
+    </b-navbar-brand>
 </template>
 
 <script>
@@ -21,7 +25,7 @@ export default {
     name: 'PageLogo',
     components: { IconLogo },
     props: {
-        darkBackground: {
+        header: {
             type: Boolean,
             default: false,
         },
@@ -42,6 +46,15 @@ export default {
             transform: scale(1.05);
         }
     }
+}
+
+.name-short {
+    font-size: 3.25rem;
+    line-height: 1;
+}
+
+.name-long {
+    font-size: 1rem;
 }
 
 .description {

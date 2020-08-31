@@ -1,6 +1,6 @@
 <template>
     <client-only>
-        <b-container>
+        <main class="container">
             <template v-if="cartCountElements > 0">
                 <div class="row my-5">
                     <div class="col-md-7 mb-5 mb-md-0">
@@ -24,7 +24,7 @@
                     :header-level="4"
                 ></b-jumbotron>
             </template>
-        </b-container>
+        </main>
     </client-only>
 </template>
 
@@ -83,26 +83,26 @@ export default {
                             })
                             .then(() => resolve())
                             .catch(err => {
-                                this.error =
-                                    err.message ||
-                                    'Bitte Seite neu laden. Es gibt ein Problem mit mind. einem der Produkte.'
-                                reject()
+                                if (err.message.toLocaleLowerCase().includes('kein artikel')) {
+                                    this.cartChanged = true
+                                    this.$store.commit('shoppingcart/removeAllFromCart', item)
+                                    this.generateToastMessage(
+                                        'Es gab eine Änderung des Warenkorbs',
+                                        `Wir mussten leider "${item.name}" aus deinem Warenkorb entfernen, da dieser Artikel nicht mehr verfügbar ist.`,
+                                        'danger'
+                                    )
+                                    reject()
+                                } else {
+                                    this.error =
+                                        err.message ||
+                                        'Bitte Seite neu laden. Es gibt ein Problem mit mind. einem der Produkte.'
+                                    reject()
+                                }
                             })
                     } catch (err) {
-                        if (err.message.toLocaleLowerCase().includes('kein artikel')) {
-                            this.cartChanged = true
-                            this.$store.commit('shoppingcart/removeAllFromCart', item)
-                            this.generateToastMessage(
-                                'Es gab eine Änderung des Warenkorbs',
-                                `Wir mussten leider "${item.name}" aus deinem Warenkorb entfernen, da dieser Artikel nicht mehr verfügbar ist.`,
-                                'danger'
-                            )
-                        } else {
-                            this.error =
-                                err.message ||
-                                'Bitte Seite neu laden. Es gibt ein Problem mit mind. einem der Produkte.'
-                            reject()
-                        }
+                        this.error =
+                            err.message || 'Bitte Seite neu laden. Es gibt ein Problem mit mind. einem der Produkte.'
+                        reject()
                     }
                 })
             })

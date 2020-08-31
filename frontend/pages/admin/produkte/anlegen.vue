@@ -1,9 +1,9 @@
 <template>
-    <div>
+    <main>
         <h1 class="mb-5">Neues Produkt anlegen</h1>
 
         <product-add />
-    </div>
+    </main>
 </template>
 
 <script>

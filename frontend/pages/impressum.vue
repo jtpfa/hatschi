@@ -1,5 +1,5 @@
 <template>
-    <b-container class="my-5">
+    <main class="container my-5">
         <h1>Impressum</h1>
         <p>Angaben gemäß § 5 TMG</p>
         <p>
@@ -114,7 +114,7 @@
             unverlangten Zusendung von Werbeinformationen, etwa durch Spam-Mails, vor.
             <br />
         </p>
-    </b-container>
+    </main>
 </template>
 
 <script>

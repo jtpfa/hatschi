@@ -4,9 +4,7 @@
         <b-card>
             <div class="row">
                 <div class="mb-4 col-xl-6" role="group">
-                    <label for="giftCardCode">
-                        Geschenkkartencode
-                    </label>
+                    <label for="giftCardCode">Geschenkkartencode</label>
                     <b-form-input
                         id="giftCardCode"
                         v-model="giftCardCode"
@@ -20,9 +18,7 @@
                     </b-form-invalid-feedback>
                 </div>
                 <div class="mb-4 col-xl-6" role="group">
-                    <label for="discountCode">
-                        Aktionscode
-                    </label>
+                    <label for="discountCode">Aktionscode</label>
                     <b-form-input
                         id="discountCode"
                         v-model="discountCode"

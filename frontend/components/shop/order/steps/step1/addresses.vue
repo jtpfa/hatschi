@@ -1,21 +1,29 @@
 <template>
     <div>
-        <order-address-form address-type="shipping" />
+        <order-adress-list address-type="shipping" :fetch-error-msg="fetchErrorMsg" />
 
         <b-form-checkbox v-model="differentInvoiceAddress" class="my-5" name="differentInvoiceAddress" size="lg" switch>
             Rechnungsadresse weicht von der Lieferadresse ab
         </b-form-checkbox>
 
-        <order-address-form v-if="differentInvoiceAddress" address-type="invoice" />
+        <template v-if="differentInvoiceAddress">
+            <order-adress-list address-type="invoice" :fetch-error-msg="fetchErrorMsg" />
+        </template>
     </div>
 </template>
 
 <script>
-import OrderAddressForm from '~/components/shop/order/steps/step1/addressForm'
+import OrderAdressList from '~/components/shop/order/steps/step1/adressList'
 
 export default {
     name: 'OrderAddresses',
-    components: { OrderAddressForm },
+    components: { OrderAdressList },
+    props: {
+        fetchErrorMsg: {
+            type: String,
+            default: '',
+        },
+    },
     computed: {
         differentInvoiceAddress: {
             get() {

@@ -1,5 +1,5 @@
 <template>
-    <b-sidebar lazy no-close-on-route-change no-header shadow visible>
+    <b-sidebar no-close-on-route-change no-header shadow visible>
         <div class="sidebar-content py-2">
             <nav class="px-1 mb-3">
                 <b-nav vertical>

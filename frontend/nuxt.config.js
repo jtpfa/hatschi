@@ -22,7 +22,7 @@ export default {
     /*
      ** Customize the progress-bar color
      */
-    loading: { color: '#fff' },
+    loading: false,
     /*
      ** Global CSS
      */
@@ -33,8 +33,9 @@ export default {
     plugins: [
         { src: '~/plugins/api', ssr: true },
         { src: '~/plugins/currency', ssr: true },
-        { src: '~/plugins/text-crop', ssr: true },
+        { src: '~/plugins/date-format', ssr: true },
         { src: '~/plugins/image-src-set', ssr: true },
+        { src: '~/plugins/text-crop', ssr: true },
         { src: '~/plugins/vuex-persist', ssr: false },
     ],
     /*
@@ -49,20 +50,38 @@ export default {
         '@nuxtjs/style-resources',
         // Doc: https://bootstrap-vue.js.org/docs/
         'bootstrap-vue/nuxt',
-        [
-            'vue-currency-filter/nuxt',
-            {
-                symbol: '€',
-                thousandsSeparator: '.',
-                fractionCount: 2,
-                fractionSeparator: ',',
-                symbolPosition: 'end',
-                symbolSpacing: true,
-            },
-        ],
         '@nuxtjs/axios',
         '@nuxtjs/auth',
+        [
+            'nuxt-cookie-control',
+            {
+                controlButton: false,
+                text: {
+                    barDescription:
+                        'Wir verwenden unsere eigenen Cookies, damit wir Ihnen diese Website zeigen können. Wenn Sie weiter surfen, gehen wir davon aus, dass Sie die Cookies akzeptiert haben.',
+                    optional: '',
+                },
+            },
+        ],
     ],
+    /*
+     * Cookie options for Cookie Consent Manager
+     */
+    cookies: {
+        necessary: [
+            {
+                name: 'Default Cookies',
+                description: 'für den Cookie Consent genutzt.',
+                cookies: ['cookie_control_consent', 'cookie_control_enabled_cookies'],
+            },
+            {
+                name: 'Cookies Authentifizierung',
+                description: 'für den Login und geschützte Bereiche.',
+                cookies: ['auth.strategy', 'auth._token.keycloak', 'auth._refresh_token.keycloak'],
+            },
+        ],
+        optional: [],
+    },
     /*
      ** Bootstrap Vue module configuration
      */
@@ -90,6 +109,7 @@ export default {
 
         babel: {
             plugins: ['@babel/plugin-proposal-throw-expressions'],
+            compact: true,
         },
     },
     publicRuntimeConfig: {
@@ -104,10 +124,12 @@ export default {
             'http://auth.pcmr.de:8080/auth/realms/pcmr/protocol/openid-connect/logout',
     },
     auth: {
+        plugins: [{ src: '~/plugins/refresh', ssr: false }],
         strategies: {
             keycloak: {
                 _scheme: '~/schemes/keycloak',
                 token_key: 'access_token',
+                token_type: 'Bearer',
                 grant_type: 'password',
                 client_id: 'pcmr',
                 token: {

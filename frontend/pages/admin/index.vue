@@ -1,16 +1,19 @@
 <template>
-    <div>
+    <main>
         <h1 class="mb-5">Dashboard</h1>
 
         <h2 class="mb-4">Produkte</h2>
         <data-overview class="mb-5" :dashboard="true" :fields="productFields" type="product"></data-overview>
 
-        <h2>Kunden</h2>
-        <data-overview class="mb-5" :dashboard="true" :fields="customerFields" type="customer"></data-overview>
-
         <h2>Bestellungen</h2>
         <data-overview class="mb-5" :dashboard="true" :fields="orderFields" type="order"></data-overview>
-    </div>
+
+        <h2>Kunden</h2>
+        <data-overview class="mb-5" :dashboard="true" :fields="userFields" type="customer"></data-overview>
+
+        <h2>Mitarbeiter</h2>
+        <data-overview class="mb-5" :dashboard="true" :fields="userFields" type="employee"></data-overview>
+    </main>
 </template>
 
 <script>
@@ -24,38 +27,41 @@ export default {
         return {
             productFields: [
                 { key: 'name', label: 'Artikelbezeichnung', sortable: true },
-                { key: 'description', label: 'Beschreibung', sortable: true },
-                { key: 'details', label: 'Details', sortable: true },
                 {
                     key: 'price',
                     label: 'Preis',
                     formatter: price => {
-                        return this.$options.filters.currency(
-                            this.$currencyConverter.insertFractionForEuroConversion(price)
-                        )
+                        return this.$currencyConverter.convertCentsToEuro(price)
                     },
                     sortable: true,
                 },
                 { key: 'stock', label: 'Lagerbestand', sortable: true },
                 { key: 'image', label: 'Bild', sortable: false },
-                { key: 'actions', label: '', sortable: false },
             ],
-            customerFields: [
+            userFields: [
                 { key: 'firstName', label: 'Vorname', sortable: true },
                 { key: 'lastName', label: 'Nachname', sortable: true },
-                { key: 'actions', label: '', sortable: false },
             ],
             orderFields: [
                 {
                     key: 'orderDate',
                     label: 'Datum',
-                    formatter: date => new Date(date),
+                    formatter: date => this.$dateFormatter.toDateString(date),
+                    sortable: true,
+                },
+                {
+                    key: 'orderStatus',
+                    label: 'Status',
+                    formatter: status => (status === 'OPEN' ? 'Offen' : 'Geliefert'),
                     sortable: true,
                 },
                 { key: 'customerEmail', label: 'Kunde', sortable: true },
-                { key: 'paid', label: 'Bezahlt', sortable: true },
-                { key: 'orderItems', label: 'Bestellte Ware(n)', sortable: true },
-                { key: 'actions', label: '', sortable: false },
+                {
+                    key: 'paid',
+                    label: 'Bezahlt',
+                    formatter: paid => (paid ? 'Ja' : 'Nein'),
+                    sortable: true,
+                },
             ],
         }
     },

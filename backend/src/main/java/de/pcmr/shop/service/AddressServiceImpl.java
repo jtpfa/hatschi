@@ -61,6 +61,7 @@ public class AddressServiceImpl implements AddressServiceI {
             checkIfUserIsAuthorized(currentAddressEntity, customerEntity);
             checkIfAddressIsInactive(currentAddressEntity);
             currentAddressEntity.setActive(false);
+            addressRepository.save(currentAddressEntity);
         } else {
             throw new NoAddressFoundException(addressId);
         }

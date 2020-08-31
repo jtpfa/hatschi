@@ -1,6 +1,6 @@
 <template>
     <fetch-content v-if="$fetchState.pending" :size="6" />
-    <b-container v-else class="my-5">
+    <main v-else class="container my-5">
         <b-alert v-if="error.length > 0" :show="true">{{ error }}</b-alert>
         <template v-else>
             <product-details class="my-5" :product="product" />
@@ -22,7 +22,7 @@
                 />
             </div>
         </template>
-    </b-container>
+    </main>
 </template>
 
 <script>

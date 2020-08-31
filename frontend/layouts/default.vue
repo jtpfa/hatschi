@@ -2,6 +2,7 @@
     <div class="d-flex flex-column page">
         <page-header />
         <nuxt class="mb-5" />
+        <CookieControl locale="de" />
         <page-footer />
     </div>
 </template>

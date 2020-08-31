@@ -1,12 +1,8 @@
 <template>
     <div class="row">
         <div class="col-md-7 d-flex justify-content-between align-items-center">
-            <b-button v-if="step === 1" size="lg" to="/warenkorb" variant="light">
-                &larr; Zurück
-            </b-button>
-            <b-button v-else-if="step > 1" size="lg" variant="light" @click="$emit('back')">
-                &larr; Zurück
-            </b-button>
+            <b-button v-if="step === 1" size="lg" to="/warenkorb" variant="light">&larr; Zurück</b-button>
+            <b-button v-else-if="step > 1" size="lg" variant="light" @click="$emit('back')">&larr; Zurück</b-button>
             <b-button
                 class="d-flex justify-content-center align-items-center my-3"
                 :disabled="loading"

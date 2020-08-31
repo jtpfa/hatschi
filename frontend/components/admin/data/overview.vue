@@ -17,7 +17,6 @@
             :responsive="true"
             show-empty
             :sort-by="sortBy"
-            @row-hovered="setCurrentItem"
         >
             <template v-slot:cell(image)="row">
                 <b-img-lazy
@@ -30,41 +29,30 @@
             </template>
 
             <template v-if="!dashboard" v-slot:cell(actions)="row">
-                <b-button-group>
+                <b-button-group class="float-right">
                     <b-button
-                        v-if="type !== 'order'"
+                        v-if="type !== 'order' && userIsAllowedToEdit"
                         v-b-tooltip.hover
                         class="action-button"
                         size="sm"
                         title="Bearbeiten"
                         variant="primary"
-                        @click="$bvModal.show(`modal-edit-${type}`)"
+                        @click="showEditModal(row.item)"
                     >
                         <icon-pen />
                     </b-button>
                     <b-button
-                        v-if="type !== 'order'"
+                        v-if="type !== 'order' && userIsAllowedToDelete"
                         v-b-tooltip.hover
                         class="action-button"
                         size="sm"
                         title="Löschen"
                         variant="danger"
-                        @click="showMsgBoxConfirmDeletion"
+                        @click="confirmDeletion(row.item)"
                     >
                         <icon-trash />
                     </b-button>
-                    <b-button v-if="type === 'order'" size="sm" @click="row.toggleDetails">
-                        {{ row.detailsShowing ? 'Hide' : 'Show' }} Details
-                    </b-button>
                 </b-button-group>
-            </template>
-
-            <template v-slot:row-details="row">
-                <b-card>
-                    <ul>
-                        <li v-for="(value, key) in row.item" :key="key">{{ key }}: {{ value }}</li>
-                    </ul>
-                </b-card>
             </template>
 
             <template v-slot:table-busy>
@@ -88,17 +76,9 @@
             :total-rows="rows"
         ></b-pagination>
 
-        <customer-edit
-            v-if="type === 'customer'"
-            :customer="Object.assign({}, currentItem)"
-            modal-id="modal-edit-customer"
-        />
+        <customer-edit v-if="type === 'customer'" :customer="currentItem" modal-id="modal-edit-customer" />
 
-        <product-edit
-            v-else-if="type === 'product'"
-            modal-id="modal-edit-product"
-            :product="Object.assign({}, currentItem)"
-        />
+        <product-edit v-else-if="type === 'product'" modal-id="modal-edit-product" :product="currentItem" />
     </div>
 </template>
 
@@ -129,7 +109,7 @@ export default {
             required: true,
             validator(type) {
                 // The value must match one of these strings
-                return ['product', 'customer', 'order'].indexOf(type) !== -1
+                return ['product', 'customer', 'employee', 'order'].indexOf(type) !== -1
             },
         },
     },
@@ -140,7 +120,18 @@ export default {
                     this.items = await this.$api.getAllProductsDetailedVersion(this.$auth.getToken('keycloak'))
                     break
                 case 'customer':
-                    // @todo getAllCustomers
+                    this.items = [
+                        { id: 1, firstName: 'Dickerson', lastName: 'Macdonald' },
+                        { id: 2, firstName: 'Larsen', lastName: 'Shaw' },
+                        { id: 3, firstName: 'Geneva', lastName: 'Wilson' },
+                    ]
+                    break
+                case 'employee':
+                    this.items = [
+                        { id: 1, firstName: 'Peter', lastName: 'Pan' },
+                        { id: 2, firstName: 'Hans', lastName: 'Wurst' },
+                        { id: 3, firstName: 'Jürgen', lastName: 'Müller' },
+                    ]
                     break
                 case 'order':
                     this.items = await this.$api.getAllOrders(this.$auth.getToken('keycloak'))
@@ -154,7 +145,6 @@ export default {
                 err.message || 'Leider gab es ein Problem beim Laden der Daten. Bitte später erneut versuchen.'
         }
     },
-    fetchOnServer: false,
     data() {
         return {
             perPage: 5,
@@ -170,12 +160,32 @@ export default {
         rows() {
             return this.items.length
         },
+        userIsAllowedToEdit() {
+            return (
+                ['product', 'customer'].includes(this.type) ||
+                (this.type === 'employee' && this.$auth.$state.roles.includes('admin'))
+            )
+        },
+        userIsAllowedToDelete() {
+            return (
+                this.type === 'product' ||
+                (['customer', 'employee'].includes(this.type) && this.$auth.$state.roles.includes('admin'))
+            )
+        },
+    },
+    activated() {
+        // Call fetch again if last fetch more than 30 sec ago
+        if (this.$fetchState.timestamp <= Date.now() - 30000) {
+            this.$fetch()
+        }
     },
     methods: {
-        setCurrentItem(item) {
-            this.currentItem = item
+        showEditModal(item) {
+            this.currentItem = { ...item }
+            this.$bvModal.show(`modal-edit-${this.type}`)
         },
-        showMsgBoxConfirmDeletion() {
+        confirmDeletion(item) {
+            this.currentItem = { ...item }
             this.$bvModal
                 .msgBoxConfirm(`Soll der Datensatz wirklich gelöscht werden?`, {
                     title: 'Löschen bestätigen',
@@ -190,17 +200,17 @@ export default {
                 })
                 .then(async value => {
                     if (value) {
-                        await this.deleteData()
+                        await this.deleteData(this.currentItem)
                     }
                 })
                 .catch(err => {
                     this.error = err.message || 'Leider gab es ein Problem. Bitte später erneut versuchen.'
                 })
         },
-        async deleteData() {
+        async deleteData(item) {
             if (this.type === 'product') {
                 try {
-                    await this.$api.deleteProduct(this.currentItem.id, this.$auth.getToken('keycloak'))
+                    await this.$api.deleteProduct(item.id, this.$auth.getToken('keycloak'))
                     this.$router.app.refresh()
                 } catch (err) {
                     this.error =
@@ -232,5 +242,9 @@ export default {
     width: 1.25rem;
     height: auto;
     fill: $white;
+}
+
+::v-deep table td {
+    white-space: pre-line;
 }
 </style>

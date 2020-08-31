@@ -75,7 +75,7 @@
 
             <b-alert class="mt-3" :show="error.length > 0" variant="danger">{{ error }}</b-alert>
 
-            <button-container :loading="loading" text="Speichern" />
+            <button-container :loading="loading" text="Profildaten ändern" />
         </b-form>
     </div>
 </template>
@@ -83,7 +83,7 @@
 import ButtonContainer from '~/components/general/layout/buttonContainer'
 
 export default {
-    name: 'ProfilForm',
+    name: 'AccountProfil',
     components: { ButtonContainer },
     data() {
         return {
@@ -126,8 +126,10 @@ export default {
             this.loading = false
         },
         async login() {
-            await this.$auth.logout()
-            this.$router.push('/auth/login')
+            window.location.href = `${this.$config.keycloakLogoutEndpoint}?redirect_uri=${encodeURI(
+                `${this.$config.baseURL}/auth/login`
+            )}`
+            this.$auth.reset()
         },
     },
 }

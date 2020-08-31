@@ -1,11 +1,10 @@
-// @todo write the whole conversion process instead of using a plugin
 export class CurrenyConverter {
     constructor(fractionCount, fractionSeperator) {
         this.fractionCount = fractionCount
         this.fractionSeperator = fractionSeperator
     }
 
-    insertFractionForEuroConversion(priceInCents) {
+    convertCentsToEuro(priceInCents) {
         if (!priceInCents) {
             return 0
         }
@@ -17,6 +16,6 @@ export class CurrenyConverter {
             this.fractionSeperator +
             price.substr(-this.fractionCount)
 
-        return price
+        return new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' }).format(price)
     }
 }

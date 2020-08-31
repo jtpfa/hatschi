@@ -7,7 +7,7 @@
                 <b-nav-item href="/kontakt">Kontakt</b-nav-item>
             </b-navbar-nav>
 
-            <page-logo class="order-md-0" dark-background />
+            <page-logo class="order-md-0" />
         </b-navbar>
     </footer>
 </template>

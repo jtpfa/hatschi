@@ -20,7 +20,7 @@
                     {{ $textCropper.cropText(item.description, 75) }}
                 </b-card-text>
                 <b-card-text class="product-price font-weight-bold text-primary big-noodle">
-                    {{ $currencyConverter.insertFractionForEuroConversion(item.price) | currency }}
+                    {{ $currencyConverter.convertCentsToEuro(item.price) }}
                 </b-card-text>
                 <b-card-text v-if="order">
                     <b-badge class="quantity" pill variant="primary">{{ item.quantity }} Stück</b-badge>

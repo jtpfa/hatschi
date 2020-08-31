@@ -1,19 +1,13 @@
 <template>
-    <data-overview
-        v-if="accessGranted"
-        :dashboard="false"
-        :fields="[
-            { key: 'firstName', label: 'Vorname', sortable: true },
-            { key: 'lastName', label: 'Nachname', sortable: true },
-            { key: 'actions', label: '', sortable: false },
-        ]"
-        :items="[
-            { id: 1, firstName: 'Dickerson', lastName: 'Macdonald' },
-            { id: 2, firstName: 'Larsen', lastName: 'Shaw' },
-            { id: 3, firstName: 'Geneva', lastName: 'Wilson' },
-        ]"
-        type="customer"
-    ></data-overview>
+    <main>
+        <h1 class="mb-5">Nutzerverwaltung</h1>
+
+        <h2 class="mb-4">Kunden</h2>
+        <data-overview :dashboard="false" :fields="userFields" type="customer"></data-overview>
+
+        <h2>Mitarbeiter</h2>
+        <data-overview :dashboard="false" :fields="userFields" type="customer"></data-overview>
+    </main>
 </template>
 
 <script>
@@ -24,17 +18,11 @@ export default {
     layout: 'admin',
     data() {
         return {
-            accessGranted: false,
-        }
-    },
-    mounted() {
-        this.accessGranted = this.$auth.$state.roles?.includes('admin')
-
-        if (!this.accessGranted) {
-            this.$auth.$storage.setUniversal('redirect', '/admin/kunden')
-            this.$router.push('/auth/login')
-        } else {
-            this.$auth.$storage.removeUniversal('redirect')
+            userFields: [
+                { key: 'firstName', label: 'Vorname', sortable: true },
+                { key: 'lastName', label: 'Nachname', sortable: true },
+                { key: 'actions', label: '', sortable: false },
+            ],
         }
     },
 }

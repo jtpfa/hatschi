@@ -42,9 +42,7 @@
             />
 
             <b-form-invalid-feedback id="input-live-feedback">
-                <template v-if="!passwordConfirmationErrorMessage">
-                    Bitte bestätige das Passwort.
-                </template>
+                <template v-if="!passwordConfirmationErrorMessage">Bitte bestätige das Passwort.</template>
                 <template v-else>
                     {{ passwordConfirmationErrorMessage }}
                 </template>

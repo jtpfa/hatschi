@@ -16,7 +16,7 @@
 
         <h2>Ausgewählte Artikel</h2>
 
-        <cart-products :order="true" />
+        <cart-products class="mb-5 mb-md-0" :order="true" />
     </div>
 </template>
 

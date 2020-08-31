@@ -1,29 +1,26 @@
 <template>
-    <b-container>
+    <main class="container">
         <home-stage />
 
-        <p class="h3 mb-5">Aktuelle Top-Seller</p>
-
-        <!-- @todo adjust search form styling -->
-        <home-search @search="filterProducts($event)" />
+        <home-filter class="mb-5 top-seller-filter" @filtered="filterProducts($event)" @sort="sortProducts($event)" />
 
         <home-product-overview
             :error="error"
             :products="!filtered ? products : filteredProducts"
             :state="$fetchState.pending"
         />
-    </b-container>
+    </main>
 </template>
 <script>
 import HomeProductOverview from '~/components/shop/home/productOverview'
-import HomeSearch from '~/components/shop/home/search'
+import HomeFilter from '~/components/shop/home/filter'
 import HomeStage from '~/components/shop/home/stage'
 
 export default {
     components: {
         HomeStage,
         HomeProductOverview,
-        HomeSearch,
+        HomeFilter,
     },
     async fetch() {
         try {
@@ -40,7 +37,6 @@ export default {
             error: '',
         }
     },
-    fetchOnServer: false,
     methods: {
         filterProducts(searchParam) {
             this.filtered = true
@@ -50,12 +46,34 @@ export default {
                     product.description.toLocaleLowerCase().includes(searchParam)
             )
         },
+        sortProducts(sortParam) {
+            if (!this.filtered) {
+                // deep clone the products array
+                this.filteredProducts = JSON.parse(JSON.stringify(this.products))
+            }
+            this.filtered = true
+            this.filteredProducts.sort((a, b) => {
+                if (sortParam.key === 'price') {
+                    if (sortParam.order === 'asc') {
+                        return a.price - b.price
+                    }
+
+                    return b.price - a.price
+                }
+
+                if (sortParam.order === 'asc') {
+                    return a.name.toLocaleLowerCase().localeCompare(b.name.toLocaleLowerCase())
+                }
+
+                return b.name.toLocaleLowerCase().localeCompare(a.name.toLocaleLowerCase())
+            })
+        },
     },
 }
 </script>
 
 <style lang="scss" scoped>
-p {
-    margin-top: 5rem;
+.top-seller-filter {
+    margin-top: 5.5rem;
 }
 </style>

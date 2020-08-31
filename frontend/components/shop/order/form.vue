@@ -4,13 +4,13 @@
 
         <div class="row mt-5">
             <div class="col-md-7 mb-0">
-                <order-step1 v-if="step === 1" />
+                <order-step1 v-if="step === 1" :fetch-error-msg="fetchErrorMsg" />
 
                 <order-step2 v-else-if="step === 2" />
 
                 <order-step3 v-else-if="step === 3" />
 
-                <order-invalid-state v-else-if="step < 1 || step > 4" />
+                <order-invalid-state v-else-if="step < 1 || step > 3" />
             </div>
             <div v-if="step >= 1 && step <= 3" class="col-md-5">
                 <cart-summary class="mb-5 mb-md-0" :error="error">
@@ -45,9 +45,19 @@ import OrderStep3 from '~/components/shop/order/steps/step3/step3'
 export default {
     name: 'OrderForm',
     components: { OrderStep3, OrderStep2, OrderStep1, OrderInvalidState, OrderPagination, OrderHeadline, CartSummary },
+    async fetch() {
+        try {
+            const addresses = await this.$api.getAddressesOfCustomer(this.$auth.getToken('keycloak'))
+            this.$store.commit('order/updateOrderInformation', { key: 'addresses', data: addresses })
+        } catch (err) {
+            this.fetchErrorMsg =
+                err.message || 'Leider gab es ein Problem beim Laden der Daten. Bitte später erneut versuchen.'
+        }
+    },
     data() {
         return {
             loading: false,
+            fetchErrorMsg: '',
             error: '',
         }
     },
@@ -98,7 +108,6 @@ export default {
                     return
                 }
 
-                this.step += 1
                 this.$router.push('/bestell-bestaetigung')
             } else {
                 this.step += 1
@@ -110,31 +119,24 @@ export default {
         },
         async submitOrder() {
             try {
-                const shippingAddress = this.getAddress('shipping')
-                const invoiceAddress = this.order.differentInvoiceAddress ? this.getAddress('invoice') : shippingAddress
                 const orderItems = this.cart.map(item => {
                     return { articleId: item.id, quantity: item.quantity }
                 })
-                const paymentMethod = this.order.paymentMethod.id
-                const shippingMethod = this.order.shippingMethod.id
 
                 await this.$api.placeOrder(
-                    { orderItems, shippingAddress, invoiceAddress, paymentMethod, shippingMethod },
+                    {
+                        orderItems,
+                        shippingAddressId: this.order.shippingAddress.id,
+                        invoiceAddressId: this.order.differentInvoiceAddress
+                            ? this.order.invoiceAddress.id
+                            : this.order.shippingAddress.id,
+                        paymentMethod: this.order.paymentMethod.id,
+                        shippingMethod: this.order.shippingMethod.id,
+                    },
                     this.$auth.getToken('keycloak')
                 )
             } catch (err) {
                 this.error = err.message || 'Leider gab es ein Problem. Bitte später erneut versuchen.'
-            }
-        },
-        getAddress(addressType) {
-            return {
-                firstName: this.order[`${addressType}Address`].firstName,
-                lastName: this.order[`${addressType}Address`].lastName,
-                address: `${this.order[`${addressType}Address`].street} ${this.order[`${addressType}Address`].number}`,
-                additionalAddress: this.order[`${addressType}Address`].additionalAddress,
-                zip: this.order[`${addressType}Address`].zip,
-                city: this.order[`${addressType}Address`].city,
-                country: this.order[`${addressType}Address`].country,
             }
         },
     },

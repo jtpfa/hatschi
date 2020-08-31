@@ -3,8 +3,8 @@
         <admin-header />
         <div class="d-flex">
             <admin-sidebar />
-            <b-container class="my-5 mx-3">
-                <nuxt />
+            <b-container class="my-5 mx-3 overflow-y-hidden">
+                <nuxt keep-alive />
             </b-container>
         </div>
     </div>
@@ -44,4 +44,8 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.overflow-y-hidden {
+    overflow-y: hidden;
+}
+</style>

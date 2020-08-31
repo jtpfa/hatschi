@@ -2,7 +2,6 @@ import jwtDecode from 'jwt-decode'
 
 const DEFAULTS = {
     tokenRequired: true,
-    tokenType: 'Bearer',
     globalToken: true,
     tokenName: 'Authorization',
     autoFetchUser: true,
@@ -111,7 +110,7 @@ export default class KeyCloakScheme {
     }
 
     async setUserToken(accessToken, refreshToken) {
-        const token = this.options.tokenType ? `${this.options.tokenType} ${accessToken}` : accessToken
+        const token = this.options.token_type ? `${this.options.token_type} ${accessToken}` : accessToken
         this.$auth.setToken(this.name, token)
         this._setToken(token)
 
@@ -135,28 +134,6 @@ export default class KeyCloakScheme {
         // Try to fetch user and then set
         const user = await this.$auth.requestWith(this.name, endpoint, this.options.endpoints.user)
         this.$auth.setUser(user)
-    }
-
-    async logout(endpoint) {
-        // Only connect to logout endpoint if it's configured
-        if (this.options.endpoints.logout) {
-            const xhrData = { ...endpoint }
-
-            xhrData.headers = {
-                'Content-Type': 'application/x-www-form-urlencoded',
-            }
-
-            const urlencoded = new URLSearchParams()
-            urlencoded.append('client_id', this.options.client_id)
-            urlencoded.append('refresh_token', this.$auth.getRefreshToken(this.name))
-
-            xhrData.data = urlencoded
-
-            await this.$auth.requestWith(this.name, xhrData, this.options.endpoints.logout).catch(() => {})
-        }
-
-        // But reset regardless
-        return this.$auth.reset()
     }
 
     async reset() {

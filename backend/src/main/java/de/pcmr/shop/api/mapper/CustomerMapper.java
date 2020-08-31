@@ -4,6 +4,11 @@ import de.pcmr.shop.api.model.CustomerDetailsDTO;
 import de.pcmr.shop.api.model.CustomerRegistrationDTO;
 import de.pcmr.shop.domain.CustomerEntity;
 import de.pcmr.shop.util.ValidationUtils;
+import org.keycloak.representations.idm.UserRepresentation;
+import org.modelmapper.ModelMapper;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class CustomerMapper {
     private CustomerMapper() {
@@ -36,5 +41,14 @@ public class CustomerMapper {
         customerEntity.setPassword(customerRegistrationDTO.getPassword());
 
         return customerEntity;
+    }
+
+    public static List<CustomerDetailsDTO> mapUserRepresentationListToCustomerDtoList(List<UserRepresentation> userRepresentations) {
+        return userRepresentations.stream().map(CustomerMapper::mapUserRepresentationToCustomerDto).collect(Collectors.toList());
+    }
+
+    public static CustomerDetailsDTO mapUserRepresentationToCustomerDto(UserRepresentation userRepresentation) {
+        ModelMapper modelMapper = new ModelMapper();
+        return modelMapper.map(userRepresentation, CustomerDetailsDTO.class);
     }
 }

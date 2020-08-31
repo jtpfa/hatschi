@@ -3,6 +3,7 @@ package de.pcmr.shop.service;
 import de.pcmr.shop.AbstractIntegrationTest;
 import de.pcmr.shop.builder.*;
 import de.pcmr.shop.domain.*;
+import de.pcmr.shop.exception.AddressDoesNotBelongToUserException;
 import de.pcmr.shop.exception.DuplicateOrderItemsException;
 import de.pcmr.shop.exception.NoCustomerFoundException;
 import de.pcmr.shop.exception.NotEnoughArticlesOnStockException;
@@ -63,7 +64,7 @@ class OrderServiceIntegrationTest extends AbstractIntegrationTest {
     }
 
     @Test
-    void testProcessOrder() throws NoCustomerFoundException, NotEnoughArticlesOnStockException, DuplicateOrderItemsException {
+    void testProcessOrder() throws NoCustomerFoundException, NotEnoughArticlesOnStockException, DuplicateOrderItemsException, AddressDoesNotBelongToUserException {
         given.aCustomerEntityInDatabaseWith(CUSTOMER_EMAIL_A, CUSTOMER_FIRSTNAME_A, CUSTOMER_LASTNAME_A, CUSTOMER_PASSWORD_A);
         given.anArticleEntityInDatabaseWith("Testartikel 1", "Testbeschreibung 1", "Testdetails 1", 5, 150);
         given.anArticleEntityInDatabaseWith("Testartikel 2", "Testbeschreibung 2", "Testdetails 2", 3, 999);
@@ -181,6 +182,7 @@ class OrderServiceIntegrationTest extends AbstractIntegrationTest {
                     .withCountry("Germany")
                     .withFirstName("TestFirst")
                     .withLastName("TestLast")
+                    .withCustomer(customerEntity)
                     .build();
         }
 
@@ -199,7 +201,7 @@ class OrderServiceIntegrationTest extends AbstractIntegrationTest {
             securityContext.setAuthentication(auth);
         }
 
-        void anOrderIsProcessed(OrderEntity orderEntity) throws NoCustomerFoundException, NotEnoughArticlesOnStockException, DuplicateOrderItemsException {
+        void anOrderIsProcessed(OrderEntity orderEntity) throws NoCustomerFoundException, NotEnoughArticlesOnStockException, DuplicateOrderItemsException, AddressDoesNotBelongToUserException {
             orderService.processOrder(orderEntity, SecurityContextHolder.getContext().getAuthentication());
         }
 
