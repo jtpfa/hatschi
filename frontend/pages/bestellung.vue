@@ -61,7 +61,9 @@ export default {
         }
     },
     watchQuery(query) {
-        this.step = +query.step
+        if (this) {
+            this.step = +query.step
+        }
     },
 }
 </script>
