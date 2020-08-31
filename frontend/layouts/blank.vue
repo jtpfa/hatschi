@@ -1,6 +1,7 @@
 <template>
     <div class="d-flex justify-content-center align-items-center vh-100">
-        <nuxt keep-alive />
+        <nuxt />
+        <CookieControl locale="de" />
     </div>
 </template>
 

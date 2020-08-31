@@ -52,7 +52,36 @@ export default {
         'bootstrap-vue/nuxt',
         '@nuxtjs/axios',
         '@nuxtjs/auth',
+        [
+            'nuxt-cookie-control',
+            {
+                controlButton: false,
+                text: {
+                    barDescription:
+                        'Wir verwenden unsere eigenen Cookies, damit wir Ihnen diese Website zeigen können. Wenn Sie weiter surfen, gehen wir davon aus, dass Sie die Cookies akzeptiert haben.',
+                    optional: '',
+                },
+            },
+        ],
     ],
+    /*
+     * Cookie options for Cookie Consent Manager
+     */
+    cookies: {
+        necessary: [
+            {
+                name: 'Default Cookies',
+                description: 'für den Cookie Consent genutzt.',
+                cookies: ['cookie_control_consent', 'cookie_control_enabled_cookies'],
+            },
+            {
+                name: 'Cookies Authentifizierung',
+                description: 'für den Login und geschützte Bereiche.',
+                cookies: ['auth.strategy', 'auth._token.keycloak', 'auth._refresh_token.keycloak'],
+            },
+        ],
+        optional: [],
+    },
     /*
      ** Bootstrap Vue module configuration
      */
