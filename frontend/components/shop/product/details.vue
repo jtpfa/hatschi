@@ -36,11 +36,9 @@
             </div>
         </div>
         <div>
-            <p class="h5">Produktdetails</p>
+            <p class="h5 my-5">Produktdetails</p>
 
-            <p>
-                {{ product.details }}
-            </p>
+            <div v-html="product.details"></div>
         </div>
     </div>
 </template>

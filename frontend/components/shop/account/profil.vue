@@ -31,9 +31,8 @@ export default {
     },
     methods: {
         async login() {
-            this.$auth.logout()
+            await this.$auth.logout()
             this.$router.push('/auth/login')
-            this.$auth.reset()
         },
     },
 }

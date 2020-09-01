@@ -190,4 +190,64 @@ export class RestApi {
             body: JSON.stringify(passwords),
         }).then(response => _handleResponse(response))
     }
+
+    getCustomers(userToken) {
+        return fetch(`${this.baseUrl}employee/customer`, {
+            method: 'GET',
+            headers: {
+                Authorization: userToken,
+            },
+        }).then(response => _handleResponse(response, true))
+    }
+
+    getEmployees(userToken) {
+        return fetch(`${this.baseUrl}employee/employee`, {
+            method: 'GET',
+            headers: {
+                Authorization: userToken,
+            },
+        }).then(response => _handleResponse(response, true))
+    }
+
+    getAdmins(userToken) {
+        return fetch(`${this.baseUrl}admin/admin`, {
+            method: 'GET',
+            headers: {
+                Authorization: userToken,
+            },
+        }).then(response => _handleResponse(response, true))
+    }
+
+    editCustomer(customerAttributes, username, userToken) {
+        console.log(customerAttributes)
+        return fetch(`${this.baseUrl}employee/customer/${username}`, {
+            method: 'PUT',
+            headers: {
+                'Content-type': 'application/json; charset=UTF-8',
+                Authorization: userToken,
+            },
+            body: JSON.stringify(customerAttributes),
+        }).then(response => _handleResponse(response))
+    }
+
+    editEmployee(employeeAttributes, username, userRole, userToken) {
+        return fetch(`${this.baseUrl}admin/${userRole}/${username}`, {
+            method: 'PUT',
+            headers: {
+                'Content-type': 'application/json; charset=UTF-8',
+                Authorization: userToken,
+            },
+            body: JSON.stringify(employeeAttributes),
+        }).then(response => _handleResponse(response))
+    }
+
+    deleteUser(username, userRole, userToken) {
+        return fetch(`${this.baseUrl}admin/${userRole}/${username}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-type': 'application/json; charset=UTF-8',
+                Authorization: userToken,
+            },
+        }).then(response => _handleResponse(response))
+    }
 }

@@ -1,6 +1,6 @@
 {
   "name": "pcmr",
-  "version": "2.2.0",
+  "version": "2.3.0",
   "description": "PC Masterrace",
   "author": "Aleksandar Vuk Jovanovic, Fynn Lohse, Jonas Pfannkuche, Tayfun Gülbasi, Vera Meermeier",
   "private": true,
@@ -12,9 +12,9 @@
     "build": "nuxt build",
     "start": "nuxt start",
     "serve": "nuxt serve",
-    "generate": "nuxt build --target static && nuxt export",
+    "analyze": "nuxt build --analyze",
     "dev-env": "truncate -s 0 .env",
-    "prod-env": "echo \"# Frontend base URL\nPCMR_BASE_URL_PROD=https://pc-mr.de\n\n# Rest API\n# Don't forget the trailing slash\nPCMR_REST_API_PROD=https://api.pc-mr.de/api/\nPCMR_MEDIA_API_PROD=https://api.pc-mr.de/media/article/\n\n# Keycloak endpoints\nKEYCLOAK_TOKEN_ENDPOINT_PROD=https://auth.pc-mr.de/auth/realms/pcmr/protocol/openid-connect/token\nKEYCLOAK_LOGOUT_ENDPOINT_PROD=https://auth.pc-mr.de/auth/realms/pcmr/protocol/openid-connect/logout\" > .env",
+    "prod-env": "echo \"# Frontend base URL\nPCMR_BASE_URL_PROD=https://pc-mr.de\n\n# Rest API\n# Don't forget the trailing slash\nPCMR_REST_API_PROD=https://api.pc-mr.de/api/\nPCMR_MEDIA_API_PROD=https://api.pc-mr.de/media/article/\n\n# Keycloak endpoints\nKEYCLOAK_ENDPOINT_PROD=https://auth.pc-mr.de/auth/realms/pcmr/\" > .env",
     "lint:script": "eslint --ext .js,.vue --color --cache --cache-location tmp/.eslintcache --ignore-path .gitignore .",
     "lint:scriptfix": "npm run lint:script -- --fix",
     "format": "prettier --write \"${FOLDER:-*}/**/*.*\""
@@ -46,6 +46,7 @@
     "nuxt": "^2.14.4",
     "nuxt-cookie-control": "^1.8.6",
     "sass-loader": "^10.0.1",
+    "vue-glide-js": "^1.3.14",
     "vuex-persist": "^2.2.0"
   },
   "devDependencies": {

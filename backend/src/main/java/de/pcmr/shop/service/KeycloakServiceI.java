@@ -16,6 +16,7 @@ public interface KeycloakServiceI {
     void updateKeycloakUser(CustomerEntity customerEntity, String currentUsername) throws KeycloakEndpointNotFoundException, KeycloakUnknownErrorException, KeycloakUserAlreadyExistsException, KeycloakUserIsNotAuthorizedException;
     List<UserRepresentation> findAllKeycloakUsersWithRole(CustomerRoleEnum roleEnum) throws KeycloakEndpointNotFoundException, KeycloakUnknownErrorException, KeycloakUserAlreadyExistsException, KeycloakUserIsNotAuthorizedException;
     CustomerRoleEnum getRoleOfCustomer(CustomerEntity customerEntity) throws KeycloakEndpointNotFoundException, KeycloakUnknownErrorException, KeycloakUserAlreadyExistsException, KeycloakUserIsNotAuthorizedException;
+    CustomerRoleEnum getRoleOfCustomer(String userEmail) throws KeycloakEndpointNotFoundException, KeycloakUnknownErrorException, KeycloakUserAlreadyExistsException, KeycloakUserIsNotAuthorizedException;
     void updateKeycloakUser(CustomerEntity customerEntity, String currentUsername, CustomerRoleEnum customerRoleEnum) throws KeycloakEndpointNotFoundException, KeycloakUnknownErrorException, KeycloakUserAlreadyExistsException, KeycloakUserIsNotAuthorizedException;
     void deleteCustomerByEmail(String email) throws KeycloakEndpointNotFoundException, KeycloakUnknownErrorException, KeycloakUserAlreadyExistsException, KeycloakUserIsNotAuthorizedException, NotAuthorizedException;
 }

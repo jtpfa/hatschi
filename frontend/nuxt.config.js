@@ -32,6 +32,7 @@ export default {
      */
     plugins: [
         { src: '~/plugins/api', ssr: true },
+        { src: '~/plugins/carousel', ssr: true },
         { src: '~/plugins/currency', ssr: true },
         { src: '~/plugins/date-format', ssr: true },
         { src: '~/plugins/image-src-set', ssr: true },
@@ -75,7 +76,7 @@ export default {
                 cookies: ['cookie_control_consent', 'cookie_control_enabled_cookies'],
             },
             {
-                name: 'Cookies Authentifizierung',
+                name: 'Authentifizierungscookies',
                 description: 'für den Login und geschützte Bereiche.',
                 cookies: ['auth.strategy', 'auth._token.keycloak', 'auth._refresh_token.keycloak'],
             },
@@ -116,17 +117,8 @@ export default {
         baseURL: process.env.PCMR_BASE_URL_PROD || 'http://localhost:3000',
         restApiBaseUrl: process.env.PCMR_REST_API_PROD || 'http://localhost:8090/api/',
         mediaUrl: process.env.PCMR_MEDIA_API_PROD || 'http://localhost:8090/media/article/',
-        keycloakTokenEndpoint:
-            process.env.KEYCLOAK_TOKEN_ENDPOINT_PROD ||
-            'http://auth.pcmr.de:8080/auth/realms/pcmr/protocol/openid-connect/token',
-        keycloakLogoutEndpoint:
-            process.env.KEYCLOAK_LOGOUT_ENDPOINT_PROD ||
-            'http://auth.pcmr.de:8080/auth/realms/pcmr/protocol/openid-connect/logout',
-        keycloakChangePasswordEndpoint:
-            process.env.KEYCLOAK_CHANGE_PASSWORD_ENDPOINT_PROD ||
-            'http://auth.pcmr.de:8080/auth/realms/pcmr/accounts/credentials/password',
+        keycloakEndpoint: process.env.KEYCLOAK_ENDPOINT_PROD || 'http://auth.pcmr.de:8080/auth/realms/pcmr/',
     },
-    // @todo change keycloak api endpoint to one
     auth: {
         plugins: [{ src: '~/plugins/refresh', ssr: false }],
         strategies: {
@@ -135,7 +127,6 @@ export default {
                 token_key: 'access_token',
                 token_type: 'Bearer',
                 grant_type: 'password',
-                client_id: 'pcmr',
                 token: {
                     property: 'access_token',
                     maxAge: 300,

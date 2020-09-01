@@ -27,7 +27,7 @@
                 </label>
                 <b-form-input
                     id="firstname"
-                    v-model="customer.firstName"
+                    v-model="employee.firstName"
                     aria-describedby="input-live-feedback"
                     pattern="^.{1,50}$"
                     placeholder="Vorname"
@@ -45,7 +45,7 @@
                 </label>
                 <b-form-input
                     id="name"
-                    v-model="customer.lastName"
+                    v-model="employee.lastName"
                     aria-describedby="input-live-feedback"
                     pattern="^.{1,50}$"
                     placeholder="Nachname"
@@ -54,6 +54,16 @@
                 />
 
                 <b-form-invalid-feedback id="input-live-feedback">Bitte Nachnamen angeben.</b-form-invalid-feedback>
+            </div>
+
+            <div class="mb-4" role="group">
+                <label for="name">
+                    Rolle
+                    <span class="mandatory">*</span>
+                </label>
+                <b-form-select v-model="selectedRole" :options="roleOptions" required />
+
+                <b-form-invalid-feedback id="input-live-feedback">Bitte Rolle angeben.</b-form-invalid-feedback>
             </div>
 
             <b-alert class="mt-3" :show="error.length > 0" variant="danger">{{ error }}</b-alert>
@@ -67,10 +77,10 @@
 import ButtonContainer from '~/components/general/layout/buttonContainer'
 
 export default {
-    name: 'CustomerEdit',
+    name: 'EmployeeEdit',
     components: { ButtonContainer },
     props: {
-        customer: {
+        employee: {
             type: Object,
             required: true,
         },
@@ -78,10 +88,24 @@ export default {
             type: String,
             default: '',
         },
+        role: {
+            type: String,
+            required: true,
+            validator(type) {
+                // The value must match one of these strings
+                return ['employee', 'admin'].indexOf(type) !== -1
+            },
+        },
     },
     data() {
         return {
-            newEmail: this.customer.email,
+            newEmail: this.employee.email,
+            newRole: this.role,
+            roleOptions: [
+                { text: 'Kunde', value: 'customer' },
+                { text: 'Mitarbeiter', value: 'employee' },
+                { text: 'Admin', value: 'admin' },
+            ],
             error: '',
             loading: false,
         }
@@ -89,23 +113,33 @@ export default {
     computed: {
         username: {
             get() {
-                return this.newEmail ? this.newEmail : this.customer.email
+                return this.newEmail ? this.newEmail : this.employee.email
             },
             set(newEmail) {
                 this.newEmail = newEmail
             },
         },
+        selectedRole: {
+            get() {
+                return this.newRole ? this.newRole : this.role
+            },
+            set(newRole) {
+                this.newRole = newRole
+            },
+        },
     },
     methods: {
-        async editCustomer() {
+        async editEmployee() {
             try {
-                await this.$api.editCustomer(
+                await this.$api.editEmployee(
                     {
                         email: this.username,
-                        firstName: this.customer.firstName,
-                        lastName: this.customer.lastName,
+                        firstName: this.employee.firstName,
+                        lastName: this.employee.lastName,
+                        customerRole: this.selectedRole.toLocaleUpperCase(),
                     },
-                    this.customer.email,
+                    this.employee.email,
+                    this.role,
                     this.$auth.getToken('keycloak')
                 )
 
@@ -123,7 +157,7 @@ export default {
                 event.preventDefault()
             } else {
                 this.$refs.form.classList.add('was-validated')
-                await this.editCustomer()
+                await this.editEmployee()
             }
             this.loading = false
         },
