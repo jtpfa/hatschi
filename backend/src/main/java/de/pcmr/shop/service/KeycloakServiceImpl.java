@@ -2,6 +2,7 @@ package de.pcmr.shop.service;
 
 import de.pcmr.shop.domain.CustomerEntity;
 import de.pcmr.shop.domain.CustomerRoleEnum;
+import de.pcmr.shop.exception.NotAuthorizedException;
 import de.pcmr.shop.exception.keycloak.KeycloakEndpointNotFoundException;
 import de.pcmr.shop.exception.keycloak.KeycloakUnknownErrorException;
 import de.pcmr.shop.exception.keycloak.KeycloakUserAlreadyExistsException;
@@ -78,6 +79,11 @@ public class KeycloakServiceImpl implements KeycloakServiceI {
 
     @Override
     public void updateKeycloakUser(CustomerEntity customerEntity, String currentUsername) throws KeycloakEndpointNotFoundException, KeycloakUnknownErrorException, KeycloakUserAlreadyExistsException, KeycloakUserIsNotAuthorizedException {
+        updateKeycloakUser(customerEntity, currentUsername, null);
+    }
+
+    @Override
+    public void updateKeycloakUser(CustomerEntity customerEntity, String currentUsername, CustomerRoleEnum targetCustomerPrivileges) throws KeycloakEndpointNotFoundException, KeycloakUnknownErrorException, KeycloakUserAlreadyExistsException, KeycloakUserIsNotAuthorizedException {
         try {
             RealmResource realmResource = keycloak.realm(keycloakRealm);
             UsersResource usersResource = realmResource.users();
@@ -89,7 +95,13 @@ public class KeycloakServiceImpl implements KeycloakServiceI {
             userRepresentation.setLastName(customerEntity.getLastName());
 
             UserResource userResource = usersResource.get(userRepresentation.getId());
+
+            if (targetCustomerPrivileges != null) {
+                updateKeycloakUserRoles(targetCustomerPrivileges, userResource, realmResource);
+            }
+
             userResource.update(userRepresentation);
+
         } catch (ClientErrorException ex) {
             handleWebApplicationException(ex);
         }
@@ -128,6 +140,67 @@ public class KeycloakServiceImpl implements KeycloakServiceI {
         } catch (ClientErrorException ex) {
             handleWebApplicationException(ex);
         } return null;
+    }
+
+    @Override
+    public void deleteCustomerByEmail(String email) throws KeycloakEndpointNotFoundException, KeycloakUnknownErrorException, KeycloakUserAlreadyExistsException, KeycloakUserIsNotAuthorizedException, NotAuthorizedException {
+        try {
+            RealmResource realmResource = keycloak.realm(keycloakRealm);
+            UsersResource usersResource = realmResource.users();
+
+            if (email.equals(keycloakRegistrationUser)) {
+                throw new NotAuthorizedException();
+            }
+
+            UserRepresentation userRepresentation = findUserByEmail(email, usersResource);
+            usersResource.delete(userRepresentation.getId());
+        } catch (ClientErrorException ex) {
+            handleWebApplicationException(ex);
+        }
+    }
+
+    private void updateKeycloakUserRoles(CustomerRoleEnum targetCustomerPrivileges, UserResource userResource, RealmResource realmResource) {
+        List<RoleRepresentation> roleRepresentationList = realmResource.roles().list();
+        List<RoleRepresentation> rolesToAdd = new ArrayList<>();
+        List<RoleRepresentation> rolesToRemove = new ArrayList<>();
+
+        for (RoleRepresentation roleRepresentation : roleRepresentationList) {
+            determineIfRoleToAddOrToRemove(targetCustomerPrivileges, rolesToAdd, rolesToRemove, roleRepresentation);
+        }
+
+        userResource.roles().realmLevel().add(rolesToAdd);
+        userResource.roles().realmLevel().remove(rolesToRemove);
+    }
+
+    private void determineIfRoleToAddOrToRemove(CustomerRoleEnum customerRoleEnum, List<RoleRepresentation> rolesToAdd, List<RoleRepresentation> rolesToRemove, RoleRepresentation roleRepresentation) {
+        switch (customerRoleEnum) {
+            case EMPLOYEE:
+                if (roleRepresentation.getName().equals(CustomerRoleEnum.EMPLOYEE.toString())) {
+                    rolesToAdd.add(roleRepresentation);
+                } else if (roleRepresentation.getName().equals(CustomerRoleEnum.ADMIN.toString())) {
+                    rolesToRemove.add(roleRepresentation);
+                } break;
+            case ADMIN:
+                if (needsRoleToBeAddedForAdmin(roleRepresentation)) {
+                    rolesToAdd.add(roleRepresentation);
+                } break;
+            case CUSTOMER:
+                if (needsRoleToBeRemoveForCustomer(roleRepresentation)) {
+                    rolesToRemove.add(roleRepresentation);
+                } break;
+            default:
+                throw new IllegalStateException();
+        }
+    }
+
+    private boolean needsRoleToBeRemoveForCustomer(RoleRepresentation roleRepresentation) {
+        return roleRepresentation.getName().equals(CustomerRoleEnum.EMPLOYEE.toString())
+                || roleRepresentation.getName().equals(CustomerRoleEnum.ADMIN.toString());
+    }
+
+    private boolean needsRoleToBeAddedForAdmin(RoleRepresentation roleRepresentation) {
+        return roleRepresentation.getName().equals(CustomerRoleEnum.ADMIN.toString())
+                || roleRepresentation.getName().equals(CustomerRoleEnum.EMPLOYEE.toString());
     }
 
     private UserRepresentation findUserByEmail(String email, UsersResource usersResource) {

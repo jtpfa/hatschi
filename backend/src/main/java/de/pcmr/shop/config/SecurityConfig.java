@@ -51,6 +51,7 @@ class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
                 .antMatchers("/api/registration/**").permitAll()
                 .antMatchers("/api/customer/**").hasRole("customer")
                 .antMatchers("/api/employee/**").hasRole("employee")
+                .antMatchers("/api/admin/**").hasRole("admin")
                 .and().cors()
                 .and().csrf().disable();
     }
