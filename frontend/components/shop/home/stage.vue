@@ -18,14 +18,14 @@
                     />
                 </vue-glide-slide>
                 <vue-glide-slide class="row">
-                    <home-slide-facts feature-one="2y" feature-two="120 dpi" name="TogiLech xD 4000" :price="2495" />
+                    <home-slide-facts feature-one="2y" feature-two="120 dpi" name="TogiLech xD" :price="2495" />
                     <home-slide-description
                         headline="Klicken wie ein Weltmeister"
                         text="Gigantomatisches Klicken bis der Arzt kommt und noch viel weiter. Einfach nur geile Tasten für geile Leute."
                     />
                 </vue-glide-slide>
                 <vue-glide-slide class="row">
-                    <home-slide-facts feature-one="AMG" feature-two="RT-340" name="Roflcopter 110" :price="99" />
+                    <home-slide-facts feature-one="AMG" feature-two="RT-340" name="Roflcopter 2.0" :price="99" />
                     <home-slide-description
                         headline="Abheben mal anders"
                         text="Mit dem integrierten RT-340 Motor kann jeder PC gekühlt werden. Jetzt losrofln."
