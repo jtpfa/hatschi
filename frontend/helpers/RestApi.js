@@ -208,6 +208,7 @@ export class RestApi {
     }
 
     editCustomer(customerAttributes, username, userToken) {
+        console.log(customerAttributes)
         return fetch(`${this.baseUrl}employee/customer/${username}`, {
             method: 'PUT',
             headers: {

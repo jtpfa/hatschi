@@ -30,10 +30,7 @@ export default {
     name: 'HeaderNavUserStatus',
     methods: {
         logout() {
-            window.location.href = `${
-                this.$config.keycloakEndpoint
-            }protocol/openid-connect/logout?redirect_uri=${encodeURI(this.$config.baseURL)}`
-            this.$auth.reset()
+            this.$auth.logout()
         },
     },
 }
