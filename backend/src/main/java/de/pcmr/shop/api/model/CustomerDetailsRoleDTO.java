@@ -3,13 +3,13 @@ package de.pcmr.shop.api.model;
 import de.pcmr.shop.domain.CustomerRoleEnum;
 
 public class CustomerDetailsRoleDTO extends CustomerDetailsDTO {
-    private CustomerRoleEnum customerRoleEnum;
+    private CustomerRoleEnum customerRole;
 
-    public CustomerRoleEnum getCustomerRoleEnum() {
-        return customerRoleEnum;
+    public CustomerRoleEnum getCustomerRole() {
+        return customerRole;
     }
 
-    public void setCustomerRoleEnum(CustomerRoleEnum customerRoleEnum) {
-        this.customerRoleEnum = customerRoleEnum;
+    public void setCustomerRole(CustomerRoleEnum customerRole) {
+        this.customerRole = customerRole;
     }
 }
