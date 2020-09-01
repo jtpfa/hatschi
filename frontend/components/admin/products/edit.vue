@@ -123,7 +123,7 @@ import FormFieldEditor from '~/components/admin/form-fields/editor'
 import FormFieldFileUpload from '~/components/admin/form-fields/fileUpload'
 
 export default {
-    name: 'CustomerEdit',
+    name: 'ProductEdit',
     components: { FormFieldEditor, FormFieldFileUpload },
     props: {
         product: {

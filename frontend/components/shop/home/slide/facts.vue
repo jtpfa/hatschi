@@ -3,20 +3,16 @@
         <home-slide-background-shape>
             <div class="col-12 col-sm-5 mt-2 mt-sm-0">
                 <div class="lazy-image d-flex justify-content-center align-items-center">
-                    <b-img-lazy
-                        alt="Monitor Acer Predator"
-                        src="~assets/img/stage-sample.png"
-                        title="Monitor Acer Predator"
-                    />
+                    <b-img-lazy :alt="name" src="~assets/img/stage-sample.png" :title="name" />
                     <spinner color="white" :size="6" />
                 </div>
             </div>
             <div class="col-12 col-sm-6 d-flex flex-column justify-content-between">
-                <home-slide-info-cards />
+                <home-slide-info-cards :feature-one="featureOne" :feature-two="featureTwo" :name="name" />
                 <div
                     class="product-price font-weight-bold text-white big-noodle align-self-end mr-5 mr-sm-0 mb-3 mb-sm-0"
                 >
-                    299.99 €
+                    {{ $currencyConverter.convertCentsToEuro(price) }}
                 </div>
             </div>
         </home-slide-background-shape>
@@ -30,6 +26,24 @@ import Spinner from '~/components/shop/layout/spinner'
 export default {
     name: 'HomeSlideFacts',
     components: { Spinner, HomeSlideInfoCards, HomeSlideBackgroundShape },
+    props: {
+        name: {
+            type: String,
+            required: true,
+        },
+        featureOne: {
+            type: String,
+            required: true,
+        },
+        featureTwo: {
+            type: String,
+            required: true,
+        },
+        price: {
+            type: [Number, String],
+            required: true,
+        },
+    },
 }
 </script>
 

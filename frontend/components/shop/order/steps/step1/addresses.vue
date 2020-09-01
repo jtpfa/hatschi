@@ -1,15 +1,13 @@
 <template>
     <div>
-        <order-adress-list v-if="fetchErrorMsg.length === 0" address-type="shipping" />
-        <slot />
+        <order-adress-list address-type="shipping" :fetch-error-msg="fetchErrorMsg" />
 
         <b-form-checkbox v-model="differentInvoiceAddress" class="my-5" name="differentInvoiceAddress" size="lg" switch>
             Rechnungsadresse weicht von der Lieferadresse ab
         </b-form-checkbox>
 
         <template v-if="differentInvoiceAddress">
-            <order-adress-list v-if="fetchErrorMsg.length === 0" address-type="invoice" />
-            <slot />
+            <order-adress-list address-type="invoice" :fetch-error-msg="fetchErrorMsg" />
         </template>
     </div>
 </template>

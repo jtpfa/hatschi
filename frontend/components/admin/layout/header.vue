@@ -12,9 +12,9 @@ export default {
     name: 'AdminHeader',
     methods: {
         logout() {
-            window.location.href = `${this.$config.keycloakLogoutEndpoint}?redirect_uri=${encodeURI(
-                this.$config.baseURL
-            )}`
+            window.location.href = `${
+                this.$config.keycloakEndpoint
+            }protocol/openid-connect/logout?redirect_uri=${encodeURI(this.$config.baseURL)}`
             this.$auth.reset()
         },
     },

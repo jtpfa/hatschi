@@ -31,7 +31,6 @@ import ProductCard from '~/components/shop/product/card'
 import ProductDetails from '~/components/shop/product/details'
 
 export default {
-    name: 'Product',
     components: { ProductDetails, ProductCard, FetchContent },
     async fetch() {
         try {

@@ -2,6 +2,7 @@
     <div class="d-flex flex-column page">
         <page-header />
         <nuxt class="mb-5" />
+        <CookieControl locale="de" />
         <page-footer />
     </div>
 </template>
@@ -11,6 +12,7 @@ import PageFooter from '~/components/shop/layout/footer'
 import PageHeader from '~/components/shop/layout/header'
 
 export default {
+    name: 'Default',
     components: {
         PageFooter,
         PageHeader,

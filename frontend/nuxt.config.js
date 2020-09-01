@@ -32,6 +32,7 @@ export default {
      */
     plugins: [
         { src: '~/plugins/api', ssr: true },
+        { src: '~/plugins/carousel', ssr: true },
         { src: '~/plugins/currency', ssr: true },
         { src: '~/plugins/date-format', ssr: true },
         { src: '~/plugins/image-src-set', ssr: true },
@@ -52,7 +53,36 @@ export default {
         'bootstrap-vue/nuxt',
         '@nuxtjs/axios',
         '@nuxtjs/auth',
+        [
+            'nuxt-cookie-control',
+            {
+                controlButton: false,
+                text: {
+                    barDescription:
+                        'Wir verwenden unsere eigenen Cookies, damit wir Ihnen diese Website zeigen können. Wenn Sie weiter surfen, gehen wir davon aus, dass Sie die Cookies akzeptiert haben.',
+                    optional: '',
+                },
+            },
+        ],
     ],
+    /*
+     * Cookie options for Cookie Consent Manager
+     */
+    cookies: {
+        necessary: [
+            {
+                name: 'Default Cookies',
+                description: 'für den Cookie Consent genutzt.',
+                cookies: ['cookie_control_consent', 'cookie_control_enabled_cookies'],
+            },
+            {
+                name: 'Authentifizierungscookies',
+                description: 'für den Login und geschützte Bereiche.',
+                cookies: ['auth.strategy', 'auth._token.keycloak', 'auth._refresh_token.keycloak'],
+            },
+        ],
+        optional: [],
+    },
     /*
      ** Bootstrap Vue module configuration
      */
@@ -87,12 +117,7 @@ export default {
         baseURL: process.env.PCMR_BASE_URL_PROD || 'http://localhost:3000',
         restApiBaseUrl: process.env.PCMR_REST_API_PROD || 'http://localhost:8090/api/',
         mediaUrl: process.env.PCMR_MEDIA_API_PROD || 'http://localhost:8090/media/article/',
-        keycloakTokenEndpoint:
-            process.env.KEYCLOAK_TOKEN_ENDPOINT_PROD ||
-            'http://auth.pcmr.de:8080/auth/realms/pcmr/protocol/openid-connect/token',
-        keycloakLogoutEndpoint:
-            process.env.KEYCLOAK_LOGOUT_ENDPOINT_PROD ||
-            'http://auth.pcmr.de:8080/auth/realms/pcmr/protocol/openid-connect/logout',
+        keycloakEndpoint: process.env.KEYCLOAK_ENDPOINT_PROD || 'http://auth.pcmr.de:8080/auth/realms/pcmr/',
     },
     auth: {
         plugins: [{ src: '~/plugins/refresh', ssr: false }],
