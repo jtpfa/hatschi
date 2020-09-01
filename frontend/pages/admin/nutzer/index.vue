@@ -7,6 +7,11 @@
 
         <h2>Mitarbeiter</h2>
         <data-overview :dashboard="false" :fields="userFields" type="employee"></data-overview>
+
+        <template v-if="accessGranted">
+            <h2>Admins</h2>
+            <data-overview :dashboard="false" :fields="userFields" type="admin"></data-overview>
+        </template>
     </main>
 </template>
 
@@ -18,6 +23,7 @@ export default {
     layout: 'dashboard',
     data() {
         return {
+            accessGranted: false,
             userFields: [
                 { key: 'email', label: 'E-Mail', sortable: true },
                 { key: 'firstName', label: 'Vorname', sortable: true },
@@ -25,6 +31,9 @@ export default {
                 { key: 'actions', label: '', sortable: false },
             ],
         }
+    },
+    mounted() {
+        this.accessGranted = this.$auth.$state.roles?.includes('admin')
     },
 }
 </script>
