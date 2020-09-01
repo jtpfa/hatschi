@@ -97,7 +97,7 @@ public class KeycloakServiceImpl implements KeycloakServiceI {
             UserResource userResource = usersResource.get(userRepresentation.getId());
 
             if (targetCustomerPrivileges != null) {
-                updateKeycloakUserRoles(targetCustomerPrivileges, userResource);
+                updateKeycloakUserRoles(targetCustomerPrivileges, userResource, realmResource);
             }
 
             userResource.update(userRepresentation);
@@ -159,8 +159,8 @@ public class KeycloakServiceImpl implements KeycloakServiceI {
         }
     }
 
-    private void updateKeycloakUserRoles(CustomerRoleEnum targetCustomerPrivileges, UserResource userResource) {
-        List<RoleRepresentation> roleRepresentationList = userResource.roles().realmLevel().listAvailable();
+    private void updateKeycloakUserRoles(CustomerRoleEnum targetCustomerPrivileges, UserResource userResource, RealmResource realmResource) {
+        List<RoleRepresentation> roleRepresentationList = realmResource.roles().list();
         List<RoleRepresentation> rolesToAdd = new ArrayList<>();
         List<RoleRepresentation> rolesToRemove = new ArrayList<>();
 
