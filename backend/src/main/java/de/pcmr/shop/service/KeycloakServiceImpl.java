@@ -17,6 +17,7 @@ import org.keycloak.admin.client.resource.UsersResource;
 import org.keycloak.representations.idm.CredentialRepresentation;
 import org.keycloak.representations.idm.RoleRepresentation;
 import org.keycloak.representations.idm.UserRepresentation;
+import org.keycloak.representations.idm.UserSessionRepresentation;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -96,7 +97,7 @@ public class KeycloakServiceImpl implements KeycloakServiceI {
 
             UserResource userResource = usersResource.get(userRepresentation.getId());
 
-            if (targetCustomerPrivileges != null) {
+            if (targetCustomerPrivileges != null && getRoleOfCustomer(currentUsername) != targetCustomerPrivileges) {
                 updateKeycloakUserRoles(targetCustomerPrivileges, userResource, realmResource);
             }
 
@@ -119,11 +120,16 @@ public class KeycloakServiceImpl implements KeycloakServiceI {
 
     @Override
     public CustomerRoleEnum getRoleOfCustomer(CustomerEntity customerEntity) throws KeycloakEndpointNotFoundException, KeycloakUnknownErrorException, KeycloakUserAlreadyExistsException, KeycloakUserIsNotAuthorizedException {
+        return getRoleOfCustomer(customerEntity.getEmail());
+    }
+
+    @Override
+    public CustomerRoleEnum getRoleOfCustomer(String userEmail) throws KeycloakEndpointNotFoundException, KeycloakUnknownErrorException, KeycloakUserAlreadyExistsException, KeycloakUserIsNotAuthorizedException {
         try {
             RealmResource realmResource = keycloak.realm(keycloakRealm);
             UsersResource usersResource = realmResource.users();
 
-            UserRepresentation userRepresentation = findUserByEmail(customerEntity.getEmail(), usersResource);
+            UserRepresentation userRepresentation = findUserByEmail(userEmail, usersResource);
             UserResource userResource = usersResource.get(userRepresentation.getId());
             List<RoleRepresentation> userRoles = userResource.roles().realmLevel().listEffective();
 
@@ -168,8 +174,17 @@ public class KeycloakServiceImpl implements KeycloakServiceI {
             determineIfRoleToAddOrToRemove(targetCustomerPrivileges, rolesToAdd, rolesToRemove, roleRepresentation);
         }
 
+        removeUserSessions(userResource, realmResource);
         userResource.roles().realmLevel().add(rolesToAdd);
         userResource.roles().realmLevel().remove(rolesToRemove);
+    }
+
+    private void removeUserSessions(UserResource userResource, RealmResource realmResource) {
+        List<UserSessionRepresentation> userSessionRepresentations = userResource.getUserSessions();
+
+        for (UserSessionRepresentation userSessionRepresentation : userSessionRepresentations) {
+            realmResource.deleteSession(userSessionRepresentation.getId());
+        }
     }
 
     private void determineIfRoleToAddOrToRemove(CustomerRoleEnum customerRoleEnum, List<RoleRepresentation> rolesToAdd, List<RoleRepresentation> rolesToRemove, RoleRepresentation roleRepresentation) {
