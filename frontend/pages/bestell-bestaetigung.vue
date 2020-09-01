@@ -11,7 +11,6 @@ import OrderProgressbar from '~/components/shop/order/progressbar'
 import OrderConfirmation from '~/components/shop/order/steps/orderConfirmation'
 
 export default {
-    name: 'BestellBestaetigung',
     components: { OrderConfirmation, OrderProgressbar },
     computed: {
         step() {

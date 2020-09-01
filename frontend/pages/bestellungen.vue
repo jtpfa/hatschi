@@ -10,7 +10,6 @@
 import AccountOrders from '~/components/shop/account/orders'
 
 export default {
-    name: 'Bestellungen',
     components: { AccountOrders },
     middleware: ['auth'],
     head() {

@@ -12,7 +12,6 @@ import OrderForm from '~/components/shop/order/form'
 import OrderProgressbar from '~/components/shop/order/progressbar'
 
 export default {
-    name: 'Order',
     components: { OrderProgressbar, OrderForm },
     middleware: ['auth'],
     computed: {

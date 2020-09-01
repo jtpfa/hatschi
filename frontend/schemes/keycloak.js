@@ -15,16 +15,19 @@ export default class KeyCloakScheme {
         this.options = {
             ...DEFAULTS,
             ...options,
-            access_token_endpoint: this.$auth.ctx.$config.keycloakTokenEndpoint,
+            access_token_endpoint: `${this.$auth.ctx.$config.keycloakEndpoint}protocol/openid-connect/token`,
             endpoints: {
                 login: {
-                    url: this.$auth.ctx.$config.keycloakTokenEndpoint,
+                    url: `${this.$auth.ctx.$config.keycloakEndpoint}protocol/openid-connect/token`,
                     method: 'post',
                     propertyName: 'access_token',
                 },
-                logout: { url: this.$auth.ctx.$config.keycloakLogoutEndpoint, method: 'post' },
+                logout: {
+                    url: `${this.$auth.ctx.$config.keycloakEndpoint}protocol/openid-connect/logout`,
+                    method: 'post',
+                },
                 refresh: {
-                    url: this.$auth.ctx.$config.keycloakTokenEndpoint,
+                    url: `${this.$auth.ctx.$config.keycloakEndpoint}protocol/openid-connect/token`,
                     method: 'post',
                     propertyName: 'refresh_token',
                 },

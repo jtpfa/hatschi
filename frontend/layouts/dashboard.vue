@@ -9,7 +9,7 @@
         </div>
     </div>
     <div v-else class="d-flex justify-content-center align-items-center vh-100">
-        <login-form :login-page="true" />
+        <login-form :dashboard="true" :login-page="true" />
     </div>
 </template>
 
@@ -28,7 +28,7 @@ export default {
         }
     },
     mounted() {
-        this.accessGranted = this.$auth.$state.roles?.includes('employee') || this.$auth.$state.roles?.includes('admin')
+        this.accessGranted = this.$auth.roles?.includes('employee') || this.$auth.roles?.includes('admin')
 
         if (!this.accessGranted) {
             this.$auth.$storage.setUniversal('redirect', '/admin')

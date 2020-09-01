@@ -5,7 +5,7 @@
                 <b-nav vertical>
                     <b-nav-item to="/admin"><icon-dashboard /></b-nav-item>
                     <b-nav-item to="/admin/produkte"><icon-barcode /></b-nav-item>
-                    <b-nav-item to="/admin/kunden"><icon-customers /></b-nav-item>
+                    <b-nav-item to="/admin/nutzer"><icon-customers /></b-nav-item>
                     <b-nav-item to="/admin/bestellungen"><icon-orders /></b-nav-item>
                 </b-nav>
             </nav>
