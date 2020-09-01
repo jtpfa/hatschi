@@ -10,7 +10,7 @@ import DataOverview from '~/components/admin/data/overview'
 
 export default {
     components: { DataOverview },
-    layout: 'admin',
+    layout: 'dashboard',
     data() {
         return {
             fields: [

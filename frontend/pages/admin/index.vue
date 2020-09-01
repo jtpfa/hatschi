@@ -13,6 +13,11 @@
 
         <h2>Mitarbeiter</h2>
         <data-overview class="mb-5" :dashboard="true" :fields="userFields" type="employee"></data-overview>
+
+        <template v-if="accessGranted">
+            <h2>Admins</h2>
+            <data-overview :dashboard="false" :fields="userFields" type="admin"></data-overview>
+        </template>
     </main>
 </template>
 
@@ -20,11 +25,11 @@
 import DataOverview from '~/components/admin/data/overview'
 
 export default {
-    name: 'Index',
     components: { DataOverview },
-    layout: 'admin',
+    layout: 'dashboard',
     data() {
         return {
+            accessGranted: false,
             productFields: [
                 { key: 'name', label: 'Artikelbezeichnung', sortable: true },
                 {
@@ -39,6 +44,7 @@ export default {
                 { key: 'image', label: 'Bild', sortable: false },
             ],
             userFields: [
+                { key: 'email', label: 'E-Mail', sortable: true },
                 { key: 'firstName', label: 'Vorname', sortable: true },
                 { key: 'lastName', label: 'Nachname', sortable: true },
             ],
@@ -64,6 +70,9 @@ export default {
                 },
             ],
         }
+    },
+    mounted() {
+        this.accessGranted = this.$auth.$state.roles?.includes('admin')
     },
 }
 </script>

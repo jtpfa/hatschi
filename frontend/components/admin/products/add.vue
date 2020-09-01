@@ -140,6 +140,7 @@ export default {
                 this.success = 'Der Artikel wurde erfolgreich angelegt.'
                 this.clearForm()
                 window.scrollTo(0, 0)
+                this.$router.app.refresh()
             } catch (err) {
                 this.error = err.message || 'Leider gab es ein Problem. Bitte später erneut versuchen.'
             }

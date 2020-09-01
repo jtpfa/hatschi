@@ -32,10 +32,8 @@
                 <b-button-group class="float-right">
                     <b-button
                         v-if="type !== 'order' && userIsAllowedToEdit"
-                        v-b-tooltip.hover
                         class="action-button"
                         size="sm"
-                        title="Bearbeiten"
                         variant="primary"
                         @click="showEditModal(row.item)"
                     >
@@ -43,10 +41,8 @@
                     </b-button>
                     <b-button
                         v-if="type !== 'order' && userIsAllowedToDelete"
-                        v-b-tooltip.hover
                         class="action-button"
                         size="sm"
-                        title="Löschen"
                         variant="danger"
                         @click="confirmDeletion(row.item)"
                     >
@@ -63,7 +59,7 @@
             </template>
 
             <template v-slot:empty>
-                <h4 class="text-center text-info">Keine Daten vorhanden. Bitte neuen Datensatz erstellen.</h4>
+                <h4 class="text-center text-info">Keine Daten vorhanden.</h4>
             </template>
         </b-table>
 
@@ -78,11 +74,19 @@
 
         <customer-edit v-if="type === 'customer'" :customer="currentItem" modal-id="modal-edit-customer" />
 
+        <employee-edit
+            v-else-if="['employee', 'admin'].includes(type)"
+            :employee="currentItem"
+            :modal-id="`modal-edit-${type}`"
+            :role="type"
+        />
+
         <product-edit v-else-if="type === 'product'" modal-id="modal-edit-product" :product="currentItem" />
     </div>
 </template>
 
 <script>
+import EmployeeEdit from '~/components/admin/employee/edit'
 import ProductEdit from '~/components/admin/products/edit'
 import CustomerEdit from '~/components/admin/customers/edit'
 import IconPen from '~/components/general/icons/pen'
@@ -90,7 +94,7 @@ import IconTrash from '~/components/general/icons/trash'
 
 export default {
     name: 'DataOverview',
-    components: { IconTrash, IconPen, ProductEdit, CustomerEdit },
+    components: { EmployeeEdit, IconTrash, IconPen, ProductEdit, CustomerEdit },
     props: {
         dashboard: {
             type: Boolean,
@@ -109,7 +113,7 @@ export default {
             required: true,
             validator(type) {
                 // The value must match one of these strings
-                return ['product', 'customer', 'employee', 'order'].indexOf(type) !== -1
+                return ['product', 'customer', 'employee', 'admin', 'order'].indexOf(type) !== -1
             },
         },
     },
@@ -120,18 +124,13 @@ export default {
                     this.items = await this.$api.getAllProductsDetailedVersion(this.$auth.getToken('keycloak'))
                     break
                 case 'customer':
-                    this.items = [
-                        { id: 1, firstName: 'Dickerson', lastName: 'Macdonald' },
-                        { id: 2, firstName: 'Larsen', lastName: 'Shaw' },
-                        { id: 3, firstName: 'Geneva', lastName: 'Wilson' },
-                    ]
+                    this.items = await this.$api.getCustomers(this.$auth.getToken('keycloak'))
                     break
                 case 'employee':
-                    this.items = [
-                        { id: 1, firstName: 'Peter', lastName: 'Pan' },
-                        { id: 2, firstName: 'Hans', lastName: 'Wurst' },
-                        { id: 3, firstName: 'Jürgen', lastName: 'Müller' },
-                    ]
+                    this.items = await this.$api.getEmployees(this.$auth.getToken('keycloak'))
+                    break
+                case 'admin':
+                    this.items = await this.$api.getAdmins(this.$auth.getToken('keycloak'))
                     break
                 case 'order':
                     this.items = await this.$api.getAllOrders(this.$auth.getToken('keycloak'))
@@ -147,6 +146,8 @@ export default {
     },
     data() {
         return {
+            userIsAllowedToEdit: false,
+            userIsAllowedToDelete: false,
             perPage: 5,
             currentPage: 1,
             currentItem: {},
@@ -160,18 +161,15 @@ export default {
         rows() {
             return this.items.length
         },
-        userIsAllowedToEdit() {
-            return (
-                ['product', 'customer'].includes(this.type) ||
-                (this.type === 'employee' && this.$auth.$state.roles.includes('admin'))
-            )
-        },
-        userIsAllowedToDelete() {
-            return (
-                this.type === 'product' ||
-                (['customer', 'employee'].includes(this.type) && this.$auth.$state.roles.includes('admin'))
-            )
-        },
+    },
+    mounted() {
+        this.userIsAllowedToEdit =
+            ['product', 'customer'].includes(this.type) ||
+            (['employee', 'admin'].includes(this.type) && this.$auth.$state.roles?.includes('admin'))
+
+        this.userIsAllowedToDelete =
+            this.type === 'product' ||
+            (['customer', 'employee', 'admin'].includes(this.type) && this.$auth.$state.roles?.includes('admin'))
     },
     activated() {
         // Call fetch again if last fetch more than 30 sec ago
@@ -217,9 +215,9 @@ export default {
                         `Produkt wurde nicht gelöscht: ${err.message}` ||
                         'Leider gab es ein Problem beim Löschen. Bitte später erneut versuchen.'
                 }
-            } else if (this.type === 'customer') {
+            } else if (['customer', 'employee', 'admin'].includes(this.type)) {
                 try {
-                    // @todo delete customer api endpoint
+                    await this.$api.deleteUser(item.email, this.type, this.$auth.getToken('keycloak'))
                     this.$router.app.refresh()
                 } catch (err) {
                     this.error =

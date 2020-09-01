@@ -126,9 +126,9 @@ export default {
             this.loading = false
         },
         async login() {
-            window.location.href = `${this.$config.keycloakLogoutEndpoint}?redirect_uri=${encodeURI(
-                `${this.$config.baseURL}/auth/login`
-            )}`
+            window.location.href = `${
+                this.$config.keycloakEndpoint
+            }protocol/openid-connect/logout?redirect_uri=${encodeURI(`${this.$config.baseURL}/auth/login`)}`
             this.$auth.reset()
         },
     },
