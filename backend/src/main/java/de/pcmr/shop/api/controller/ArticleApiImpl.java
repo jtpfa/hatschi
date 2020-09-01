@@ -37,9 +37,9 @@ public class ArticleApiImpl implements ArticleApiI {
     }
 
     @Override
-    @GetMapping("/article/random/{limit}")
-    public List<ArticleShortDTO> getRandomArticles(@PathVariable Integer limit) {
-        return ArticleMapper.mapListOfArticleEntityToListOfArticleShortDTO(articleService.getRandomArticles(limit));
+    @GetMapping("/article/random/{excludeId}/{limit}")
+    public List<ArticleShortDTO> getRandomArticles(@PathVariable Long excludeId, @PathVariable Integer limit) {
+        return ArticleMapper.mapListOfArticleEntityToListOfArticleShortDTO(articleService.getRandomArticles(excludeId, limit));
     }
 
     @Override

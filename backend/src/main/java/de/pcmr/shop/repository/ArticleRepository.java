@@ -8,6 +8,6 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface ArticleRepository extends JpaRepository<ArticleEntity, Long> {
-    @Query(value="SELECT a FROM ArticleEntity a order by function('RAND')")
-    List<ArticleEntity> findRandomArticles(Pageable pageable);
+    @Query(value="SELECT a FROM ArticleEntity a where a.id <> ?1 order by function('RAND')")
+    List<ArticleEntity> findRandomArticles(Long excludeId, Pageable pageable);
 }

@@ -77,8 +77,8 @@ public class ArticleServiceImpl implements ArticleServiceI {
     }
 
     @Override
-    public List<ArticleEntity> getRandomArticles(int numberOfArticles) {
-        return articleRepository.findRandomArticles(PageRequest.of(0, numberOfArticles));
+    public List<ArticleEntity> getRandomArticles(Long excludeId, int numberOfArticles) {
+        return articleRepository.findRandomArticles(excludeId, PageRequest.of(0, numberOfArticles));
     }
 
     private void processImageIfNotNull(ArticleEntity articleEntity, MultipartFile imageFile) throws NoArticleFoundException, UploadedImageResolutionTooLowException, IOException {
