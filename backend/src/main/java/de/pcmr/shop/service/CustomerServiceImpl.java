@@ -50,14 +50,20 @@ public class CustomerServiceImpl implements CustomerServiceI {
         customerRepository.save(currentCustomerEntity);
     }
 
+    @Override
     @Transactional(rollbackFor = Exception.class)
     public void updateCustomer(String email, @Valid CustomerEntity customerEntity, CustomerRoleEnum roleOfCallingPrincipal) throws CustomerAlreadyExistsException, KeycloakUnknownErrorException, KeycloakUserAlreadyExistsException, KeycloakEndpointNotFoundException, KeycloakUserIsNotAuthorizedException, NoCustomerFoundException, NotAuthorizedException {
+        updateCustomer(email, customerEntity, roleOfCallingPrincipal, null);
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    public void updateCustomer(String email, @Valid CustomerEntity customerEntity, CustomerRoleEnum roleOfCallingPrincipal, CustomerRoleEnum targetCustomerRole) throws KeycloakUnknownErrorException, KeycloakUserAlreadyExistsException, KeycloakEndpointNotFoundException, KeycloakUserIsNotAuthorizedException, CustomerAlreadyExistsException, NotAuthorizedException, NoCustomerFoundException {
         CustomerEntity currentCustomerEntity = customerRepository.findByEmail(email).orElseThrow(NoCustomerFoundException::new);
 
-        if (keycloakService.getRoleOfCustomer(currentCustomerEntity).compareTo(roleOfCallingPrincipal) < 0) {
+        if (isUserAuthorized(currentCustomerEntity, roleOfCallingPrincipal)) {
             checkIfUserWithSameEmailExists(customerEntity, currentCustomerEntity.getEmail());
 
-            keycloakService.updateKeycloakUser(customerEntity, currentCustomerEntity.getEmail());
+            updateKeycloakUser(customerEntity, targetCustomerRole, currentCustomerEntity);
 
             currentCustomerEntity.setEmail(customerEntity.getEmail());
             currentCustomerEntity.setFirstName(customerEntity.getFirstName());
@@ -68,6 +74,26 @@ public class CustomerServiceImpl implements CustomerServiceI {
         }
     }
 
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void deleteCustomer(String email, CustomerRoleEnum roleOfCallingPrincipal) throws NoCustomerFoundException, KeycloakUnknownErrorException, KeycloakUserAlreadyExistsException, KeycloakEndpointNotFoundException, KeycloakUserIsNotAuthorizedException, NotAuthorizedException {
+        CustomerEntity currentCustomerEntity = customerRepository.findByEmail(email).orElseThrow(NoCustomerFoundException::new);
+
+        if (isUserAuthorized(currentCustomerEntity, roleOfCallingPrincipal)) {
+            keycloakService.deleteCustomerByEmail(email);
+            customerRepository.delete(currentCustomerEntity);
+        } else {
+            throw new NotAuthorizedException();
+        }
+    }
+
+    private void updateKeycloakUser(CustomerEntity customerEntity, CustomerRoleEnum targetCustomerRole, CustomerEntity currentCustomerEntity) throws KeycloakEndpointNotFoundException, KeycloakUnknownErrorException, KeycloakUserAlreadyExistsException, KeycloakUserIsNotAuthorizedException {
+        if (targetCustomerRole != null) {
+            keycloakService.updateKeycloakUser(customerEntity, currentCustomerEntity.getEmail(), targetCustomerRole);
+        } else {
+            keycloakService.updateKeycloakUser(customerEntity, currentCustomerEntity.getEmail());
+        }
+    }
 
     private CustomerEntity getCurrentCustomerIfExists(Principal principal) throws NoCustomerFoundException {
         if (principal == null) {
@@ -87,5 +113,9 @@ public class CustomerServiceImpl implements CustomerServiceI {
         && customerRepository.findByEmail(newCustomerEntity.getEmail()).isPresent()) {
             throw new CustomerAlreadyExistsException();
         }
+    }
+
+    private boolean isUserAuthorized(CustomerEntity currentCustomerEntity, CustomerRoleEnum roleOfCallingPrincipal) throws KeycloakUnknownErrorException, KeycloakUserAlreadyExistsException, KeycloakEndpointNotFoundException, KeycloakUserIsNotAuthorizedException {
+        return keycloakService.getRoleOfCustomer(currentCustomerEntity).compareTo(roleOfCallingPrincipal) < 0 || roleOfCallingPrincipal == CustomerRoleEnum.ADMIN;
     }
 }
