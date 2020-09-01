@@ -8,18 +8,7 @@
             <p class="h5">Weitere Produkte</p>
 
             <div class="grid">
-                <product-card
-                    v-for="i in 5"
-                    :key="i"
-                    :product="{
-                        id: i,
-                        name: 'Feinste Ware',
-                        description:
-                            'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et\n' +
-                            '            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip',
-                        price: 299.99,
-                    }"
-                />
+                <product-card v-for="item in recommendations" :key="item.id" :product="item" />
             </div>
         </template>
     </main>
@@ -35,6 +24,7 @@ export default {
     async fetch() {
         try {
             this.product = await this.$api.getProduct(this.$route.params.id)
+            this.recommendations = await this.$api.getRandomProducts(this.$route.params.id, 5)
         } catch (err) {
             this.error = err.message || 'Dieses Produkt existiert nicht.'
         }
@@ -46,6 +36,7 @@ export default {
     data() {
         return {
             product: {},
+            recommendations: [],
             error: '',
         }
     },
