@@ -127,7 +127,6 @@ export default {
                 token_key: 'access_token',
                 token_type: 'Bearer',
                 grant_type: 'password',
-                client_id: 'pcmr',
                 token: {
                     property: 'access_token',
                     maxAge: 300,

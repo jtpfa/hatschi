@@ -5,6 +5,7 @@ const DEFAULTS = {
     globalToken: true,
     tokenName: 'Authorization',
     autoFetchUser: true,
+    client_id: 'pcmr',
 }
 
 export default class KeyCloakScheme {
@@ -137,6 +138,29 @@ export default class KeyCloakScheme {
         // Try to fetch user and then set
         const user = await this.$auth.requestWith(this.name, endpoint, this.options.endpoints.user)
         this.$auth.setUser(user)
+    }
+
+    async logout() {
+        // Only connect to logout endpoint if it's configured
+        if (this.options.endpoints.logout) {
+            const myHeaders = new Headers()
+            myHeaders.append('Content-Type', 'application/x-www-form-urlencoded')
+
+            const urlencoded = new URLSearchParams()
+            urlencoded.append('client_id', this.options.client_id)
+            urlencoded.append('refresh_token', this.$auth.getRefreshToken(this.name))
+
+            const xhrData = {
+                method: this.options.endpoints.logout.method,
+                headers: myHeaders,
+                body: urlencoded,
+            }
+
+            await fetch(this.options.endpoints.logout.url, xhrData).catch(() => {})
+        }
+
+        // But reset regardless
+        return this.$auth.reset()
     }
 
     async reset() {
