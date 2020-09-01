@@ -21,6 +21,7 @@
                     placeholder="Aktuelles Passwort"
                     required
                     trim
+                    type="password"
                 />
 
                 <b-form-invalid-feedback id="input-live-feedback">
@@ -55,14 +56,17 @@ export default {
     methods: {
         async changePassword() {
             try {
-                await this.$api.changeUserPassword({
-                    currentPassword: this.currentPassword,
-                    newPassword: this.$refs.passwordConfirmation.password,
-                    confirmation: this.$refs.passwordConfirmation.password,
-                })
+                await this.$api.changeUserPassword(
+                    {
+                        currentPassword: this.currentPassword,
+                        newPassword: this.$refs.passwordConfirmation.password,
+                        confirmation: this.$refs.passwordConfirmation.password,
+                    },
+                    this.$auth.getToken('keycloak')
+                )
                 this.success = 'Dein Passwort wurde erfolgreich geändert.'
             } catch (err) {
-                this.error = err.errorMessage || 'Leider gab es ein Problem. Bitte später erneut versuchen.'
+                this.error = err.message || 'Leider gab es ein Problem. Bitte später erneut versuchen.'
             }
         },
         async onSubmit(event) {

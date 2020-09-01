@@ -103,6 +103,7 @@ export default {
         async updateUserData() {
             try {
                 await this.$api.updateUserData(this.user, this.$auth.getToken('keycloak'))
+                await this.$auth.fetchUser()
                 this.success = 'Deine Benutzerdaten wurde erfolgreich geändert.'
 
                 if (this.$auth.user.email !== this.user.email) {
