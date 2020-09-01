@@ -32,6 +32,7 @@ export default {
      */
     plugins: [
         { src: '~/plugins/api', ssr: true },
+        { src: '~/plugins/carousel', ssr: true },
         { src: '~/plugins/currency', ssr: true },
         { src: '~/plugins/date-format', ssr: true },
         { src: '~/plugins/image-src-set', ssr: true },

@@ -74,6 +74,10 @@ export default {
 
 <style lang="scss" scoped>
 .top-seller-filter {
-    margin-top: 5.5rem;
+    margin-top: 2.5rem;
+
+    @media (min-width: $grid-md) {
+        margin-top: 4.5rem;
+    }
 }
 </style>
