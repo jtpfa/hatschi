@@ -15,4 +15,5 @@ public interface ArticleServiceI {
     void createNewArticle(@Valid ArticleEntity articleEntity, MultipartFile imageFile) throws NoArticleFoundException, UploadedImageResolutionTooLowException, IOException;
     void updateArticle(@Valid ArticleEntity articleEntity, MultipartFile imageFile) throws NoArticleFoundException, IOException, UploadedImageResolutionTooLowException;
     void deleteArticle(long articleId) throws NoArticleFoundException, IOException;
+    List<ArticleEntity> getRandomArticles(int numberOfArticles);
 }
