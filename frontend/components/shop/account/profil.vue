@@ -8,11 +8,25 @@
             </template>
         </b-alert>
 
-        <h2>Meine Daten</h2>
-        <profil-personal-data />
+        <template v-if="!needsNewLogin">
+            <h2>Meine Daten</h2>
+            <b-alert class="mt-3" :show="errorData.length > 0" variant="danger">{{ errorData }}</b-alert>
+            <profil-personal-data
+                @error="showErrorMessage($event, 'data')"
+                @loginDataChanged="needsNewLogin = true"
+                @reset="resetStatus"
+                @success="showSuccessMessage($event)"
+            />
 
-        <h2 class="mt-5">Passwort ändern</h2>
-        <profil-change-password />
+            <h2 class="mt-5">Passwort ändern</h2>
+            <b-alert class="mt-3" :show="errorPassword.length > 0" variant="danger">{{ errorPassword }}</b-alert>
+            <profil-change-password
+                @error="showErrorMessage($event, 'password')"
+                @loginDataChanged="needsNewLogin = true"
+                @reset="resetStatus"
+                @success="showSuccessMessage($event)"
+            />
+        </template>
     </div>
 </template>
 <script>
@@ -24,15 +38,32 @@ export default {
     components: { ProfilChangePassword, ProfilPersonalData },
     data() {
         return {
-            needNewLogin: false,
+            needsNewLogin: false,
             success: '',
-            error: '',
+            errorData: '',
+            errorPassword: '',
         }
     },
     methods: {
         async login() {
             await this.$auth.logout()
             this.$router.push('/auth/login')
+        },
+        resetStatus() {
+            this.needsNewLogin = false
+            this.success = ''
+            this.errorData = ''
+            this.errorPassword = ''
+        },
+        showErrorMessage(event, type) {
+            if (type === 'data') {
+                this.errorData = event
+            } else if (type === 'password') {
+                this.errorPassword = event
+            }
+        },
+        showSuccessMessage(event) {
+            this.success = event
         },
     },
 }

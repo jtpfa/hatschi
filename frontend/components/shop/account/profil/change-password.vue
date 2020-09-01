@@ -1,12 +1,7 @@
 <template>
     <div>
-        <b-alert class="my-3" :show="success.length > 0" variant="success">
-            {{ success }}
-            Bitte mit den neuen Anmeldedaten
-            <b-link class="alert-link>" @click="login">einloggen.</b-link>
-        </b-alert>
-
-        <b-form v-if="success.length === 0" ref="form" novalidate @submit.prevent="onSubmit">
+        <b-form ref="form" novalidate @submit.prevent="onSubmit">
+            <b-form-input v-model="$auth.user.email" autocomplete="username" hidden type="password" />
             <div class="mb-4" role="group">
                 <label for="currentPassword">
                     Aktuelles Passwort
@@ -31,8 +26,6 @@
 
             <form-field-password-confirmation ref="passwordConfirmation" />
 
-            <b-alert class="mt-3" :show="error.length > 0" variant="danger">{{ error }}</b-alert>
-
             <button-container :loading="loading" text="Passwort ändern" />
         </b-form>
     </div>
@@ -48,8 +41,6 @@ export default {
     data() {
         return {
             currentPassword: '',
-            success: '',
-            error: '',
             loading: false,
         }
     },
@@ -64,15 +55,15 @@ export default {
                     },
                     this.$auth.getToken('keycloak')
                 )
-                this.success = 'Dein Passwort wurde erfolgreich geändert.'
+                this.$emit('success', 'Dein Passwort wurde erfolgreich geändert.')
+                this.$emit('loginDataChanged')
             } catch (err) {
-                this.error = err.message || 'Leider gab es ein Problem. Bitte später erneut versuchen.'
+                this.$emit('error', err.message || 'Leider gab es ein Problem. Bitte später erneut versuchen.')
             }
         },
         async onSubmit(event) {
             this.loading = true
-            this.success = ''
-            this.error = ''
+            this.$emit('reset')
             if (!this.$refs.form.checkValidity() || !this.$refs.passwordConfirmation.isPasswordConfirmed()) {
                 this.$refs.form.classList.add('was-validated')
                 event.preventDefault()
@@ -82,12 +73,6 @@ export default {
                 await this.changePassword()
             }
             this.loading = false
-        },
-        async login() {
-            window.location.href = `${this.$config.keycloakLogoutEndpoint}?redirect_uri=${encodeURI(
-                `${this.$config.baseURL}/auth/login`
-            )}`
-            this.$auth.reset()
         },
     },
 }
