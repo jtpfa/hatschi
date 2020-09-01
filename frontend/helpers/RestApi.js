@@ -250,4 +250,10 @@ export class RestApi {
             },
         }).then(response => _handleResponse(response))
     }
+
+    getRandomProducts(excludeProductId, amount) {
+        return fetch(`${this.baseUrl}article/random/${excludeProductId}/${amount}`, {
+            method: 'GET',
+        }).then(response => _handleResponse(response, true))
+    }
 }

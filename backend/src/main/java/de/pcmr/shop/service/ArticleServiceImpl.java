@@ -5,6 +5,7 @@ import de.pcmr.shop.exception.NoArticleFoundException;
 import de.pcmr.shop.exception.UploadedImageResolutionTooLowException;
 import de.pcmr.shop.repository.ArticleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
@@ -73,6 +74,11 @@ public class ArticleServiceImpl implements ArticleServiceI {
         } else {
             throw new NoArticleFoundException();
         }
+    }
+
+    @Override
+    public List<ArticleEntity> getRandomArticles(Long excludeId, int numberOfArticles) {
+        return articleRepository.findRandomArticles(excludeId, PageRequest.of(0, numberOfArticles));
     }
 
     private void processImageIfNotNull(ArticleEntity articleEntity, MultipartFile imageFile) throws NoArticleFoundException, UploadedImageResolutionTooLowException, IOException {

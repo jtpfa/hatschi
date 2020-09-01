@@ -37,6 +37,12 @@ public class ArticleApiImpl implements ArticleApiI {
     }
 
     @Override
+    @GetMapping("/article/random/{excludeId}/{limit}")
+    public List<ArticleShortDTO> getRandomArticles(@PathVariable Long excludeId, @PathVariable Integer limit) {
+        return ArticleMapper.mapListOfArticleEntityToListOfArticleShortDTO(articleService.getRandomArticles(excludeId, limit));
+    }
+
+    @Override
     @GetMapping(value = "/article/{id}")
     public ArticleDTO getArticle(@PathVariable long id) throws NoArticleFoundException {
         return ArticleMapper.mapArticleEntityToArticleDTO(articleService.getArticle(id));

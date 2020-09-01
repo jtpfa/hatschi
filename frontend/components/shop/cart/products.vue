@@ -9,7 +9,6 @@
                     :src="$imageSrcSet.getImageUrl(item.id, 512)"
                     :srcset="$imageSrcSet.getSrcSet(item.id)"
                     :title="item.name"
-                    top
                 />
                 <spinner />
             </div>

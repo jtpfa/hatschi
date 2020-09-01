@@ -3,7 +3,6 @@
         :id="modalId"
         centered
         :hide-header-close="loading"
-        lazy
         :no-close-on-backdrop="loading"
         :no-close-on-esc="loading"
         no-enforce-focus
