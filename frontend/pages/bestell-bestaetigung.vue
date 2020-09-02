@@ -22,6 +22,14 @@ export default {
             this.$router.push({ path: '/bestellung', query: { step: 1 } })
         } else {
             this.$store.commit('shoppingcart/clearCart')
+            this.$store.commit('order/updateOrderInformation', {
+                key: 'shippingAddress',
+                data: { id: -1, index: -1 },
+            })
+            this.$store.commit('order/updateOrderInformation', {
+                key: 'invoiceAddress',
+                data: { id: -1, index: -1 },
+            })
         }
 
         this.$store.commit('order/updateOrderInformation', { key: 'step', data: 1 })
