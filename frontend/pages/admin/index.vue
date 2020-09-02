@@ -62,6 +62,7 @@ export default {
                     formatter: date => this.$dateFormatter.toDateString(date),
                     sortable: true,
                 },
+                { key: 'id', label: 'Bestellnr.', sortable: true },
                 {
                     key: 'orderStatus',
                     label: 'Status',
