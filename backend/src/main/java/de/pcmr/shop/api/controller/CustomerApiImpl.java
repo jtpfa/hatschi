@@ -2,6 +2,7 @@ package de.pcmr.shop.api.controller;
 
 import de.pcmr.shop.api.mapper.CustomerMapper;
 import de.pcmr.shop.api.model.CustomerDetailsDTO;
+import de.pcmr.shop.api.model.CustomerDetailsRoleDTO;
 import de.pcmr.shop.domain.CustomerRoleEnum;
 import de.pcmr.shop.exception.CustomerAlreadyExistsException;
 import de.pcmr.shop.exception.NoCustomerFoundException;
@@ -57,6 +58,12 @@ public class CustomerApiImpl implements CustomerApiI {
     @PutMapping(CUSTOMER_EMPLOYEE_URI + "/{email:.+}")
     public void updateCustomer(@PathVariable String email, @RequestBody @Valid CustomerDetailsDTO customerDetailsDTO) throws CustomerAlreadyExistsException, KeycloakEndpointNotFoundException, NoCustomerFoundException, KeycloakUserIsNotAuthorizedException, KeycloakUnknownErrorException, KeycloakUserAlreadyExistsException, NotAuthorizedException {
         customerService.updateCustomer(email, CustomerMapper.mapCustomerDetailsDTOToCustomerEntity(customerDetailsDTO), CustomerRoleEnum.EMPLOYEE);
+    }
+
+    @Override
+    @PutMapping(CUSTOMER_ADMIN_URI + "/{email:.+}")
+    public void updateCustomer(@PathVariable String email, @RequestBody @Valid CustomerDetailsRoleDTO customerDetailsRoleDTO) throws CustomerAlreadyExistsException, KeycloakEndpointNotFoundException, NoCustomerFoundException, KeycloakUserIsNotAuthorizedException, KeycloakUnknownErrorException, KeycloakUserAlreadyExistsException, NotAuthorizedException {
+        customerService.updateCustomer(email, CustomerMapper.mapCustomerDetailsDTOToCustomerEntity(customerDetailsRoleDTO), CustomerRoleEnum.ADMIN);
     }
 
     @Override
