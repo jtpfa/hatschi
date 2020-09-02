@@ -1,7 +1,7 @@
 <template>
     <fetch-content v-if="$fetchState.pending" :size="6" />
     <div v-else>
-        <b-alert v-if="fetchErrorMsg.length > 0" :show="true" variant="warning">{{ fetchErrorMsg }}</b-alert>
+        <b-alert v-if="fetchErrorMsg.length > 0" :show="true" variant="warning" v-html="fetchErrorMsg" />
 
         <b-alert v-else-if="addresses.length === 0" :show="true" variant="warning">
             Keine Adressen hinterlegt. Lege deine erste Adresse an:

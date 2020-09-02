@@ -1,7 +1,7 @@
 <template>
     <fetch-content v-if="$fetchState.pending" :size="6" />
     <div v-else>
-        <b-alert v-if="fetchErrorMsg.length > 0" :show="true" variant="warning">{{ fetchErrorMsg }}</b-alert>
+        <b-alert v-if="fetchErrorMsg.length > 0" :show="true" variant="warning" v-html="fetchErrorMsg" />
 
         <b-alert v-else-if="orders.length === 0" :show="true" variant="info">Keine Bestellungen getätigt.</b-alert>
 
@@ -42,25 +42,28 @@
                 </div>
             </template>
 
-            <b-card-body>
-                <div v-for="oItem in item.orderItems" :key="oItem.articleId" class="row" no-body>
-                    <div class="lazy-image col-md-6 d-flex justify-content-center align-items-center">
-                        <b-card-img-lazy
-                            :alt="oItem.articleName"
-                            class="mb-4"
-                            onerror="this.onerror=null;this.srcset='/img/logo-placeholder.svg';"
-                            :src="$imageSrcSet.getImageUrl(oItem.articleId, 256)"
-                            :srcset="$imageSrcSet.getSrcSet(oItem.articleId)"
-                            :title="oItem.articleName"
-                        />
-                        <spinner />
-                    </div>
-                    <div class="col-md-6">
-                        {{ oItem.articleName }}
-                        {{ $currencyConverter.convertCentsToEuro(oItem.articlePrice) }}
-                        <b-badge class="quantity" pill variant="primary">{{ oItem.quantity }} Stück</b-badge>
-                    </div>
-                </div>
+            <b-card-body body-class="py-0">
+                <ul class="list-unstyled">
+                    <b-media v-for="oItem in item.orderItems" :key="oItem.articleId" class="product py-4" tag="li">
+                        <template v-slot:aside>
+                            <div class="lazy-image">
+                                <b-card-img-lazy
+                                    :alt="oItem.articleName"
+                                    onerror="this.onerror=null;this.srcset='/img/logo-placeholder.svg';"
+                                    :src="$imageSrcSet.getImageUrl(oItem.articleId, 256)"
+                                    :srcset="$imageSrcSet.getSrcSet(oItem.articleId)"
+                                    :title="oItem.articleName"
+                                />
+                                <spinner />
+                            </div>
+                        </template>
+                        <div class="product-information">
+                            <span class="font-weight-bolder">{{ oItem.articleName }}</span>
+                            <span>{{ $currencyConverter.convertCentsToEuro(oItem.articlePrice) }}</span>
+                            <b-badge class="quantity" pill variant="primary">{{ oItem.quantity }} Stück</b-badge>
+                        </div>
+                    </b-media>
+                </ul>
             </b-card-body>
 
             <template v-slot:footer>
@@ -166,31 +169,35 @@ a.details {
             margin-bottom: 0;
         }
     }
+}
 
-    span {
+.card-header,
+.card-footer,
+.product-information {
+    span:not(.quantity) {
         display: block;
+    }
+}
+
+.product:not(:last-of-type) {
+    border-bottom: 1px solid $gray-300;
+}
+
+.product-information {
+    span:not(:last-child) {
+        margin-bottom: 0.75rem;
     }
 }
 
 .lazy-image {
     position: relative;
     flex-shrink: 0;
-    width: 100%;
-    min-height: 8rem;
-    max-height: 100%;
+    width: 7.5rem;
     overflow: hidden;
 
     img {
         display: block;
-        max-width: 30%;
-
-        @media (min-width: $grid-sm) {
-            max-width: 50%;
-        }
-
-        @media (min-width: $grid-xl) {
-            max-width: 50%;
-        }
+        max-width: 80%;
     }
 }
 

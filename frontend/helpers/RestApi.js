@@ -3,7 +3,7 @@ const _handleResponse = (response, needJsonOutput = false) => {
         return needJsonOutput ? response.json() : response
     }
     if (response.status === 401) {
-        throw new Error('Zugriff nicht gestattet. Bitte (erneut) anmelden.')
+        throw new Error('Zugriff nicht gestattet. Bitte (erneut) <a href="/auth/login" target="_self">anmelden</a>.')
     } else {
         return response.json().then(result => (result.error !== '' ? throw result : result))
     }

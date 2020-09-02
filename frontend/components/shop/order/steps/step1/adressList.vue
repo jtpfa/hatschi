@@ -5,7 +5,7 @@
             <span class="mandatory">*</span>
         </h2>
 
-        <b-alert v-if="fetchErrorMsg.length > 0" :show="true" variant="warning">{{ fetchErrorMsg }}</b-alert>
+        <b-alert v-if="fetchErrorMsg.length > 0" :show="true" variant="warning" v-html="fetchErrorMsg" />
 
         <b-list-group v-else>
             <b-list-group-item v-for="(item, index) in addresses" :key="item.id">

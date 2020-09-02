@@ -1,6 +1,6 @@
 <template>
     <div>
-        <b-alert :show="fetchErrorMsg.length > 0" variant="warning">{{ fetchErrorMsg }}</b-alert>
+        <b-alert :show="fetchErrorMsg.length > 0" variant="warning" v-html="fetchErrorMsg" />
         <b-alert :show="error.length > 0" variant="danger">{{ error }}</b-alert>
 
         <b-table
