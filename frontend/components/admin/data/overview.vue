@@ -17,6 +17,7 @@
             :responsive="true"
             show-empty
             :sort-by="sortBy"
+            :sort-desc="sortDesc"
         >
             <template v-slot:cell(image)="row">
                 <b-img-lazy
@@ -108,6 +109,10 @@ export default {
         sortBy: {
             type: String,
             default: '',
+        },
+        sortDesc: {
+            type: Boolean,
+            default: false,
         },
         type: {
             type: String,

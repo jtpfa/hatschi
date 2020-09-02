@@ -6,7 +6,14 @@
         <data-overview class="mb-5" :dashboard="true" :fields="productFields" type="product"></data-overview>
 
         <h2>Bestellungen</h2>
-        <data-overview class="mb-5" :dashboard="true" :fields="orderFields" type="order"></data-overview>
+        <data-overview
+            class="mb-5"
+            :dashboard="true"
+            :fields="orderFields"
+            sort-by="orderDate"
+            sort-desc
+            type="order"
+        ></data-overview>
 
         <h2>Kunden</h2>
         <data-overview class="mb-5" :dashboard="true" :fields="userFields" type="customer"></data-overview>
