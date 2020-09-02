@@ -1,7 +1,7 @@
 <template>
     <div>
         <b-form ref="form" novalidate @submit.prevent="onSubmit">
-            <b-form-input v-model="$auth.user.email" autocomplete="username" hidden type="password" />
+            <b-form-input id="username" v-model="$auth.user.email" autocomplete="username" hidden type="text" />
             <div class="mb-4" role="group">
                 <label for="currentPassword">
                     Aktuelles Passwort
