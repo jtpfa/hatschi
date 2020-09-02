@@ -60,4 +60,13 @@ export default {
 }
 </script>
 
-<style scoped></style>
+<style lang="scss" scoped>
+.b-form-file ::v-deep label {
+    overflow: hidden;
+    word-break: break-all;
+
+    &::after {
+        border-left: 0.5rem solid $white;
+    }
+}
+</style>
