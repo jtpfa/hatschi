@@ -52,6 +52,7 @@
                         <b-form-input
                             v-model="priceEur"
                             aria-describedby="input-live-feedback"
+                            :formatter="checkEuroRange"
                             max="999999"
                             min="0"
                             required
@@ -62,6 +63,7 @@
                         <b-form-input
                             v-model="priceCt"
                             aria-describedby="input-live-feedback"
+                            :formatter="checkCtRange"
                             max="99"
                             min="0"
                             required
@@ -124,6 +126,24 @@ export default {
         }
     },
     methods: {
+        checkEuroRange(value) {
+            if (+value < 0) {
+                return '0'
+            }
+            if (+value > 999999) {
+                return '999999'
+            }
+            return value
+        },
+        checkCtRange(value) {
+            if (+value < 0) {
+                return '0'
+            }
+            if (+value > 99) {
+                return '99'
+            }
+            return value
+        },
         async addProduct() {
             try {
                 await this.$api.addProduct(
@@ -131,7 +151,10 @@ export default {
                         name: this.name,
                         description: this.description,
                         details: this.$refs.editorDetails.details,
-                        price: +(this.priceEur + (this.priceCt <= 9 ? `0${this.priceCt}` : this.priceCt)),
+                        price: +(
+                            this.priceEur +
+                            (+this.priceCt !== 0 && +this.priceCt <= 9 ? `0${+this.priceCt}` : +this.priceCt)
+                        ),
                         stock: +this.stock,
                     },
                     this.$refs.fileInput.image,
