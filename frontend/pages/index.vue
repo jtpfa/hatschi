@@ -42,8 +42,8 @@ export default {
             this.filtered = true
             this.filteredProducts = this.products.filter(
                 product =>
-                    product.name.toLocaleLowerCase().includes(searchParam) ||
-                    product.description.toLocaleLowerCase().includes(searchParam)
+                    product.name.toLocaleLowerCase().includes(searchParam.toLocaleLowerCase()) ||
+                    product.description.toLocaleLowerCase().includes(searchParam).toLocaleLowerCase()
             )
         },
         sortProducts(sortParam) {
