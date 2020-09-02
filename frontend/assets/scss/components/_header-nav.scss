@@ -1,9 +1,12 @@
 .header-nav {
     .nav-item {
         color: $primary;
-        transition: opacity 0.3s ease-in-out;
 
-        &:hover {
+        > a {
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        &:hover > a {
             opacity: 0.8;
             cursor: pointer;
         }
