@@ -102,7 +102,7 @@
 
             <form-field-file-upload ref="fileInput" :replace="true" />
 
-            <b-alert class="my-3" :show="error.length > 0" variant="danger">{{ error }}</b-alert>
+            <b-alert class="my-3" :show="error.length > 0" variant="danger" v-html="error" />
         </b-form>
 
         <template v-slot:modal-footer="{ ok, cancel }">

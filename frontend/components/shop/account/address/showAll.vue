@@ -8,7 +8,7 @@
         </b-alert>
 
         <div v-else>
-            <b-alert :show="error.length > 0" variant="danger">{{ error }}</b-alert>
+            <b-alert :show="error.length > 0" variant="danger" v-html="error" />
 
             <b-card v-for="(item, index) in addresses" :key="item.id" class="my-3">
                 <template v-slot:header>

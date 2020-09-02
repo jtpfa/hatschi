@@ -140,7 +140,7 @@
             </div>
         </div>
 
-        <b-alert class="mt-3" :show="error.length > 0" variant="danger">{{ error }}</b-alert>
+        <b-alert class="mt-3" :show="error.length > 0" variant="danger" v-html="error" />
 
         <button-container :loading="loading" text="Änderungen speichern" />
     </b-form>

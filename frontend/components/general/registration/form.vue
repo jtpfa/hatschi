@@ -71,7 +71,7 @@
 
             <form-field-password-confirmation ref="passwordConfirmation" />
 
-            <b-alert class="mt-3" :show="error.length > 0" variant="danger">{{ error }}</b-alert>
+            <b-alert class="mt-3" :show="error.length > 0" variant="danger" v-html="error" />
 
             <button-container :loading="loading" text="Registrieren" />
         </b-form>

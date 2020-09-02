@@ -56,7 +56,7 @@
                 <b-form-invalid-feedback id="input-live-feedback">Bitte Nachnamen angeben.</b-form-invalid-feedback>
             </div>
 
-            <b-alert class="mt-3" :show="error.length > 0" variant="danger">{{ error }}</b-alert>
+            <b-alert class="mt-3" :show="error.length > 0" variant="danger" v-html="error" />
 
             <button-container :loading="loading" text="Daten speichern" />
         </b-form>
