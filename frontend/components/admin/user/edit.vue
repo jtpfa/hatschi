@@ -1,5 +1,5 @@
 <template>
-    <b-modal :id="modalId" centered hide-footer scrollable title="Kundendaten bearbeiten">
+    <b-modal :id="modalId" centered hide-footer scrollable title="Nutzerdaten bearbeiten">
         <b-form ref="form" novalidate @submit.prevent="onSubmit">
             <div class="mb-4" role="group">
                 <label for="email">
@@ -27,7 +27,7 @@
                 </label>
                 <b-form-input
                     id="firstname"
-                    v-model="employee.firstName"
+                    v-model="user.firstName"
                     aria-describedby="input-live-feedback"
                     pattern="^.{1,50}$"
                     placeholder="Vorname"
@@ -45,7 +45,7 @@
                 </label>
                 <b-form-input
                     id="name"
-                    v-model="employee.lastName"
+                    v-model="user.lastName"
                     aria-describedby="input-live-feedback"
                     pattern="^.{1,50}$"
                     placeholder="Nachname"
@@ -56,7 +56,7 @@
                 <b-form-invalid-feedback id="input-live-feedback">Bitte Nachnamen angeben.</b-form-invalid-feedback>
             </div>
 
-            <div class="mb-4" role="group">
+            <div v-if="accessGranted" class="mb-4" role="group">
                 <label for="name">
                     Rolle
                     <span class="mandatory">*</span>
@@ -77,10 +77,10 @@
 import ButtonContainer from '~/components/general/layout/buttonContainer'
 
 export default {
-    name: 'EmployeeEdit',
+    name: 'UserEdit',
     components: { ButtonContainer },
     props: {
-        employee: {
+        user: {
             type: Object,
             required: true,
         },
@@ -93,13 +93,14 @@ export default {
             required: true,
             validator(type) {
                 // The value must match one of these strings
-                return ['employee', 'admin'].indexOf(type) !== -1
+                return ['customer', 'employee', 'admin'].indexOf(type) !== -1
             },
         },
     },
     data() {
         return {
-            newEmail: this.employee.email,
+            accessGranted: false,
+            newEmail: this.user.email,
             newRole: this.role,
             roleOptions: [
                 { text: 'Kunde', value: 'customer' },
@@ -113,7 +114,7 @@ export default {
     computed: {
         username: {
             get() {
-                return this.newEmail ? this.newEmail : this.employee.email
+                return this.newEmail ? this.newEmail : this.user.email
             },
             set(newEmail) {
                 this.newEmail = newEmail
@@ -128,21 +129,37 @@ export default {
             },
         },
     },
+    mounted() {
+        this.accessGranted = this.$auth.$state.roles?.includes('admin')
+    },
     methods: {
         async editEmployee() {
             try {
-                await this.$api.editEmployee(
-                    {
-                        email: this.username,
-                        firstName: this.employee.firstName,
-                        lastName: this.employee.lastName,
-                        customerRole: this.selectedRole.toLocaleUpperCase(),
-                    },
-                    this.employee.email,
-                    this.role,
-                    this.$auth.getToken('keycloak')
-                )
+                if (!this.accessGranted) {
+                    await this.$api.editCustomer(
+                        {
+                            email: this.username,
+                            firstName: this.user.firstName,
+                            lastName: this.user.lastName,
+                        },
+                        this.user.email,
+                        this.$auth.getToken('keycloak')
+                    )
+                } else {
+                    await this.$api.editUser(
+                        {
+                            email: this.username,
+                            firstName: this.user.firstName,
+                            lastName: this.user.lastName,
+                            customerRole: this.selectedRole.toLocaleUpperCase(),
+                        },
+                        this.user.email,
+                        this.role,
+                        this.$auth.getToken('keycloak')
+                    )
+                }
 
+                this.newRole = ''
                 this.$root.$emit('bv::hide::modal', this.modalId)
                 this.$router.app.refresh()
             } catch (err) {

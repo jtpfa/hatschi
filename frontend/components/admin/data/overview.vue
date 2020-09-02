@@ -72,29 +72,26 @@
             :total-rows="rows"
         ></b-pagination>
 
-        <customer-edit v-if="type === 'customer'" :customer="currentItem" modal-id="modal-edit-customer" />
-
-        <employee-edit
-            v-else-if="['employee', 'admin'].includes(type)"
-            :employee="currentItem"
+        <user-edit
+            v-if="['customer', 'employee', 'admin'].includes(type)"
             :modal-id="`modal-edit-${type}`"
             :role="type"
+            :user="currentItem"
         />
 
-        <product-edit v-else-if="type === 'product'" modal-id="modal-edit-product" :product="currentItem" />
+        <product-edit v-else-if="type === 'product'" :modal-id="`modal-edit-${type}`" :product="currentItem" />
     </div>
 </template>
 
 <script>
-import EmployeeEdit from '~/components/admin/employee/edit'
 import ProductEdit from '~/components/admin/products/edit'
-import CustomerEdit from '~/components/admin/customers/edit'
+import UserEdit from '~/components/admin/user/edit'
 import IconPen from '~/components/general/icons/pen'
 import IconTrash from '~/components/general/icons/trash'
 
 export default {
     name: 'DataOverview',
-    components: { EmployeeEdit, IconTrash, IconPen, ProductEdit, CustomerEdit },
+    components: { UserEdit, IconTrash, IconPen, ProductEdit },
     props: {
         dashboard: {
             type: Boolean,
