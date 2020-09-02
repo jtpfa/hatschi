@@ -38,6 +38,7 @@ export default {
         return {
             accessGranted: false,
             productFields: [
+                { key: 'id', label: 'Produktnr.', sortable: true },
                 { key: 'name', label: 'Artikelbezeichnung', sortable: true },
                 {
                     key: 'price',

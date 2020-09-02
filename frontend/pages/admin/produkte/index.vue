@@ -14,6 +14,7 @@ export default {
     data() {
         return {
             fields: [
+                { key: 'id', label: 'Produktnr.', sortable: true },
                 { key: 'name', label: 'Name', sortable: true },
                 { key: 'description', label: 'Beschreibung', sortable: true },
                 { key: 'details', label: 'Details', sortable: true },
