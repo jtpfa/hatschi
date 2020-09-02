@@ -9,9 +9,8 @@
         no-enforce-focus
         scrollable
         title="Produktdaten bearbeiten"
-        @ok.prevent="onSubmit"
     >
-        <b-form ref="form" novalidate>
+        <b-form ref="form" novalidate @submit.prevent="onSubmit">
             <div class="mb-4" role="group">
                 <label for="name">
                     Artikelbezeichnung

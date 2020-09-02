@@ -54,13 +54,13 @@
                     v-if="['customer', 'employee', 'admin'].includes(type)"
                     :modal-id="`modal-edit-${type}-${row.item.id}`"
                     :role="type"
-                    :user="row.item"
+                    :user="Object.assign({}, row.item)"
                 />
 
                 <product-edit
                     v-else-if="type === 'product'"
                     :modal-id="`modal-edit-${type}-${row.item.id}`"
-                    :product="row.item"
+                    :product="Object.assign({}, row.item)"
                 />
             </template>
 
