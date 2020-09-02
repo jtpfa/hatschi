@@ -1,11 +1,18 @@
-.nav-icon {
-    color: $primary !important; // override bootstrap default
-    text-decoration: none;
+.nav-item {
+    color: $primary;
     transition: opacity 0.3s ease-in-out;
 
     &:hover {
-        text-decoration: none;
         opacity: 0.8;
         cursor: pointer;
+    }
+
+    .nav-link {
+        color: $primary !important; // override bootstrap default
+        transition: none;
+
+        &:hover {
+            text-decoration: none;
+        }
     }
 }

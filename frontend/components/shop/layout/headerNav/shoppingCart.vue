@@ -1,6 +1,6 @@
 <template>
-    <b-link
-        class="d-flex align-items-center flex-md-column nav-icon nav-link big-noodle mr-0 mr-md-3 mt-3 mb-1 my-md-0"
+    <b-nav-item
+        link-classes="d-flex align-items-center flex-md-column big-noodle mr-0 mr-md-3 mt-3 mb-1 my-md-0"
         to="/warenkorb"
     >
         <div class="bg-primary rounded-circle shopping-cart b-avatar badge-primary mr-2 mr-md-0">
@@ -10,7 +10,7 @@
             </span>
         </div>
         Warenkorb
-    </b-link>
+    </b-nav-item>
 </template>
 
 <script>
