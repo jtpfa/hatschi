@@ -7,10 +7,17 @@
                 :autoplay="7500"
                 class="col"
                 :per-view="1"
+                :throttle="1000"
                 type="carousel"
             >
                 <vue-glide-slide class="row">
-                    <home-slide-facts feature-one="4k" feature-two="HDR-600" name="Acer Predator" :price="29999" />
+                    <home-slide-facts
+                        feature-one="4k"
+                        feature-two="HDR-600"
+                        img-src="/img/home-slider/pc.png"
+                        name="Acer Predator"
+                        :price="29999"
+                    />
                     <home-slide-description
                         headline="Erlebe die Schlacht wie nie zuvor"
                         text="Der neuste 144Hz Monitor von Acer bietet ein unfassbares HDR-600 Farbspektrum! Darüber hinaus wird mit
@@ -18,14 +25,26 @@
                     />
                 </vue-glide-slide>
                 <vue-glide-slide class="row">
-                    <home-slide-facts feature-one="2y" feature-two="120 dpi" name="TogiLech xD" :price="2495" />
+                    <home-slide-facts
+                        feature-one="2y"
+                        feature-two="120 dpi"
+                        img-src="/img/home-slider/mouse.png"
+                        name="TogiLech xD"
+                        :price="3495"
+                    />
                     <home-slide-description
                         headline="Klicken wie ein Weltmeister"
                         text="Gigantomatisches Klicken bis der Arzt kommt und noch viel weiter. Einfach nur geile Tasten für geile Leute."
                     />
                 </vue-glide-slide>
                 <vue-glide-slide class="row">
-                    <home-slide-facts feature-one="AMG" feature-two="RT-340" name="Roflcopter 2.0" :price="99" />
+                    <home-slide-facts
+                        feature-one="AMG"
+                        feature-two="RT-340"
+                        img-src="/img/home-slider/graphic-card.png"
+                        name="Roflcopter 2.0"
+                        :price="12999"
+                    />
                     <home-slide-description
                         headline="Abheben mal anders"
                         text="Mit dem integrierten RT-340 Motor kann jeder PC gekühlt werden. Jetzt losrofln."

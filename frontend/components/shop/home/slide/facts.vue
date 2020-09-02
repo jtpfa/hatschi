@@ -3,7 +3,7 @@
         <home-slide-background-shape>
             <div class="col-12 col-sm-5 mt-2 mt-sm-0">
                 <div class="lazy-image d-flex justify-content-center align-items-center">
-                    <b-img-lazy :alt="name" src="~assets/img/stage-sample.png" :title="name" />
+                    <b-img-lazy :alt="name" :src="imgSrc" :title="name" />
                     <spinner color="white" :size="6" />
                 </div>
             </div>
@@ -41,6 +41,10 @@ export default {
         },
         price: {
             type: [Number, String],
+            required: true,
+        },
+        imgSrc: {
+            type: String,
             required: true,
         },
     },
