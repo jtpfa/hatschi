@@ -29,7 +29,7 @@ services:
       - db
       - keycloak
     volumes:
-      - ./backend/media:/root/media
+      - ./backend/media:/root/dev/myapp/media
 
   pcmr-frontend:
     image: fynloh/pc-mr:frontend
