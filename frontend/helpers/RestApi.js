@@ -3,7 +3,7 @@ const _handleResponse = (response, needJsonOutput = false) => {
         return needJsonOutput ? response.json() : response
     }
     if (response.status === 401) {
-        throw new Error('Zugriff nicht gestattet. Bitte (erneut) anmelden.')
+        throw new Error('Zugriff nicht gestattet. Bitte (erneut) <a href="/auth/login" target="_self">anmelden</a>.')
     } else {
         return response.json().then(result => (result.error !== '' ? throw result : result))
     }
@@ -180,6 +180,17 @@ export class RestApi {
         }).then(response => _handleResponse(response))
     }
 
+    changeUserPassword(passwords, userToken) {
+        return fetch(`${this.baseUrl}customer/password`, {
+            method: 'POST',
+            headers: {
+                'Content-type': 'application/json; charset=UTF-8',
+                Authorization: userToken,
+            },
+            body: JSON.stringify(passwords),
+        }).then(response => _handleResponse(response))
+    }
+
     getCustomers(userToken) {
         return fetch(`${this.baseUrl}employee/customer`, {
             method: 'GET',
@@ -208,6 +219,7 @@ export class RestApi {
     }
 
     editCustomer(customerAttributes, username, userToken) {
+        console.log(customerAttributes)
         return fetch(`${this.baseUrl}employee/customer/${username}`, {
             method: 'PUT',
             headers: {
@@ -237,5 +249,11 @@ export class RestApi {
                 Authorization: userToken,
             },
         }).then(response => _handleResponse(response))
+    }
+
+    getRandomProducts(excludeProductId, amount) {
+        return fetch(`${this.baseUrl}article/random/${excludeProductId}/${amount}`, {
+            method: 'GET',
+        }).then(response => _handleResponse(response, true))
     }
 }

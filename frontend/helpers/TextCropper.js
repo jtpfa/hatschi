@@ -1,5 +1,8 @@
 export class TextCropper {
     static cropText(text, length) {
+        if (!text || !length) {
+            return ''
+        }
         // text needs no cropping
         if (text.length < length) {
             return text

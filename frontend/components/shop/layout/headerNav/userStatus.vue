@@ -1,12 +1,12 @@
 <template>
-    <span
+    <b-nav-item
         v-if="!$auth.loggedIn"
         v-b-modal.modal-center
-        class="d-flex align-items-center flex-md-column nav-icon nav-link big-noodle text-primary"
+        link-classes="d-flex align-items-center flex-md-column big-noodle"
     >
         <b-avatar class="mr-2 mr-md-0" variant="primary" />
         Login
-    </span>
+    </b-nav-item>
     <b-nav-item-dropdown v-else no-caret right>
         <template slot="button-content">
             <span class="d-flex align-items-center flex-md-column nav-icon big-noodle text-primary">
@@ -30,10 +30,7 @@ export default {
     name: 'HeaderNavUserStatus',
     methods: {
         logout() {
-            window.location.href = `${
-                this.$config.keycloakEndpoint
-            }protocol/openid-connect/logout?redirect_uri=${encodeURI(this.$config.baseURL)}`
-            this.$auth.reset()
+            this.$auth.logout()
         },
     },
 }

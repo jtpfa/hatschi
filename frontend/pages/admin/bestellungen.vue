@@ -89,6 +89,7 @@ export default {
         formatAddress(address) {
             return `${address.firstName} ${address.lastName}
             ${address.address}
+            ${address.additionalAddress ? address.additionalAddress : ''}
             ${address.zip} ${address.city}
             ${address.country}`
         },

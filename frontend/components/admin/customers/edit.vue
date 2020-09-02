@@ -1,5 +1,5 @@
 <template>
-    <b-modal :id="modalId" centered hide-footer lazy scrollable title="Kundendaten bearbeiten">
+    <b-modal :id="modalId" centered hide-footer scrollable title="Kundendaten bearbeiten">
         <b-form ref="form" novalidate @submit.prevent="onSubmit">
             <div class="mb-4" role="group">
                 <label for="email">

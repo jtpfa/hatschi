@@ -3,12 +3,12 @@
         <b-card>
             <div class="row">
                 <div class="mb-4 col-xl-6" role="group">
-                    <label for="firstName">
+                    <label for="newFirstName">
                         Vorname
                         <span class="mandatory">*</span>
                     </label>
                     <b-form-input
-                        id="firstName"
+                        id="newFirstName"
                         v-model="firstName"
                         aria-describedby="input-live-feedback"
                         autocomplete="given-name"
@@ -24,12 +24,12 @@
                 </div>
 
                 <div class="mb-4 col-xl-6" role="group">
-                    <label for="lastName">
+                    <label for="newLastName">
                         Nachname
                         <span class="mandatory">*</span>
                     </label>
                     <b-form-input
-                        id="lastName"
+                        id="newLastName"
                         v-model="lastName"
                         aria-describedby="input-live-feedback"
                         autocomplete="family-name"
@@ -47,12 +47,12 @@
 
             <div class="row">
                 <div class="mb-4 col-sm-4" role="group">
-                    <label for="zip">
+                    <label for="newZip">
                         PLZ
                         <span class="mandatory">*</span>
                     </label>
                     <b-form-input
-                        id="zip"
+                        id="newZip"
                         v-model="zip"
                         aria-describedby="input-live-feedback"
                         pattern="^.{1,50}$"
@@ -65,12 +65,12 @@
                 </div>
 
                 <div class="mb-4 col-sm-8" role="group">
-                    <label for="city">
+                    <label for="newCity">
                         Stadt
                         <span class="mandatory">*</span>
                     </label>
                     <b-form-input
-                        id="city"
+                        id="newCity"
                         v-model="city"
                         aria-describedby="input-live-feedback"
                         pattern="^.{1,100}$"
@@ -85,12 +85,12 @@
 
             <div class="row">
                 <div class="mb-4 col-12" role="group">
-                    <label for="address">
+                    <label for="newAddress">
                         Straße und Hausnr.
                         <span class="mandatory">*</span>
                     </label>
                     <b-form-input
-                        id="address"
+                        id="newAddress"
                         v-model="address"
                         aria-describedby="input-live-feedback"
                         pattern="^.{1,255}$"
@@ -107,9 +107,9 @@
 
             <div class="row">
                 <div class="mb-4 col-sm-4 col-xl-3" role="group">
-                    <label for="additionalAddress">Adresszusatz</label>
+                    <label for="newAdditionalAddress">Adresszusatz</label>
                     <b-form-input
-                        id="additionalAddress"
+                        id="newAdditionalAddress"
                         v-model="additionalAddress"
                         aria-describedby="input-live-feedback"
                         pattern="^.{1,255}$"
@@ -123,12 +123,12 @@
                 </div>
 
                 <div class="mb-4 col-sm-8 col-xl-9" role="group">
-                    <label for="country">
+                    <label for="newCountry">
                         Land
                         <span class="mandatory">*</span>
                     </label>
                     <b-form-input
-                        id="country"
+                        id="newCountry"
                         v-model="country"
                         aria-describedby="input-live-feedback"
                         pattern="^.{1,50}$"

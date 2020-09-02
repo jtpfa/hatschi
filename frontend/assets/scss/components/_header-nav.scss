@@ -1,0 +1,23 @@
+.header-nav {
+    .nav-item {
+        color: $primary;
+
+        > a {
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        &:hover > a {
+            opacity: 0.8;
+            cursor: pointer;
+        }
+
+        .nav-link {
+            color: $primary !important; // override bootstrap default
+            transition: none;
+
+            &:hover {
+                text-decoration: none;
+            }
+        }
+    }
+}
