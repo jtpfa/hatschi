@@ -35,7 +35,7 @@
                         class="action-button"
                         size="sm"
                         variant="primary"
-                        @click="showEditModal(row.item)"
+                        @click="showEditModal(row.item.id)"
                     >
                         <icon-pen />
                     </b-button>
@@ -49,6 +49,19 @@
                         <icon-trash />
                     </b-button>
                 </b-button-group>
+
+                <user-edit
+                    v-if="['customer', 'employee', 'admin'].includes(type)"
+                    :modal-id="`modal-edit-${type}-${row.item.id}`"
+                    :role="type"
+                    :user="row.item"
+                />
+
+                <product-edit
+                    v-else-if="type === 'product'"
+                    :modal-id="`modal-edit-${type}-${row.item.id}`"
+                    :product="row.item"
+                />
             </template>
 
             <template v-slot:table-busy>
@@ -71,15 +84,6 @@
             :per-page="perPage"
             :total-rows="rows"
         ></b-pagination>
-
-        <user-edit
-            v-if="['customer', 'employee', 'admin'].includes(type)"
-            :modal-id="`modal-edit-${type}`"
-            :role="type"
-            :user="currentItem"
-        />
-
-        <product-edit v-else-if="type === 'product'" :modal-id="`modal-edit-${type}`" :product="currentItem" />
     </div>
 </template>
 
@@ -175,9 +179,8 @@ export default {
         }
     },
     methods: {
-        showEditModal(item) {
-            this.currentItem = { ...item }
-            this.$bvModal.show(`modal-edit-${this.type}`)
+        showEditModal(itemId) {
+            this.$root.$emit('bv::show::modal', `modal-edit-${this.type}-${itemId}`)
         },
         confirmDeletion(item) {
             this.currentItem = { ...item }
