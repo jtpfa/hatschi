@@ -36,7 +36,7 @@
                         class="action-button"
                         size="sm"
                         variant="primary"
-                        @click="showEditModal(row.item.id)"
+                        @click="showEditModal(row.item.id ? row.item.id : row.item.email)"
                     >
                         <icon-pen />
                     </b-button>
@@ -53,7 +53,7 @@
 
                 <user-edit
                     v-if="['customer', 'employee', 'admin'].includes(type)"
-                    :modal-id="`modal-edit-${type}-${row.item.id}`"
+                    :modal-id="`modal-edit-${type}-${row.item.email}`"
                     :role="type"
                     :user="Object.assign({}, row.item)"
                 />

@@ -17,13 +17,16 @@ export default {
                 { key: 'id', label: 'Produktnr.', sortable: true },
                 { key: 'name', label: 'Name', sortable: true },
                 { key: 'description', label: 'Beschreibung', sortable: true },
-                { key: 'details', label: 'Details', sortable: true },
+                {
+                    key: 'details',
+                    label: 'Details',
+                    formatter: details => this.$textCropper.cropText(details, 100),
+                    sortable: true,
+                },
                 {
                     key: 'price',
                     label: 'Preis',
-                    formatter: price => {
-                        return this.$currencyConverter.convertCentsToEuro(price)
-                    },
+                    formatter: price => this.$currencyConverter.convertCentsToEuro(price),
                     sortable: true,
                 },
                 { key: 'stock', label: 'Lager', sortable: true },
