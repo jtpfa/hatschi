@@ -219,7 +219,6 @@ export class RestApi {
     }
 
     editCustomer(customerAttributes, username, userToken) {
-        console.log(customerAttributes)
         return fetch(`${this.baseUrl}employee/customer/${username}`, {
             method: 'PUT',
             headers: {
@@ -230,7 +229,7 @@ export class RestApi {
         }).then(response => _handleResponse(response))
     }
 
-    editEmployee(employeeAttributes, username, userRole, userToken) {
+    editUser(employeeAttributes, username, userRole, userToken) {
         return fetch(`${this.baseUrl}admin/${userRole}/${username}`, {
             method: 'PUT',
             headers: {

@@ -13,6 +13,7 @@ export default {
     data() {
         return {
             fields: [
+                { key: 'id', label: 'Bestellnr.', sortable: true },
                 {
                     key: 'orderDate',
                     label: 'Datum',

@@ -2,12 +2,12 @@
     <b-form ref="form" novalidate @submit.prevent="onSubmit">
         <div class="row">
             <div class="mb-4 col-xl-6" role="group">
-                <label for="firstName">
+                <label :for="`firstName-${address.id}`">
                     Vorname
                     <span class="mandatory">*</span>
                 </label>
                 <b-form-input
-                    id="firstName"
+                    :id="`firstName-${address.id}`"
                     v-model="address.firstName"
                     aria-describedby="input-live-feedback"
                     autocomplete="given-name"
@@ -23,12 +23,12 @@
             </div>
 
             <div class="mb-4 col-xl-6" role="group">
-                <label for="lastName">
+                <label :for="`lastName-${address.id}`">
                     Nachname
                     <span class="mandatory">*</span>
                 </label>
                 <b-form-input
-                    id="lastName"
+                    :id="`lastName-${address.id}`"
                     v-model="address.lastName"
                     aria-describedby="input-live-feedback"
                     autocomplete="family-name"
@@ -46,12 +46,12 @@
 
         <div class="row">
             <div class="mb-4 col-sm-4" role="group">
-                <label for="zip">
+                <label :for="`zip-${address.id}`">
                     PLZ
                     <span class="mandatory">*</span>
                 </label>
                 <b-form-input
-                    id="zip"
+                    :id="`zip-${address.id}`"
                     v-model="address.zip"
                     aria-describedby="input-live-feedback"
                     pattern="^.{1,50}$"
@@ -64,12 +64,12 @@
             </div>
 
             <div class="mb-4 col-sm-8" role="group">
-                <label for="city">
+                <label :for="`city-${address.id}`">
                     Stadt
                     <span class="mandatory">*</span>
                 </label>
                 <b-form-input
-                    id="city"
+                    :id="`city-${address.id}`"
                     v-model="address.city"
                     aria-describedby="input-live-feedback"
                     pattern="^.{1,100}$"
@@ -84,12 +84,12 @@
 
         <div class="row">
             <div class="mb-4 col-12" role="group">
-                <label for="address">
+                <label :for="`address-${address.id}`">
                     Straße und Hausnr.
                     <span class="mandatory">*</span>
                 </label>
                 <b-form-input
-                    id="address"
+                    :id="`address-${address.id}`"
                     v-model="address.address"
                     aria-describedby="input-live-feedback"
                     pattern="^.{1,255}$"
@@ -106,9 +106,9 @@
 
         <div class="row">
             <div class="mb-4 col-sm-4 col-xl-3" role="group">
-                <label for="additionalAddress">Adresszusatz</label>
+                <label :for="`additionalAddress-${address.id}`">Adresszusatz</label>
                 <b-form-input
-                    id="additionalAddress"
+                    :id="`additionalAddress-${address.id}`"
                     v-model="address.additionalAddress"
                     aria-describedby="input-live-feedback"
                     pattern="^.{1,255}$"
@@ -122,12 +122,12 @@
             </div>
 
             <div class="mb-4 col-sm-8 col-xl-9" role="group">
-                <label for="country">
+                <label :for="`country-${address.id}`">
                     Land
                     <span class="mandatory">*</span>
                 </label>
                 <b-form-input
-                    id="country"
+                    :id="`country-${address.id}`"
                     v-model="address.country"
                     aria-describedby="input-live-feedback"
                     pattern="^.{1,50}$"
@@ -140,7 +140,7 @@
             </div>
         </div>
 
-        <b-alert class="mt-3" :show="error.length > 0" variant="danger">{{ error }}</b-alert>
+        <b-alert class="mt-3" :show="error.length > 0" variant="danger" v-html="error" />
 
         <button-container :loading="loading" text="Änderungen speichern" />
     </b-form>

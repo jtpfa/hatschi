@@ -3,7 +3,7 @@
         <cart-price-overview />
 
         <div class="d-flex justify-content-center align-items-center flex-column">
-            <b-alert class="w-100" :show="error.length > 0" variant="danger">{{ error }}</b-alert>
+            <b-alert class="w-100" :show="error.length > 0" variant="danger" v-html="error" />
 
             <slot />
         </div>

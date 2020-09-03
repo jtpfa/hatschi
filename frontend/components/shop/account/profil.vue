@@ -10,7 +10,7 @@
 
         <template v-if="!needsNewLogin">
             <h2>Meine Daten</h2>
-            <b-alert class="mt-3" :show="errorData.length > 0" variant="danger">{{ errorData }}</b-alert>
+            <b-alert class="mt-3" :show="errorData.length > 0" variant="danger" v-html="errorData" />
             <profil-personal-data
                 @error="showErrorMessage($event, 'data')"
                 @loginDataChanged="needsNewLogin = true"
@@ -19,7 +19,7 @@
             />
 
             <h2 class="mt-5">Passwort ändern</h2>
-            <b-alert class="mt-3" :show="errorPassword.length > 0" variant="danger">{{ errorPassword }}</b-alert>
+            <b-alert class="mt-3" :show="errorPassword.length > 0" variant="danger" v-html="errorPassword" />
             <profil-change-password
                 @error="showErrorMessage($event, 'password')"
                 @loginDataChanged="needsNewLogin = true"

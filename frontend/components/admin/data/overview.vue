@@ -1,7 +1,7 @@
 <template>
     <div>
         <b-alert :show="fetchErrorMsg.length > 0" variant="warning" v-html="fetchErrorMsg" />
-        <b-alert :show="error.length > 0" variant="danger">{{ error }}</b-alert>
+        <b-alert :show="error.length > 0" variant="danger" v-html="error" />
 
         <b-table
             :id="`${type}-table`"
@@ -17,6 +17,7 @@
             :responsive="true"
             show-empty
             :sort-by="sortBy"
+            :sort-desc="sortDesc"
         >
             <template v-slot:cell(image)="row">
                 <b-img-lazy
@@ -35,7 +36,7 @@
                         class="action-button"
                         size="sm"
                         variant="primary"
-                        @click="showEditModal(row.item)"
+                        @click="showEditModal(row.item.id ? row.item.id : row.item.email)"
                     >
                         <icon-pen />
                     </b-button>
@@ -49,6 +50,19 @@
                         <icon-trash />
                     </b-button>
                 </b-button-group>
+
+                <user-edit
+                    v-if="['customer', 'employee', 'admin'].includes(type)"
+                    :modal-id="`modal-edit-${type}-${row.item.email}`"
+                    :role="type"
+                    :user="Object.assign({}, row.item)"
+                />
+
+                <product-edit
+                    v-else-if="type === 'product'"
+                    :modal-id="`modal-edit-${type}-${row.item.id}`"
+                    :product="Object.assign({}, row.item)"
+                />
             </template>
 
             <template v-slot:table-busy>
@@ -71,30 +85,18 @@
             :per-page="perPage"
             :total-rows="rows"
         ></b-pagination>
-
-        <customer-edit v-if="type === 'customer'" :customer="currentItem" modal-id="modal-edit-customer" />
-
-        <employee-edit
-            v-else-if="['employee', 'admin'].includes(type)"
-            :employee="currentItem"
-            :modal-id="`modal-edit-${type}`"
-            :role="type"
-        />
-
-        <product-edit v-else-if="type === 'product'" modal-id="modal-edit-product" :product="currentItem" />
     </div>
 </template>
 
 <script>
-import EmployeeEdit from '~/components/admin/employee/edit'
 import ProductEdit from '~/components/admin/products/edit'
-import CustomerEdit from '~/components/admin/customers/edit'
+import UserEdit from '~/components/admin/user/edit'
 import IconPen from '~/components/general/icons/pen'
 import IconTrash from '~/components/general/icons/trash'
 
 export default {
     name: 'DataOverview',
-    components: { EmployeeEdit, IconTrash, IconPen, ProductEdit, CustomerEdit },
+    components: { UserEdit, IconTrash, IconPen, ProductEdit },
     props: {
         dashboard: {
             type: Boolean,
@@ -107,6 +109,10 @@ export default {
         sortBy: {
             type: String,
             default: '',
+        },
+        sortDesc: {
+            type: Boolean,
+            default: false,
         },
         type: {
             type: String,
@@ -178,9 +184,8 @@ export default {
         }
     },
     methods: {
-        showEditModal(item) {
-            this.currentItem = { ...item }
-            this.$bvModal.show(`modal-edit-${this.type}`)
+        showEditModal(itemId) {
+            this.$root.$emit('bv::show::modal', `modal-edit-${this.type}-${itemId}`)
         },
         confirmDeletion(item) {
             this.currentItem = { ...item }
@@ -211,18 +216,14 @@ export default {
                     await this.$api.deleteProduct(item.id, this.$auth.getToken('keycloak'))
                     this.$router.app.refresh()
                 } catch (err) {
-                    this.error =
-                        `Produkt wurde nicht gelöscht: ${err.message}` ||
-                        'Leider gab es ein Problem beim Löschen. Bitte später erneut versuchen.'
+                    this.error = err.message || 'Leider gab es ein Problem beim Löschen. Bitte später erneut versuchen.'
                 }
             } else if (['customer', 'employee', 'admin'].includes(this.type)) {
                 try {
                     await this.$api.deleteUser(item.email, this.type, this.$auth.getToken('keycloak'))
                     this.$router.app.refresh()
                 } catch (err) {
-                    this.error =
-                        `Kunde wurde nicht gelöscht: ${err.message}` ||
-                        'Leider gab es ein Problem beim Löschen. Bitte später erneut versuchen.'
+                    this.error = err.message || 'Leider gab es ein Problem beim Löschen. Bitte später erneut versuchen.'
                 }
             }
         },

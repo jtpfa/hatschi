@@ -99,7 +99,7 @@
                 </div>
                 <div>
                     <span class="font-weight-bold">Versandart</span>
-                    <span>{{ item.shippingAddress === 'DEFAULT' ? 'Standard' : 'Express' }}</span>
+                    <span>{{ item.shippingMethod === 'DEFAULT' ? 'Standard' : 'Express' }}</span>
                 </div>
             </template>
         </b-card>
@@ -158,6 +158,10 @@ a.details {
     &:focus {
         text-decoration: none;
     }
+}
+
+.card:not(:last-of-type) {
+    margin-bottom: 2.5rem;
 }
 
 .card-header,

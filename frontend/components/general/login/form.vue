@@ -37,7 +37,7 @@
                 ></b-form-input>
             </div>
 
-            <b-alert class="mt-5 mb-3" :show="error.length > 0" variant="danger">{{ error }}</b-alert>
+            <b-alert class="mt-5 mb-3" :show="error.length > 0" variant="danger" v-html="error" />
 
             <div class="d-flex justify-content-between align-items-center w-100">
                 <div class="big-noodle">

@@ -28,7 +28,7 @@
                             {{ $currencyConverter.convertCentsToEuro(product.price) }}
                         </span>
                         <span class="text-muted">inkl. MwSt.</span>
-                        <span class="text-muted">zzgl. Versandkosten</span>
+                        <span class="text-muted">keine Versandkosten</span>
                     </div>
 
                     <add-to-cart :orderable="orderable" :product="product" />
