@@ -80,8 +80,8 @@ public class CustomerServiceImpl implements CustomerServiceI {
         CustomerEntity currentCustomerEntity = customerRepository.findByEmail(email).orElseThrow(NoCustomerFoundException::new);
 
         if (isUserAuthorized(currentCustomerEntity, roleOfCallingPrincipal)) {
-            keycloakService.deleteCustomerByEmail(email);
             customerRepository.delete(currentCustomerEntity);
+            keycloakService.deleteCustomerByEmail(email);
         } else {
             throw new NotAuthorizedException();
         }
