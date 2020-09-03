@@ -60,12 +60,14 @@
     </div>
 </template>
 <script>
+import 'vue-glide-js/dist/vue-glide.css'
+import { Glide, GlideSlide } from 'vue-glide-js'
 import HomeSlideDescription from '~/components/shop/home/slide/description'
 import HomeSlideFacts from '~/components/shop/home/slide/facts'
 
 export default {
     name: 'HomeStage',
-    components: { HomeSlideDescription, HomeSlideFacts },
+    components: { HomeSlideDescription, HomeSlideFacts, [Glide.name]: Glide, [GlideSlide.name]: GlideSlide },
 }
 </script>
 
