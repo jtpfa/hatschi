@@ -42,12 +42,12 @@ public class CustomerServiceImpl implements CustomerServiceI {
         CustomerEntity currentCustomerEntity = getCurrentCustomerIfExists(principal);
 
         checkIfUserWithSameEmailExists(customerEntity, principal.getName());
-        keycloakService.updateKeycloakUser(customerEntity, principal.getName());
-
         currentCustomerEntity.setEmail(customerEntity.getEmail());
         currentCustomerEntity.setFirstName(customerEntity.getFirstName());
         currentCustomerEntity.setLastName(customerEntity.getLastName());
+
         customerRepository.save(currentCustomerEntity);
+        keycloakService.updateKeycloakUser(customerEntity, principal.getName());
     }
 
     @Override
@@ -63,12 +63,13 @@ public class CustomerServiceImpl implements CustomerServiceI {
         if (isUserAuthorized(currentCustomerEntity, roleOfCallingPrincipal)) {
             checkIfUserWithSameEmailExists(customerEntity, currentCustomerEntity.getEmail());
 
-            updateKeycloakUser(customerEntity, targetCustomerRole, currentCustomerEntity);
-
+            String currentCustomerEmail = currentCustomerEntity.getEmail();
             currentCustomerEntity.setEmail(customerEntity.getEmail());
             currentCustomerEntity.setFirstName(customerEntity.getFirstName());
             currentCustomerEntity.setLastName(customerEntity.getLastName());
+
             customerRepository.save(currentCustomerEntity);
+            updateKeycloakUser(customerEntity, targetCustomerRole, currentCustomerEmail);
         } else {
             throw new NotAuthorizedException();
         }
@@ -87,11 +88,11 @@ public class CustomerServiceImpl implements CustomerServiceI {
         }
     }
 
-    private void updateKeycloakUser(CustomerEntity customerEntity, CustomerRoleEnum targetCustomerRole, CustomerEntity currentCustomerEntity) throws KeycloakEndpointNotFoundException, KeycloakUnknownErrorException, KeycloakUserAlreadyExistsException, KeycloakUserIsNotAuthorizedException {
+    private void updateKeycloakUser(CustomerEntity customerEntity, CustomerRoleEnum targetCustomerRole, String currentCustomerEmail) throws KeycloakEndpointNotFoundException, KeycloakUnknownErrorException, KeycloakUserAlreadyExistsException, KeycloakUserIsNotAuthorizedException {
         if (targetCustomerRole != null) {
-            keycloakService.updateKeycloakUser(customerEntity, currentCustomerEntity.getEmail(), targetCustomerRole);
+            keycloakService.updateKeycloakUser(customerEntity, currentCustomerEmail, targetCustomerRole);
         } else {
-            keycloakService.updateKeycloakUser(customerEntity, currentCustomerEntity.getEmail());
+            keycloakService.updateKeycloakUser(customerEntity, currentCustomerEmail);
         }
     }
 
