@@ -12,7 +12,6 @@ import de.pcmr.shop.exception.keycloak.KeycloakUserIsNotAuthorizedException;
 import de.pcmr.shop.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 
 import javax.validation.Valid;
@@ -37,7 +36,6 @@ public class CustomerServiceImpl implements CustomerServiceI {
     }
 
     @Override
-    @Transactional(rollbackFor = Exception.class)
     public void updateCurrentCustomer(@Valid CustomerEntity customerEntity, Principal principal) throws NoCustomerFoundException, KeycloakUnknownErrorException, KeycloakUserAlreadyExistsException, KeycloakEndpointNotFoundException, KeycloakUserIsNotAuthorizedException, CustomerAlreadyExistsException {
         CustomerEntity currentCustomerEntity = getCurrentCustomerIfExists(principal);
 
@@ -45,18 +43,16 @@ public class CustomerServiceImpl implements CustomerServiceI {
         currentCustomerEntity.setEmail(customerEntity.getEmail());
         currentCustomerEntity.setFirstName(customerEntity.getFirstName());
         currentCustomerEntity.setLastName(customerEntity.getLastName());
-
         customerRepository.save(currentCustomerEntity);
         keycloakService.updateKeycloakUser(customerEntity, principal.getName());
     }
 
     @Override
-    @Transactional(rollbackFor = Exception.class)
     public void updateCustomer(String email, @Valid CustomerEntity customerEntity, CustomerRoleEnum roleOfCallingPrincipal) throws CustomerAlreadyExistsException, KeycloakUnknownErrorException, KeycloakUserAlreadyExistsException, KeycloakEndpointNotFoundException, KeycloakUserIsNotAuthorizedException, NoCustomerFoundException, NotAuthorizedException {
         updateCustomer(email, customerEntity, roleOfCallingPrincipal, null);
     }
 
-    @Transactional(rollbackFor = Exception.class)
+    @Override
     public void updateCustomer(String email, @Valid CustomerEntity customerEntity, CustomerRoleEnum roleOfCallingPrincipal, CustomerRoleEnum targetCustomerRole) throws KeycloakUnknownErrorException, KeycloakUserAlreadyExistsException, KeycloakEndpointNotFoundException, KeycloakUserIsNotAuthorizedException, CustomerAlreadyExistsException, NotAuthorizedException, NoCustomerFoundException {
         CustomerEntity currentCustomerEntity = customerRepository.findByEmail(email).orElseThrow(NoCustomerFoundException::new);
 
@@ -76,7 +72,6 @@ public class CustomerServiceImpl implements CustomerServiceI {
     }
 
     @Override
-    @Transactional(rollbackFor = Exception.class)
     public void deleteCustomer(String email, CustomerRoleEnum roleOfCallingPrincipal) throws NoCustomerFoundException, KeycloakUnknownErrorException, KeycloakUserAlreadyExistsException, KeycloakEndpointNotFoundException, KeycloakUserIsNotAuthorizedException, NotAuthorizedException {
         CustomerEntity currentCustomerEntity = customerRepository.findByEmail(email).orElseThrow(NoCustomerFoundException::new);
 
