@@ -216,18 +216,14 @@ export default {
                     await this.$api.deleteProduct(item.id, this.$auth.getToken('keycloak'))
                     this.$router.app.refresh()
                 } catch (err) {
-                    this.error =
-                        `Produkt wurde nicht gelöscht: ${err.message}` ||
-                        'Leider gab es ein Problem beim Löschen. Bitte später erneut versuchen.'
+                    this.error = err.message || 'Leider gab es ein Problem beim Löschen. Bitte später erneut versuchen.'
                 }
             } else if (['customer', 'employee', 'admin'].includes(this.type)) {
                 try {
                     await this.$api.deleteUser(item.email, this.type, this.$auth.getToken('keycloak'))
                     this.$router.app.refresh()
                 } catch (err) {
-                    this.error =
-                        `Kunde wurde nicht gelöscht: ${err.message}` ||
-                        'Leider gab es ein Problem beim Löschen. Bitte später erneut versuchen.'
+                    this.error = err.message || 'Leider gab es ein Problem beim Löschen. Bitte später erneut versuchen.'
                 }
             }
         },

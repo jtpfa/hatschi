@@ -76,9 +76,7 @@ export default {
                 })
                 this.$router.app.refresh()
             } catch (err) {
-                this.error =
-                    `Adresse wurde nicht gelöscht: ${err.message}` ||
-                    'Leider gab es ein Problem beim Löschen. Bitte später erneut versuchen.'
+                this.error = err.message || 'Leider gab es ein Problem beim Löschen. Bitte später erneut versuchen.'
             }
         },
     },
