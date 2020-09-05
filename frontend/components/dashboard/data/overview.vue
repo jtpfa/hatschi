@@ -32,7 +32,7 @@
             <template v-if="!dashboard" v-slot:cell(actions)="row">
                 <b-button-group class="float-right">
                     <b-button
-                        v-if="type !== 'order' && userIsAllowedToEdit"
+                        v-if="type !== 'order' && isUserAllowedToEdit"
                         class="action-button"
                         size="sm"
                         variant="primary"
@@ -41,7 +41,7 @@
                         <icon-pen />
                     </b-button>
                     <b-button
-                        v-if="type !== 'order' && userIsAllowedToDelete"
+                        v-if="type !== 'order' && isUserAllowedToDelete"
                         class="action-button"
                         size="sm"
                         variant="danger"
@@ -89,6 +89,15 @@
 </template>
 
 <script>
+/**
+ * @component DataOverview
+ * @desc Table rendering for dashboard data
+ * @lifecycle mounted - Check if user has privileges to edit and/ or delete data
+ * @lifecycle fetch - Fetch the data of the given type and store the result in.
+ * @lifecycle activated - Call fetch again if last fetch more than 30 sec ago
+ * @author Jonas Pfannkuche
+ */
+
 import ProductEdit from '~/components/dashboard/products/edit'
 import UserEdit from '~/components/dashboard/user/edit'
 import IconPen from '~/components/general/icons/pen'
@@ -98,22 +107,37 @@ export default {
     name: 'DataOverview',
     components: { UserEdit, IconTrash, IconPen, ProductEdit },
     props: {
+        /**
+         * @vprop {Boolean} dashboard - Is table shown on {@link component:DashboardIndexPage main dashboard page}
+         */
         dashboard: {
             type: Boolean,
             required: true,
         },
+        /**
+         * @vprop {Array} fields - Columns of the table
+         */
         fields: {
             type: Array,
             required: true,
         },
+        /**
+         * @vprop {String} [sortBy=''] - Column to sort table data
+         */
         sortBy: {
             type: String,
             default: '',
         },
+        /**
+         * @vprop {Boolean} [sortDesc=false] - Sort order
+         */
         sortDesc: {
             type: Boolean,
             default: false,
         },
+        /**
+         * @vprop {('product'|'customer'|'employee'|'admin'|'order')} type - The allowed types of table data
+         */
         type: {
             type: String,
             required: true,
@@ -152,43 +176,74 @@ export default {
     },
     data() {
         return {
-            userIsAllowedToEdit: false,
-            userIsAllowedToDelete: false,
+            /**
+             * @member {Boolean} isUserAllowedToEdit - Has user privileges to edit data
+             */
+            isUserAllowedToEdit: false,
+            /**
+             * @member {Boolean} isUserAllowedToDelete - Has user privileges to delete data
+             */
+            isUserAllowedToDelete: false,
+            /**
+             * @member {Number} perPage - Maximum number of elements in table page
+             */
             perPage: 5,
+            /**
+             * @member {Number} currentPage - Selected page of table
+             */
             currentPage: 1,
-            currentItem: {},
-            deletionConfirmed: '',
+            /**
+             * @member {Array} items - Table items
+             */
             items: [],
+            /**
+             * @member {String} items - Error message of rejected fetch
+             */
             fetchErrorMsg: '',
+            /**
+             * @member {String} error - General error message
+             */
             error: '',
         }
     },
     computed: {
+        /**
+         * @computed {Number} rows - Get the number of table rows needed to display all items. With this we can generate the pagination.
+         */
         rows() {
             return this.items.length
         },
     },
     mounted() {
-        this.userIsAllowedToEdit =
+        this.isUserAllowedToEdit =
             ['product', 'customer'].includes(this.type) ||
             (['employee', 'admin'].includes(this.type) && this.$auth.$state.roles?.includes('admin'))
 
-        this.userIsAllowedToDelete =
+        this.isUserAllowedToDelete =
             this.type === 'product' ||
             (['customer', 'employee', 'admin'].includes(this.type) && this.$auth.$state.roles?.includes('admin'))
     },
     activated() {
-        // Call fetch again if last fetch more than 30 sec ago
         if (this.$fetchState.timestamp <= Date.now() - 30000) {
             this.$fetch()
         }
     },
     methods: {
+        /**
+         * @method showEditModal
+         * @desc Displays a modal with an form to edit data
+         * @param {String|Number} itemId - Key to uniquely identify item
+         */
         showEditModal(itemId) {
             this.$root.$emit('bv::show::modal', `modal-edit-${this.type}-${itemId}`)
         },
+        /**
+         * @method confirmDeletion
+         * @desc Shows a confirmation modal and calls {@link component:DataOverview~deleteData deleteData} if the user confirms
+         * @param {Object} item - Item which should be deleted
+         */
         confirmDeletion(item) {
-            this.currentItem = { ...item }
+            const itemToDelete = { ...item }
             this.$bvModal
                 .msgBoxConfirm(`Soll der Datensatz wirklich gelöscht werden?`, {
                     title: 'Löschen bestätigen',
@@ -203,13 +258,19 @@ export default {
                 })
                 .then(async value => {
                     if (value) {
-                        await this.deleteData(this.currentItem)
+                        await this.deleteData(itemToDelete)
                     }
                 })
                 .catch(err => {
                     this.error = err.message || 'Leider gab es ein Problem. Bitte später erneut versuchen.'
                 })
         },
+        /**
+         * @method deleteData
+         * @desc Calls api endpoint to delete item and handles response
+         * @param {Object} item - Item which should be deleted
+         * @returns {Promise<void>}
+         */
         async deleteData(item) {
             if (this.type === 'product') {
                 try {
@@ -243,6 +304,7 @@ export default {
     fill: $white;
 }
 
+// Accept line breaks within cells
 ::v-deep table td {
     white-space: pre-line;
 }

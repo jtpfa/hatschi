@@ -106,6 +106,12 @@
 </template>
 
 <script>
+/**
+ * @component ProductAdd
+ * @desc Form to add a new product. It's only rendered on client side because of the ckeditor
+ * @author Jonas Pfannkuche
+ */
+
 import FormFieldEditor from '~/components/dashboard/form-fields/editor'
 import FormFieldFileUpload from '~/components/dashboard/form-fields/fileUpload'
 import ButtonContainer from '~/components/general/layout/buttonContainer'
@@ -115,17 +121,47 @@ export default {
     components: { FormFieldEditor, FormFieldFileUpload, ButtonContainer },
     data() {
         return {
+            /**
+             * @member {String} name - Product name
+             */
             name: '',
+            /**
+             * @member {String} description - Product description
+             */
             description: '',
+            /**
+             * @member {Number} priceEur - Euros of product price
+             */
             priceEur: 0,
+            /**
+             * @member {Number} priceCt - Cents of product price
+             */
             priceCt: 0,
+            /**
+             * @member {Number} stock - Product stock
+             */
             stock: 0,
+            /**
+             * @member {String} success - General success message
+             */
             success: '',
+            /**
+             * @member {String} error - General error message
+             */
             error: '',
+            /**
+             * @member {Boolean} loading - Show request status
+             */
             loading: false,
         }
     },
     methods: {
+        /**
+         * @method checkEuroRange
+         * @desc Checks if entered euro value are between 0 and 999999
+         * @param {String} value - Current euro value of input field
+         * @returns {String}
+         */
         checkEuroRange(value) {
             if (+value < 0) {
                 return '0'
@@ -135,6 +171,12 @@ export default {
             }
             return value
         },
+        /**
+         * @method checkCtRange
+         * @desc Checks if entered cent value is between 0 and 99
+         * @param {String} value - Current cent value of input field
+         * @returns {String}
+         */
         checkCtRange(value) {
             if (+value < 0) {
                 return '0'
@@ -144,6 +186,11 @@ export default {
             }
             return value
         },
+        /**
+         * @method addProduct
+         * @desc Calls api endpoint to add product and handles response
+         * @returns {Promise<void>}
+         */
         async addProduct() {
             try {
                 await this.$api.addProduct(
@@ -168,6 +215,11 @@ export default {
                 this.error = err.message || 'Leider gab es ein Problem. Bitte später erneut versuchen.'
             }
         },
+        /**
+         * @method onSubmit
+         * @desc Validates the form, shows validation state and calls {@link component:ProductAdd~addProduct addProduct} if the form is valid
+         * @param {Object} event - Browser event which is fired on submitting the form
+         */
         async onSubmit(event) {
             this.loading = true
             this.success = ''
@@ -182,6 +234,10 @@ export default {
             }
             this.loading = false
         },
+        /**
+         * @method clearForm
+         * @desc Clears all input fields and removes validation state of form
+         */
         clearForm() {
             this.$refs.form.classList.remove('was-validated')
             this.name = ''

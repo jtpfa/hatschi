@@ -8,9 +8,18 @@
 </template>
 
 <script>
+/**
+ * @component DashboardHeader
+ * @desc Header of dashboard
+ * @author Jonas Pfannkuche
+ */
 export default {
-    name: 'AdminHeader',
+    name: 'DashboardHeader',
     methods: {
+        /**
+         * @method logout
+         * @desc Logs the user out
+         */
         logout() {
             this.$auth.logout()
         },

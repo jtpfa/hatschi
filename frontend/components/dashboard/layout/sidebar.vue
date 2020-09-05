@@ -14,13 +14,19 @@
 </template>
 
 <script>
+/**
+ * @component DashboardSidebar
+ * @desc Sidebar of dashboard
+ * @author Jonas Pfannkuche
+ */
+
 import IconBarcode from '~/components/general/icons/barcode'
 import IconCustomers from '~/components/general/icons/customers'
 import IconDashboard from '~/components/general/icons/dashboard'
 import IconOrders from '~/components/general/icons/orders'
 
 export default {
-    name: 'AdminSidebar',
+    name: 'DashboardSidebar',
     components: { IconDashboard, IconBarcode, IconCustomers, IconOrders },
 }
 </script>
