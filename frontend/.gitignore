@@ -86,3 +86,6 @@ sw.*
 
 # Vim swap files
 *.swp
+
+# JS Doc
+out
