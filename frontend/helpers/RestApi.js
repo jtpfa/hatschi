@@ -9,7 +9,7 @@ const _handleResponse = (response, needJsonOutput = false) => {
     }
 }
 
-export class RestApi {
+export default class RestApi {
     constructor(baseUrl) {
         this.baseUrl = baseUrl
     }

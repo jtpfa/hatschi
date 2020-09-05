@@ -1,3 +1,9 @@
+/**
+ * ESLint configurations
+ *
+ * @author Jonas Pfannkuche
+ */
+
 module.exports = {
     globals: {
         $nuxt: true,
@@ -11,6 +17,10 @@ module.exports = {
         parser: 'babel-eslint',
         sourceType: 'module',
     },
+    /**
+     * The order in the extends array shouldn't be changed
+     * Otherwise you could run into an endless loop
+     */
     extends: [
         'airbnb-base',
         'plugin:vue/recommended',
@@ -20,7 +30,6 @@ module.exports = {
     ],
     // required to lint *.vue files
     plugins: ['vue'],
-    // add your custom rules here
     rules: {
         'import/extensions': [
             'error',
@@ -49,12 +58,11 @@ module.exports = {
                 alphabetical: true,
             },
         ],
-        'import/prefer-default-export': 0,
-        'no-underscore-dangle': 'off', // to use the nuxt/auth localScheme
+        'no-underscore-dangle': 'off',
         'consistent-return': 'off',
         'vue/no-v-html': 0,
         'no-param-reassign': ['error', { props: false }],
-        'no-shadow': ['error', { allow: ['resolve', 'reject', 'done', 'cb', 'state'] }],
+        'no-shadow': ['error', { allow: ['resolve', 'reject', 'state'] }],
     },
     settings: {
         'import/resolver': {

@@ -112,8 +112,8 @@
 </template>
 
 <script>
-import FormFieldEditor from '~/components/admin/form-fields/editor'
-import FormFieldFileUpload from '~/components/admin/form-fields/fileUpload'
+import FormFieldEditor from '~/components/dashboard/form-fields/editor'
+import FormFieldFileUpload from '~/components/dashboard/form-fields/fileUpload'
 import ButtonContainer from '~/components/general/layout/buttonContainer'
 
 export default {

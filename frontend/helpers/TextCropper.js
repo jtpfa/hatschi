@@ -1,4 +1,4 @@
-export class TextCropper {
+export default class TextCropper {
     static cropText(text, length) {
         if (!text || !length) {
             return ''

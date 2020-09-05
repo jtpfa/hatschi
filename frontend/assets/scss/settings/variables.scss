@@ -1,7 +1,9 @@
-// Variables
+// Global Variables
 //
 // These variables overwrite the bootstrap variables.
 // node_modules/bootstrap/scss/_variables.scss
+//
+// @author Jonas Pfannkuche
 
 // Breakpoints
 
@@ -74,9 +76,6 @@ $primary: #2196f3;
 
 $secondary: $gray-600;
 
-// Create higher contrast for light backgrounds
-$yiq-text-dark: $black;
-
 $info: $dark;
 $warning: #fca808;
 $danger: #f44336;
@@ -97,6 +96,9 @@ $theme-colors: map-merge(
     ),
     $theme-colors
 );
+
+// Create higher contrast for light backgrounds
+$yiq-text-dark: $black;
 
 // Fonts
 
@@ -121,5 +123,3 @@ $navbar-light-active-color: $primary;
 $enable-shadows: true;
 $enable-gradients: true;
 $enable-responsive-font-sizes: true;
-
-// Custom variables

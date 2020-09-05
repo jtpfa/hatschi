@@ -89,8 +89,8 @@
 </template>
 
 <script>
-import ProductEdit from '~/components/admin/products/edit'
-import UserEdit from '~/components/admin/user/edit'
+import ProductEdit from '~/components/dashboard/products/edit'
+import UserEdit from '~/components/dashboard/user/edit'
 import IconPen from '~/components/general/icons/pen'
 import IconTrash from '~/components/general/icons/trash'
 

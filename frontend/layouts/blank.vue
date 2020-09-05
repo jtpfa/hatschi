@@ -6,6 +6,12 @@
 </template>
 
 <script>
+/**
+ * @component LayoutBlank
+ * @desc Blank layout for login page
+ * @author Jonas Pfannkuche
+ */
+
 export default {
     name: 'Blank',
 }

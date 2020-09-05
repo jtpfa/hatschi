@@ -5,13 +5,22 @@
 </template>
 
 <script>
-import DataOverview from '~/components/admin/data/overview'
+/**
+ * @component DashboardOrderPage
+ * @desc Dashboard order page
+ * @author Jonas Pfannkuche
+ */
+
+import DataOverview from '~/components/dashboard/data/overview'
 
 export default {
     components: { DataOverview },
     layout: 'dashboard',
     data() {
         return {
+            /**
+             * @member {Array} fields - Fields that should be shown in the table
+             */
             fields: [
                 { key: 'id', label: 'Bestellnr.', sortable: true },
                 {
@@ -87,6 +96,12 @@ export default {
         }
     },
     methods: {
+        /**
+         * @method formatAddress
+         * @desc Format address to show in multiple lines in the table
+         * @param {Object} address - Address which should be formatted
+         * @returns {string} Formatted address
+         */
         formatAddress(address) {
             return `${address.firstName} ${address.lastName}
             ${address.address}
