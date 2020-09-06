@@ -95,7 +95,7 @@ export default {
             required: true,
         },
         /**
-         * @vprop {String} modalId - Id of the modal to identifie it in root scope
+         * @vprop {String} modalId - Id of the modal to identify it in root scope
          */
         modalId: {
             type: String,

@@ -79,6 +79,12 @@
 </template>
 
 <script>
+/**
+ * @component RegistrationForm
+ * @desc Registration form
+ * @author Jonas Pfannkuche
+ */
+
 import FormFieldPasswordConfirmation from '~/components/general/form-fields/passwordConfirmation'
 import ButtonContainer from '~/components/general/layout/buttonContainer'
 
@@ -87,15 +93,38 @@ export default {
     components: { ButtonContainer, FormFieldPasswordConfirmation },
     data() {
         return {
+            /**
+             * @member {String} firstName - First name of the new user
+             */
             firstName: '',
+            /**
+             * @member {String} lastName - Last name of the new user
+             */
             lastName: '',
+            /**
+             * @member {String} email - Email of the new user
+             */
             email: '',
+            /**
+             * @member {String} success - General success message
+             */
             success: '',
+            /**
+             * @member {String} error - General error message
+             */
             error: '',
+            /**
+             * @member {Boolean} loading - Request status
+             */
             loading: false,
         }
     },
     methods: {
+        /**
+         * @method register
+         * @desc Calls api endpoint to register a new user
+         * @returns {Promise<void>}
+         */
         async register() {
             try {
                 await this.$api.signUp({
@@ -109,6 +138,11 @@ export default {
                 this.error = err.message || 'Leider gab es ein Problem. Bitte später erneut versuchen.'
             }
         },
+        /**
+         * @method onSubmit
+         * @desc Validates the form, shows validation state and calls {@link component:RegisterForm~register register} if the form is valid
+         * @param {Object} event - Browser event which is fired on submitting the form
+         */
         async onSubmit(event) {
             this.loading = true
             this.success = ''

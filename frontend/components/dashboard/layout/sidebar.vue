@@ -5,7 +5,7 @@
                 <b-nav vertical>
                     <b-nav-item to="/dashboard"><icon-dashboard /></b-nav-item>
                     <b-nav-item to="/dashboard/produkte"><icon-barcode /></b-nav-item>
-                    <b-nav-item to="/dashboard/nutzer"><icon-customers /></b-nav-item>
+                    <b-nav-item to="/dashboard/nutzer"><icon-users /></b-nav-item>
                     <b-nav-item to="/dashboard/bestellungen"><icon-orders /></b-nav-item>
                 </b-nav>
             </nav>
@@ -21,13 +21,13 @@
  */
 
 import IconBarcode from '~/components/general/icons/barcode'
-import IconCustomers from '~/components/general/icons/customers'
+import IconUsers from '~/components/general/icons/users'
 import IconDashboard from '~/components/general/icons/dashboard'
 import IconOrders from '~/components/general/icons/orders'
 
 export default {
     name: 'DashboardSidebar',
-    components: { IconDashboard, IconBarcode, IconCustomers, IconOrders },
+    components: { IconDashboard, IconBarcode, IconUsers, IconOrders },
 }
 </script>
 

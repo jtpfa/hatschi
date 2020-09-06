@@ -12,9 +12,18 @@
 </template>
 
 <script>
+/**
+ * @component IconShoppingCart
+ * @desc Shopping cart icon; gets filled when product(s) inside
+ * @author Jonas Pfannkuche
+ */
+
 export default {
     name: 'IconShoppingCart',
     props: {
+        /**
+         * @vprop {Number} items - Number of products in the shopping cart
+         */
         items: {
             type: Number,
             default: 0,

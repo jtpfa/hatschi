@@ -11,6 +11,12 @@
 </template>
 
 <script>
+/**
+ * @component IconTrash
+ * @desc Trash icon
+ * @author Jonas Pfannkuche
+ */
+
 export default {
     name: 'IconTrash',
 }

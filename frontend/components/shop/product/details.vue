@@ -44,7 +44,12 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+/**
+ * @component ProductDetails
+ * @desc Detailed view of product with ability to add it to the cart
+ * @author Jonas Pfannkuche
+ */
+
 import AddToCart from '~/components/shop/cart/addToCart'
 import Spinner from '~/components/shop/layout/spinner'
 
@@ -52,21 +57,36 @@ export default {
     name: 'ProductDetails',
     components: { Spinner, AddToCart },
     props: {
+        /**
+         * @vprop {Object} product - Product with information that should be rendered
+         */
         product: {
             type: Object,
             required: true,
         },
     },
     computed: {
-        ...mapGetters({ productQuantity: 'shoppingcart/productQuantity' }),
+        /**
+         * @computed {Number} productQuantity - Quantity of product in shopping cart
+         */
+        productQuantity(productId) {
+            return this.$store.state.shoppingcart.productQuantity(productId)
+        },
+        /**
+         * @computed {String} shippingInformation - Shipping information text
+         */
         shippingInformation() {
             return !this.orderable ? 'Nicht mehr auf Lager' : 'Lieferbar in 1-2 Werktagen'
         },
+        /**
+         * @computed {Boolean} orderable - Product order availability
+         */
         orderable() {
             return this.product.stock > 0 && this.productQuantity(this.product.id) < this.product.stock
         },
     },
 }
+// @todo check if productquantity works fine
 </script>
 
 <style lang="scss" scoped>

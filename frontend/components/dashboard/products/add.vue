@@ -150,7 +150,7 @@ export default {
              */
             error: '',
             /**
-             * @member {Boolean} loading - Show request status
+             * @member {Boolean} loading - Request status
              */
             loading: false,
         }

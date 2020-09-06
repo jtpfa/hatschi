@@ -133,6 +133,12 @@
 </template>
 
 <script>
+/**
+ * @component IconLogo
+ * @desc PCMR Logo
+ * @author Jonas Pfannkuche
+ */
+
 export default {
     name: 'IconLogo',
 }

@@ -13,6 +13,12 @@
 </template>
 
 <script>
+/**
+ * @component IconDashboard
+ * @desc Dashboard icon
+ * @author Jonas Pfannkuche
+ */
+
 export default {
     name: 'IconDashboard',
 }

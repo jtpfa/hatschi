@@ -20,17 +20,28 @@
 </template>
 
 <script>
+/**
+ * @component FormFieldPasswordStrength
+ * @desc Visual representation of password strength check
+ * @author Jonas Pfannkuche
+ */
+
 export default {
     name: 'FormFieldPasswordStrength',
     props: {
+        /**
+         * @vprop {String} password - Password which should be checked
+         */
         password: {
             type: String,
-            default: '',
             required: true,
         },
     },
     data() {
         return {
+            /**
+             * @member {Array.<{text: String, fulfilled: Boolean}>} passwordCriteria - Criteria which needs to be fulfilled
+             */
             passwordCriteria: [
                 { text: 'Mind. 6 Zeichen', fulfilled: false },
                 { text: 'Mind. einen Buchstaben', fulfilled: false },
@@ -40,6 +51,9 @@ export default {
         }
     },
     computed: {
+        /**
+         * @computed {Number} passwordStrength - Number of fulfilled criterias
+         */
         passwordStrength: {
             get() {
                 let strength = 0
@@ -52,6 +66,10 @@ export default {
         },
     },
     watch: {
+        /**
+         * @watch password
+         * @desc On password change, calculate the strength
+         */
         password() {
             this.$set(this.passwordCriteria, 0, {
                 text: this.passwordCriteria[0].text,

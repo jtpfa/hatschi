@@ -28,12 +28,21 @@
 </template>
 
 <script>
+/**
+ * @component ProductCard
+ * @desc Card to show basic information of a product with a link to the detailed page
+ * @author Jonas Pfannkuche
+ */
+
 import Spinner from '~/components/shop/layout/spinner'
 
 export default {
     name: 'ProductCard',
     components: { Spinner },
     props: {
+        /**
+         * @vprop {Object} product - Product with information that should be rendered
+         */
         product: {
             type: Object,
             required: true,

@@ -10,6 +10,12 @@
 </template>
 
 <script>
+/**
+ * @component IconBarcode
+ * @desc Barcode icon
+ * @author Jonas Pfannkuche
+ */
+
 export default {
     name: 'IconBarcode',
 }

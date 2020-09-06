@@ -51,6 +51,12 @@
     </fieldset>
 </template>
 <script>
+/**
+ * @component FormFieldPasswordConfirmation
+ * @desc Password input field with confirmation
+ * @author Jonas Pfannkuche
+ */
+
 import FormFieldPasswordStrength from '~/components/general/form-fields/passwordStrength'
 
 export default {
@@ -58,12 +64,26 @@ export default {
     components: { FormFieldPasswordStrength },
     data() {
         return {
+            /**
+             * @member {String} password - Entered Password
+             */
             password: '',
+            /**
+             * @member {String} passwordConfirmation - Entered confirmation password
+             */
             passwordConfirmation: '',
+            /**
+             * @member {String} passwordConfirmationErrorMessage - Error message
+             */
             passwordConfirmationErrorMessage: '',
         }
     },
     methods: {
+        /**
+         * @method isPasswordConfirmed
+         * @desc Checks if the password is {@link component:FormFieldPasswordStrength~passwordCriteria strong enough} and confirmed
+         * @returns {Boolean} true, when password is {@link component:FormFieldPasswordStrength~passwordCriteria strong enough} and confirmed
+         */
         isPasswordConfirmed() {
             if (this.password !== this.passwordConfirmation) {
                 this.passwordConfirmationErrorMessage = 'Prüfe, ob deine Passwörter übereinstimmen.'
