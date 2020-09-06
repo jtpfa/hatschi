@@ -8,6 +8,7 @@ import java.util.Date;
 public final class OrderItemEntityBuilder {
     private Integer quantity;
     private ArticleEntity article;
+    private Integer price;
     private Long id;
     private Date created;
     private Date updated;
@@ -21,7 +22,7 @@ public final class OrderItemEntityBuilder {
         return new OrderItemEntityBuilder();
     }
 
-    public OrderItemEntityBuilder withQuantity(int quantity) {
+    public OrderItemEntityBuilder withQuantity(Integer quantity) {
         this.quantity = quantity;
         return this;
     }
@@ -31,7 +32,12 @@ public final class OrderItemEntityBuilder {
         return this;
     }
 
-    public OrderItemEntityBuilder withId(long id) {
+    public OrderItemEntityBuilder withPrice(Integer price) {
+        this.price = price;
+        return this;
+    }
+
+    public OrderItemEntityBuilder withId(Long id) {
         this.id = id;
         return this;
     }
@@ -60,6 +66,7 @@ public final class OrderItemEntityBuilder {
         OrderItemEntity orderItemEntity = new OrderItemEntity();
         orderItemEntity.setQuantity(quantity);
         orderItemEntity.setArticle(article);
+        orderItemEntity.setPrice(price);
         orderItemEntity.setId(id);
         orderItemEntity.setCreated(created);
         orderItemEntity.setUpdated(updated);

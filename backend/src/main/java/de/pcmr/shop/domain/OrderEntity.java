@@ -31,11 +31,11 @@ public class OrderEntity extends AbstractEntity {
     @Column(nullable = false)
     private Boolean paid;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(nullable = false)
     private AddressEntity invoiceAddress;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(nullable = false)
     private AddressEntity shippingAddress;
 

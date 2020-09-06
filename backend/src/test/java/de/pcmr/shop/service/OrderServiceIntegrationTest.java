@@ -7,6 +7,7 @@ import de.pcmr.shop.exception.AddressDoesNotBelongToUserException;
 import de.pcmr.shop.exception.DuplicateOrderItemsException;
 import de.pcmr.shop.exception.NoCustomerFoundException;
 import de.pcmr.shop.exception.NotEnoughArticlesOnStockException;
+import de.pcmr.shop.repository.AddressRepository;
 import de.pcmr.shop.repository.ArticleRepository;
 import de.pcmr.shop.repository.CustomerRepository;
 import de.pcmr.shop.repository.OrderRepository;
@@ -40,6 +41,7 @@ class OrderServiceIntegrationTest extends AbstractIntegrationTest {
 
     private final CustomerRepository customerRepository;
     private final ArticleRepository articleRepository;
+    private final AddressRepository addressRepository;
     private final OrderRepository orderRepository;
     private final OrderServiceI orderService;
 
@@ -49,10 +51,11 @@ class OrderServiceIntegrationTest extends AbstractIntegrationTest {
     private final Then then = new Then();
 
     @Autowired
-    OrderServiceIntegrationTest(CustomerRepository customerRepository, ArticleRepository articleRepository, OrderRepository orderRepository, OrderServiceI orderService) {
+    OrderServiceIntegrationTest(CustomerRepository customerRepository, ArticleRepository articleRepository, AddressRepository addressRepository, OrderRepository orderRepository, OrderServiceI orderService) {
         super();
         this.customerRepository = customerRepository;
         this.articleRepository = articleRepository;
+        this.addressRepository = addressRepository;
         this.orderRepository = orderRepository;
         this.orderService = orderService;
     }
@@ -184,6 +187,8 @@ class OrderServiceIntegrationTest extends AbstractIntegrationTest {
                     .withLastName("TestLast")
                     .withCustomer(customerEntity)
                     .build();
+
+            addressEntity = addressRepository.save(addressEntity);
         }
 
         void anOrderItemEntityWith(ArticleEntity articleEntity, int quantity) {
