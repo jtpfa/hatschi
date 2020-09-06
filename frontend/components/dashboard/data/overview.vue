@@ -208,7 +208,7 @@ export default {
     },
     computed: {
         /**
-         * @computed {Number} rows - Get the number of table rows needed to display all items. With this we can generate the pagination.
+         * @computed {Number} rows - Number of table rows needed to display all items. With this we can generate the pagination.
          */
         rows() {
             return this.items.length

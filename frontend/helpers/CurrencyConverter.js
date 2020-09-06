@@ -15,8 +15,8 @@ class CurrenyConverter {
 
     /**
      * Converts cents to euro
-     * @param {number} priceInCents - Price, in cents, to convert to euro
-     * @returns {string|number}
+     * @param {Number} priceInCents - Price, in cents, to convert to euro
+     * @returns {String}
      */
     convertCentsToEuro(priceInCents) {
         if (priceInCents === undefined) {

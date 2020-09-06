@@ -3,10 +3,10 @@
         <div class="sidebar-content py-2">
             <nav class="px-1 mb-3">
                 <b-nav vertical>
-                    <b-nav-item to="/admin"><icon-dashboard /></b-nav-item>
-                    <b-nav-item to="/admin/produkte"><icon-barcode /></b-nav-item>
-                    <b-nav-item to="/admin/nutzer"><icon-customers /></b-nav-item>
-                    <b-nav-item to="/admin/bestellungen"><icon-orders /></b-nav-item>
+                    <b-nav-item to="/dashboard"><icon-dashboard /></b-nav-item>
+                    <b-nav-item to="/dashboard/produkte"><icon-barcode /></b-nav-item>
+                    <b-nav-item to="/dashboard/nutzer"><icon-customers /></b-nav-item>
+                    <b-nav-item to="/dashboard/bestellungen"><icon-orders /></b-nav-item>
                 </b-nav>
             </nav>
         </div>

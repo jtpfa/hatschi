@@ -80,10 +80,11 @@ export default {
     },
     computed: {
         /**
-         * @computed {String} detailModel - If detail text exists use this one otherwise our new one
+         * @computed {String} detailModel - Synchronized input field value
          */
         detailModel: {
             get() {
+                // If detail text exists use this one otherwise our new one
                 return this.currentDetails.length <= 0 ? this.details : this.currentDetails
             },
             set(newDetailValue) {

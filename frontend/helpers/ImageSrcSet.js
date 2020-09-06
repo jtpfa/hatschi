@@ -5,7 +5,7 @@
 
 class ImageSrcSet {
     /**
-     * @param {string} mediaUrl - Base url to the product images folder
+     * @param {String} mediaUrl - Base url to the product images folder
      */
     constructor(mediaUrl) {
         this.baseUrl = mediaUrl
@@ -13,8 +13,8 @@ class ImageSrcSet {
 
     /**
      * Generates source set of image urls of the product
-     * @param {number} productId - Product id of the requested images
-     * @returns {string} Urls of the image in HTML srcSet format
+     * @param {Number} productId - Product id of the requested images
+     * @returns {String} Urls of the image in HTML srcSet format
      */
     getSrcSet(productId) {
         const sizes = ['256', '512', '1024']

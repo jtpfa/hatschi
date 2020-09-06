@@ -8,8 +8,8 @@ class DateFormatter {
      * Formats the a timestamp to the loacale date format:
      * DD.MM.YYYY, HH:MI:SS
      * @static
-     * @param {number} timestamp
-     * @returns {string}
+     * @param {Number} timestamp
+     * @returns {String}
      */
     static toDateString(timestamp) {
         const date = new Date(timestamp)

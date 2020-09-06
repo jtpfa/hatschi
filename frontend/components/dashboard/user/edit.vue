@@ -129,10 +129,11 @@ export default {
     },
     computed: {
         /**
-         * @computed {String} username - If new email exists use it otherwise use the email from the user
+         * @computed {String} username - Synchronized username input field value
          */
         username: {
             get() {
+                // If new email exists use it otherwise use the email from the user
                 return this.newEmail ? this.newEmail : this.user.email
             },
             set(newEmail) {
@@ -140,10 +141,11 @@ export default {
             },
         },
         /**
-         * @computed {String} selectedRole - If new role exists use it otherwise use the role from the user
+         * @computed {String} selectedRole - Synchronized role select field value
          */
         selectedRole: {
             get() {
+                // If new role exists use it otherwise use the role from the user
                 return this.newRole ? this.newRole : this.role
             },
             set(newRole) {
@@ -165,9 +167,9 @@ export default {
                 if (!this.isAdmin) {
                     await this.$api.editCustomer(
                         {
-                            email: this.username,
                             firstName: this.user.firstName,
                             lastName: this.user.lastName,
+                            email: this.username,
                         },
                         this.user.email,
                         this.$auth.getToken('keycloak')
@@ -175,9 +177,9 @@ export default {
                 } else {
                     await this.$api.editUser(
                         {
-                            email: this.username,
                             firstName: this.user.firstName,
                             lastName: this.user.lastName,
+                            email: this.username,
                             customerRole: this.selectedRole.toLocaleUpperCase(),
                         },
                         this.user.email,

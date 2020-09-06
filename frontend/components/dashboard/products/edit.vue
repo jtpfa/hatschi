@@ -163,10 +163,11 @@ export default {
     },
     computed: {
         /**
-         * @computed {String|Number} euro - If euros of price exists use it otherwise get the euros of our current product
+         * @computed {String|Number} euro - Synchronized euros input field value
          */
         euro: {
             get() {
+                // If euros of price exists use it otherwise get the euros of our current product
                 return this.priceEur !== undefined ? this.priceEur : this.getEuro(this.product.price)
             },
             set(newEuroPrice) {
@@ -174,10 +175,11 @@ export default {
             },
         },
         /**
-         * @computed {String|Number} ct - If cents of price exists use it otherwise get the cents of our current product
+         * @computed {String|Number} ct - Synchronized cents input field value
          */
         ct: {
             get() {
+                // If cents of price exists use it otherwise get the cents of our current product
                 return this.priceCt !== undefined ? this.priceCt : this.getCt(this.product.price)
             },
             set(newCtPrice) {

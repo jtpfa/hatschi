@@ -48,7 +48,7 @@ export default {
     },
     computed: {
         /**
-         * @computed acceptedFile - Check if file was uploaded, if type is jp(e)?g or png and if size is less than 10 MB.
+         * @computed acceptedFile - Returns true if a file was uploaded, type is jp(e)?g or png and size is less than 10 MB
          */
         acceptedFile() {
             // if no image was uploaded no need to check image properties
