@@ -8,13 +8,25 @@
 </template>
 
 <script>
+/**
+ * @component Buttoncontainer
+ * @desc Container for a button with a spinner to show loading status in responsive layout
+ * @author Jonas Pfannkuche
+ */
+
 export default {
     name: 'ButtonContainer',
     props: {
+        /**
+         * @vprop {String} text - Button text
+         */
         text: {
             type: String,
             default: '',
         },
+        /**
+         * @vprop {Boolean} loading - Loading status
+         */
         loading: {
             type: Boolean,
             default: false,

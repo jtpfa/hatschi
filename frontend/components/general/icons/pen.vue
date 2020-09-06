@@ -10,6 +10,12 @@
 </template>
 
 <script>
+/**
+ * @component IconPen
+ * @desc Pen icon
+ * @author Jonas Pfannkuche
+ */
+
 export default {
     name: 'IconPen',
 }

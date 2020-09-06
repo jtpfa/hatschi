@@ -1,8 +1,8 @@
 <template>
-    <div v-if="accessGranted">
-        <admin-header />
+    <div v-if="hasAccess">
+        <dashboard-header />
         <div class="d-flex">
-            <admin-sidebar />
+            <dashboard-sidebar />
             <b-container class="my-5 mx-3 overflow-y-hidden">
                 <nuxt keep-alive />
             </b-container>
@@ -14,31 +14,41 @@
 </template>
 
 <script>
-import AdminHeader from '~/components/admin/layout/header'
-import AdminSidebar from '~/components/admin/layout/sidebar'
+/**
+ * @component LayoutDashboard
+ * @desc Layout for the dashboard
+ * @lifecycle mounted - Check if user is allowed to visit admin pages. Redirect to login page if access is forbidden.
+ * @author Jonas Pfannkuche
+ */
+
+import DashboardHeader from '~/components/dashboard/layout/header'
+import DashboardSidebar from '~/components/dashboard/layout/sidebar'
 import LoginForm from '~/components/general/login/form'
 
 export default {
-    name: 'Admin',
-    components: { LoginForm, AdminHeader, AdminSidebar },
+    name: 'Dashboard',
+    components: { LoginForm, DashboardHeader, DashboardSidebar },
     middleware: ['auth'],
     data() {
         return {
-            accessGranted: false,
+            /**
+             * @member {Boolean} hasAccess - Has user privileges to view page
+             */
+            hasAccess: false,
         }
     },
     mounted() {
-        this.accessGranted = this.$auth.$state.roles?.includes('employee') || this.$auth.$state.roles?.includes('admin')
+        this.hasAccess = this.$auth.$state.roles?.includes('employee') || this.$auth.$state.roles?.includes('admin')
 
-        if (!this.accessGranted) {
-            this.$auth.$storage.setUniversal('redirect', '/admin')
+        if (!this.hasAccess) {
+            this.$auth.$storage.setUniversal('redirect', '/dashboard')
         } else {
             this.$auth.$storage.removeUniversal('redirect')
         }
     },
     head() {
         return {
-            title: 'Admin Dashboard - PC Masterrace',
+            title: 'Dashboard - PC Masterrace',
         }
     },
 }

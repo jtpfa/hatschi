@@ -20,6 +20,12 @@
 </template>
 
 <script>
+/**
+ * @component FormFieldEditor
+ * @desc WYSIWYG Editor with validation
+ * @author Jonas Pfannkuche
+ */
+
 /* eslint global-require: "off" */
 let ckeditor
 let ClassicEditor = {}
@@ -32,6 +38,9 @@ export default {
     name: 'FormFieldEditor',
     components: { ckeditor },
     props: {
+        /**
+         * @vprop {String} currentDetails - Existing details of item
+         */
         currentDetails: {
             type: String,
             default: '',
@@ -39,7 +48,13 @@ export default {
     },
     data() {
         return {
+            /**
+             * @member {String} details - If details exist user them otherwise it's an empty String
+             */
             details: this.currentDetails || '',
+            /**
+             * @member {Object} ediotr - CKEdtior configuration
+             */
             editor: {
                 editor: ClassicEditor,
                 config: {
@@ -64,8 +79,12 @@ export default {
         }
     },
     computed: {
+        /**
+         * @computed {String} detailModel - Synchronized input field value
+         */
         detailModel: {
             get() {
+                // If detail text exists use this one otherwise our new one
                 return this.currentDetails.length <= 0 ? this.details : this.currentDetails
             },
             set(newDetailValue) {
@@ -74,6 +93,11 @@ export default {
         },
     },
     methods: {
+        /**
+         * @method isValid
+         * @desc Checks if the details text is between 4 and 32768 characters long
+         * @returns {Boolean} true, when text is between 4 and 32768 characters long
+         */
         isValid() {
             if (this.currentDetails.length <= 0) {
                 return /^.{4,32768}$/.test(this.details)

@@ -24,6 +24,12 @@
 </template>
 
 <script>
+/**
+ * @component FormFieldFileUpload
+ * @desc File uploader with validation
+ * @author Jonas Pfannkuche
+ */
+
 export default {
     name: 'FormFieldFileUpload',
     props: {
@@ -34,10 +40,16 @@ export default {
     },
     data() {
         return {
+            /**
+             * @member {Object} image - Uploaded image
+             */
             image: null,
         }
     },
     computed: {
+        /**
+         * @computed acceptedFile - Returns true if a file was uploaded, type is jp(e)?g or png and size is less than 10 MB
+         */
         acceptedFile() {
             // if no image was uploaded no need to check image properties
             if (!this.image) {
@@ -50,11 +62,7 @@ export default {
             }
 
             // check if image size is under 10 MB
-            if (this.image.size > 10 * 2 ** 20) {
-                return false
-            }
-
-            return true
+            return this.image.size <= 10 * 2 ** 20
         },
     },
 }

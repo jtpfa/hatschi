@@ -6,13 +6,22 @@
 </template>
 
 <script>
-import DataOverview from '~/components/admin/data/overview'
+/**
+ * @component DashboardProductIndexPage
+ * @desc Dashboard product page
+ * @author Jonas Pfannkuche
+ */
+
+import DataOverview from '~/components/dashboard/data/overview'
 
 export default {
     components: { DataOverview },
     layout: 'dashboard',
     data() {
         return {
+            /**
+             * @member {Array} fields - Fields that should be shown in the table
+             */
             fields: [
                 { key: 'id', label: 'Produktnr.', sortable: true },
                 { key: 'name', label: 'Name', sortable: true },

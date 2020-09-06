@@ -1,3 +1,8 @@
+// Load fonts in different file formats.
+// Allow swapping to prevent content flashs.
+//
+// @author Jonas Pfannkuche
+
 @font-face {
     font-family: 'BigNoodle';
     src: url('~assets/fonts/bigNoodleRegular/big_noodle_titling.woff2') format('woff2'),

@@ -9,6 +9,12 @@
 </template>
 
 <script>
+/**
+ * @component IconOrders
+ * @desc Orders icon
+ * @author Jonas Pfannkuche
+ */
+
 export default {
     name: 'IconOrders',
 }

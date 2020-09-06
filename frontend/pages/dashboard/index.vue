@@ -21,7 +21,7 @@
         <h2>Mitarbeiter</h2>
         <data-overview class="mb-5" :dashboard="true" :fields="userFields" type="employee"></data-overview>
 
-        <template v-if="accessGranted">
+        <template v-if="isAdmin">
             <h2>Admins</h2>
             <data-overview :dashboard="false" :fields="userFields" type="admin"></data-overview>
         </template>
@@ -29,14 +29,27 @@
 </template>
 
 <script>
-import DataOverview from '~/components/admin/data/overview'
+/**
+ * @component DashboardIndexPage
+ * @desc Dashboard index page with all information in short version
+ * @lifecycle mounted - Check if user has admin privileges.
+ * @author Jonas Pfannkuche
+ */
+
+import DataOverview from '~/components/dashboard/data/overview'
 
 export default {
     components: { DataOverview },
     layout: 'dashboard',
     data() {
         return {
-            accessGranted: false,
+            /**
+             * @member {Boolean} isAdmin - Has user admin privileges
+             */
+            isAdmin: false,
+            /**
+             * @member {Array} productFields - Product related fields that should be shown in the table
+             */
             productFields: [
                 { key: 'id', label: 'Produktnr.', sortable: true },
                 { key: 'name', label: 'Artikelbezeichnung', sortable: true },
@@ -51,11 +64,17 @@ export default {
                 { key: 'stock', label: 'Lagerbestand', sortable: true },
                 { key: 'image', label: 'Bild', sortable: false },
             ],
+            /**
+             * @member {Array} userFields - User related fields that should be shown in the table
+             */
             userFields: [
                 { key: 'email', label: 'E-Mail', sortable: true },
                 { key: 'firstName', label: 'Vorname', sortable: true },
                 { key: 'lastName', label: 'Nachname', sortable: true },
             ],
+            /**
+             * @member {Array} orderFields - Order related fields that should be shown in the table
+             */
             orderFields: [
                 {
                     key: 'orderDate',
@@ -81,7 +100,7 @@ export default {
         }
     },
     mounted() {
-        this.accessGranted = this.$auth.$state.roles?.includes('admin')
+        this.isAdmin = this.$auth.$state.roles?.includes('admin')
     },
 }
 </script>

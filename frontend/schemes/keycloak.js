@@ -1,5 +1,15 @@
+/**
+ * Keycloak scheme for nuxt/auth module
+ * @module KeyCloakScheme
+ * @author Jonas Pfannkuche
+ */
+
 import jwtDecode from 'jwt-decode'
 
+/**
+ * Default configurations to amend the config in the nuxt.config.js
+ * @const {{tokenRequired: boolean, autoFetchUser: boolean, tokenName: string, globalToken: boolean, client_id: string}}
+ */
 const DEFAULTS = {
     tokenRequired: true,
     globalToken: true,
@@ -8,7 +18,13 @@ const DEFAULTS = {
     client_id: 'pcmr',
 }
 
-export default class KeyCloakScheme {
+class KeyCloakScheme {
+    /**
+     * Makes the nuxt/auth module accessible and
+     * merges the configurations of the DEFAULTS object and the nuxt.config.js
+     * @param {Object} auth - auth from the nuxt/auth modul
+     * @param {Object} options - Options defined in nuxt.config.js
+     */
     constructor(auth, options) {
         this.$auth = auth
         this.name = options._name
@@ -37,22 +53,34 @@ export default class KeyCloakScheme {
         }
     }
 
+    /**
+     * Sets Authorization token for all axios requests into the request header
+     * @param {string} token - Token which should be set
+     * @private
+     */
     _setToken(token) {
         if (this.options.globalToken) {
-            // Set Authorization token for all axios requests
             this.$auth.ctx.app.$axios.setHeader(this.options.tokenName, token)
         }
     }
 
+    /**
+     * Clears Authorization token for all axios requests
+     * @private
+     */
     _clearToken() {
         if (this.options.globalToken) {
-            // Clear Authorization token for all axios requests
             this.$auth.ctx.app.$axios.setHeader(this.options.tokenName, false)
         }
     }
 
-    setRoles(jwtToken) {
-        const decoded = jwtDecode(jwtToken)
+    /**
+     * Decodes the JWT, reads out the roles property and
+     * stores the value in the auth store
+     * @param {string} jwToken - Token which should be decoded
+     */
+    setRoles(jwToken) {
+        const decoded = jwtDecode(jwToken)
         const realmAccessRoles = decoded.realm_access.roles
 
         let roles = ''
@@ -71,6 +99,10 @@ export default class KeyCloakScheme {
         this.$auth.$storage.setState('roles', roles.slice(0, -1))
     }
 
+    /**
+     * Mounted is called each time before the scheme is rendered on the server
+     * @returns {Promise<void> | Promise<any>}
+     */
     mounted() {
         if (this.options.tokenRequired) {
             const token = this.$auth.syncToken(this.name)
@@ -80,6 +112,13 @@ export default class KeyCloakScheme {
         return this.$auth.fetchUserOnce()
     }
 
+    /**
+     * Logs the user in
+     * @param {Object} endpoint - Includes user submitted data
+     * @param {string} endpoint.username - Username
+     * @param {string} endpoint.password - User password
+     * @returns {Promise<*>}
+     */
     async login(endpoint) {
         if (!this.options.endpoints.login) {
             return
@@ -129,6 +168,12 @@ export default class KeyCloakScheme {
         return response
     }
 
+    /**
+     * Sets the access and refresh token of the user
+     * @param {strong} accessToken - Access token of the login request
+     * @param {strong} refreshToken - Refresh token of the login request
+     * @returns {Promise<undefined>}
+     */
     async setUserToken(accessToken, refreshToken) {
         const token = this.options.token_type ? `${this.options.token_type} ${accessToken}` : accessToken
         this.$auth.setToken(this.name, token)
@@ -139,6 +184,11 @@ export default class KeyCloakScheme {
         return this.fetchUser()
     }
 
+    /**
+     * Get the user credentials (first name, last name, email) from the given endpoint
+     * @param {Object} endpoint - Default endpoints configured in nuxt/auth
+     * @returns {Promise<void>}
+     */
     async fetchUser(endpoint) {
         // Token is required but not available
         if (this.options.tokenRequired && !this.$auth.getToken(this.name)) {
@@ -156,6 +206,10 @@ export default class KeyCloakScheme {
         this.$auth.setUser(user)
     }
 
+    /**
+     * Logs out the user
+     * @returns {Promise<void|*>}
+     */
     async logout() {
         // Only connect to logout endpoint if it's configured
         if (this.options.endpoints.logout) {
@@ -179,6 +233,10 @@ export default class KeyCloakScheme {
         return this.$auth.reset()
     }
 
+    /**
+     * Resets the access and refresh token and the roles of the user
+     * @returns {Promise<void>}
+     */
     async reset() {
         if (this.options.tokenRequired) {
             this._clearToken()
@@ -192,3 +250,5 @@ export default class KeyCloakScheme {
         return Promise.resolve()
     }
 }
+
+export default KeyCloakScheme

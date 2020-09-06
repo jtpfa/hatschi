@@ -7,7 +7,13 @@
 </template>
 
 <script>
-import ProductAdd from '~/components/admin/products/add'
+/**
+ * @component DashboardProductAddPage
+ * @desc Page for adding new products
+ * @author Jonas Pfannkuche
+ */
+
+import ProductAdd from '~/components/dashboard/products/add'
 
 export default {
     components: { ProductAdd },

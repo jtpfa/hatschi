@@ -1,7 +1,13 @@
+/**
+ * Nuxt.js configurations
+ *
+ * @author Jonas Pfannkuche
+ */
+
 export default {
     mode: 'universal',
-    /*
-     ** Headers of the page
+    /**
+     * Headers of the page
      */
     head: {
         htmlAttrs: {
@@ -19,16 +25,16 @@ export default {
         ],
         link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
     },
-    /*
-     ** Customize the progress-bar color
+    /**
+     * Customize the progress-bar
      */
     loading: false,
-    /*
-     ** Global CSS
+    /**
+     * Global CSS
      */
     css: ['~/assets/scss/main.scss'],
-    /*
-     ** Plugins to load before mounting the App
+    /**
+     * Plugins to load before mounting the App
      */
     plugins: [
         { src: '~/plugins/api', ssr: true },
@@ -38,12 +44,12 @@ export default {
         { src: '~/plugins/text-crop', ssr: true },
         { src: '~/plugins/vuex-persist', ssr: false },
     ],
-    /*
-     ** Nuxt.js dev-modules
+    /**
+     * Nuxt.js dev-modules
      */
     buildModules: [],
-    /*
-     ** Nuxt.js modules
+    /**
+     * Nuxt.js modules
      */
     modules: [
         // https://github.com/nuxt-community/style-resources-module
@@ -64,8 +70,8 @@ export default {
             },
         ],
     ],
-    /*
-     * Cookie options for Cookie Consent Manager
+    /**
+     * Cookie Consent Manager configuration
      */
     cookies: {
         necessary: [
@@ -82,29 +88,27 @@ export default {
         ],
         optional: [],
     },
-    /*
-     ** Bootstrap Vue module configuration
+    /**
+     * Bootstrap Vue module configuration
      */
     bootstrapVue: {
-        bootstrapCSS: false, // Or `css: false`
-        bootstrapVueCSS: false, // Or `bvCSS: false`
+        bootstrapCSS: false,
+        bootstrapVueCSS: false,
     },
-    /*
-     ** Style Resources module configuration
+    /**
+     * Style Resources module configuration
      */
     styleResources: {
         scss: ['~assets/scss/settings/variables.scss'],
     },
-    /*
-     ** Build configuration
+    /**
+     * Build configuration
      */
     build: {
-        /*
-         ** You can extend webpack config here
-         */
         /* eslint-disable no-unused-vars */
         extend(config, ctx) {},
         /* eslint-enable no-unused-vars */
+
         transpile: ['@nuxtjs/auth'],
 
         babel: {
@@ -112,12 +116,18 @@ export default {
             compact: true,
         },
     },
+    /**
+     * Public (server and client) config object configuration
+     */
     publicRuntimeConfig: {
         baseURL: process.env.PCMR_BASE_URL_PROD || 'http://localhost:3000',
         restApiBaseUrl: process.env.PCMR_REST_API_PROD || 'http://localhost:8090/api/',
         mediaUrl: process.env.PCMR_MEDIA_API_PROD || 'http://localhost:8090/media/article/',
         keycloakEndpoint: process.env.KEYCLOAK_ENDPOINT_PROD || 'http://auth.pcmr.de:8080/auth/realms/pcmr/',
     },
+    /**
+     * nuxtjs/auth configuration
+     */
     auth: {
         plugins: [{ src: '~/plugins/refresh', ssr: false }],
         strategies: {

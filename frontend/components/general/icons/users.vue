@@ -7,8 +7,14 @@
 </template>
 
 <script>
+/**
+ * @component IconUsers
+ * @desc Users icon
+ * @author Jonas Pfannkuche
+ */
+
 export default {
-    name: 'IconCustomers',
+    name: 'IconUsers',
 }
 </script>
 

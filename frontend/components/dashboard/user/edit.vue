@@ -56,7 +56,7 @@
                 <b-form-invalid-feedback id="input-live-feedback">Bitte Nachnamen angeben.</b-form-invalid-feedback>
             </div>
 
-            <div v-if="accessGranted" class="mb-4" role="group">
+            <div v-if="isAdmin" class="mb-4" role="group">
                 <label for="name">
                     Rolle
                     <span class="mandatory">*</span>
@@ -74,20 +74,36 @@
 </template>
 
 <script>
+/**
+ * @component UserEdit
+ * @desc Form to edit an existing user inside of a modal. Modals er rendered by default on client side.
+ * @lifecycle mounted - Check if user has admin privileges.
+ * @author Jonas Pfannkuche
+ */
+
 import ButtonContainer from '~/components/general/layout/buttonContainer'
 
 export default {
     name: 'UserEdit',
     components: { ButtonContainer },
     props: {
+        /**
+         * @vprop {Object} user - User who should be edited
+         */
         user: {
             type: Object,
             required: true,
         },
+        /**
+         * @vprop {String} modalId - Id of the modal to identify it in root scope
+         */
         modalId: {
             type: String,
             default: '',
         },
+        /**
+         * @vprop {('customer'|'employee'|'admin'|'order')} type - The allowed roles of an user
+         */
         role: {
             type: String,
             required: true,
@@ -99,7 +115,7 @@ export default {
     },
     data() {
         return {
-            accessGranted: false,
+            isAdmin: false,
             newEmail: this.user.email,
             newRole: this.role,
             roleOptions: [
@@ -112,16 +128,24 @@ export default {
         }
     },
     computed: {
+        /**
+         * @computed {String} username - Synchronized username input field value
+         */
         username: {
             get() {
+                // If new email exists use it otherwise use the email from the user
                 return this.newEmail ? this.newEmail : this.user.email
             },
             set(newEmail) {
                 this.newEmail = newEmail
             },
         },
+        /**
+         * @computed {String} selectedRole - Synchronized role select field value
+         */
         selectedRole: {
             get() {
+                // If new role exists use it otherwise use the role from the user
                 return this.newRole ? this.newRole : this.role
             },
             set(newRole) {
@@ -130,17 +154,22 @@ export default {
         },
     },
     mounted() {
-        this.accessGranted = this.$auth.$state.roles?.includes('admin')
+        this.isAdmin = this.$auth.$state.roles?.includes('admin')
     },
     methods: {
-        async editEmployee() {
+        /**
+         * @method editUser
+         * @desc Calls api endpoint to edit customer as an employee or all user types as an admin and handles response
+         * @returns {Promise<void>}
+         */
+        async editUser() {
             try {
-                if (!this.accessGranted) {
+                if (!this.isAdmin) {
                     await this.$api.editCustomer(
                         {
-                            email: this.username,
                             firstName: this.user.firstName,
                             lastName: this.user.lastName,
+                            email: this.username,
                         },
                         this.user.email,
                         this.$auth.getToken('keycloak')
@@ -148,9 +177,9 @@ export default {
                 } else {
                     await this.$api.editUser(
                         {
-                            email: this.username,
                             firstName: this.user.firstName,
                             lastName: this.user.lastName,
+                            email: this.username,
                             customerRole: this.selectedRole.toLocaleUpperCase(),
                         },
                         this.user.email,
@@ -166,6 +195,11 @@ export default {
                 this.error = err.message || 'Leider gab es ein Problem. Bitte später erneut versuchen.'
             }
         },
+        /**
+         * @method onSubmit
+         * @desc Validates the form, shows validation state and calls {@link component:UserEdit~editUser editUser} if the form is valid
+         * @param {Object} event - Browser event which is fired on submitting the form
+         */
         async onSubmit(event) {
             this.loading = true
             this.error = ''
@@ -174,7 +208,7 @@ export default {
                 event.preventDefault()
             } else {
                 this.$refs.form.classList.add('was-validated')
-                await this.editEmployee()
+                await this.editUser()
             }
             this.loading = false
         },

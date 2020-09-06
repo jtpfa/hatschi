@@ -54,13 +54,25 @@
 </template>
 
 <script>
+/**
+ * @component LoginForm
+ * @desc Login with username and password field and link to registration
+ * @author Jonas Pfannkuche
+ */
+
 export default {
     name: 'LoginForm',
     props: {
+        /**
+         * @vprop {Boolean} loginPage - Set to true if shown on standalone page
+         */
         loginPage: {
             type: Boolean,
             default: false,
         },
+        /**
+         * @vprop {Boolean} dashboard - Set to true if used in dashboard
+         */
         dashboard: {
             type: Boolean,
             default: false,
@@ -68,18 +80,54 @@ export default {
     },
     data() {
         return {
+            /**
+             * @member {String} email - Username to log in
+             */
             email: '',
+            /**
+             * @member {String} password - Password to log in
+             */
             password: '',
+            /**
+             * @member {String} error - Genereal error message
+             */
             error: '',
+            /**
+             * @member {Boolean} loading - Request status
+             */
             loading: false,
         }
     },
     computed: {
+        /**
+         * @computed {Boolean} hasAccess - Has user access to view content
+         */
         hasAccess() {
             return this.$auth.loggedIn && ['employee', 'admin'].includes(this.$auth.roles)
         },
     },
     methods: {
+        /**
+         * @method login
+         * @desc Calls nuxt auth log in function with the keycloak strategy
+         * @returns {Promise<void>}
+         */
+        async login() {
+            try {
+                await this.$auth.loginWith('keycloak', { username: this.email, password: this.password })
+                this.$emit('success')
+            } catch (err) {
+                this.$refs.email?.setCustomValidity('Benutzername und Passwort stimmen nicht überein.')
+                this.$refs.password?.setCustomValidity('Benutzername und Passwort stimmen nicht überein.')
+                this.error = err.message || 'Es ist ein Fehler passiert. Bitter später erneut versuchen.'
+            }
+            this.loading = false
+        },
+        /**
+         * @method onSubmit
+         * @desc Validates the form, shows validation state and calls {@link component:LoginForm~login login} if the form is valid
+         * @param {Object} event - Browser event which is fired on submitting the form
+         */
         async onSubmit(event) {
             this.loading = true
             this.$refs.email?.setCustomValidity('')
@@ -93,15 +141,7 @@ export default {
             }
             this.$refs.form.classList.add('was-validated')
 
-            try {
-                await this.$auth.loginWith('keycloak', { username: this.email, password: this.password })
-                this.$emit('success')
-            } catch (err) {
-                this.$refs.email?.setCustomValidity('Benutzername und Passwort stimmen nicht überein.')
-                this.$refs.password?.setCustomValidity('Benutzername und Passwort stimmen nicht überein.')
-                this.error = err.message || 'Es ist ein Fehler passiert. Bitter später erneut versuchen.'
-            }
-            this.loading = false
+            await this.login()
         },
     },
 }

@@ -1,8 +1,21 @@
-export default class ImageSrcSet {
+/**
+ * @module ImageSrcSet
+ * @author Jonas Pfannkuche
+ */
+
+class ImageSrcSet {
+    /**
+     * @param {String} mediaUrl - Base url to the product images folder
+     */
     constructor(mediaUrl) {
         this.baseUrl = mediaUrl
     }
 
+    /**
+     * Generates source set of image urls of the product
+     * @param {Number} productId - Product id of the requested images
+     * @returns {String} Urls of the image in HTML srcSet format
+     */
     getSrcSet(productId) {
         const sizes = ['256', '512', '1024']
         let result = ''
@@ -15,7 +28,15 @@ export default class ImageSrcSet {
         return result.slice(0, -2)
     }
 
+    /**
+     * Get the product image for one resolution
+     * @param {number} productId - Product id of the requested image
+     * @param {number} [size=512] - Width of the image
+     * @returns {string} Url of the image
+     */
     getImageUrl(productId, size = 512) {
         return `${this.baseUrl}${productId}_${size}.png`
     }
 }
+
+export default ImageSrcSet

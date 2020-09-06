@@ -8,6 +8,12 @@
 </template>
 
 <script>
+/**
+ * @component LayoutDefault
+ * @desc Default layout for the shop
+ * @author Jonas Pfannkuche
+ */
+
 import PageFooter from '~/components/shop/layout/footer'
 import PageHeader from '~/components/shop/layout/header'
 

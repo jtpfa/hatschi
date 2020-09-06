@@ -3,10 +3,10 @@
         <div class="sidebar-content py-2">
             <nav class="px-1 mb-3">
                 <b-nav vertical>
-                    <b-nav-item to="/admin"><icon-dashboard /></b-nav-item>
-                    <b-nav-item to="/admin/produkte"><icon-barcode /></b-nav-item>
-                    <b-nav-item to="/admin/nutzer"><icon-customers /></b-nav-item>
-                    <b-nav-item to="/admin/bestellungen"><icon-orders /></b-nav-item>
+                    <b-nav-item to="/dashboard"><icon-dashboard /></b-nav-item>
+                    <b-nav-item to="/dashboard/produkte"><icon-barcode /></b-nav-item>
+                    <b-nav-item to="/dashboard/nutzer"><icon-users /></b-nav-item>
+                    <b-nav-item to="/dashboard/bestellungen"><icon-orders /></b-nav-item>
                 </b-nav>
             </nav>
         </div>
@@ -14,14 +14,20 @@
 </template>
 
 <script>
+/**
+ * @component DashboardSidebar
+ * @desc Sidebar of dashboard
+ * @author Jonas Pfannkuche
+ */
+
 import IconBarcode from '~/components/general/icons/barcode'
-import IconCustomers from '~/components/general/icons/customers'
+import IconUsers from '~/components/general/icons/users'
 import IconDashboard from '~/components/general/icons/dashboard'
 import IconOrders from '~/components/general/icons/orders'
 
 export default {
-    name: 'AdminSidebar',
-    components: { IconDashboard, IconBarcode, IconCustomers, IconOrders },
+    name: 'DashboardSidebar',
+    components: { IconDashboard, IconBarcode, IconUsers, IconOrders },
 }
 </script>
 

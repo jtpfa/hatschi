@@ -1,28 +1,45 @@
-/*
-  Refresh keycloak's access token
-  This is a refactored and es6-conform version of
-  https://gist.github.com/robsontenorio/d1e56c5bc5bc391ba0791be77419a68c
-  
-  Two main things have been changed:
-  1. We use the jqt-decode module instead of robson's selfmade decode function
-  2. We fetch the user after a successful access token refreshing so we can use
-     the user attributes as placeholders in forms
+/**
+ * Refresh keycloak's access token
+ * This is a refactored and es6-conform version of
+ * @see {@link} https://gist.github.com/robsontenorio/d1e56c5bc5bc391ba0791be77419a68c
+ *
+ * Two main things have been changed:
+ * 1. We use the jqt-decode module instead of robson's selfmade decode function
+ * 2. We fetch the user after a successful access token refreshing so we can use
+ * the user attributes as placeholders in forms
+ *
+ * @author Jonas Pfannkuche
  */
+
 import jwtDecode from 'jwt-decode'
 
 const strategy = 'keycloak'
 
-// Properly encode data
-function encodeQuery(queryObject) {
+/**
+ * Encode query data
+ * @private
+ * @param {Object} queryObject - Object of query parts
+ * @param {string} queryObject.refresh_token - Refresh token of user
+ * @param {string} queryObject.client_id - Client id of keycloak realm
+ * @param {string} queryObject.grant_type - Grant type of token flow
+ * @returns {string} - Encoded query
+ */
+function _encodeQuery(queryObject) {
     return Object.keys(queryObject)
         .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(queryObject[key])}`)
         .join('&')
 }
 
+/**
+ * Refreshes access token with the refresh token before the current access token is invalid
+ * @param {Object} app - Nuxt app context
+ */
 export default function refresh({ app }) {
     const { $axios, $auth } = app
 
-    if (!$auth.loggedIn || !$auth.strategies[strategy]) return
+    if (!$auth.loggedIn || !$auth.strategies[strategy]) {
+        return
+    }
 
     const { options } = $auth.strategies.keycloak
     let token = $auth.getToken(strategy)
@@ -39,7 +56,7 @@ export default function refresh({ app }) {
         try {
             const response = await $axios.post(
                 options.access_token_endpoint,
-                encodeQuery({
+                _encodeQuery({
                     refresh_token: refreshToken.replace(`${options.token_type} `, ''),
                     client_id: options.client_id,
                     grant_type: options.refreshToken.property,

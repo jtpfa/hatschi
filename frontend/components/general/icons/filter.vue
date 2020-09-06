@@ -13,6 +13,12 @@
 </template>
 
 <script>
+/**
+ * @component IconFilter
+ * @desc Filter icon
+ * @author Jonas Pfannkuche
+ */
+
 export default {
     name: 'IconFilter',
 }

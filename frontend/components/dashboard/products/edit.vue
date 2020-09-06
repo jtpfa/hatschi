@@ -112,18 +112,30 @@
 </template>
 
 <script>
-import FormFieldEditor from '~/components/admin/form-fields/editor'
-import FormFieldFileUpload from '~/components/admin/form-fields/fileUpload'
+/**
+ * @component ProductEdit
+ * @desc Form to edit an existing product inside of a modal. Modals er rendered by default on client side.
+ * @author Jonas Pfannkuche
+ */
+
+import FormFieldEditor from '~/components/dashboard/form-fields/editor'
+import FormFieldFileUpload from '~/components/dashboard/form-fields/fileUpload'
 import ButtonContainer from '~/components/general/layout/buttonContainer'
 
 export default {
     name: 'ProductEdit',
     components: { ButtonContainer, FormFieldEditor, FormFieldFileUpload },
     props: {
+        /**
+         * @vprop {Object} product - Product which should be edited
+         */
         product: {
             type: Object,
             required: true,
         },
+        /**
+         * @vprop {String} modalId - Id of the modal to identify it in root scope
+         */
         modalId: {
             type: String,
             default: '',
@@ -131,23 +143,43 @@ export default {
     },
     data() {
         return {
+            /**
+             * @member {String} priceEur - Euros of product price
+             */
             priceEur: this.getEuro(this.product.price),
+            /**
+             * @member {Number} priceCt - Cents of product price
+             */
             priceCt: this.getCt(this.product.price),
+            /**
+             * @member {String} error - General error message
+             */
             error: '',
+            /**
+             * @member {Boolean} loading - Request status
+             */
             loading: false,
         }
     },
     computed: {
+        /**
+         * @computed {String|Number} euro - Synchronized euros input field value
+         */
         euro: {
             get() {
+                // If euros of price exists use it otherwise get the euros of our current product
                 return this.priceEur !== undefined ? this.priceEur : this.getEuro(this.product.price)
             },
             set(newEuroPrice) {
                 this.priceEur = newEuroPrice
             },
         },
+        /**
+         * @computed {String|Number} ct - Synchronized cents input field value
+         */
         ct: {
             get() {
+                // If cents of price exists use it otherwise get the cents of our current product
                 return this.priceCt !== undefined ? this.priceCt : this.getCt(this.product.price)
             },
             set(newCtPrice) {
@@ -156,6 +188,12 @@ export default {
         },
     },
     methods: {
+        /**
+         * @method checkEuroRange
+         * @desc Checks if entered euro value are between 0 and 999999
+         * @param {String} value - Current euro value of input field
+         * @returns {String}
+         */
         checkEuroRange(value) {
             if (+value < 0) {
                 return '0'
@@ -165,6 +203,12 @@ export default {
             }
             return value
         },
+        /**
+         * @method checkCtRange
+         * @desc Checks if entered cent value is between 0 and 99
+         * @param {String} value - Current cent value of input field
+         * @returns {String}
+         */
         checkCtRange(value) {
             if (+value < 0) {
                 return '0'
@@ -174,6 +218,12 @@ export default {
             }
             return value
         },
+        /**
+         * @method getEuro
+         * @desc Returns the euros of the given price
+         * @param {Number} price - Product price
+         * @returns {String|Number}
+         */
         getEuro(price) {
             if (price !== undefined) {
                 const priceString = price.toString()
@@ -188,6 +238,12 @@ export default {
 
             return -1
         },
+        /**
+         * @method getCt
+         * @desc Returns the cents of the given price
+         * @param {Number} price - Product price
+         * @returns {String|Number}
+         */
         getCt(price) {
             if (price !== undefined) {
                 return price.toString().slice(-2)
@@ -195,6 +251,11 @@ export default {
 
             return -1
         },
+        /**
+         * @method editProduct
+         * @desc Calls api endpoint to edit product and handles response
+         * @returns {Promise<void>}
+         */
         async editProduct() {
             try {
                 await this.$api.editProduct(
@@ -216,6 +277,11 @@ export default {
                 this.error = err.message || 'Leider gab es ein Problem. Bitte später erneut versuchen.'
             }
         },
+        /**
+         * @method onSubmit
+         * @desc Validates the form, shows validation state and calls {@link component:ProductEdit~editProduct editProduct} if the form is valid
+         * @param {Object} event - Browser event which is fired on submitting the form
+         */
         async onSubmit(event) {
             this.loading = true
             this.error = ''

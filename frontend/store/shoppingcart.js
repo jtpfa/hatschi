@@ -1,16 +1,56 @@
+/**
+ * @store ShoppingCart
+ * @namespaced
+ * @desc Vuex store module to handle the shopping cart
+ * @author Jonas Pfannkuche
+ */
+
+/**
+ * The state object of the shopping cart
+ */
 export const state = () => ({
+    /**
+     * @member {Array} cart - Elements in shopping cart
+     */
     cart: [],
+    /**
+     * @member {boolean} stockOfElementChanged - Stores whether the stock has changed or not, needs to be resetted after each product
+     */
     stockOfElementChanged: false,
 })
 
+/**
+ * Getters to get "calculated" values of the state object
+ */
 export const getters = {
+    /**
+     * Returns the amount the different shopping cart items
+     * @getter cartCountElements
+     * @param {Object} state
+     * @returns {number}
+     */
     cartCountElements: state => {
         return state.cart.length || 0
     },
+
+    /**
+     * Returns the total price of all shopping cart items
+     * @getter cartTotal
+     * @param {Object} state
+     * @returns {number}
+     */
     cartTotal: state => {
         if (!state.cart.length) return 0
         return state.cart.reduce((ac, next) => ac + next.quantity * next.price, 0)
     },
+
+    /**
+     * Returns the quantity of the given product id
+     * @getter productQuantity
+     * @param {Object} state
+     * @param {number} state.productId - Id of the product
+     * @returns {function(*): *|number}
+     */
     productQuantity: state => productId => {
         const itemfound = state.cart.find(el => el.id === productId)
 
@@ -18,7 +58,19 @@ export const getters = {
     },
 }
 
+/**
+ * Mutations to change state data
+ */
 export const mutations = {
+    /**
+     * Adds product with the specified quantity to the card.
+     * If the product already exists, the quantity is increased accordingly
+     * @mutation addToCart
+     * @param {Object} state
+     * @param {Object} payload - Product data
+     * @param {number} payload.id - Id of the product
+     * @param {number} payload.quantity - Product quantity to add to the cart
+     */
     addToCart: (state, payload) => {
         const itemfound = state.cart.find(el => el.id === payload.id)
 
@@ -28,9 +80,22 @@ export const mutations = {
             state.cart.push(payload)
         }
     },
+    /**
+     * Empties the shopping cart
+     * @mutation clearCart
+     * @param {Object} state
+     */
     clearCart: state => {
         Object.assign(state, { cart: [], stockOfElementChanged: false })
     },
+    /**
+     * Reduces the quantity of the given product by one.
+     * If the quantity is one, the product will be removed from the cart
+     * @mutation removeOneFromCart
+     * @param {Object} state
+     * @param {Object} payload - Product data
+     * @param {number} payload.id - Id of the product
+     */
     removeOneFromCart: (state, payload) => {
         const index = state.cart.findIndex(el => el.id === payload.id)
 
@@ -40,9 +105,24 @@ export const mutations = {
             state.cart.splice(index, 1)
         }
     },
+    /**
+     * Deletes the given product from the cart
+     * @mutation removeAllFromCart
+     * @param {Object} state
+     * @param {Object} payload - Product data
+     * @param {number} payload.id - Id of the product
+     */
     removeAllFromCart: (state, payload) => {
         state.cart = state.cart.filter(el => el.id !== payload.id)
     },
+    /**
+     * Updates the content of the given product.
+     * "Stores" if the value has changed
+     * @mutation updateCart
+     * @param {Object} state
+     * @param {Object} payload - Product data
+     * @param {number} payload.id - Id of the product
+     */
     updateCart: (state, payload) => {
         state.stockOfElementChanged = false
         const itemfound = state.cart.find(el => el.id === payload.id)
