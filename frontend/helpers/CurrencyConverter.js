@@ -5,7 +5,7 @@
 
 class CurrenyConverter {
     /**
-     * @param {number} fractionCount - Number of decimal places
+     * @param {Number} fractionCount - Number of decimal places
      * @param {string} fractionSeperator - Separator between euro and cents
      */
     constructor(fractionCount, fractionSeperator) {

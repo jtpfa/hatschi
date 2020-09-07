@@ -14,15 +14,14 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import IconShoppingCart from '~/components/general/icons/shoppingCart'
 
 export default {
     name: 'HeaderNavShoppingCart',
     components: { IconShoppingCart },
     computed: {
-        cartCountElements() {
-            return this.$store.state.shoppingcart.cartCountElements
-        },
+        ...mapGetters({ cartCountElements: 'shoppingcart/cartCountElements' }),
     },
 }
 </script>

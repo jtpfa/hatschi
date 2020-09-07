@@ -29,6 +29,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import CartProducts from '~/components/shop/cart/products'
 import CartSummary from '~/components/shop/cart/summary'
 
@@ -41,9 +42,7 @@ export default {
         }
     },
     computed: {
-        cartCountElements() {
-            return this.$store.state.shoppingcart.cartCountElements
-        },
+        ...mapGetters({ cartCountElements: 'shoppingcart/cartCountElements' }),
         cart() {
             return this.$store.state.shoppingcart.cart
         },

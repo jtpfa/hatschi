@@ -50,6 +50,7 @@
  * @author Jonas Pfannkuche
  */
 
+import { mapGetters } from 'vuex'
 import AddToCart from '~/components/shop/cart/addToCart'
 import Spinner from '~/components/shop/layout/spinner'
 
@@ -69,9 +70,7 @@ export default {
         /**
          * @computed {Number} productQuantity - Quantity of product in shopping cart
          */
-        productQuantity(productId) {
-            return this.$store.state.shoppingcart.productQuantity(productId)
-        },
+        ...mapGetters({ productQuantity: 'shoppingcart/productQuantity' }),
         /**
          * @computed {String} shippingInformation - Shipping information text
          */
@@ -86,7 +85,6 @@ export default {
         },
     },
 }
-// @todo check if productquantity works fine
 </script>
 
 <style lang="scss" scoped>

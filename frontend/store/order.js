@@ -56,7 +56,7 @@ export const state = () => ({
      */
     discountCode: '',
     /**
-     * @member {number} step - Stores the current step of the order process
+     * @member {Number} step - Stores the current step of the order process
      */
     step: 1,
 })

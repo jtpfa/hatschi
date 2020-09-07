@@ -39,12 +39,12 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
     name: 'CartPriceOverview',
     computed: {
-        cartTotal() {
-            return this.$store.state.shoppingcart.cartTotal
-        },
+        ...mapGetters({ cartTotal: 'shoppingcart/cartTotal' }),
         cart() {
             return this.$store.state.shoppingcart.cart
         },

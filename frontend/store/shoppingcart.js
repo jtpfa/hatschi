@@ -27,7 +27,7 @@ export const getters = {
      * Returns the amount the different shopping cart items
      * @getter cartCountElements
      * @param {Object} state
-     * @returns {number}
+     * @returns {Number}
      */
     cartCountElements: state => {
         return state.cart.length || 0
@@ -37,7 +37,7 @@ export const getters = {
      * Returns the total price of all shopping cart items
      * @getter cartTotal
      * @param {Object} state
-     * @returns {number}
+     * @returns {Number}
      */
     cartTotal: state => {
         if (!state.cart.length) return 0
@@ -48,8 +48,8 @@ export const getters = {
      * Returns the quantity of the given product id
      * @getter productQuantity
      * @param {Object} state
-     * @param {number} state.productId - Id of the product
-     * @returns {function(*): *|number}
+     * @param {Number} state.productId - Id of the product
+     * @returns {function(*): *|Number}
      */
     productQuantity: state => productId => {
         const itemfound = state.cart.find(el => el.id === productId)
@@ -68,8 +68,8 @@ export const mutations = {
      * @mutation addToCart
      * @param {Object} state
      * @param {Object} payload - Product data
-     * @param {number} payload.id - Id of the product
-     * @param {number} payload.quantity - Product quantity to add to the cart
+     * @param {Number} payload.id - Id of the product
+     * @param {Number} payload.quantity - Product quantity to add to the cart
      */
     addToCart: (state, payload) => {
         const itemfound = state.cart.find(el => el.id === payload.id)
@@ -94,7 +94,7 @@ export const mutations = {
      * @mutation removeOneFromCart
      * @param {Object} state
      * @param {Object} payload - Product data
-     * @param {number} payload.id - Id of the product
+     * @param {Number} payload.id - Id of the product
      */
     removeOneFromCart: (state, payload) => {
         const index = state.cart.findIndex(el => el.id === payload.id)
@@ -110,7 +110,7 @@ export const mutations = {
      * @mutation removeAllFromCart
      * @param {Object} state
      * @param {Object} payload - Product data
-     * @param {number} payload.id - Id of the product
+     * @param {Number} payload.id - Id of the product
      */
     removeAllFromCart: (state, payload) => {
         state.cart = state.cart.filter(el => el.id !== payload.id)
@@ -121,7 +121,7 @@ export const mutations = {
      * @mutation updateCart
      * @param {Object} state
      * @param {Object} payload - Product data
-     * @param {number} payload.id - Id of the product
+     * @param {Number} payload.id - Id of the product
      */
     updateCart: (state, payload) => {
         state.stockOfElementChanged = false
