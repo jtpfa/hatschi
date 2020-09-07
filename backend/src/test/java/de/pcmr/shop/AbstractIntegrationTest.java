@@ -38,6 +38,7 @@ public abstract class AbstractIntegrationTest {
     private String keycloakRegistrationPassword;
 
     private UsersResource usersResource;
+    private boolean cleanupDatabaseBeforeEach = true;
 
     @PostConstruct
     void initKeycloak() {
@@ -55,8 +56,10 @@ public abstract class AbstractIntegrationTest {
 
     @BeforeEach
     void cleanUp() {
-        cleanUpDatabase();
-        cleanUpKeycloak();
+        if (cleanupDatabaseBeforeEach) {
+            cleanUpDatabase();
+            cleanUpKeycloak();
+        }
     }
 
     void cleanUpDatabase() {
@@ -77,5 +80,13 @@ public abstract class AbstractIntegrationTest {
 
     protected UsersResource getUsersResource() {
         return usersResource;
+    }
+
+    public boolean isCleanupDatabaseBeforeEach() {
+        return cleanupDatabaseBeforeEach;
+    }
+
+    public void setCleanupDatabaseBeforeEach(boolean cleanupDatabaseBeforeEach) {
+        this.cleanupDatabaseBeforeEach = cleanupDatabaseBeforeEach;
     }
 }

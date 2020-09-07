@@ -2,16 +2,30 @@ package de.pcmr.shop.db;
 
 import de.pcmr.shop.builder.*;
 import de.pcmr.shop.domain.*;
+import de.pcmr.shop.exception.keycloak.KeycloakEndpointNotFoundException;
+import de.pcmr.shop.exception.keycloak.KeycloakUnknownErrorException;
+import de.pcmr.shop.exception.keycloak.KeycloakUserAlreadyExistsException;
+import de.pcmr.shop.exception.keycloak.KeycloakUserIsNotAuthorizedException;
 import de.pcmr.shop.repository.*;
+import org.keycloak.admin.client.CreatedResponseUtil;
+import org.keycloak.admin.client.Keycloak;
+import org.keycloak.admin.client.KeycloakBuilder;
+import org.keycloak.admin.client.resource.RealmResource;
+import org.keycloak.admin.client.resource.UserResource;
+import org.keycloak.admin.client.resource.UsersResource;
+import org.keycloak.representations.idm.CredentialRepresentation;
+import org.keycloak.representations.idm.RoleRepresentation;
+import org.keycloak.representations.idm.UserRepresentation;
+import org.keycloak.representations.idm.UserSessionRepresentation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import javax.annotation.PostConstruct;
+import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.core.Response;
+import java.util.*;
 
 @Service
 public class DBPreparer {
@@ -21,14 +35,33 @@ public class DBPreparer {
     @Autowired private OrderItemRepository orderItemRepository;
     @Autowired private OrderRepository orderRepository;
 
+    @Value("${PCMR_AUTH_SERVER_URL}") private String keycloakUrl;
+    @Value("${PCMR_KEYCLOAK_REALM}") private String keycloakRealm;
+    @Value("${PCMR_RESOURCE}") private String keycloakClient;
+    @Value("${PCMR_KEYCLOAK_REGISTRATION_USER}") private String keycloakRegistrationUser;
+    @Value("${PCMR_KEYCLOAK_REGISTRATION_PASSWORD}") private String keycloakRegistrationPassword;
+
+    private Keycloak keycloak;
+
     private Map<String, CustomerEntity> customers = new HashMap<>();
     private Map<String, AddressEntity> addresses = new HashMap<>();
     private Map<String, ArticleEntity> articles = new HashMap<>();
     private Map<String, OrderEntity> orders = new HashMap<>();
 
-    @Transactional
-    public void prepareTestDatabase() {
+    @PostConstruct
+    public void initKeycloak() {
+        keycloak = KeycloakBuilder.builder()
+                .serverUrl(keycloakUrl)
+                .realm(keycloakRealm)
+                .clientId(keycloakClient)
+                .username(keycloakRegistrationUser)
+                .password(keycloakRegistrationPassword)
+                .build();
+    }
+
+    public void prepareTestDatabase() throws KeycloakUnknownErrorException, KeycloakUserAlreadyExistsException, KeycloakEndpointNotFoundException, KeycloakUserIsNotAuthorizedException {
         cleanupDatabase();
+        cleanupKeycloak();
         createCustomerEntities();
         createArticleEntities();
         createCustomerAddresses();
@@ -43,59 +76,78 @@ public class DBPreparer {
         customerRepository.deleteAll();
     }
 
-    private void createCustomerEntities() {
+    public void cleanupKeycloak() {
+        UsersResource usersResource = keycloak.realm(keycloakRealm).users();
+
+        for (UserRepresentation user : usersResource.list()) {
+            if (!user.getUsername().equals(keycloakRegistrationUser)) {
+                usersResource.delete(user.getId());
+            }
+        }
+    }
+
+    private void createCustomerEntities() throws KeycloakEndpointNotFoundException, KeycloakUnknownErrorException, KeycloakUserAlreadyExistsException, KeycloakUserIsNotAuthorizedException {
         CustomerEntity customerA = CustomerEntityBuilder.aCustomerEntity()
                 .withEmail("a@customer")
                 .withFirstName("Peter")
                 .withLastName("Pan")
+                .withPassword("Password1!")
                 .build();
 
         CustomerEntity customerB = CustomerEntityBuilder.aCustomerEntity()
                 .withEmail("b@customer")
                 .withFirstName("Petra")
                 .withLastName("Pan")
+                .withPassword("Password1!")
                 .build();
 
         CustomerEntity customerC = CustomerEntityBuilder.aCustomerEntity()
                 .withEmail("c@customer")
                 .withFirstName("Lara")
                 .withLastName("Müller")
+                .withPassword("Password1!")
                 .build();
 
         CustomerEntity customerD = CustomerEntityBuilder.aCustomerEntity()
                 .withEmail("d@customer")
                 .withFirstName("Michael")
                 .withLastName("Wandler")
+                .withPassword("Password1!")
                 .build();
 
         CustomerEntity employeeA = CustomerEntityBuilder.aCustomerEntity()
                 .withEmail("a@employee")
                 .withFirstName("John")
                 .withLastName("Smith")
+                .withPassword("Password1!")
                 .build();
 
         CustomerEntity employeeB = CustomerEntityBuilder.aCustomerEntity()
                 .withEmail("b@employee")
                 .withFirstName("Jane")
                 .withLastName("Scott")
+                .withPassword("Password1!")
                 .build();
 
         CustomerEntity employeeC = CustomerEntityBuilder.aCustomerEntity()
                 .withEmail("c@employee")
                 .withFirstName("Mehmet")
                 .withLastName("Uzun")
+                .withPassword("Password1!")
                 .build();
 
         CustomerEntity adminA = CustomerEntityBuilder.aCustomerEntity()
                 .withEmail("a@admin")
                 .withFirstName("Lukas")
                 .withLastName("Meier")
+                .withPassword("Password1!")
                 .build();
 
         CustomerEntity adminB = CustomerEntityBuilder.aCustomerEntity()
                 .withEmail("b@admin")
                 .withFirstName("Sabine")
                 .withLastName("Berger")
+                .withPassword("Password1!")
                 .build();
 
         customerA = customerRepository.save(customerA);
@@ -107,6 +159,16 @@ public class DBPreparer {
         employeeC = customerRepository.save(employeeC);
         adminA = customerRepository.save(adminA);
         adminB = customerRepository.save(adminB);
+
+        createKeycloakUser(customerA, CustomerRoleEnum.CUSTOMER);
+        createKeycloakUser(customerB, CustomerRoleEnum.CUSTOMER);
+        createKeycloakUser(customerC, CustomerRoleEnum.CUSTOMER);
+        createKeycloakUser(customerD, CustomerRoleEnum.CUSTOMER);
+        createKeycloakUser(employeeA, CustomerRoleEnum.EMPLOYEE);
+        createKeycloakUser(employeeB, CustomerRoleEnum.EMPLOYEE);
+        createKeycloakUser(employeeC, CustomerRoleEnum.EMPLOYEE);
+        createKeycloakUser(adminA, CustomerRoleEnum.ADMIN);
+        createKeycloakUser(adminB, CustomerRoleEnum.ADMIN);
 
         customers.put(customerA.getEmail(), customerA);
         customers.put(customerB.getEmail(), customerB);
@@ -361,6 +423,117 @@ public class DBPreparer {
         orders.put("CA1", orderEntityCA1);
         orders.put("CA2", orderEntityCA2);
         orders.put("CB1", orderEntityCB1);
+    }
+
+    public void createKeycloakUser(CustomerEntity customerEntity, CustomerRoleEnum customerRole) throws KeycloakUserIsNotAuthorizedException, KeycloakUserAlreadyExistsException, KeycloakEndpointNotFoundException, KeycloakUnknownErrorException {
+        try {
+            UserRepresentation user = createKeycloakUserFromCustomer(customerEntity);
+
+            RealmResource realmResource = keycloak.realm(keycloakRealm);
+            UsersResource usersResource = realmResource.users();
+
+            Response response = usersResource.create(user);
+            String userId = CreatedResponseUtil.getCreatedId(response);
+
+            CredentialRepresentation passwordCredentials = createCredentialsFromCustomer(customerEntity);
+
+            UserResource userResource = usersResource.get(userId);
+            userResource.resetPassword(passwordCredentials);
+
+            updateKeycloakUserRoles(customerRole, userResource, realmResource);
+
+        } catch (WebApplicationException ex) {
+            handleWebApplicationException(ex);
+        }
+    }
+
+    private void handleWebApplicationException(WebApplicationException ex) throws KeycloakUserIsNotAuthorizedException, KeycloakUserAlreadyExistsException, KeycloakEndpointNotFoundException, KeycloakUnknownErrorException {
+        switch (ex.getResponse().getStatus()) {
+            case 401:
+                throw new KeycloakUserIsNotAuthorizedException(ex);
+            case 404:
+                throw new KeycloakEndpointNotFoundException(ex);
+            case 409:
+                throw new KeycloakUserAlreadyExistsException(ex);
+            case 400:
+                throw new KeycloakUnknownErrorException();
+            default:
+                throw ex;
+        }
+    }
+
+    private UserRepresentation createKeycloakUserFromCustomer(CustomerEntity customerEntity) {
+        UserRepresentation user = new UserRepresentation();
+        user.setEmail(customerEntity.getEmail());
+        user.setFirstName(customerEntity.getFirstName());
+        user.setLastName(customerEntity.getLastName());
+        user.setUsername(customerEntity.getEmail());
+        user.setAttributes(Collections.singletonMap("origin", Collections.singletonList("pcmr_test")));
+        user.setEnabled(true);
+
+        return user;
+    }
+
+    private CredentialRepresentation createCredentialsFromCustomer(CustomerEntity customerEntity) {
+        CredentialRepresentation passwordCredentials = new CredentialRepresentation();
+        passwordCredentials.setTemporary(false);
+        passwordCredentials.setType(CredentialRepresentation.PASSWORD);
+        passwordCredentials.setValue(customerEntity.getPassword());
+
+        return passwordCredentials;
+    }
+
+    private void updateKeycloakUserRoles(CustomerRoleEnum targetCustomerPrivileges, UserResource userResource, RealmResource realmResource) {
+        List<RoleRepresentation> roleRepresentationList = realmResource.roles().list();
+        List<RoleRepresentation> rolesToAdd = new ArrayList<>();
+        List<RoleRepresentation> rolesToRemove = new ArrayList<>();
+
+        for (RoleRepresentation roleRepresentation : roleRepresentationList) {
+            determineIfRoleToAddOrToRemove(targetCustomerPrivileges, rolesToAdd, rolesToRemove, roleRepresentation);
+        }
+
+        removeUserSessions(userResource, realmResource);
+        userResource.roles().realmLevel().add(rolesToAdd);
+        userResource.roles().realmLevel().remove(rolesToRemove);
+    }
+
+    private void removeUserSessions(UserResource userResource, RealmResource realmResource) {
+        List<UserSessionRepresentation> userSessionRepresentations = userResource.getUserSessions();
+
+        for (UserSessionRepresentation userSessionRepresentation : userSessionRepresentations) {
+            realmResource.deleteSession(userSessionRepresentation.getId());
+        }
+    }
+
+    private void determineIfRoleToAddOrToRemove(CustomerRoleEnum customerRoleEnum, List<RoleRepresentation> rolesToAdd, List<RoleRepresentation> rolesToRemove, RoleRepresentation roleRepresentation) {
+        switch (customerRoleEnum) {
+            case EMPLOYEE:
+                if (roleRepresentation.getName().equals(CustomerRoleEnum.EMPLOYEE.toString())) {
+                    rolesToAdd.add(roleRepresentation);
+                } else if (roleRepresentation.getName().equals(CustomerRoleEnum.ADMIN.toString())) {
+                    rolesToRemove.add(roleRepresentation);
+                } break;
+            case ADMIN:
+                if (needsRoleToBeAddedForAdmin(roleRepresentation)) {
+                    rolesToAdd.add(roleRepresentation);
+                } break;
+            case CUSTOMER:
+                if (needsRoleToBeRemoveForCustomer(roleRepresentation)) {
+                    rolesToRemove.add(roleRepresentation);
+                } break;
+            default:
+                throw new IllegalStateException();
+        }
+    }
+
+    private boolean needsRoleToBeRemoveForCustomer(RoleRepresentation roleRepresentation) {
+        return roleRepresentation.getName().equals(CustomerRoleEnum.EMPLOYEE.toString())
+                || roleRepresentation.getName().equals(CustomerRoleEnum.ADMIN.toString());
+    }
+
+    private boolean needsRoleToBeAddedForAdmin(RoleRepresentation roleRepresentation) {
+        return roleRepresentation.getName().equals(CustomerRoleEnum.ADMIN.toString())
+                || roleRepresentation.getName().equals(CustomerRoleEnum.EMPLOYEE.toString());
     }
 
     public Map<String, CustomerEntity> getCustomers() {

@@ -8,10 +8,15 @@ import de.pcmr.shop.domain.CustomerEntity;
 import de.pcmr.shop.exception.AddressDoesNotBelongToUserException;
 import de.pcmr.shop.exception.NoAddressFoundException;
 import de.pcmr.shop.exception.NoCustomerFoundException;
+import de.pcmr.shop.exception.keycloak.KeycloakEndpointNotFoundException;
+import de.pcmr.shop.exception.keycloak.KeycloakUnknownErrorException;
+import de.pcmr.shop.exception.keycloak.KeycloakUserAlreadyExistsException;
+import de.pcmr.shop.exception.keycloak.KeycloakUserIsNotAuthorizedException;
 import de.pcmr.shop.repository.AddressRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
@@ -23,7 +28,8 @@ import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class AddressServiceIntegrationTest extends AbstractIntegrationTest {
+@SpringBootTest
+public class AddressServiceIntegrationTest {
 
     final Given given = new Given();
     final When when = new When();
@@ -46,7 +52,7 @@ public class AddressServiceIntegrationTest extends AbstractIntegrationTest {
     private DBPreparer dbPreparer;
 
     @BeforeEach
-    void setupDatabase() {
+    void setupDatabase() throws KeycloakUnknownErrorException, KeycloakUserAlreadyExistsException, KeycloakEndpointNotFoundException, KeycloakUserIsNotAuthorizedException {
         dbPreparer.prepareTestDatabase();
         addresses = dbPreparer.getAddresses();
     }

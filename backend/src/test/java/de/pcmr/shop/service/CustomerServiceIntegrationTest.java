@@ -2,18 +2,23 @@ package de.pcmr.shop.service;
 
 import de.pcmr.shop.AbstractIntegrationTest;
 import de.pcmr.shop.builder.CustomerEntityBuilder;
+import de.pcmr.shop.db.DBPreparer;
 import de.pcmr.shop.domain.CustomerEntity;
+import de.pcmr.shop.domain.CustomerRoleEnum;
 import de.pcmr.shop.exception.CustomerAlreadyExistsException;
 import de.pcmr.shop.exception.NoCustomerFoundException;
+import de.pcmr.shop.exception.NotAuthorizedException;
 import de.pcmr.shop.exception.keycloak.KeycloakEndpointNotFoundException;
 import de.pcmr.shop.exception.keycloak.KeycloakUnknownErrorException;
 import de.pcmr.shop.exception.keycloak.KeycloakUserAlreadyExistsException;
 import de.pcmr.shop.exception.keycloak.KeycloakUserIsNotAuthorizedException;
 import de.pcmr.shop.repository.CustomerRepository;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.keycloak.admin.client.resource.UsersResource;
 import org.keycloak.representations.idm.UserRepresentation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
@@ -23,6 +28,7 @@ import javax.annotation.PostConstruct;
 import javax.validation.ConstraintViolationException;
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -43,8 +49,10 @@ class CustomerServiceIntegrationTest extends AbstractIntegrationTest {
 
     private final RegistrationServiceI registrationService;
     private final CustomerServiceI customerService;
+    private final KeycloakServiceI keycloakService;
 
     private final CustomerRepository customerRepository;
+    private final DBPreparer dbPreparer;
 
     private final Given given = new Given();
     private final When when = new When();
@@ -55,14 +63,21 @@ class CustomerServiceIntegrationTest extends AbstractIntegrationTest {
     private CustomerEntity customerEntityB;
     private CustomerEntity updatedCustomerEntity;
 
+    private CustomerEntity employee;
+    private CustomerEntity admin;
+
+    private List<UserRepresentation> userRepresentationList;
+
     private UsersResource usersResource;
 
     @Autowired
-    CustomerServiceIntegrationTest(RegistrationServiceI registrationService, CustomerServiceI customerService, CustomerRepository customerRepository) {
+    CustomerServiceIntegrationTest(RegistrationServiceI registrationService, CustomerServiceI customerService, KeycloakServiceI keycloakService, CustomerRepository customerRepository, DBPreparer dbPreparer) {
         super();
         this.registrationService = registrationService;
         this.customerService = customerService;
+        this.keycloakService = keycloakService;
         this.customerRepository = customerRepository;
+        this.dbPreparer = dbPreparer;
     }
 
     @PostConstruct
@@ -146,7 +161,116 @@ class CustomerServiceIntegrationTest extends AbstractIntegrationTest {
         assertThrows(CustomerAlreadyExistsException.class, () -> when.theCurrentCustomerIsUpdatedTo(updatedCustomerEntity));
     }
 
+    @Test
+    void testUpdateOtherCustomerAsEmployee() throws KeycloakUnknownErrorException, KeycloakUserAlreadyExistsException, KeycloakEndpointNotFoundException, KeycloakUserIsNotAuthorizedException, NotAuthorizedException, CustomerAlreadyExistsException, NoCustomerFoundException {
+        given.aTestDatabase();
+        given.aCustomerWithEmployeeRole();
+        given.aCustomer();
+        given.aUpdatedCustomerEntityWith("a@edited", "UpdatedFirst", "UpdatedLast", "Passwort1!");
+        when.aRegisteredCustomerIsAuthenticated(employee.getEmail(), "blabla");
+        when.aCustomerIsEditedAsEmployee(customerEntity.getEmail(), updatedCustomerEntity);
+        then.theCustomerWithIdEquals(customerEntity.getId(), updatedCustomerEntity);
+    }
+
+    @Test
+    void testUpdateOtherCustomerAsAdminToEmployee() throws KeycloakUnknownErrorException, KeycloakUserAlreadyExistsException, KeycloakEndpointNotFoundException, KeycloakUserIsNotAuthorizedException, NotAuthorizedException, CustomerAlreadyExistsException, NoCustomerFoundException {
+        given.aTestDatabase();
+        given.aCustomerWithAdminRole();
+        given.aCustomer();
+        given.aUpdatedCustomerEntityWith("a@edited", "UpdatedFirst", "UpdatedLast", "Passwort1!");
+        when.aRegisteredCustomerIsAuthenticated(admin.getEmail(), "blabla");
+        when.aCustomerIsEditedAsAdmin(customerEntity.getEmail(), updatedCustomerEntity, CustomerRoleEnum.EMPLOYEE);
+        then.theCustomerWithIdEquals(customerEntity.getId(), updatedCustomerEntity);
+    }
+
+    @Test
+    void testUpdateOtherCustomerAsAdminToAdmin() throws KeycloakUnknownErrorException, KeycloakUserAlreadyExistsException, KeycloakEndpointNotFoundException, KeycloakUserIsNotAuthorizedException, NotAuthorizedException, CustomerAlreadyExistsException, NoCustomerFoundException {
+        given.aTestDatabase();
+        given.aCustomerWithAdminRole();
+        given.aCustomer();
+        given.aUpdatedCustomerEntityWith("a@edited", "UpdatedFirst", "UpdatedLast", "Passwort1!");
+        when.aRegisteredCustomerIsAuthenticated(admin.getEmail(), "blabla");
+        when.aCustomerIsEditedAsAdmin(customerEntity.getEmail(), updatedCustomerEntity, CustomerRoleEnum.ADMIN);
+        then.theCustomerWithIdEquals(customerEntity.getId(), updatedCustomerEntity);
+    }
+
+    @Test
+    void testUpdateOtherEmployeeAsAdminToCustomer() throws KeycloakUnknownErrorException, KeycloakUserAlreadyExistsException, KeycloakEndpointNotFoundException, KeycloakUserIsNotAuthorizedException, NotAuthorizedException, CustomerAlreadyExistsException, NoCustomerFoundException {
+        given.aTestDatabase();
+        given.aCustomerWithAdminRole();
+        given.aCustomerWithEmployeeRole();
+        given.aUpdatedCustomerEntityWith("a@edited", "UpdatedFirst", "UpdatedLast", "Passwort1!");
+        when.aRegisteredCustomerIsAuthenticated(admin.getEmail(), "blabla");
+        when.aCustomerIsEditedAsAdmin(employee.getEmail(), updatedCustomerEntity, CustomerRoleEnum.CUSTOMER);
+        then.theCustomerWithIdEquals(employee.getId(), updatedCustomerEntity);
+    }
+
+    @Test
+    void testGetAllCustomers() throws KeycloakUnknownErrorException, KeycloakUserAlreadyExistsException, KeycloakEndpointNotFoundException, KeycloakUserIsNotAuthorizedException {
+        given.aTestDatabase();
+        given.aCustomerWithEmployeeRole();
+        when.aRegisteredCustomerIsAuthenticated(employee.getEmail(), "blabla");
+        when.aListOfCustomersIsRetrieved(CustomerRoleEnum.CUSTOMER);
+        then.listSizeIs(userRepresentationList, 4);
+    }
+
+    @Test
+    void testGetAllEmployees() throws KeycloakUnknownErrorException, KeycloakUserAlreadyExistsException, KeycloakEndpointNotFoundException, KeycloakUserIsNotAuthorizedException {
+        given.aTestDatabase();
+        given.aCustomerWithEmployeeRole();
+        when.aRegisteredCustomerIsAuthenticated(employee.getEmail(), "blabla");
+        when.aListOfCustomersIsRetrieved(CustomerRoleEnum.EMPLOYEE);
+        then.listSizeIs(userRepresentationList, 3);
+    }
+
+    @Test
+    void testGetAllAdmins() throws KeycloakUnknownErrorException, KeycloakUserAlreadyExistsException, KeycloakEndpointNotFoundException, KeycloakUserIsNotAuthorizedException {
+        given.aTestDatabase();
+        given.aCustomerWithAdminRole();
+        when.aRegisteredCustomerIsAuthenticated(admin.getEmail(), "blabla");
+        when.aListOfCustomersIsRetrieved(CustomerRoleEnum.ADMIN);
+        then.listSizeIs(userRepresentationList, 2);
+    }
+
+    @Test
+    void deleteCustomerUnreferenced() throws KeycloakUnknownErrorException, KeycloakUserAlreadyExistsException, KeycloakEndpointNotFoundException, KeycloakUserIsNotAuthorizedException, NotAuthorizedException, NoCustomerFoundException {
+        given.aTestDatabase();
+        given.aCustomerWithAdminRole();
+        given.anUnReferencedCustomer();
+        when.aCustomerIsDeleted(customerEntity.getEmail(), CustomerRoleEnum.ADMIN);
+        then.numberOfCustomerEntitiesInDatabaseAre(8);
+        then.numberOfKeycloakUsersWithRoleAre(3, CustomerRoleEnum.CUSTOMER);
+    }
+
+    @Test
+    void deleteCustomerReferenced() throws KeycloakUnknownErrorException, KeycloakUserAlreadyExistsException, KeycloakEndpointNotFoundException, KeycloakUserIsNotAuthorizedException, NotAuthorizedException, NoCustomerFoundException {
+        given.aTestDatabase();
+        given.aCustomerWithAdminRole();
+        given.aCustomer();
+        assertThrows(DataIntegrityViolationException.class, () -> when.aCustomerIsDeleted(customerEntity.getEmail(), CustomerRoleEnum.ADMIN));
+    }
+
     class Given {
+        void aTestDatabase() throws KeycloakUnknownErrorException, KeycloakUserAlreadyExistsException, KeycloakEndpointNotFoundException, KeycloakUserIsNotAuthorizedException {
+            dbPreparer.prepareTestDatabase();
+        }
+
+        void aCustomerWithEmployeeRole() {
+            employee = dbPreparer.getCustomers().get("a@employee");
+        }
+
+        void aCustomerWithAdminRole() {
+            admin = dbPreparer.getCustomers().get("a@admin");
+        }
+
+        void aCustomer() {
+            customerEntity = dbPreparer.getCustomers().get("a@customer");
+        }
+
+        void anUnReferencedCustomer() {
+            customerEntity = dbPreparer.getCustomers().get("d@customer");
+        }
+
         void aCustomerEntityWith(String email, String firstname, String lastname, String password) {
             customerEntity = CustomerEntityBuilder.aCustomerEntity()
                     .withEmail(email)
@@ -196,6 +320,22 @@ class CustomerServiceIntegrationTest extends AbstractIntegrationTest {
         void theCurrentCustomerIsUpdatedTo(CustomerEntity updatedCustomerEntity) throws NoCustomerFoundException, KeycloakUnknownErrorException, KeycloakUserAlreadyExistsException, CustomerAlreadyExistsException, KeycloakEndpointNotFoundException, KeycloakUserIsNotAuthorizedException {
             customerService.updateCurrentCustomer(updatedCustomerEntity, SecurityContextHolder.getContext().getAuthentication());
         }
+
+        void aCustomerIsEditedAsEmployee(String email, CustomerEntity customerEntity) throws NotAuthorizedException, CustomerAlreadyExistsException, KeycloakEndpointNotFoundException, NoCustomerFoundException, KeycloakUserIsNotAuthorizedException, KeycloakUnknownErrorException, KeycloakUserAlreadyExistsException {
+            customerService.updateCustomer(email, customerEntity, CustomerRoleEnum.EMPLOYEE);
+        }
+
+        void aCustomerIsEditedAsAdmin(String email, CustomerEntity customerEntity, CustomerRoleEnum customerTargetRole) throws NotAuthorizedException, CustomerAlreadyExistsException, KeycloakEndpointNotFoundException, NoCustomerFoundException, KeycloakUserIsNotAuthorizedException, KeycloakUnknownErrorException, KeycloakUserAlreadyExistsException {
+            customerService.updateCustomer(email, customerEntity, CustomerRoleEnum.ADMIN, customerTargetRole);
+        }
+
+        void aListOfCustomersIsRetrieved(CustomerRoleEnum roleEnum) throws KeycloakUnknownErrorException, KeycloakUserAlreadyExistsException, KeycloakEndpointNotFoundException, KeycloakUserIsNotAuthorizedException {
+            userRepresentationList = keycloakService.findAllKeycloakUsersWithRole(roleEnum);
+        }
+
+        void aCustomerIsDeleted(String email, CustomerRoleEnum roleOfCaller) throws KeycloakEndpointNotFoundException, NotAuthorizedException, NoCustomerFoundException, KeycloakUserIsNotAuthorizedException, KeycloakUnknownErrorException, KeycloakUserAlreadyExistsException {
+            customerService.deleteCustomer(email, roleOfCaller);
+        }
     }
 
     class Then {
@@ -216,6 +356,14 @@ class CustomerServiceIntegrationTest extends AbstractIntegrationTest {
             assertEquals(lastname, customerEntity.getLastName());
         }
 
+        void theCustomerWithIdEquals(Long id, CustomerEntity expected) {
+            CustomerEntity customerEntity = customerRepository.findById(id).orElseThrow();
+
+            assertEquals(expected.getEmail(), customerEntity.getEmail());
+            assertEquals(expected.getFirstName(), customerEntity.getFirstName());
+            assertEquals(expected.getLastName(), customerEntity.getLastName());
+        }
+
         void theEmailAndUsernameOfTheKeycloakUserIsUpdatedTo(String email) {
             email = email.toLowerCase();
             UserRepresentation userRepresentation = usersResource.search(email).get(0);
@@ -227,6 +375,18 @@ class CustomerServiceIntegrationTest extends AbstractIntegrationTest {
 
         void numberOfKeycloakUsersAre(int expected) {
             assertEquals(expected, usersResource.list().size());
+        }
+
+        <T> void listSizeIs(List<T> list, int expected) {
+            assertEquals(expected, list.size());
+        }
+
+        void numberOfKeycloakUsersWithRoleAre(int expected, CustomerRoleEnum roleEnum) throws KeycloakUnknownErrorException, KeycloakUserAlreadyExistsException, KeycloakEndpointNotFoundException, KeycloakUserIsNotAuthorizedException {
+            assertEquals(expected, keycloakService.findAllKeycloakUsersWithRole(roleEnum).size());
+        }
+
+        void numberOfCustomerEntitiesInDatabaseAre(int expected) {
+            assertEquals(expected, customerRepository.findAll().size());
         }
     }
 }
