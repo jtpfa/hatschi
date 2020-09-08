@@ -13,6 +13,12 @@
 </template>
 
 <script>
+/**
+ * @component PageFooter
+ * @desc Shop footer
+ * @author Jonas Pfannkuche
+ */
+
 import PageLogo from '~/components/shop/layout/logo'
 
 export default {

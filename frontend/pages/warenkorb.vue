@@ -29,6 +29,11 @@
 </template>
 
 <script>
+/**
+ * @component ShoppingCartPage
+ * @desc Shopping cart page
+ * @author Jonas Pfannkuche
+ */
 import { mapGetters } from 'vuex'
 import CartProducts from '~/components/shop/cart/products'
 import CartSummary from '~/components/shop/cart/summary'
@@ -37,20 +42,40 @@ export default {
     components: { CartSummary, CartProducts },
     data() {
         return {
+            /**
+             * @member {String} error - General error message
+             */
             error: '',
+            /**
+             * @member {Boolean} cartChanged - Element of cart changed
+             */
             cartChanged: false,
         }
     },
     computed: {
+        /**
+         * @computed {Number} cartCountElements - Number of products in the cart
+         */
         ...mapGetters({ cartCountElements: 'shoppingcart/cartCountElements' }),
+        /**
+         * @computed {Object} cart - All cart related information: {@link store:ShoppingCart}
+         */
         cart() {
             return this.$store.state.shoppingcart.cart
         },
+        /**
+         * @computed {Boolean} stockOfElementChanged - Element of cart changed
+         */
         stockOfElementChanged() {
             return this.$store.state.shoppingcart.stockOfElementChanged
         },
     },
     methods: {
+        /**
+         * @method onSubmit
+         * @desc Checks if the products and their quantity are still in stock and shows individual message if something changed
+         * @returns {Promise<void>}
+         */
         async onSubmit() {
             this.cartChanged = false
 
@@ -113,6 +138,12 @@ export default {
                 }
             })
         },
+        /**
+         * Generates a bootstrap toast (pop-up)
+         * @param {String} title - Title of the message
+         * @param {String} description - Text of the message
+         * @param {String} variant - Bootstrap theme color
+         */
         generateToastMessage(title, description, variant) {
             this.$bvToast.toast(description, {
                 title,

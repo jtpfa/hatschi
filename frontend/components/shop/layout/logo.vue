@@ -19,12 +19,21 @@
 </template>
 
 <script>
+/**
+ * @component PageLogo
+ * @desc Page logo with link to root page in header or footer
+ * @author Jonas Pfannkuche
+ */
+
 import IconLogo from '~/components/general/icons/logo'
 
 export default {
     name: 'PageLogo',
     components: { IconLogo },
     props: {
+        /**
+         * @vprop {Boolean} header - Show logo in header
+         */
         header: {
             type: Boolean,
             default: false,

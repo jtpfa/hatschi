@@ -88,4 +88,4 @@ sw.*
 *.swp
 
 # JS Doc
-out
+docs

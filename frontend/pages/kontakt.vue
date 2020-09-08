@@ -6,6 +6,12 @@
 </template>
 
 <script>
+/**
+ * @component ContactPage
+ * @desc Contact page
+ * @author Jonas Pfannkuche
+ */
+
 export default {
     head() {
         return {

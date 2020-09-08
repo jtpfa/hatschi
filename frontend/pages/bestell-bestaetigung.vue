@@ -7,12 +7,22 @@
 </template>
 
 <script>
+/**
+ * @component OrderConfirmationPage
+ * @desc Order confirmation page
+ * @lifecycle mounted - Checks if user has performed an order. In this case clear the cart and reset some values. Otherwise redirect to first step.
+ * @author Jonas Pfannkuche
+ */
+
 import OrderProgressbar from '~/components/shop/order/progressbar'
 import OrderConfirmation from '~/components/shop/order/steps/orderConfirmation'
 
 export default {
     components: { OrderConfirmation, OrderProgressbar },
     computed: {
+        /**
+         * @computed {Number} step - Current step of order process
+         */
         step() {
             return this.$store.state.order.step
         },

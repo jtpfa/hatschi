@@ -26,9 +26,18 @@
 </template>
 
 <script>
+/**
+ * @component HeaderNavUserStatus
+ * @desc Shows a login button when the user isn't logged in. Otherwise a menu with account related actions and pages
+ * @author Jonas Pfannkuche
+ */
+
 export default {
     name: 'HeaderNavUserStatus',
     methods: {
+        /**
+         * @method logout - Logs the user out
+         */
         logout() {
             this.$auth.logout()
         },

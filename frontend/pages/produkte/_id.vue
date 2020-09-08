@@ -15,6 +15,13 @@
 </template>
 
 <script>
+/**
+ * @component ProductPage
+ * @desc Dynamic product page
+ * @lifecyle fetch - Fetch product of the given route id and some recommendations
+ * @author Jonas Pfannkuche
+ */
+
 import FetchContent from '~/components/shop/layout/fetchContent'
 import ProductCard from '~/components/shop/product/card'
 import ProductDetails from '~/components/shop/product/details'
@@ -35,8 +42,17 @@ export default {
     },
     data() {
         return {
+            /**
+             * @member {Object} product - Fetched product
+             */
             product: {},
+            /**
+             * @member {Array.<Object>} recommendations - Recommendations to show on page
+             */
             recommendations: [],
+            /**
+             * @member {String} error - General error message
+             */
             error: '',
         }
     },

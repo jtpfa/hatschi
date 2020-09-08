@@ -37,6 +37,12 @@
 </template>
 
 <script>
+/**
+ * @component PaymentTermsPage
+ * @desc payment terms page
+ * @author Jonas Pfannkuche
+ */
+
 export default {
     head() {
         return {

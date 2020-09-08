@@ -24,6 +24,11 @@
 </template>
 
 <script>
+/**
+ * @component ProfilPage
+ * @desc Profil page
+ * @author Jonas Pfannkuche
+ */
 import AccountAddAddress from '~/components/shop/account/address/add'
 import AccountProfil from '~/components/shop/account/profil'
 import AccountShowAllAddresses from '~/components/shop/account/address/showAll'

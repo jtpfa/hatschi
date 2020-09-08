@@ -9,7 +9,7 @@
 
 <script>
 /**
- * @component Buttoncontainer
+ * @component ButtonContainer
  * @desc Container for a button with a spinner to show loading status in responsive layout
  * @author Jonas Pfannkuche
  */

@@ -10,13 +10,25 @@
 </template>
 
 <script>
+/**
+ * @component Spinner
+ * @desc Spinner to show loading state (especially, image loading and data fetching)
+ * @author Jonas Pfannkuche
+ */
+
 export default {
     name: 'Spinner',
     props: {
+        /**
+         * @vprop {String} color - Bootstrap theme color
+         */
         color: {
             type: String,
             default: 'primary',
         },
+        /**
+         * @vprop {Number} size - Size of spinner in rem
+         */
         size: {
             type: Number,
             default: 5,

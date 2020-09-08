@@ -20,6 +20,12 @@
 </template>
 
 <script>
+/**
+ * @component LayoutHeader
+ * @desc Shop header
+ * @author Jonas Pfannkuche
+ */
+
 import LoginModal from '~/components/general/login/modal'
 import HeaderNavShoppingCart from '~/components/shop/layout/headerNav/shoppingCart'
 import HeaderNavUserStatus from '~/components/shop/layout/headerNav/userStatus'

@@ -3,6 +3,12 @@
 </template>
 
 <script>
+/**
+ * @component AuthLoginPage
+ * @desc Login page
+ * @author Jonas Pfannkuche
+ */
+
 import LoginForm from '~/components/general/login/form'
 
 export default {

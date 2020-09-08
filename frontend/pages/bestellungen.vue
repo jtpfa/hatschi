@@ -7,6 +7,12 @@
 </template>
 
 <script>
+/**
+ * @component OrdersPage
+ * @desc Customer orders page
+ * @author Jonas Pfannkuche
+ */
+
 import AccountOrders from '~/components/shop/account/orders'
 
 export default {

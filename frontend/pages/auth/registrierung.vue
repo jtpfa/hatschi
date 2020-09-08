@@ -7,6 +7,12 @@
 </template>
 
 <script>
+/**
+ * @component AuthRegistrationPage
+ * @desc Registration page
+ * @author Jonas Pfannkuche
+ */
+
 import RegistrationForm from '~/components/general/registration/form'
 
 export default {

@@ -93,7 +93,7 @@
  * @component DataOverview
  * @desc Table rendering for dashboard data
  * @lifecycle mounted - Check if user has privileges to edit and/ or delete data
- * @lifecycle fetch - Fetch the data of the given type and store the result in.
+ * @lifecycle fetch - Fetch the data of the given type
  * @lifecycle activated - Call fetch again if last fetch more than 30 sec ago
  * @author Jonas Pfannkuche
  */
@@ -193,7 +193,7 @@ export default {
              */
             currentPage: 1,
             /**
-             * @member {Array} items - Table items
+             * @member {Array} items - Fetched table items
              */
             items: [],
             /**

@@ -118,6 +118,12 @@
 </template>
 
 <script>
+/**
+ * @component ImprintPage
+ * @desc Imprint
+ * @author Jonas Pfannkuche
+ */
+
 export default {
     head() {
         return {

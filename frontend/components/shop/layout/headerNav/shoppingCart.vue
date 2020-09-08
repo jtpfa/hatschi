@@ -14,6 +14,12 @@
 </template>
 
 <script>
+/**
+ * @component HeaderNavShoppingCart
+ * @desc Button, which links to {@link component:ShoppingCartPage}, shows the current amount of products of the shopping cart
+ * @author Jonas Pfannkuche
+ */
+
 import { mapGetters } from 'vuex'
 import IconShoppingCart from '~/components/general/icons/shoppingCart'
 
@@ -21,6 +27,9 @@ export default {
     name: 'HeaderNavShoppingCart',
     components: { IconShoppingCart },
     computed: {
+        /**
+         * @computed {Number} cartCountElements - Number of products in the cart
+         */
         ...mapGetters({ cartCountElements: 'shoppingcart/cartCountElements' }),
     },
 }

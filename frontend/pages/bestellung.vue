@@ -8,6 +8,13 @@
     </client-only>
 </template>
 <script>
+/**
+ * @component OrderPage
+ * @desc Order process page with multi step form
+ * @lifecycle mounted - Checks whether products are in cart and which step has to be filled in
+ * @lifecyle watchQuery - Change the step accordingly to the url query
+ * @author Jonas Pfannkuche
+ */
 import OrderForm from '~/components/shop/order/form'
 import OrderProgressbar from '~/components/shop/order/progressbar'
 
@@ -15,6 +22,9 @@ export default {
     components: { OrderProgressbar, OrderForm },
     middleware: ['auth'],
     computed: {
+        /**
+         * @computed {Number} step - Current step of order process
+         */
         step: {
             get() {
                 return this.$store.state.order.step
@@ -23,6 +33,9 @@ export default {
                 this.$store.commit('order/updateOrderInformation', { key: 'step', data: step })
             },
         },
+        /**
+         * @computed {Object} order - All order related information: {@link store:Order}
+         */
         order() {
             return this.$store.state.order
         },
