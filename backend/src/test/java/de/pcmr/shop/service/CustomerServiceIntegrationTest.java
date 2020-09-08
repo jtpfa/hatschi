@@ -13,7 +13,6 @@ import de.pcmr.shop.exception.keycloak.KeycloakUnknownErrorException;
 import de.pcmr.shop.exception.keycloak.KeycloakUserAlreadyExistsException;
 import de.pcmr.shop.exception.keycloak.KeycloakUserIsNotAuthorizedException;
 import de.pcmr.shop.repository.CustomerRepository;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.keycloak.admin.client.resource.UsersResource;
 import org.keycloak.representations.idm.UserRepresentation;
@@ -236,7 +235,7 @@ class CustomerServiceIntegrationTest extends AbstractIntegrationTest {
     void deleteCustomerUnreferenced() throws KeycloakUnknownErrorException, KeycloakUserAlreadyExistsException, KeycloakEndpointNotFoundException, KeycloakUserIsNotAuthorizedException, NotAuthorizedException, NoCustomerFoundException {
         given.aTestDatabase();
         given.aCustomerWithAdminRole();
-        given.anUnReferencedCustomer();
+        given.anUnreferencedCustomer();
         when.aCustomerIsDeleted(customerEntity.getEmail(), CustomerRoleEnum.ADMIN);
         then.numberOfCustomerEntitiesInDatabaseAre(8);
         then.numberOfKeycloakUsersWithRoleAre(3, CustomerRoleEnum.CUSTOMER);
@@ -267,7 +266,7 @@ class CustomerServiceIntegrationTest extends AbstractIntegrationTest {
             customerEntity = dbPreparer.getCustomers().get("a@customer");
         }
 
-        void anUnReferencedCustomer() {
+        void anUnreferencedCustomer() {
             customerEntity = dbPreparer.getCustomers().get("d@customer");
         }
 
