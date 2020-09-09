@@ -1,6 +1,5 @@
 package de.pcmr.shop.service;
 
-import de.pcmr.shop.AbstractIntegrationTest;
 import de.pcmr.shop.builder.AddressEntityBuilder;
 import de.pcmr.shop.db.DBPreparer;
 import de.pcmr.shop.domain.AddressEntity;
@@ -189,7 +188,7 @@ public class AddressServiceIntegrationTest {
     }
 
     class Then {
-        <T>  void resultListSizeIs(int size, List<T> list) {
+        <T> void resultListSizeIs(int size, List<T> list) {
             assertEquals(size, list.size());
         }
 
