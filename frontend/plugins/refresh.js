@@ -1,7 +1,7 @@
 /**
  * Refresh keycloak's access token
  * This is a refactored and es6-conform version of
- * @see {@link} https://gist.github.com/robsontenorio/d1e56c5bc5bc391ba0791be77419a68c
+ * {@link https://gist.github.com/robsontenorio/d1e56c5bc5bc391ba0791be77419a68c https://gist.github.com/robsontenorio/d1e56c5bc5bc391ba0791be77419a68c}
  *
  * Two main things have been changed:
  * 1. We use the jqt-decode module instead of robson's selfmade decode function

@@ -56,7 +56,7 @@
 <script>
 /**
  * @component LoginForm
- * @desc Login with username and password field and link to registration
+ * @desc Login form with username and password field and link to registration
  * @author Jonas Pfannkuche
  */
 

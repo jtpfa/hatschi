@@ -11,22 +11,38 @@
 </template>
 
 <script>
+/**
+ * @component AddToCart
+ * @desc Button to add a product to the cart
+ * @author Jonas Pfannkuche
+ */
+
 import IconShoppingCart from '~/components/general/icons/shoppingCart'
 
 export default {
     name: 'AddToCart',
     components: { IconShoppingCart },
     props: {
+        /**
+         * @vprop {Object} product - Product which could be added to the cart
+         */
         product: {
             type: Object,
             required: true,
         },
+        /**
+         * @vprop {Boolean} orderable - Product is orderable or not
+         */
         orderable: {
             type: Boolean,
             required: true,
         },
     },
     methods: {
+        /**
+         * @method addToCart
+         * @desc Adds the product to the cart and shows a pop-up success message
+         */
         addToCart() {
             const item = {
                 ...this.product,

@@ -39,15 +39,30 @@
 </template>
 
 <script>
+/**
+ * @component CartPriceOverview
+ * @desc Table with all products in the shopping cart. The price and amount of each product as well as the total price are shown.
+ * @author Jonas Pfannkuche
+ */
+
 import { mapGetters } from 'vuex'
 
 export default {
     name: 'CartPriceOverview',
     computed: {
+        /**
+         * @computed {Number} cartTotal - Total price of products in the shopping cart
+         */
         ...mapGetters({ cartTotal: 'shoppingcart/cartTotal' }),
+        /**
+         * @computed {Object} cart - Products in cart
+         */
         cart() {
             return this.$store.state.shoppingcart.cart
         },
+        /**
+         * @computed {Boolean} standardShipping - Standard shipping or express shipping
+         */
         standardShipping() {
             return this.$store.state.order.shippingMethod.description?.toLocaleLowerCase() === 'standardversand'
         },

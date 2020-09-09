@@ -46,7 +46,7 @@
 <script>
 /**
  * @component ProductDetails
- * @desc Detailed view of product with ability to add it to the cart
+ * @desc Detailed view of product
  * @author Jonas Pfannkuche
  */
 

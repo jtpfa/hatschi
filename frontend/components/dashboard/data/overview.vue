@@ -91,7 +91,7 @@
 <script>
 /**
  * @component DataOverview
- * @desc Table rendering for dashboard data
+ * @desc Table with pagination and sortable columns for the dashboard
  * @lifecycle mounted - Check if user has privileges to edit and/ or delete data
  * @lifecycle fetch - Fetch the data of the given type
  * @lifecycle activated - Call fetch again if last fetch more than 30 sec ago

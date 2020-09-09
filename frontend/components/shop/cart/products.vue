@@ -66,6 +66,12 @@
     </div>
 </template>
 <script>
+/**
+ * @component CartProducts
+ * @desc List of products in the card with option to change quantity
+ * @author Jonas Pfannkuche
+ */
+
 import IconTrash from '~/components/general/icons/trash'
 import Spinner from '~/components/shop/layout/spinner'
 
@@ -73,17 +79,27 @@ export default {
     name: 'CartProducts',
     components: { Spinner, IconTrash },
     props: {
+        /**
+         * @vprop {Boolean} order - In order process it's not possible to change quantity of products
+         */
         order: {
             type: Boolean,
             default: false,
         },
     },
     computed: {
+        /**
+         * @computed {Object} cart - Products in cart
+         */
         cart() {
             return this.$store.state.shoppingcart.cart
         },
     },
     methods: {
+        /**
+         * Adds the product to the cart (increases the quantity, product already exists)
+         * @param {Object} item - Product which quantity will be increased by one
+         */
         addOneToCart(item) {
             const product = {
                 ...item,
@@ -91,9 +107,17 @@ export default {
             }
             this.$store.commit('shoppingcart/addToCart', { ...product })
         },
+        /**
+         * Removes the product from to the cart (decreases the quantity)
+         * @param {Object} item - Product which quantity should be decreased by one
+         */
         removeOneFromCart(item) {
             this.$store.commit('shoppingcart/removeOneFromCart', item)
         },
+        /**
+         * Removes the product completely from to the cart
+         * @param {Object} item - Product which will be removed
+         */
         removeAllFromCart(item) {
             this.$store.commit('shoppingcart/removeAllFromCart', item)
         },

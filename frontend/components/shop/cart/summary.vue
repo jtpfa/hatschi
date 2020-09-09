@@ -11,12 +11,21 @@
 </template>
 
 <script>
+/**
+ * @component CartSummary
+ * @desc Summary of the cart (includes {link component:PriceOverview PriceOverview}, an error message and a custom slot)
+ * @author Jonas Pfannkuche
+ */
+
 import CartPriceOverview from '~/components/shop/cart/priceOverview'
 
 export default {
     name: 'CartSummary',
     components: { CartPriceOverview },
     props: {
+        /**
+         * @vprop {String} error - General error message
+         */
         error: {
             type: String,
             default: '',
