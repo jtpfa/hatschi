@@ -6,6 +6,13 @@ import javax.persistence.*;
 
 import static de.pcmr.shop.domain.AbstractEntity.TABLE_PREFIX;
 
+/**
+ * The order item entity. It represents one item of an order.
+ * Includes validation constraints.
+ *
+ * @author Fynn Lohse
+ */
+
 @Entity
 @Table(name = TABLE_PREFIX + "order_items")
 public class OrderItemEntity extends AbstractEntity {

@@ -10,6 +10,13 @@ import javax.validation.constraints.Size;
 
 import static de.pcmr.shop.domain.AbstractEntity.TABLE_PREFIX;
 
+/**
+ * The article entity. It represents the articles that can be ordered.
+ * Includes validation constraints.
+ *
+ * @author Fynn Lohse
+ */
+
 @Entity
 @Table(name = TABLE_PREFIX + "articles")
 public class ArticleEntity extends AbstractEntity {

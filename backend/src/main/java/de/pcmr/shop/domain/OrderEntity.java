@@ -8,6 +8,13 @@ import java.util.List;
 
 import static de.pcmr.shop.domain.AbstractEntity.TABLE_PREFIX;
 
+/**
+ * The order entity. It represents orders that customers can place.
+ * Includes validation constraints.
+ *
+ * @author Fynn Lohse
+ */
+
 @Entity
 @Table(name = TABLE_PREFIX + "orders")
 public class OrderEntity extends AbstractEntity {

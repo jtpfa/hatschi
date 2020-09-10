@@ -5,6 +5,13 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+/**
+ * This customer role enmum. It represents the different roles of customers.
+ * Includes string representation.
+ *
+ * @author Fynn Lohse
+ */
+
 public enum CustomerRoleEnum {
     CUSTOMER("customer"),
     EMPLOYEE("employee"),

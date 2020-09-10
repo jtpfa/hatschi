@@ -7,6 +7,13 @@ import java.util.Objects;
 
 import static de.pcmr.shop.domain.AbstractEntity.TABLE_PREFIX;
 
+/**
+ * The address entity. It represents the addresses customers can have. It can be used as shipping and invoice address of an order.
+ * Includes validation constraints.
+ *
+ * @author Fynn Lohse
+ */
+
 @Entity
 @Table(name = TABLE_PREFIX + "addresses")
 public class AddressEntity extends AbstractEntity {

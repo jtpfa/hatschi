@@ -9,6 +9,14 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.*;
 import java.util.Date;
 
+/**
+ * Base entity of all other entities. All attributes are inherited by extending entities.
+ * Includes id, created and updated timestamp and createdBy and lastModifiedBy information (email).
+ *
+ * @author Fynn Lohse
+ */
+
+
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
 public abstract class AbstractEntity {

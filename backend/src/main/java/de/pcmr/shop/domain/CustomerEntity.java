@@ -8,6 +8,14 @@ import java.util.List;
 
 import static de.pcmr.shop.domain.AbstractEntity.TABLE_PREFIX;
 
+/**
+ * The customer entity. It represents the users of the web shop. It also represents employees and admins.
+ * Includes validation constraints.
+ * Password is transient and managed by Keycloak.
+ *
+ * @author Fynn Lohse
+ */
+
 @Entity
 @Table(name = TABLE_PREFIX + "customers")
 public class CustomerEntity extends AbstractEntity {
