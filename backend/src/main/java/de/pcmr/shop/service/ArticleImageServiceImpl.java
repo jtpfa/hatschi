@@ -17,6 +17,12 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+/**
+ * Implementation of the article image service interface.
+ *
+ * @author Fynn Lohse
+ */
+
 @Service
 public class ArticleImageServiceImpl implements ArticleImageServiceI {
 

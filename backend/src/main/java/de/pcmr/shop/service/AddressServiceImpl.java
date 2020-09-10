@@ -16,6 +16,12 @@ import java.security.Principal;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Implementation of the address service interface.
+ *
+ * @author Fynn Lohse
+ */
+
 @Service
 public class AddressServiceImpl implements AddressServiceI {
     private final AddressRepository addressRepository;
