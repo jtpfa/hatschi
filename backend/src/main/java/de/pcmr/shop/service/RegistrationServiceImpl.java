@@ -13,6 +13,11 @@ import org.springframework.validation.annotation.Validated;
 
 import javax.validation.Valid;
 
+/**
+ * Implementation of registration service interface.
+ * @see de.pcmr.shop.service.RegistrationServiceI
+ * @author Fynn Lohse
+ */
 
 @Service
 @Validated

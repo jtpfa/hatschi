@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 
 /**
  * Implementation of the address service interface.
- *
+ * @see de.pcmr.shop.service.AddressServiceI
  * @author Fynn Lohse
  */
 

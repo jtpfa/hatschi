@@ -16,6 +16,12 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Implementation of the article service interface.
+ * @see de.pcmr.shop.service.ArticleServiceI
+ * @author Fynn Lohse
+ */
+
 @Service
 @Validated
 public class ArticleServiceImpl implements ArticleServiceI {

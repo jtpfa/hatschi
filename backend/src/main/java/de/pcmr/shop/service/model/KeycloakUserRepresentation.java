@@ -4,6 +4,14 @@ import org.keycloak.representations.idm.UserRepresentation;
 
 import java.util.Objects;
 
+/**
+ * Class is a modified UserRepresentation class with an implemented equals and hashcode method to be used in java.util.Set
+ * @see org.keycloak.representations.idm.UserRepresentation
+ * @see java.util.Set;
+ *
+ * @author Fynn Lohse
+ */
+
 public class KeycloakUserRepresentation extends UserRepresentation {
 
     public KeycloakUserRepresentation(UserRepresentation userRepresentation) {

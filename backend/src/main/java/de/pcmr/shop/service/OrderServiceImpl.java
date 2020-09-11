@@ -17,6 +17,12 @@ import javax.validation.Valid;
 import java.security.Principal;
 import java.util.*;
 
+/**
+ * Implementation of the order service interface.
+ * @see de.pcmr.shop.service.OrderServiceI
+ * @author Fynn Lohse
+ */
+
 @Service
 @Validated
 public class OrderServiceImpl implements OrderServiceI {

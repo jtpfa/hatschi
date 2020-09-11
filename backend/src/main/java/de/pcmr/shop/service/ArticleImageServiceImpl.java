@@ -19,7 +19,7 @@ import java.nio.file.Paths;
 
 /**
  * Implementation of the article image service interface.
- *
+ * @see de.pcmr.shop.service.ArticleImageServiceI
  * @author Fynn Lohse
  */
 

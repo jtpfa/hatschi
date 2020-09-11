@@ -18,6 +18,13 @@ import javax.validation.Valid;
 import java.security.Principal;
 import java.util.Optional;
 
+/**
+ * Implementation of the customer service interface.
+ * @see de.pcmr.shop.service.CustomerServiceI
+ *
+ * @author Fynn Lohse
+ */
+
 @Service
 @Validated
 public class CustomerServiceImpl implements CustomerServiceI {

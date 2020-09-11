@@ -31,6 +31,13 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+/**
+ * Implementation of the keycloak service interface.
+ * @see de.pcmr.shop.service.KeycloakServiceI
+ *
+ * @author Fynn Lohse
+ */
+
 @Service
 public class KeycloakServiceImpl implements KeycloakServiceI {
 
