@@ -4,7 +4,8 @@ import de.pcmr.shop.api.model.CredentialChangeDTO;
 import de.pcmr.shop.exception.PasswordException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
@@ -16,14 +17,6 @@ import java.util.Collections;
 @RestController
 @RequestMapping("/api")
 public class CredentialApiImpl implements CredentialApiI {
-
-    private static final String PASSWORD_CUSTOMER_URI = "/customer/password";
-    private static final String AUTHORIZATION_HEADER_KEY = "Authorization";
-
-    private static final String NOT_MATCH_PASSWORD_MESSAGE = "notMatchPasswordMessage";
-    private static final String INVALID_PASSWORD_EXISTING_MESSAGE = "invalidPasswordExistingMessage";
-    private static final String INVALID_PASSWORD_REGEX_PATTERN_MESSAGE = "invalidPasswordRegexPatternMessage";
-
     @Value("${PCMR_AUTH_SERVER_URL}")
     private String authServerUrl;
     @Value("${PCMR_KEYCLOAK_REALM}")
@@ -32,8 +25,7 @@ public class CredentialApiImpl implements CredentialApiI {
     private final RestTemplate restTemplate = new RestTemplate();
 
     @Override
-    @PostMapping(PASSWORD_CUSTOMER_URI)
-    public void changePasswordOfCustomer(@RequestHeader(AUTHORIZATION_HEADER_KEY) String authorizationHeader, @RequestBody @Valid CredentialChangeDTO credentialChangeDTO) throws MalformedURLException, PasswordException {
+    public void changePasswordOfCustomer(String authorizationHeader, @Valid CredentialChangeDTO credentialChangeDTO) throws MalformedURLException, PasswordException {
         URL keycloakUrl = new URL(authServerUrl);
         String logoutEndpointUrl = new URL(keycloakUrl, "/auth/realms/" + keycloakRealm + "/account/credentials/password").toString();
 

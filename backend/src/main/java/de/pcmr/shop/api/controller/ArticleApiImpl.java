@@ -10,19 +10,19 @@ import de.pcmr.shop.exception.UploadedImageResolutionTooLowException;
 import de.pcmr.shop.service.ArticleServiceI;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.io.IOException;
 import java.util.List;
 
-@RestController
-@RequestMapping(ArticleApiImpl.BASE_URI)
-public class ArticleApiImpl implements ArticleApiI {
-    public static final String BASE_URI = "/api";
-    public static final String EMPLOYEE_ROLE_URI = "/employee";
+import static de.pcmr.shop.api.controller.ArticleApiI.BASE_URI;
 
+@RestController
+@RequestMapping(BASE_URI)
+public class ArticleApiImpl implements ArticleApiI {
     private final ArticleServiceI articleService;
 
     @Autowired
@@ -31,32 +31,27 @@ public class ArticleApiImpl implements ArticleApiI {
     }
 
     @Override
-    @GetMapping(value = "/article")
     public List<ArticleShortDTO> getArticles() {
         return ArticleMapper.mapListOfArticleEntityToListOfArticleShortDTO(articleService.getAllArticles());
     }
 
     @Override
-    @GetMapping("/article/random/{excludeId}/{limit}")
-    public List<ArticleShortDTO> getRandomArticles(@PathVariable Long excludeId, @PathVariable Integer limit) {
+    public List<ArticleShortDTO> getRandomArticles(Long excludeId, Integer limit) {
         return ArticleMapper.mapListOfArticleEntityToListOfArticleShortDTO(articleService.getRandomArticles(excludeId, limit));
     }
 
     @Override
-    @GetMapping(value = "/article/{id}")
-    public ArticleDTO getArticle(@PathVariable long id) throws NoArticleFoundException {
+    public ArticleDTO getArticle(long id) throws NoArticleFoundException {
         return ArticleMapper.mapArticleEntityToArticleDTO(articleService.getArticle(id));
     }
 
     @Override
-    @GetMapping(value = EMPLOYEE_ROLE_URI + "/article")
     public List<ArticleDTO> getArticlesFull() {
         return ArticleMapper.mapListOfArticleEntitiesToListOfArticleDTO(articleService.getAllArticles());
     }
 
     @Override
-    @PostMapping(value = EMPLOYEE_ROLE_URI + "/article")
-    public void createArticle(@Valid @RequestPart(value = "json", required = true) ArticleCreationDTO articleCreationDTO, @RequestPart(value = "file", required = false) MultipartFile imageFile) throws NoArticleFoundException, UploadedImageResolutionTooLowException, IOException, UploadedImageInvalidFileExtensionException {
+    public void createArticle(@Valid ArticleCreationDTO articleCreationDTO, MultipartFile imageFile) throws NoArticleFoundException, UploadedImageResolutionTooLowException, IOException, UploadedImageInvalidFileExtensionException {
         if (imageFile != null) {
             checkFileExtension(imageFile);
         }
@@ -64,8 +59,7 @@ public class ArticleApiImpl implements ArticleApiI {
     }
 
     @Override
-    @PutMapping(value = EMPLOYEE_ROLE_URI + "/article")
-    public void updateArticle(@Valid @RequestPart(value = "json", required = true) ArticleDTO articleDTO, @RequestPart(value = "file", required = false) MultipartFile imageFile) throws NoArticleFoundException, IOException, UploadedImageResolutionTooLowException, UploadedImageInvalidFileExtensionException {
+    public void updateArticle(@Valid ArticleDTO articleDTO, MultipartFile imageFile) throws NoArticleFoundException, IOException, UploadedImageResolutionTooLowException, UploadedImageInvalidFileExtensionException {
         if (imageFile != null) {
             checkFileExtension(imageFile);
         }
@@ -73,8 +67,7 @@ public class ArticleApiImpl implements ArticleApiI {
     }
 
     @Override
-    @DeleteMapping(value = EMPLOYEE_ROLE_URI + "/article/{id}")
-    public void deleteArticle(@PathVariable long id) throws NoArticleFoundException, IOException {
+    public void deleteArticle(long id) throws NoArticleFoundException, IOException {
         articleService.deleteArticle(id);
     }
 

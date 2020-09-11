@@ -6,7 +6,6 @@ import de.pcmr.shop.exception.AddressDoesNotBelongToUserException;
 import de.pcmr.shop.exception.NoAddressFoundException;
 import de.pcmr.shop.exception.NoCustomerFoundException;
 import de.pcmr.shop.repository.AddressRepository;
-import de.pcmr.shop.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
