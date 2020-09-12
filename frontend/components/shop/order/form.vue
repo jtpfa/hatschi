@@ -1,5 +1,5 @@
 <template>
-    <b-form ref="form" novalidate @submit.prevent.stop="onSubmit">
+    <b-form ref="form" novalidate @submit.prevent="onSubmit">
         <order-headline />
 
         <div class="row mt-5">
