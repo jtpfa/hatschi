@@ -21,10 +21,19 @@
 </template>
 
 <script>
+/**
+ * @component OrderProgressbar
+ * @desc Progress bar to show steps of order form
+ * @author Jonas Pfannkuche
+ */
+
 export default {
     name: 'OrderProgressbar',
     props: {
-        ready: {
+        /**
+         * @vprop {Boolean} done - Set to true if progress bar should be filled
+         */
+        done: {
             type: Boolean,
             default: false,
         },
@@ -41,8 +50,11 @@ export default {
                 this.$store.commit('order/updateOrderInformation', { key: 'step', data: step })
             },
         },
+        /**
+         * @computed {Number} progressBarValue - Value of the progress bar
+         */
         progressBarValue() {
-            if (!this.ready) {
+            if (!this.done) {
                 return this.step * 2 - 1
             }
 
@@ -50,6 +62,11 @@ export default {
         },
     },
     methods: {
+        /**
+         * @method goToStep
+         * @desc Navigates to specified order step
+         * @param {Number} step - Step to jump to
+         */
         goToStep(step) {
             this.step = step
             this.$router.push({ path: '/bestellung', query: { step: this.step } })

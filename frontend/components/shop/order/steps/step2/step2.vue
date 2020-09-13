@@ -7,6 +7,12 @@
 </template>
 
 <script>
+/**
+ * @component OrderStep2
+ * @desc Second step of the order process (payment method and vouchers)
+ * @author Jonas Pfannkuche
+ */
+
 import OrderPaymentMethod from '~/components/shop/order/steps/step2/paymentMethod'
 import OrderVouchers from '~/components/shop/order/steps/step2/vouchers'
 

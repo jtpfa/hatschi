@@ -11,6 +11,12 @@
     </b-card-group>
 </template>
 <script>
+/**
+ * @component OrderShippingAndPayment
+ * @desc Overview of the shipping and payment methods
+ * @author Jonas Pfannkuche
+ */
+
 import OrderOverviewCard from '~/components/shop/order/steps/step3/card'
 
 export default {

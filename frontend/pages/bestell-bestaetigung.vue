@@ -1,6 +1,6 @@
 <template>
     <main v-if="step !== 4" class="container my-5">
-        <order-progressbar class="position-relative mt-5" :ready="true" />
+        <order-progressbar class="position-relative mt-5" :done="true" />
 
         <order-confirmation />
     </main>

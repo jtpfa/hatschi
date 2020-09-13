@@ -107,6 +107,13 @@
 </template>
 
 <script>
+/**
+ * @component AccountOrders
+ * @desc List of all orders related to the logged in user
+ * @lifecycle fetch - Fetch the orders of the user (customer)
+ * @author Jonas Pfannkuche
+ */
+
 import FetchContent from '~/components/shop/layout/fetchContent'
 import Spinner from '~/components/shop/layout/spinner'
 
@@ -123,6 +130,9 @@ export default {
     },
     data() {
         return {
+            /**
+             * @member {Array.<Object>} orders - All orders of the customer
+             */
             orders: [],
             /**
              * @member {String} fetchErrorMsg - Error message of rejected fetch
@@ -131,12 +141,24 @@ export default {
         }
     },
     methods: {
+        /**
+         * @method formatAddress
+         * @desc Formats the address to a multi line string for the popovers
+         * @param {Object} address - Address which will be formatted
+         * @returns {String} Formatted address
+         */
         formatAddress(address) {
             return `${address.address}
             ${address.additionalAddress ? address.additionalAddress : ''}
             ${address.zip} ${address.city}
             ${address.country}`
         },
+        /**
+         * @method getPaymentMethod
+         * @desc Converts the payment method value to a user friendly version
+         * @param {String} method - Method which should be converted
+         * @returns {String} User friendly payment method name/description
+         */
         getPaymentMethod(method) {
             switch (method) {
                 case 'CREDIT_CARD':

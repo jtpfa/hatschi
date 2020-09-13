@@ -34,6 +34,13 @@
 </template>
 
 <script>
+/**
+ * @component OrderForm
+ * @desc Multi step order form with navigation (pagination)
+ * @lifecycle fetch - Fetch all addresses of logged in user and save them in the store
+ * @author Jonas Pfannkuche
+ */
+
 import CartSummary from '~/components/shop/cart/summary'
 import OrderHeadline from '~/components/shop/order/headline'
 import OrderPagination from '~/components/shop/order/pagination'
@@ -96,12 +103,48 @@ export default {
         },
     },
     methods: {
+        /**
+         * @method stepBack
+         * @desc Navigates one step back and scrolls to top
+         */
         stepBack() {
             this.$refs.form.classList.remove('was-validated')
             this.step -= 1
             this.$router.push({ path: '/bestellung', query: { step: this.step } })
             window.scrollTo(0, 0)
         },
+        /**
+         * @method submitOrder
+         * @desc Calls api endpoint to submit order and handles response
+         * @returns {Promise<void>}
+         */
+        async submitOrder() {
+            try {
+                const orderItems = this.cart.map(item => {
+                    return { articleId: item.id, quantity: item.quantity }
+                })
+
+                await this.$api.placeOrder(
+                    {
+                        orderItems,
+                        shippingAddressId: this.order.shippingAddress.id,
+                        invoiceAddressId: this.order.differentInvoiceAddress
+                            ? this.order.invoiceAddress.id
+                            : this.order.shippingAddress.id,
+                        paymentMethod: this.order.paymentMethod.id,
+                        shippingMethod: this.order.shippingMethod.id,
+                    },
+                    this.$auth.getToken('keycloak')
+                )
+            } catch (err) {
+                this.error = err.message || 'Leider gab es ein Problem. Bitte später erneut versuchen.'
+            }
+        },
+        /**
+         * @method onSubmit
+         * @desc Validates the form, shows validation state and navigates to the next step if the form is valid. If the user submits the form in the third step, {@link component:OrderForm~submitOrder submitOrder} is called.
+         * @param {Object} event - Browser event which is fired on submitting the form
+         */
         async onSubmit(event) {
             this.$refs.form.classList.remove('was-validated')
             this.loading = true
@@ -134,28 +177,6 @@ export default {
             }
 
             this.loading = false
-        },
-        async submitOrder() {
-            try {
-                const orderItems = this.cart.map(item => {
-                    return { articleId: item.id, quantity: item.quantity }
-                })
-
-                await this.$api.placeOrder(
-                    {
-                        orderItems,
-                        shippingAddressId: this.order.shippingAddress.id,
-                        invoiceAddressId: this.order.differentInvoiceAddress
-                            ? this.order.invoiceAddress.id
-                            : this.order.shippingAddress.id,
-                        paymentMethod: this.order.paymentMethod.id,
-                        shippingMethod: this.order.shippingMethod.id,
-                    },
-                    this.$auth.getToken('keycloak')
-                )
-            } catch (err) {
-                this.error = err.message || 'Leider gab es ein Problem. Bitte später erneut versuchen.'
-            }
         },
     },
 }

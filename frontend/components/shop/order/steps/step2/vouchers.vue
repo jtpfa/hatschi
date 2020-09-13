@@ -37,9 +37,18 @@
 </template>
 
 <script>
+/**
+ * @component OrderPaymentMethod
+ * @desc Voucher input fields
+ * @author Jonas Pfannkuche
+ */
+
 export default {
     name: 'OrderVouchers',
     computed: {
+        /**
+         * @computed {String} giftCardCode - Code of gift card
+         */
         giftCardCode: {
             get() {
                 return this.$store.state.order.giftCardCode
@@ -51,6 +60,9 @@ export default {
                 })
             },
         },
+        /**
+         * @computed {String} discountCode - Discount code
+         */
         discountCode: {
             get() {
                 return this.$store.state.order.discountCode

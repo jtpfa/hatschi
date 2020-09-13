@@ -6,21 +6,34 @@
                 <b-button variant="white" @click="step = stepToEditData"><icon-pen class="edit" /></b-button>
             </div>
         </template>
+
         <slot />
     </b-card>
 </template>
 
 <script>
+/**
+ * @component OrderOverviewCard
+ * @desc General card template for order overview with ability to edit data (jumps to the given step)
+ * @author Jonas Pfannkuche
+ */
+
 import IconPen from '~/components/general/icons/pen'
 
 export default {
     name: 'OrderOverviewCard',
     components: { IconPen },
     props: {
+        /**
+         * @vprop {String} title - Titel/description of the information in the card
+         */
         title: {
             type: String,
             required: true,
         },
+        /**
+         * @vprop {Number} stepToEditData - Step where data is editable
+         */
         stepToEditData: {
             type: Number,
             required: true,

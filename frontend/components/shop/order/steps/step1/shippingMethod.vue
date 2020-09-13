@@ -23,11 +23,23 @@
 </template>
 
 <script>
+/**
+ * @component OrderShippingMethod
+ * @desc Radio group of all shipping methods
+ * @author Jonas Pfannkuche
+ */
+
 export default {
     name: 'OrderShippingMethod',
     data() {
         return {
+            /**
+             * @member {Boolean|Function} [validState='null'] - Set to null to prevent validation when user navigates between steps
+             */
             validState: null,
+            /**
+             * @member {Array.<{id: String, name: String, description: String, shippingTime: String}>} availableMethods - Available shipping methods
+             */
             availableMethods: [
                 {
                     id: 'DEFAULT',
@@ -45,6 +57,9 @@ export default {
         }
     },
     computed: {
+        /**
+         * @computed {Object} selectedMethod - Selected shipping method
+         */
         selectedMethod: {
             get() {
                 return this.$store.state.order.shippingMethod

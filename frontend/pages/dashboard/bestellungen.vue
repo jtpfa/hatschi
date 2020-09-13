@@ -100,7 +100,7 @@ export default {
          * @method formatAddress
          * @desc Format address to show in multiple lines in the table
          * @param {Object} address - Address which should be formatted
-         * @returns {string} Formatted address
+         * @returns {String} Formatted address
          */
         formatAddress(address) {
             return `${address.firstName} ${address.lastName}

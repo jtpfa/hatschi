@@ -20,6 +20,12 @@
 </template>
 
 <script>
+/**
+ * @component OrderOverviewVouchers
+ * @desc Overview of the vouchers
+ * @author Jonas Pfannkuche
+ */
+
 import OrderOverviewCard from '~/components/shop/order/steps/step3/card'
 
 export default {

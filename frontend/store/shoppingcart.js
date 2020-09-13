@@ -14,7 +14,7 @@ export const state = () => ({
      */
     cart: [],
     /**
-     * @member {boolean} stockOfElementChanged - Stores whether the stock has changed or not, needs to be resetted after each product
+     * @member {Boolean} stockOfElementChanged - Stores whether the stock has changed or not, needs to be resetted after each product
      */
     stockOfElementChanged: false,
 })

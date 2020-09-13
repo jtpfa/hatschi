@@ -465,7 +465,7 @@ class RestApi {
     /**
      * Deletes an user
      * @param {String} username - Email of the user
-     * @param {string} userRole - Current role of the user
+     * @param {String} userRole - Current role of the user
      * @param {String} userToken - Access token of the logged in user
      * @returns {Promise<Response>}
      */

@@ -23,11 +23,23 @@
 </template>
 
 <script>
+/**
+ * @component OrderPaymentMethod
+ * @desc Radio group of all payment methods
+ * @author Jonas Pfannkuche
+ */
+
 export default {
     name: 'OrderPaymentMethod',
     data() {
         return {
+            /**
+             * @member {Boolean|Function} [validState='null'] - Set to null to prevent validation when user navigates between steps
+             */
             validState: null,
+            /**
+             * @member {Array.<{id: String, name: String, description: String}>} availableMethods - Available payment methods
+             */
             availableMethods: [
                 { id: 'INVOICE', name: 'Klarna', description: 'Kauf auf Rechnung' },
                 { id: 'PAYPAL', name: 'Paypal', description: '' },
@@ -36,6 +48,9 @@ export default {
         }
     },
     computed: {
+        /**
+         * @computed {Object} selectedMethod - Selected payment method
+         */
         selectedMethod: {
             get() {
                 return this.$store.state.order.paymentMethod

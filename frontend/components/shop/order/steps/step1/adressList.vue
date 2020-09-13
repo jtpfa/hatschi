@@ -36,9 +36,18 @@
 </template>
 
 <script>
+/**
+ * @component OrderAdressList
+ * @desc Radio group of all addresses of the given type with ability to add a new one (redirects to profil)
+ * @author Jonas Pfannkuche
+ */
+
 export default {
     name: 'OrderAdressList',
     props: {
+        /**
+         * @vprop {'shipping'|'invoice'} - Type of the address
+         */
         addressType: {
             type: String,
             required: true,
@@ -47,6 +56,9 @@ export default {
                 return ['shipping', 'invoice'].indexOf(type) !== -1
             },
         },
+        /**
+         * @vprop {String} fetchErrorMsg - Error message of rejected fetch
+         */
         fetchErrorMsg: {
             type: String,
             default: '',
@@ -54,10 +66,16 @@ export default {
     },
     data() {
         return {
+            /**
+             * @member {Boolean|Function} [validState='null'] - Set to null to prevent validation when user navigates between steps
+             */
             validState: null,
         }
     },
     computed: {
+        /**
+         * @computed {Object} selectedAddress - Selected address
+         */
         selectedAddress: {
             get() {
                 return this.$store.state.order[`${this.addressType}Address`]
@@ -69,6 +87,9 @@ export default {
                 })
             },
         },
+        /**
+         * @computed {Array.<Object>} addresses - All addresses of the user
+         */
         addresses() {
             return this.$store.state.order.addresses
         },

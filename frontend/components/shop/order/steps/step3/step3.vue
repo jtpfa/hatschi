@@ -21,6 +21,11 @@
 </template>
 
 <script>
+/**
+ * @component OrderStep3
+ * @desc Third step of the order process (data overview)
+ * @author Jonas Pfannkuche
+ */
 import CartProducts from '~/components/shop/cart/products'
 import OrderOverviewAddress from '~/components/shop/order/steps/step3/address'
 import OrderShippingAndPayment from '~/components/shop/order/steps/step3/shippingAndPayment'

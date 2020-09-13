@@ -18,9 +18,18 @@
 </template>
 
 <script>
+/**
+ * @component OrderPagination
+ * @desc Pagination (navigation) of the order process
+ * @author Jonas Pfannkuche
+ */
+
 export default {
     name: 'OrderPagination',
     props: {
+        /**
+         * @vprop {Boolean} loading - Loading status
+         */
         loading: {
             type: Boolean,
             default: false,

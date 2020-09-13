@@ -6,7 +6,7 @@
 class CurrenyConverter {
     /**
      * @param {Number} fractionCount - Number of decimal places
-     * @param {string} fractionSeperator - Separator between euro and cents
+     * @param {String} fractionSeperator - Separator between euro and cents
      */
     constructor(fractionCount, fractionSeperator) {
         this.fractionCount = fractionCount

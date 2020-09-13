@@ -5,6 +5,12 @@
 </template>
 
 <script>
+/**
+ * @component OrderHeadline
+ * @desc Headline of the current order step
+ * @author Jonas Pfannkuche
+ */
+
 export default {
     name: 'OrderHeadline',
     computed: {

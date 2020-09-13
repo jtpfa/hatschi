@@ -10,6 +10,12 @@
 </template>
 
 <script>
+/**
+ * @component OrderInvalidState
+ * @desc Invalid state in order process (e. g. step isn't between 1 and 3)
+ * @author Jonas Pfannkuche
+ */
+
 export default {
     name: 'OrderInvalidState',
     computed: {
@@ -26,6 +32,10 @@ export default {
         },
     },
     methods: {
+        /**
+         * @method goToInitialStep
+         * @desc Navigates to first order step
+         */
         goToInitialStep() {
             this.step = 1
             this.$router.push({ path: '/bestellung', query: { step: this.step } })

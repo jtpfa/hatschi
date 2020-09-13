@@ -38,12 +38,21 @@
 </template>
 
 <script>
+/**
+ * @component OrderOverviewAddress
+ * @desc Overview of the shipping OR invoice address
+ * @author Jonas Pfannkuche
+ */
+
 import OrderOverviewCard from '~/components/shop/order/steps/step3/card'
 
 export default {
     name: 'OrderOverviewAddress',
     components: { OrderOverviewCard },
     props: {
+        /**
+         * @vprop {'shipping'|'invoice'} - Type of the address
+         */
         addressType: {
             type: String,
             required: true,
@@ -52,6 +61,9 @@ export default {
                 return ['shipping', 'invoice'].indexOf(type) !== -1
             },
         },
+        /**
+         * @vprop {String} title - Title to show as descriptional header
+         */
         title: {
             type: String,
             required: true,
@@ -64,6 +76,9 @@ export default {
         order() {
             return this.$store.state.order
         },
+        /**
+         * @computed {Number} addressId - Id of the selected address
+         */
         addressId() {
             return +this.order[`${this.addressType}Address`].index
         },

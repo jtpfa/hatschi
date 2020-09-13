@@ -11,6 +11,12 @@
 </template>
 
 <script>
+/**
+ * @component OrderConfirmation
+ * @desc Message to show successful order
+ * @author Jonas Pfannkuche
+ */
+
 export default {
     name: 'OrderConfirmation',
 }

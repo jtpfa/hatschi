@@ -32,7 +32,7 @@ class ImageSrcSet {
      * Get the product image for one resolution
      * @param {Number} productId - Product id of the requested image
      * @param {Number} [size=512] - Width of the image
-     * @returns {string} Url of the image
+     * @returns {String} Url of the image
      */
     getImageUrl(productId, size = 512) {
         return `${this.baseUrl}${productId}_${size}.png`

@@ -29,7 +29,14 @@
         </template>
     </div>
 </template>
+
 <script>
+/**
+ * @component AccountProfil
+ * @desc General user related information (user data overview and editing and password editing)
+ * @author Jonas Pfannkuche
+ */
+
 import ProfilChangePassword from '~/components/shop/account/profil/change-password'
 import ProfilPersonalData from '~/components/shop/account/profil/personal-data'
 
@@ -38,23 +45,50 @@ export default {
     components: { ProfilChangePassword, ProfilPersonalData },
     data() {
         return {
+            /**
+             * @member {Boolean} needsNewLogin - If the email or password have changed, a new log in is required
+             */
             needsNewLogin: false,
+            /**
+             * @member {String} success - General succes message
+             */
             success: '',
+            /**
+             * @member {String} errorData - Error message related to user data editing
+             */
             errorData: '',
+            /**
+             * @member {String} errorPassword - Error message related to password change
+             */
             errorPassword: '',
         }
     },
     methods: {
+        /**
+         * @method login
+         * @desc Logs the user out and redirects to login page
+         * @returns {Promise<void>}
+         */
         async login() {
             await this.$auth.logout()
             this.$router.push('/auth/login')
         },
+        /**
+         * @method resetStatus
+         * @desc Resets all component data, e. g. messages
+         */
         resetStatus() {
             this.needsNewLogin = false
             this.success = ''
             this.errorData = ''
             this.errorPassword = ''
         },
+        /**
+         * @method showErrorMessage
+         * @desc Shows an error message depending on the error type
+         * @param {String} event - Error message
+         * @param {'data'|'password'} type - Which data changing triggered the error?
+         */
         showErrorMessage(event, type) {
             if (type === 'data') {
                 this.errorData = event
@@ -62,6 +96,11 @@ export default {
                 this.errorPassword = event
             }
         },
+        /**
+         * @method showSuccessMessage
+         * @desc Shows a success message
+         * @param {String} event - Success message
+         */
         showSuccessMessage(event) {
             this.success = event
         },

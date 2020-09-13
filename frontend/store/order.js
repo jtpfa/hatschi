@@ -29,7 +29,7 @@ export const state = () => ({
         index: -1,
     },
     /**
-     * @member {boolean} differentInvoiceAddress - Stores whether a user has a different billing address
+     * @member {Boolean} differentInvoiceAddress - Stores whether a user has a different billing address
      */
     differentInvoiceAddress: false,
     /**
@@ -48,7 +48,7 @@ export const state = () => ({
         description: '',
     },
     /**
-     * @member {string} giftCardCode - Stores the gift card code
+     * @member {String} giftCardCode - Stores the gift card code
      */
     giftCardCode: '',
     /**
@@ -71,7 +71,7 @@ export const mutations = {
      * @mutation updateOrderInformation
      * @param {Object} state
      * @param {Object} payload
-     * @param {string} payload.key - Name of attribute which should be updated
+     * @param {String} payload.key - Name of attribute which should be updated
      * @param {*} payload.data - Data you want to set
      */
     updateOrderInformation: (state, payload) => {

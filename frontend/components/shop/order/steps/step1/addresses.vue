@@ -13,18 +13,30 @@
 </template>
 
 <script>
+/**
+ * @component OrderAddresses
+ * @desc Default: shows shipping addresses. If the user enables the "different invoice address" checkbox: shows shipping and invoice addresses
+ * @author Jonas Pfannkuche
+ */
+
 import OrderAdressList from '~/components/shop/order/steps/step1/adressList'
 
 export default {
     name: 'OrderAddresses',
     components: { OrderAdressList },
     props: {
+        /**
+         * @vprop {String} fetchErrorMsg - Error message of rejected fetch
+         */
         fetchErrorMsg: {
             type: String,
             default: '',
         },
     },
     computed: {
+        /**
+         * @computed {Boolean} differentInvoiceAddress - Checkbox status (true = checked)
+         */
         differentInvoiceAddress: {
             get() {
                 return this.$store.state.order.differentInvoiceAddress
