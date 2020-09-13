@@ -197,7 +197,7 @@ export default {
              */
             items: [],
             /**
-             * @member {String} items - Error message of rejected fetch
+             * @member {String} fetchErrorMsg - Error message of rejected fetch
              */
             fetchErrorMsg: '',
             /**

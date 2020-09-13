@@ -19,6 +19,12 @@
     </div>
 </template>
 <script>
+/**
+ * @component HomeSlideFacts
+ * @desc Facts of a product (in slide)
+ * @author Jonas Pfannkuche
+ */
+
 import HomeSlideBackgroundShape from '~/components/shop/home/slide/backgroundShape'
 import HomeSlideInfoCards from '~/components/shop/home/slide/infoCards'
 import Spinner from '~/components/shop/layout/spinner'
@@ -27,22 +33,37 @@ export default {
     name: 'HomeSlideFacts',
     components: { Spinner, HomeSlideInfoCards, HomeSlideBackgroundShape },
     props: {
+        /**
+         * @vprop {String} name - Name of the product
+         */
         name: {
             type: String,
             required: true,
         },
+        /**
+         * @vprop {String} featureOne - First feature of the product
+         */
         featureOne: {
             type: String,
             required: true,
         },
+        /**
+         * @vprop {String} featureTeo - Second feature of the product
+         */
         featureTwo: {
             type: String,
             required: true,
         },
+        /**
+         * @vprop {String|Number} price - Price of the product
+         */
         price: {
             type: [Number, String],
             required: true,
         },
+        /**
+         * @vprop {String} imgSrc - Source link of the image
+         */
         imgSrc: {
             type: String,
             required: true,

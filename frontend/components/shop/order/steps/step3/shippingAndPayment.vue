@@ -17,6 +17,9 @@ export default {
     name: 'OrderShippingAndPayment',
     components: { OrderOverviewCard },
     computed: {
+        /**
+         * @computed {Object} order - All order related information: {@link store:Order}
+         */
         order() {
             return this.$store.state.order
         },

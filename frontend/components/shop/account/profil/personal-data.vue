@@ -71,6 +71,12 @@
 </template>
 
 <script>
+/**
+ * @component ProfilPersonalData
+ * @desc Form to change user data (first name, last name and email)
+ * @author Jonas Pfannkuche
+ */
+
 import ButtonContainer from '~/components/general/layout/buttonContainer'
 
 export default {
@@ -78,15 +84,26 @@ export default {
     components: { ButtonContainer },
     data() {
         return {
+            /**
+             * @member {Object.<{firstName: String, lastName: String, email: String}>} - User data
+             */
             user: {
                 firstName: this.$auth.user.firstName,
                 lastName: this.$auth.user.lastName,
                 email: this.$auth.user.email,
             },
+            /**
+             * @member {Boolean} loading - Request status
+             */
             loading: false,
         }
     },
     methods: {
+        /**
+         * @method updateUserData
+         * @desc Calls api endpoint to change user data and handles response
+         * @returns {Promise<void>}
+         */
         async updateUserData() {
             try {
                 await this.$api.updateUserData(this.user, this.$auth.getToken('keycloak'))
@@ -101,6 +118,11 @@ export default {
                 this.$emit('error', err.message || 'Leider gab es ein Problem. Bitte später erneut versuchen.')
             }
         },
+        /**
+         * @method onSubmit
+         * @desc Validates the form, shows validation state and calls {@link component:ProfilPersonalData~updateUserData updateUserData} if the form is valid
+         * @param {Object} event - Browser event which is fired on submitting the form
+         */
         async onSubmit(event) {
             this.loading = true
             this.$emit('reset')

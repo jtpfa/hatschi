@@ -56,18 +56,36 @@ export default {
     },
     data() {
         return {
-            loading: false,
+            /**
+             * @member {String} fetchErrorMsg - Error message of rejected fetch
+             */
             fetchErrorMsg: '',
+            /**
+             * @member {String} error - General error message
+             */
             error: '',
+            /**
+             * @member {Boolean} loading - Request status
+             */
+            loading: false,
         }
     },
     computed: {
+        /**
+         * @computed {Object} cart - Products in cart
+         */
         cart() {
             return this.$store.state.shoppingcart.cart
         },
+        /**
+         * @computed {Object} order - All order related information: {@link store:Order}
+         */
         order() {
             return this.$store.state.order
         },
+        /**
+         * @computed {Number} step - Current step of order process
+         */
         step: {
             get() {
                 return this.$store.state.order.step

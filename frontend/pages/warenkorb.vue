@@ -58,7 +58,7 @@ export default {
          */
         ...mapGetters({ cartCountElements: 'shoppingcart/cartCountElements' }),
         /**
-         * @computed {Object} cart - All cart related information: {@link store:ShoppingCart}
+         * @computed {Object} cart - Products in cart
          */
         cart() {
             return this.$store.state.shoppingcart.cart

@@ -32,9 +32,18 @@
 </template>
 
 <script>
+/**
+ * @component AccountAddAddress
+ * @desc Card view of one address
+ * @author Jonas Pfannkuche
+ */
+
 export default {
     name: 'AccountAddressDetails',
     props: {
+        /**
+         * @vprop {Object} address - Address to show
+         */
         address: {
             type: Object,
             required: true,

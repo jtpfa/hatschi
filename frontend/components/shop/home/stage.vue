@@ -60,6 +60,12 @@
     </div>
 </template>
 <script>
+/**
+ * @component HomeStage
+ * @desc Stage with a slider
+ * @author Jonas Pfannkuche
+ */
+
 import 'vue-glide-js/dist/vue-glide.css'
 import { Glide, GlideSlide } from 'vue-glide-js'
 import HomeSlideDescription from '~/components/shop/home/slide/description'

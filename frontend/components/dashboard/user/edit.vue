@@ -115,15 +115,33 @@ export default {
     },
     data() {
         return {
+            /**
+             * @member {Boolean} isAdmin - Stores if logged in user is admin or not
+             */
             isAdmin: false,
+            /**
+             * @member {String} newMail - New email of user
+             */
             newEmail: this.user.email,
+            /**
+             * @member {String} newRole - New role of user
+             */
             newRole: this.role,
+            /**
+             * @member {Array.<{text: String, value: String}>} - Selectable roles for users
+             */
             roleOptions: [
                 { text: 'Kunde', value: 'customer' },
                 { text: 'Mitarbeiter', value: 'employee' },
                 { text: 'Admin', value: 'admin' },
             ],
+            /**
+             * @member {String} error - General error message
+             */
             error: '',
+            /**
+             * @member {Boolean} loading - Request status
+             */
             loading: false,
         }
     },

@@ -30,6 +30,9 @@ export default {
         },
     },
     computed: {
+        /**
+         * @computed {Number} step - Current step of order process
+         */
         step: {
             get() {
                 return this.$store.state.order.step

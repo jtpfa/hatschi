@@ -124,6 +124,9 @@ export default {
     data() {
         return {
             orders: [],
+            /**
+             * @member {String} fetchErrorMsg - Error message of rejected fetch
+             */
             fetchErrorMsg: '',
         }
     },

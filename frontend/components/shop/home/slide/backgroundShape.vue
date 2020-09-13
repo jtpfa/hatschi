@@ -11,7 +11,7 @@
 <script>
 /**
  * @component HomeSlideBackgroundShape
- * @desc Shape of the slider (image and facts)
+ * @desc Background shape of a slide (behind image and facts)
  * @author Jonas Pfannkuche
  */
 

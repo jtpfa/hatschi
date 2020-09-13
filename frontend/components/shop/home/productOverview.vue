@@ -7,6 +7,12 @@
     </div>
 </template>
 <script>
+/**
+ * @component HomeProductOverview
+ * @desc Grid overview of all products
+ * @author Jonas Pfannkuche
+ */
+
 import FetchContent from '~/components/shop/layout/fetchContent'
 import ProductCard from '~/components/shop/product/card'
 
@@ -14,14 +20,23 @@ export default {
     name: 'HomeProductOverview',
     components: { ProductCard, FetchContent },
     props: {
+        /**
+         * @vprop {Object} products - Products to show in overview
+         */
         products: {
             type: Array,
             required: true,
         },
+        /**
+         * @vprop {Boolean} state - Fetch state
+         */
         state: {
             type: Boolean,
             required: true,
         },
+        /**
+         * @vprop {String} error - General error message
+         */
         error: {
             type: String,
             default: '',

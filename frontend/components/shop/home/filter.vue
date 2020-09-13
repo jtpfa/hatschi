@@ -71,6 +71,12 @@
 </template>
 
 <script>
+/**
+ * @component HomeFilter
+ * @desc Collapseable filter
+ * @author Jonas Pfannkuche
+ */
+
 import IconFilter from '~/components/general/icons/filter'
 
 export default {
@@ -78,6 +84,9 @@ export default {
     components: { IconFilter },
     data() {
         return {
+            /**
+             * @member {String} searchParam - Text of search input
+             */
             searchParam: '',
         }
     },

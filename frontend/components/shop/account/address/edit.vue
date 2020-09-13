@@ -147,12 +147,21 @@
 </template>
 
 <script>
+/**
+ * @component AccountEditAddress
+ * @desc Form to edit a address in profil
+ * @author Jonas Pfannkuche
+ */
+
 import ButtonContainer from '~/components/general/layout/buttonContainer'
 
 export default {
     name: 'AccountEditAddress',
     components: { ButtonContainer },
     props: {
+        /**
+         * @vprop {Object} address - Address which should be edited
+         */
         address: {
             type: Object,
             required: true,
@@ -160,11 +169,22 @@ export default {
     },
     data() {
         return {
-            loading: false,
+            /**
+             * @member {String} error - General error message
+             */
             error: '',
+            /**
+             * @member {Boolean} loading - Request status
+             */
+            loading: false,
         }
     },
     methods: {
+        /**
+         * @method editAddress
+         * @desc Calls api endpoint to edit address and handles response
+         * @returns {Promise<void>}
+         */
         async editAddress() {
             try {
                 await this.$api.editCustomerAddress(
@@ -187,6 +207,11 @@ export default {
                 this.error = err.message || 'Leider gab es ein Problem. Bitte später erneut versuchen.'
             }
         },
+        /**
+         * @method onSubmit
+         * @desc Validates the form, shows validation state and calls {@link component:AccountEditAddress~editAddress editAddress} if the form is valid
+         * @param {Object} event - Browser event which is fired on submitting the form
+         */
         async onSubmit(event) {
             this.loading = true
             this.error = ''

@@ -30,6 +30,9 @@ export default {
     name: 'OrderStep3',
     components: { OrderOverviewVouchers, OrderShippingAndPayment, OrderOverviewAddress, CartProducts },
     computed: {
+        /**
+         * @computed {Object} order - All order related information: {@link store:Order}
+         */
         order() {
             return this.$store.state.order
         },

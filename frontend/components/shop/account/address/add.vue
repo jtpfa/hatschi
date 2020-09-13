@@ -149,6 +149,12 @@
 </template>
 
 <script>
+/**
+ * @component AccountAddAddress
+ * @desc Form to add a new address to account
+ * @author Jonas Pfannkuche
+ */
+
 import ButtonContainer from '~/components/general/layout/buttonContainer'
 
 export default {
@@ -156,18 +162,50 @@ export default {
     components: { ButtonContainer },
     data() {
         return {
+            /**
+             * @member {String} firstName - First name of the user (get from logged in user)
+             */
             firstName: this.$auth.user.firstName,
+            /**
+             * @member {String} lastName - Last name of the user (get from logged in user)
+             */
             lastName: this.$auth.user.lastName,
+            /**
+             * @member {String} zip - Zip of the address
+             */
             zip: '',
+            /**
+             * @member {String} city - City of the address
+             */
             city: '',
+            /**
+             * @member {String} address - Street and house number of the address
+             */
             address: '',
+            /**
+             * @member {String} additionalAddress - Additional address of the address
+             */
             additionalAddress: '',
+            /**
+             * @member {String} country - Country of the address
+             */
             country: '',
-            loading: false,
+            /**
+             * @member {String} error - General error message
+             */
             error: '',
+            /**
+             * @member {Boolean} loading - Request status
+             */
+            loading: false,
         }
     },
     methods: {
+        /**
+         * @method addAddress
+         * @desc Calls api endpoint to add new address and handles response
+         * @returns {Promise<void>}
+         */
         async addAddress() {
             try {
                 await this.$api.addCustomerAddress(
@@ -189,6 +227,11 @@ export default {
                 this.error = err.message || 'Leider gab es ein Problem. Bitte später erneut versuchen.'
             }
         },
+        /**
+         * @method onSubmit
+         * @desc Validates the form, shows validation state and calls {@link component:AccountAddAddress~addAddress addAddress} if the form is valid
+         * @param {Object} event - Browser event which is fired on submitting the form
+         */
         async onSubmit(event) {
             this.loading = true
             this.error = ''
@@ -202,6 +245,10 @@ export default {
             }
             this.loading = false
         },
+        /**
+         * @method clearForm
+         * @desc Clears all input fields and removes validation state of form
+         */
         clearForm() {
             this.$refs.form.classList.remove('was-validated')
             this.firstName = ''

@@ -38,6 +38,13 @@
 </template>
 
 <script>
+/**
+ * @component AccountShowAllAdresses
+ * @desc List of all addresses related to the user with the ability to delete and edit each of them
+ * @lifecycle fetch - Fetch all addresses of logged in user
+ * @author Jonas Pfannkuche
+ */
+
 import IconPen from '~/components/general/icons/pen'
 import IconTrash from '~/components/general/icons/trash'
 import AccountAddressDetails from '~/components/shop/account/address/details'
@@ -57,12 +64,27 @@ export default {
     },
     data() {
         return {
+            /**
+             * @vprop {Array.<Object>} addresses - All addresses of the user
+             */
             addresses: [],
+            /**
+             * @member {String} fetchErrorMsg - Error message of rejected fetch
+             */
             fetchErrorMsg: '',
+            /**
+             * @member {String} error - General error message
+             */
             error: '',
         }
     },
     methods: {
+        /**
+         * @method deleteAddress
+         * @desc Calls api endpoint to delete address, handles response and resets the addresses of the order saved in the store to prevent null errors
+         * @param {Number} event - Event which holds the id of the address that should be deleted
+         * @returns {Promise<void>}
+         */
         async deleteAddress(event) {
             try {
                 await this.$api.deleteCustomerAddress(event, this.$auth.getToken('keycloak'))

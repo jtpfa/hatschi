@@ -11,17 +11,32 @@
 </template>
 
 <script>
+/**
+ * @component HomeSlideInfoCards
+ * @desc Info cards of slide with name and two features
+ * @author Jonas Pfannkuche
+ */
+
 export default {
     name: 'HomeSlideInfoCards',
     props: {
+        /**
+         * @vprop {String} name - Name of the product
+         */
         name: {
             type: String,
             required: true,
         },
+        /**
+         * @vprop {String} featureOne - First feature of the product
+         */
         featureOne: {
             type: String,
             required: true,
         },
+        /**
+         * @vprop {String} featureTeo - Second feature of the product
+         */
         featureTwo: {
             type: String,
             required: true,

@@ -26,6 +26,9 @@ export default {
     name: 'OrderOverviewVouchers',
     components: { OrderOverviewCard },
     computed: {
+        /**
+         * @computed {Object} order - All order related information: {@link store:Order}
+         */
         order() {
             return this.$store.state.order
         },
