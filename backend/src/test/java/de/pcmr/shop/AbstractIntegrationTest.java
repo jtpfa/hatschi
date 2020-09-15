@@ -13,6 +13,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.annotation.PostConstruct;
 
+/**
+ * @author Fynn Lohse
+ */
+
 @SpringBootTest
 public abstract class AbstractIntegrationTest {
     @Autowired

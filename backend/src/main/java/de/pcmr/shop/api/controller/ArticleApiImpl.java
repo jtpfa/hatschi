@@ -20,6 +20,12 @@ import java.util.List;
 
 import static de.pcmr.shop.api.controller.ArticleApiI.BASE_URI;
 
+/**
+ * Implementation of ArticleApi Interface.
+ *
+ * @author Fynn Lohse
+ */
+
 @RestController
 @RequestMapping(BASE_URI)
 public class ArticleApiImpl implements ArticleApiI {

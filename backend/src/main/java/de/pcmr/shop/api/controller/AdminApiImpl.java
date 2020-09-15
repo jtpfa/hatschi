@@ -20,6 +20,12 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.validation.Valid;
 import java.util.List;
 
+/**
+ * Implementation of AdminApi Interface.
+ *
+ * @author Fynn Lohse
+ */
+
 @RestController
 @RequestMapping("/api")
 public class AdminApiImpl implements AdminApiI {

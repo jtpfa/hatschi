@@ -25,6 +25,10 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * @author Fynn Lohse
+ */
+
 class OrderServiceIntegrationTest extends AbstractIntegrationTest {
 
     private CustomerEntity customerEntity;

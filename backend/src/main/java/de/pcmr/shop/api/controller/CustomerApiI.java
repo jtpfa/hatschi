@@ -15,6 +15,12 @@ import javax.validation.Valid;
 import java.security.Principal;
 import java.util.List;
 
+/**
+ * REST-Controller for customer user management.
+ *
+ * @author Fynn Lohse
+ */
+
 @RequestMapping("/api")
 public interface CustomerApiI {
     String CUSTOMER_URI = "/customer";

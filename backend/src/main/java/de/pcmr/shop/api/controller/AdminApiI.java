@@ -14,6 +14,12 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 
+/**
+ * REST-Controller for admin user management.
+ *
+ * @author Fynn Lohse
+ */
+
 @RequestMapping("/api")
 public interface AdminApiI {
     String ADMIN_ADMIN_URI = "/admin/admin";

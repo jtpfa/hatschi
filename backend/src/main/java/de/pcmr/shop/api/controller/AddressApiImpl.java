@@ -17,6 +17,12 @@ import java.util.List;
 
 import static de.pcmr.shop.api.controller.AddressApiI.BASE_URI;
 
+/**
+ * Implementation of AddressApi Interface.
+ *
+ * @author Fynn Lohse
+ */
+
 @RestController
 @RequestMapping(BASE_URI)
 public class AddressApiImpl implements AddressApiI {

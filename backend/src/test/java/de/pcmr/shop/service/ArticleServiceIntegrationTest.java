@@ -18,6 +18,10 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * @author Fynn Lohse
+ */
+
 class ArticleServiceIntegrationTest extends AbstractIntegrationTest {
 
     private static final String ARTICLE_TITLE_1 = "Testartikel 1";

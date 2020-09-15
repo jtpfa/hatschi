@@ -12,6 +12,12 @@ import javax.validation.ValidationException;
 import java.io.IOException;
 import java.util.Map;
 
+/**
+ * Exception handler for handling third party exception and assigning HTML error codes.
+ *
+ * @author Fynn Lohse
+ */
+
 @ControllerAdvice
 public class ExceptionErrorHandler extends ResponseEntityExceptionHandler {
 

@@ -12,6 +12,12 @@ import javax.validation.Valid;
 import java.security.Principal;
 import java.util.List;
 
+/**
+ * REST-Controller for order management.
+ *
+ * @author Fynn Lohse
+ */
+
 @RequestMapping("/api")
 public interface OrderApiI {
     String ORDER_CUSTOMER_URI = "/customer/order";

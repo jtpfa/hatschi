@@ -4,6 +4,10 @@ import de.pcmr.shop.domain.ArticleEntity;
 
 import java.util.Date;
 
+/**
+ * @author Fynn Lohse
+ */
+
 public final class ArticleEntityBuilder {
     private String name;
     private String description;

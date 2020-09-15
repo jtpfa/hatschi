@@ -14,6 +14,12 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Collections;
 
+/**
+ * Implementation of CredentialApi Interface.
+ *
+ * @author Fynn Lohse
+ */
+
 @RestController
 @RequestMapping("/api")
 public class CredentialApiImpl implements CredentialApiI {

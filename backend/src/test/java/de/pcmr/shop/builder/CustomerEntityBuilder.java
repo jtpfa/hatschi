@@ -7,6 +7,10 @@ import de.pcmr.shop.domain.OrderEntity;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * @author Fynn Lohse
+ */
+
 public final class CustomerEntityBuilder {
     private String email;
     private String firstName;

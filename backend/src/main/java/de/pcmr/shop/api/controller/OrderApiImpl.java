@@ -15,6 +15,12 @@ import javax.validation.Valid;
 import java.security.Principal;
 import java.util.List;
 
+/**
+ * Implementation of OrderApi Interface.
+ *
+ * @author Fynn Lohse
+ */
+
 @RestController
 @RequestMapping("/api")
 public class OrderApiImpl implements OrderApiI {

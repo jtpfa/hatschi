@@ -13,6 +13,12 @@ import java.util.List;
 
 import static de.pcmr.shop.api.controller.AddressApiI.BASE_URI;
 
+/**
+ * REST-Controller for address management.
+ *
+ * @author Fynn Lohse
+ */
+
 @RequestMapping(BASE_URI)
 public interface AddressApiI {
     String BASE_URI = "/api";

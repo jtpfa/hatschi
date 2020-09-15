@@ -8,10 +8,25 @@ import de.pcmr.shop.repository.ArticleRepository;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Class for mapping DTOs from or to OrderItemEntities
+ *
+ * @author Fynn Lohse
+ */
+
 public class OrderItemMapper {
     private OrderItemMapper() {
         throw new IllegalStateException();
     }
+
+    /**
+     * Method maps List of OrderItemDTOs to List of OrderItemEntities.
+     *
+     * @param orderItemDTOs List of OrderItemDTOs
+     * @param articleRepository  ArticleRepository
+     * @return List of OrderItemEntities
+     * @throws NoArticleFoundException if no article was found to given ID
+     */
 
     public static List<OrderItemEntity> mapListToOrderItemEntityList(List<OrderItemDTO> orderItemDTOs, ArticleRepository articleRepository) throws NoArticleFoundException {
         List<OrderItemEntity> orderItemEntities = new ArrayList<>();

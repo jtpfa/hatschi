@@ -7,6 +7,10 @@ import de.pcmr.shop.domain.ShippingMethodEnum;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * @author Fynn Lohse
+ */
+
 public class OrderDTO {
     private Long id;
     private OrderStatusEnum orderStatus;

@@ -8,6 +8,10 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
+/**
+ * @author Fynn Lohse
+ */
+
 public class OrderCreationDTO {
     @NotEmpty
     private List<@Valid OrderItemDTO> orderItems;

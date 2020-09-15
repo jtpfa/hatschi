@@ -5,6 +5,10 @@ import de.pcmr.shop.domain.*;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * @author Fynn Lohse
+ */
+
 public final class OrderEntityBuilder {
     private OrderStatusEnum orderStatus;
     private Date orderDate;

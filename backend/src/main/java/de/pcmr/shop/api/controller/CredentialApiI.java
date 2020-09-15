@@ -10,6 +10,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.validation.Valid;
 import java.net.MalformedURLException;
 
+/**
+ * REST-Controller for user credential management.
+ *
+ * @author Fynn Lohse
+ */
+
 @RequestMapping("/api")
 public interface CredentialApiI {
     String PASSWORD_CUSTOMER_URI = "/customer/password";

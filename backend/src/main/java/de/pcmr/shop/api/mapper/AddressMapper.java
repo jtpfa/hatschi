@@ -9,10 +9,23 @@ import org.modelmapper.ModelMapper;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Class for mapping DTOs from or to AddressEntities
+ *
+ * @author Fynn Lohse
+ */
+
 public class AddressMapper {
     private AddressMapper() {
         throw new IllegalStateException();
     }
+
+    /**
+     * Method maps AddressCreationDTO to AddressEntity
+     *
+     * @param addressCreationDTO AddressCreationDTO
+     * @return AddressEntity
+     */
 
     public static AddressEntity mapToAddressEntity(AddressCreationDTO addressCreationDTO) {
         AddressEntity addressEntity = new AddressEntity();
@@ -27,11 +40,26 @@ public class AddressMapper {
         return addressEntity;
     }
 
+    /**
+     * Method maps AddressCreationDTO to AddressEntity with ID
+     *
+     * @param addressCreationDTO AddressCreationDTO
+     * @param id ID
+     * @return AddressEntity with ID
+     */
+
     public static AddressEntity mapToAddressEntity(AddressCreationDTO addressCreationDTO, Long id) {
         AddressEntity addressEntity = mapToAddressEntity(addressCreationDTO);
         addressEntity.setId(id);
         return addressEntity;
     }
+
+    /**
+     * Method map List of AddressEntities to List of AddressDTOs
+     *
+     * @param addressEntities List of AddressEntities
+     * @return List of AddressDTOs
+     */
 
     public static List<AddressDTO> mapToDTOList(List<AddressEntity> addressEntities) {
         return addressEntities.stream().map(AddressMapper::mapToDTO).collect(Collectors.toList());

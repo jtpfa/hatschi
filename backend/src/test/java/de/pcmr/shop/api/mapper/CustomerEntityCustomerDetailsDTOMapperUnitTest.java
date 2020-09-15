@@ -7,6 +7,10 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * @author Fynn Lohse
+ */
+
 class CustomerEntityCustomerDetailsDTOMapperUnitTest {
     private final static String CUSTOMER_EMAIL = "test@test.com";
     private final static String CUSTOMER_FIRSTNAME = "John";

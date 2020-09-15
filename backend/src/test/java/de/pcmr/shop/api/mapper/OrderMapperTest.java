@@ -22,6 +22,10 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 
+/**
+ * @author Fynn Lohse
+ */
+
 @ExtendWith(MockitoExtension.class)
 class OrderMapperTest {
 

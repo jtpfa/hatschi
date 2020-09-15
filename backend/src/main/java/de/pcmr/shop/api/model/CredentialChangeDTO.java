@@ -2,6 +2,10 @@ package de.pcmr.shop.api.model;
 
 import javax.validation.constraints.NotNull;
 
+/**
+ * @author Fynn Lohse
+ */
+
 public class CredentialChangeDTO {
     @NotNull
     private String currentPassword;

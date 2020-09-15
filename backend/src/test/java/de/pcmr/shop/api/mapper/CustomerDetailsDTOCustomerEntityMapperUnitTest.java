@@ -9,6 +9,10 @@ import javax.validation.ValidationException;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+/**
+ * @author Fynn Lohse
+ */
+
 class CustomerDetailsDTOCustomerEntityMapperUnitTest {
     private final static String CUSTOMER_EMAIL = "test@test.com";
     private final static String CUSTOMER_FIRSTNAME = "John";

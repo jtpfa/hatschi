@@ -6,6 +6,9 @@ import javax.validation.ValidationException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * @author Fynn Lohse
+ */
 
 class ValidationUtilsUnitTest {
 

@@ -16,6 +16,12 @@ import org.springframework.security.core.authority.mapping.SimpleAuthorityMapper
 import org.springframework.security.web.authentication.session.NullAuthenticatedSessionStrategy;
 import org.springframework.security.web.authentication.session.SessionAuthenticationStrategy;
 
+/**
+ * Configuration class for spring security.
+ *
+ * @author Fynn Lohse
+ */
+
 @Configuration
 @EnableWebSecurity
 @ComponentScan(basePackageClasses = KeycloakSecurityComponents.class)

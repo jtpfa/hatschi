@@ -14,6 +14,12 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 
+/**
+ * REST-Controller for employee user management.
+ *
+ * @author Fynn Lohse
+ */
+
 @RequestMapping("/api")
 public interface EmployeeApiI {
     String EMPLOYEE_EMPLOYEE_URI = "/employee/employee";

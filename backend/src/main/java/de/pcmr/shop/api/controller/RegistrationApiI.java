@@ -12,6 +12,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
 
+/**
+ * REST-Controller for user registrations.
+ *
+ * @author Fynn Lohse
+ */
+
 @RequestMapping(RegistrationApiI.REGISTRATION_URI)
 public interface RegistrationApiI {
     String REGISTRATION_URI = "/api/registration";

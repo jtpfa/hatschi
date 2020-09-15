@@ -16,6 +16,12 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * Configuration class for swagger openapi specification.
+ *
+ * @author Fynn Lohse
+ */
+
 @Configuration
 public class SpringFoxConfig {
     @Bean

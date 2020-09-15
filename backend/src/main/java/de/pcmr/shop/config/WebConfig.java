@@ -9,6 +9,10 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
+/**
+ * @author Fynn Lohse
+ */
+
 @Configuration
 @EnableWebMvc
 public class WebConfig implements WebMvcConfigurer {

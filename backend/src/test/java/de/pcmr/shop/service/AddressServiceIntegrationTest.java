@@ -27,6 +27,10 @@ import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * @author Fynn Lohse
+ */
+
 @SpringBootTest
 public class AddressServiceIntegrationTest {
 

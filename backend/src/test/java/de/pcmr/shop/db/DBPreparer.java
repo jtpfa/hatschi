@@ -27,6 +27,10 @@ import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
 import java.util.*;
 
+/**
+ * @author Fynn Lohse
+ */
+
 @Service
 public class DBPreparer {
     @Autowired private AddressRepository addressRepository;

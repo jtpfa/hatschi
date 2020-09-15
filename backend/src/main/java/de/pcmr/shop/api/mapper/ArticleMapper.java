@@ -10,10 +10,23 @@ import de.pcmr.shop.util.ValidationUtils;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Class for mapping DTOs from or to ArticleEntities
+ *
+ * @author Fynn Lohse
+ */
+
 public class ArticleMapper {
     private ArticleMapper() {
         throw new IllegalStateException();
     }
+
+    /**
+     * Method maps ArticleCreationDTO to ArticleEntity.
+     *
+     * @param articleCreationDTO ArticleCreationDTO
+     * @return ArticleEntity
+     */
 
     public static ArticleEntity mapArticleCreationDTOToArticleEntity(ArticleCreationDTO articleCreationDTO) {
         ArticleEntity articleEntity = new ArticleEntity();
@@ -26,7 +39,15 @@ public class ArticleMapper {
         return articleEntity;
     }
 
-    public static ArticleEntity mapArticleDTOToArticleEntity(de.pcmr.shop.api.model.ArticleDTO articleDTO) {
+    /**
+     * Method maps ArticleDTO to ArticleEntity.
+     *
+     * @param articleDTO ArticleDTO
+     * @return ArticleEntity
+     */
+
+
+    public static ArticleEntity mapArticleDTOToArticleEntity(ArticleDTO articleDTO) {
         ArticleEntity articleEntity = new ArticleEntity();
         articleEntity.setId(articleDTO.getId());
         articleEntity.setName(ValidationUtils.validateNoHtml(articleDTO.getName()));
@@ -37,6 +58,13 @@ public class ArticleMapper {
 
         return articleEntity;
     }
+
+    /**
+     * Method maps ArticleEntity to ArticleDTO.
+     *
+     * @param articleEntity ArticleEntity
+     * @return ArticleDTO
+     */
 
     public static ArticleDTO mapArticleEntityToArticleDTO(ArticleEntity articleEntity) {
         ArticleDTO articleDTO = new ArticleDTO();
@@ -50,9 +78,23 @@ public class ArticleMapper {
         return articleDTO;
     }
 
+    /**
+     * Method maps List of ArticleEntities to List of ArticleDTOs.
+     *
+     * @param articleEntities List of ArticleEntities
+     * @return List of ArticleDTOs
+     */
+
     public static List<ArticleDTO> mapListOfArticleEntitiesToListOfArticleDTO(List<ArticleEntity> articleEntities) {
         return articleEntities.stream().map(ArticleMapper::mapArticleEntityToArticleDTO).collect(Collectors.toList());
     }
+
+    /**
+     * Method maps ArticleEntity to ArticleShortDTO.
+     *
+     * @param articleEntity ArticleEntity
+     * @return ArticleShortDTO
+     */
 
     public static ArticleShortDTO mapArticleEntityToArticleShortDTO(ArticleEntity articleEntity) {
         ArticleShortDTO articleShortDTO = new ArticleShortDTO();
@@ -63,6 +105,13 @@ public class ArticleMapper {
 
         return articleShortDTO;
     }
+
+    /**
+     * Method maps List of ArticleEntities to List of ArticleShortDTOs.
+     *
+     * @param articleEntities List of ArticleEntities
+     * @return List of ArticleShortDTOs
+     */
 
     public static List<ArticleShortDTO> mapListOfArticleEntityToListOfArticleShortDTO(List<ArticleEntity> articleEntities) {
         return articleEntities.stream().map(ArticleMapper::mapArticleEntityToArticleShortDTO).collect(Collectors.toList());

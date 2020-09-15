@@ -19,6 +19,10 @@ import javax.validation.ConstraintViolationException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * @author Fynn Lohse
+ */
+
 class RegistrationServiceIntegrationTest extends AbstractIntegrationTest {
     private final RegistrationServiceI registrationService;
     private final CustomerRepository customerRepository;

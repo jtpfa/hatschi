@@ -1,5 +1,9 @@
 package de.pcmr.shop.api.model;
 
+/**
+ * @author Fynn Lohse
+ */
+
 public class ArticleShortDTO {
     private long id;
     private String name;

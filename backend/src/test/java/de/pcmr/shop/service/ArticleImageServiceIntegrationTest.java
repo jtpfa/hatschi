@@ -22,6 +22,10 @@ import java.io.IOException;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+/**
+ * @author Fynn Lohse
+ */
+
 class ArticleImageServiceIntegrationTest extends AbstractIntegrationTest {
 
     private static final String IMAGE_PATH = "./media/article/";

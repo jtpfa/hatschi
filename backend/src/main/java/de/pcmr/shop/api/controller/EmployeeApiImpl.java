@@ -20,6 +20,12 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.validation.Valid;
 import java.util.List;
 
+/**
+ * Implementation of EmployeeApi Interface.
+ *
+ * @author Fynn Lohse
+ */
+
 @RestController
 @RequestMapping("/api")
 public class EmployeeApiImpl implements EmployeeApiI {

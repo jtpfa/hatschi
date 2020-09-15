@@ -31,6 +31,10 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * @author Fynn Lohse
+ */
+
 class CustomerServiceIntegrationTest extends AbstractIntegrationTest {
 
     private final static String CUSTOMER_EMAIL_A = "test@userA.de";

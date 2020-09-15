@@ -15,6 +15,12 @@ import java.util.List;
 
 import static de.pcmr.shop.api.controller.ArticleApiI.BASE_URI;
 
+/**
+ * REST-Controller for article management.
+ *
+ * @author Fynn Lohse
+ */
+
 @RequestMapping(BASE_URI)
 public interface ArticleApiI {
     String BASE_URI = "/api";

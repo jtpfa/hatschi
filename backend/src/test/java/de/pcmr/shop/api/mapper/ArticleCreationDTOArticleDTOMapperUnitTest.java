@@ -9,6 +9,10 @@ import javax.validation.ValidationException;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+/**
+ * @author Fynn Lohse
+ */
+
 class ArticleCreationDTOArticleDTOMapperUnitTest {
 
     private static final String ARTICLE_NAME = "Testartikel";

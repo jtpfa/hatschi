@@ -5,6 +5,10 @@ import de.pcmr.shop.domain.OrderItemEntity;
 
 import java.util.Date;
 
+/**
+ * @author Fynn Lohse
+ */
+
 public final class OrderItemEntityBuilder {
     private Integer quantity;
     private ArticleEntity article;

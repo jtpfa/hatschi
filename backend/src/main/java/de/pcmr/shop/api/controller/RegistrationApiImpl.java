@@ -14,6 +14,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 
+/**
+ * Implementation of RegistrationApi Interface.
+ *
+ * @author Fynn Lohse
+ */
 
 @RestController
 @RequestMapping(RegistrationApiImpl.REGISTRATION_URI)

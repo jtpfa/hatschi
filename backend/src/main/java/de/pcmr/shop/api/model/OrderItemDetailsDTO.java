@@ -1,5 +1,9 @@
 package de.pcmr.shop.api.model;
 
+/**
+ * @author Fynn Lohse
+ */
+
 public class OrderItemDetailsDTO {
     private Long articleId;
     private String articleName;

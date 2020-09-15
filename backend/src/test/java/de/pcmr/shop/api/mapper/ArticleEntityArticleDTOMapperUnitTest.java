@@ -12,6 +12,10 @@ import java.util.Random;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
+/**
+ * @author Fynn Lohse
+ */
+
 class ArticleEntityArticleDTOMapperUnitTest {
     private static final long ARTICLE_ID = 15L;
     private static final String ARTICLE_NAME = "Testartikel";

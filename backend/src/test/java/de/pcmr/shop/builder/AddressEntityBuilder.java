@@ -5,6 +5,10 @@ import de.pcmr.shop.domain.CustomerEntity;
 
 import java.util.Date;
 
+/**
+ * @author Fynn Lohse
+ */
+
 public final class AddressEntityBuilder {
     private String firstName;
     private String lastName;
