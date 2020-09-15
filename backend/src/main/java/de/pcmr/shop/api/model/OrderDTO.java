@@ -8,6 +8,8 @@ import java.util.Date;
 import java.util.List;
 
 /**
+ * Data transfer object to output order information.
+ *
  * @author Fynn Lohse
  */
 

@@ -1,6 +1,8 @@
 package de.pcmr.shop.api.model;
 
 /**
+ * Data transfer object to output short article information.
+ *
  * @author Fynn Lohse
  */
 

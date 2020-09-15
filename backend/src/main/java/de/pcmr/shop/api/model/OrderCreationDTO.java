@@ -9,6 +9,8 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
+ * Data transfer object to create a new order entity.
+ *
  * @author Fynn Lohse
  */
 

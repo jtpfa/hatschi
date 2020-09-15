@@ -1,6 +1,8 @@
 package de.pcmr.shop.api.model;
 
 /**
+ * Data transfer object to output order item information.
+ *
  * @author Fynn Lohse
  */
 

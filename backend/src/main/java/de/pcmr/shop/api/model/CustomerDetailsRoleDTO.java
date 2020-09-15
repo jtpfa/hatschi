@@ -3,6 +3,8 @@ package de.pcmr.shop.api.model;
 import de.pcmr.shop.domain.CustomerRoleEnum;
 
 /**
+ * Data transfer object to output customer data including the customer role.
+ *
  * @author Fynn Lohse
  */
 

@@ -3,6 +3,8 @@ package de.pcmr.shop.api.model;
 import javax.validation.constraints.NotNull;
 
 /**
+ * Data transfer object to create a new article entity.
+ *
  * @author Fynn Lohse
  */
 

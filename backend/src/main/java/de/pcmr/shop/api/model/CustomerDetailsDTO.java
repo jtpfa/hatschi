@@ -3,6 +3,8 @@ package de.pcmr.shop.api.model;
 import javax.validation.constraints.NotNull;
 
 /**
+ * Data transfer object to output customer data.
+ *
  * @author Fynn Lohse
  */
 
