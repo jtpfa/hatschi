@@ -1,5 +1,11 @@
 # PC-MR Backend Dokumentation.
 
+### Weitere Dokumente
+[JavaDoc](./docs/javadoc/index.html)
+
+[REST-API-Docs](./docs/rest-api/index.html)
+
+
 ### Projekt einrichten
 
 1. Docker und Compose herunterladen und installieren.
