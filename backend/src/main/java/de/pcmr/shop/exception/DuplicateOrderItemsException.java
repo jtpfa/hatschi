@@ -4,6 +4,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 /**
+ * Exception is thrown if there were duplicate order items in an order entity (same article id).
+ *
  * @author Fynn Lohse
  */
 

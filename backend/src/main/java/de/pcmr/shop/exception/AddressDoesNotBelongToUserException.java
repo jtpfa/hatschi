@@ -4,6 +4,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 /**
+ * Exception is thrown if there was an attempt to change the address of a different user than the authenticated one.
+ *
  * @author Fynn Lohse
  */
 

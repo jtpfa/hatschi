@@ -4,6 +4,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 /**
+ * Exception is thrown if the keycloak admin api return an error which is not caught with the other keycloak exceptions.
+ *
  * @author Fynn Lohse
  */
 

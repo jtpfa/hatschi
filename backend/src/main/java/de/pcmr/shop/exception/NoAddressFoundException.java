@@ -4,6 +4,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 /**
+ * Exception is thrown if no address entity was found to given ID.
+ *
  * @author Fynn Lohse
  */
 

@@ -4,6 +4,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 /**
+ * Exception is thrown if a customer already exists to the given email when creating a new one.
+ *
  * @author Fynn Lohse
  */
 

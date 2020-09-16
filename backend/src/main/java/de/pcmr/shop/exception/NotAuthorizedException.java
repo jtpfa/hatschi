@@ -4,6 +4,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 /**
+ * Exception is thrown if the currently authenticated user is not authorized to perform a protected operation.
+ *
  * @author Fynn Lohse
  */
 

@@ -4,6 +4,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 /**
+ * Exception is thrown if no keycloak endpoint has been found (invalid configuration).
+ *
  * @author Fynn Lohse
  */
 

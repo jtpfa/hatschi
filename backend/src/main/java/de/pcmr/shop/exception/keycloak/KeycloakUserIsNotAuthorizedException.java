@@ -4,6 +4,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 /**
+ * Exception is thrown if the keycloak admin user is not authorized (invalid configuration).
+ *
  * @author Fynn Lohse
  */
 
