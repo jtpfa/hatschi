@@ -1,0 +1,2 @@
+INSERT INTO keycloak.REALM_REQUIRED_CREDENTIAL (TYPE, FORM_LABEL, INPUT, SECRET, REALM_ID) VALUES ('password', 'password', true, true, 'master');
+INSERT INTO keycloak.REALM_REQUIRED_CREDENTIAL (TYPE, FORM_LABEL, INPUT, SECRET, REALM_ID) VALUES ('password', 'password', true, true, 'pcmr');

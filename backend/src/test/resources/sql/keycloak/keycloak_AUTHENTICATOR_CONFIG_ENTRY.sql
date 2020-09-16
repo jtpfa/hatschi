@@ -1,0 +1,4 @@
+INSERT INTO keycloak.AUTHENTICATOR_CONFIG_ENTRY (AUTHENTICATOR_ID, VALUE, NAME) VALUES ('37e287c4-ffe1-4f60-b88d-5d09050c8d49', 'false', 'require.password.update.after.registration');
+INSERT INTO keycloak.AUTHENTICATOR_CONFIG_ENTRY (AUTHENTICATOR_ID, VALUE, NAME) VALUES ('713bc6e0-cf68-4f84-814e-6b77fdbf7e82', 'false', 'require.password.update.after.registration');
+INSERT INTO keycloak.AUTHENTICATOR_CONFIG_ENTRY (AUTHENTICATOR_ID, VALUE, NAME) VALUES ('94c5d789-889e-431b-bc95-d53276b762fd', 'missing', 'update.profile.on.first.login');
+INSERT INTO keycloak.AUTHENTICATOR_CONFIG_ENTRY (AUTHENTICATOR_ID, VALUE, NAME) VALUES ('b62878d3-b7e1-41ad-96f0-8745791cfcc6', 'missing', 'update.profile.on.first.login');

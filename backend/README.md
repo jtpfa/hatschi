@@ -63,3 +63,9 @@
  
 > **_Hinweis:_** Auch dieses Vorgehen wurde nur auf Unix- und Linux-basierten Betriebssystemen getestet.
 > Auch hier sollte Windows dennoch funktionieren.
+
+
+#### Testdaten für das manuelle Testen
+Es gibt zwei verschiedene Möglichkeiten Testdaten zu generieren:
+1. `@Disabled` Annotation in JUnit-Test `de.pcmr.shop.db.CreateTestData` auskommentieren und ausführen.
+2. SQL-Files in `./backend/src/test/resources/sql` direkt in die Datenbank importieren.
