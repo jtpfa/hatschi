@@ -6,6 +6,8 @@ import de.pcmr.shop.domain.OrderItemEntity;
 import java.util.Date;
 
 /**
+ * Implementation of builder pattern for the OrderItemEntity.
+ *
  * @author Fynn Lohse
  */
 

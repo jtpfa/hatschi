@@ -28,6 +28,8 @@ import java.util.Map;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
+ * Partial integration test for the address service.
+ *
  * @author Fynn Lohse
  */
 

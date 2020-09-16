@@ -14,6 +14,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import javax.annotation.PostConstruct;
 
 /**
+ * Abstract partial integration test with basic initialization and cleanup operations.
+ *
  * @author Fynn Lohse
  */
 

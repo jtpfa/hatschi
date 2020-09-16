@@ -13,6 +13,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 /**
+ * Unit-Test which tests mapping from ArticleEntity to ArticleShortDTO.
+ *
  * @author Fynn Lohse
  */
 

@@ -8,6 +8,8 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
+ * Unit-Test which tests mapping from CustomerEntity to CustomerDetailsDTO.
+ *
  * @author Fynn Lohse
  */
 

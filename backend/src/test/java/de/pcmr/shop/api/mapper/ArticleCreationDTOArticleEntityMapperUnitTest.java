@@ -10,10 +10,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
+ * Unit-Test which tests mapping from ArticleCreationDTO to ArticleEntity.
+ *
  * @author Fynn Lohse
  */
 
-class ArticleCreationDTOArticleDTOMapperUnitTest {
+class ArticleCreationDTOArticleEntityMapperUnitTest {
 
     private static final String ARTICLE_NAME = "Testartikel";
     private static final String ARTICLE_NAME_HTML = "<script>Testartikel</script>";
@@ -32,14 +34,14 @@ class ArticleCreationDTOArticleDTOMapperUnitTest {
     @Test
     void testMapArticleCreationDTOToArticleEntity() {
         given.aArticleCreationDTOWith(ARTICLE_NAME, ARTICLE_DESCRIPTION, ARTICLE_DETAILS, ARTICLE_PRICE, ARTICLE_STOCK);
-        when.aArticleCreationDTOIsMappedTo(articleCreationDTO);
+        when.aArticleCreationDTOIsMappedToEntity(articleCreationDTO);
         then.theAttributesOfTheArticleEntityAre(articleEntity, ARTICLE_NAME, ARTICLE_DESCRIPTION, ARTICLE_DETAILS, ARTICLE_PRICE, ARTICLE_STOCK);
     }
 
     @Test
     void testMapArticleCreationDTOToArticleEntityFailHTML() {
         given.aArticleCreationDTOWith(ARTICLE_NAME_HTML, ARTICLE_DESCRIPTION, ARTICLE_DETAILS, ARTICLE_PRICE, ARTICLE_STOCK);
-        assertThrows(ValidationException.class, () -> when.aArticleCreationDTOIsMappedTo(articleCreationDTO));
+        assertThrows(ValidationException.class, () -> when.aArticleCreationDTOIsMappedToEntity(articleCreationDTO));
     }
 
     class Given {
@@ -54,7 +56,7 @@ class ArticleCreationDTOArticleDTOMapperUnitTest {
     }
 
     class When {
-        void aArticleCreationDTOIsMappedTo(ArticleCreationDTO articleCreationDTO) {
+        void aArticleCreationDTOIsMappedToEntity(ArticleCreationDTO articleCreationDTO) {
             articleEntity = ArticleMapper.mapArticleCreationDTOToArticleEntity(articleCreationDTO);
         }
     }

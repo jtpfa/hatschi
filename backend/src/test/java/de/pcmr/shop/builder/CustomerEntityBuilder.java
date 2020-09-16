@@ -8,6 +8,8 @@ import java.util.Date;
 import java.util.List;
 
 /**
+ * Implementation of builder pattern for the CustomerEntity.
+ *
  * @author Fynn Lohse
  */
 

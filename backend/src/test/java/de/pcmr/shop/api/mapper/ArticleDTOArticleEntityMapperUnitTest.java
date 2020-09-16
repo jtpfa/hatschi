@@ -10,6 +10,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
+ * Unit-Test which tests mapping from ArticleDTO to ArticleEntity.
+ *
  * @author Fynn Lohse
  */
 
@@ -32,14 +34,14 @@ class ArticleDTOArticleEntityMapperUnitTest {
     @Test
     void testMapArticleCreationDTOToArticleEntity() {
         given.aArticleDTOWith(ARTICLE_ID, ARTICLE_NAME, ARTICLE_DESCRIPTION, ARTICLE_DETAILS, ARTICLE_PRICE, ARTICLE_STOCK);
-        when.aArticleDTOIsMappedTo(articleDTO);
+        when.aArticleDTOIsMappedToEntity(articleDTO);
         then.theAttributesOfTheArticleEntityAre(articleEntity, ARTICLE_ID, ARTICLE_NAME, ARTICLE_DESCRIPTION, ARTICLE_DETAILS, ARTICLE_PRICE, ARTICLE_STOCK);
     }
 
     @Test
     void testMapArticleCreationDTOToArticleEntityFailHTML() {
         given.aArticleDTOWith(ARTICLE_ID, ARTICLE_NAME_HTML, ARTICLE_DESCRIPTION, ARTICLE_DETAILS, ARTICLE_PRICE, ARTICLE_STOCK);
-        assertThrows(ValidationException.class, () -> when.aArticleDTOIsMappedTo(articleDTO));
+        assertThrows(ValidationException.class, () -> when.aArticleDTOIsMappedToEntity(articleDTO));
     }
 
     class Given {
@@ -55,7 +57,7 @@ class ArticleDTOArticleEntityMapperUnitTest {
     }
 
     class When {
-        void aArticleDTOIsMappedTo(ArticleDTO articleDTO) {
+        void aArticleDTOIsMappedToEntity(ArticleDTO articleDTO) {
             articleEntity = ArticleMapper.mapArticleDTOToArticleEntity(articleDTO);
         }
     }

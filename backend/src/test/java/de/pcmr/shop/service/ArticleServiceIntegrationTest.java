@@ -19,6 +19,8 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
+ * Partial integration test for the article service.
+ *
  * @author Fynn Lohse
  */
 

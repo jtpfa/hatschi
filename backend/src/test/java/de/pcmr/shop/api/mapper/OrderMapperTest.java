@@ -23,6 +23,8 @@ import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 
 /**
+ * Unit-Test which tests all methods of the OrderMapper.
+ *
  * @author Fynn Lohse
  */
 

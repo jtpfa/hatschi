@@ -28,6 +28,8 @@ import javax.ws.rs.core.Response;
 import java.util.*;
 
 /**
+ * Service prepares database and keycloak for integration tests. It performs cleanups and creates test data.
+ *
  * @author Fynn Lohse
  */
 

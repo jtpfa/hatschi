@@ -6,6 +6,8 @@ import de.pcmr.shop.domain.CustomerEntity;
 import java.util.Date;
 
 /**
+ * Implementation of builder pattern for the AddressEntity.
+ *
  * @author Fynn Lohse
  */
 

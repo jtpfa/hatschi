@@ -19,6 +19,8 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
+ * Unit-Test which tests mapping from OrderItemDTO to OrderItemEntity.
+ *
  * @author Fynn Lohse
  */
 

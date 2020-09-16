@@ -20,6 +20,8 @@ import javax.validation.ConstraintViolationException;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
+ * Partial integration test for the registration service.
+ *
  * @author Fynn Lohse
  */
 

@@ -26,6 +26,8 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
+ * Partial integration test for the order service.
+ *
  * @author Fynn Lohse
  */
 

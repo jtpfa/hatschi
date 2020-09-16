@@ -13,6 +13,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
+ * Unit-Test which tests all methods of the AddressMapper.
+ *
  * @author Fynn Lohse
  */
 

@@ -10,6 +10,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
+ * Unit-Test which tests mapping from CustomerDetailsDTO to CustomerEntity.
+ *
  * @author Fynn Lohse
  */
 

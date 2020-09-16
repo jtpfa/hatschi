@@ -5,6 +5,8 @@ import de.pcmr.shop.domain.ArticleEntity;
 import java.util.Date;
 
 /**
+ * Implementation of builder pattern for the ArticleEntity.
+ *
  * @author Fynn Lohse
  */
 
