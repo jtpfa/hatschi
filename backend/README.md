@@ -10,12 +10,12 @@
 
 1. Docker und Compose herunterladen und installieren.
 3. OpenJDK 11 (oder AdoptOpenJDK 11) herunterladen und installieren.
-2. Ggf. Umgebungvariablen in der `.env` Datei bearbeiten (Standardwerte sollten funktionieren).
+2. Ggf. Umgebungvariablen in der `./backend/.env` Datei bearbeiten (Standardwerte sollten funktionieren).
 
 #### Backend von einer Java-IDE ausführen (für Backend-Entwickler)
 1. Das Projekt kann über den Gradle-Import einer Java-IDE importiert werden. Empfohlen dafür wird IntelliJ IDEA Ultimate.
-   Das Ursprungsverzeichnis des Backend ist das `/backend` Verzechnis.
-2. Ein neues Terminal im `/backend` Verzeichnis öffnen.
+   Das Ursprungsverzeichnis des Backend ist das `./backend` Verzechnis.
+2. Ein neues Terminal im `./backend` Verzeichnis öffnen.
    Die Applikation ist von zwei weiteren Containern abhängig:
    die MariaDB Datenbank und der Keycloak Identitätsserver.
    Beide Container werden über `$ docker-compose -f docker-compose.dev.yml up` gestartet.
@@ -42,7 +42,7 @@
 > **_Hinweis:_** Dieses Vorgehen wird nicht empfohlen, um Backend und Frontend zusammen zu betreiben.
 
 #### Backend direkt als Docker-Container ausführen (für Frontend-Entwickler)
-1. Ein neues Terminal im `/backend` Verzeichnis öffnen. Mit `$ docker-compose build` wird aus dem Quellcode
+1. Ein neues Terminal im `./backend` Verzeichnis öffnen. Mit `$ docker-compose build` wird aus dem Quellcode
    ein neues Docker-Image gebaut.
 2. Die Container werden über `$ docker-compose up` gestartet.
    Gestoppt werden können die Container mit `CTRL + C`.
