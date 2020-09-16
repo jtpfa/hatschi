@@ -52,6 +52,7 @@
    auf den Keycloak zugegriffen werden darf. Damit in der Host-Umgebung und innerhalb der Docker-Umgebung (Docker-Network)
    die gleichen Hostnames verwendet werden können, muss in der `hosts` Datei des Betriebssystems folgender Eintrag vorgenommen
    werden `127.0.0.1 auth.pcmr.de`  (sic!). Mehr dazu auf [Stackoverflow](https://stackoverflow.com/questions/57213611/keycloak-and-spring-boot-web-app-in-dockerized-environment?rq=1).
+
 > **_Hinweis:_**  Sollte der Keycloak-Container nicht korrekt starten und sich in einer endlosen Neustart-Schleife befinden müssen
 > in der `docker-compose.yml` die Zeilen 45 und 46 (KEYCLOAK_USER und KEYCLOAK_PASSWORD) mit `#` auskommentiert werden. 
 > Danach mit `$ docker-compose stop` bzw `CTRL + C` die Container stoppen und anschließend wieder hochfahren.
