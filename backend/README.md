@@ -1,4 +1,4 @@
-# PC-MR Backend Dokumentation.
+# PC-MR Backend Dokumentation
 
 ### Weitere Dokumente
 [JavaDoc](./docs/javadoc/index.html)
@@ -14,18 +14,18 @@
 
 #### Backend von einer Java-IDE ausführen (für Backend-Entwickler)
 1. Das Projekt kann über den Gradle-Import einer Java-IDE importiert werden. Empfohlen dafür wird IntelliJ IDEA Ultimate.
- Das Ursprungsverzeichnis des Backend ist das `/backend` Verzechnis.
+   Das Ursprungsverzeichnis des Backend ist das `/backend` Verzechnis.
 2. Ein neues Terminal im `/backend` Verzeichnis öffnen.
-Die Applikation ist von zwei weiteren Containern abhängig:
-die MariaDB Datenbank und der Keycloak Identitätsserver.
-Beide Container werden über `$ docker-compose -f docker-compose.dev.yml up` gestartet.
-Gestoppt werden können die Container mit `CTRL + C`.
-Alternativ lassen sich die Container auch mit `$ docker-compose -f docker-compose.dev.yml up -d`
-im detached modus starten und mit `$ docker-compose -f docker-compose.dev.yml stop` wieder stoppen.
+   Die Applikation ist von zwei weiteren Containern abhängig:
+   die MariaDB Datenbank und der Keycloak Identitätsserver.
+   Beide Container werden über `$ docker-compose -f docker-compose.dev.yml up` gestartet.
+   Gestoppt werden können die Container mit `CTRL + C`.
+   Alternativ lassen sich die Container auch mit `$ docker-compose -f docker-compose.dev.yml up -d`
+   im detached modus starten und mit `$ docker-compose -f docker-compose.dev.yml stop` wieder stoppen.
 3. Es muss sichergestellt werden, dass die Laufzeitumgebung der Applikation über die nötigen Umgebungsvariablen besitzt.
-Da die Anwendung direkt von der IDE und nicht in einem Docker-Container gestartet wird, müssen entweder die notwendigen
-Umgebungsvariablen systemweit gesetzt werden oder aber bei jedem Start z. B. über das [EnvFile-Plugin (IntelliJ)](https://plugins.jetbrains.com/plugin/7861-envfile) aus der `.env` Datei geladen werden.
-[Mögliche Lösung für Eclipse (nicht getestet).](https://help.eclipse.org/2020-09/index.jsp?topic=%2Forg.eclipse.cdt.doc.user%2Ftasks%2Fcdt_t_run_env.htm)
+   Da die Anwendung direkt von der IDE und nicht in einem Docker-Container gestartet wird, müssen entweder die notwendigen
+   Umgebungsvariablen systemweit gesetzt werden oder aber bei jedem Start z. B. über das [EnvFile-Plugin (IntelliJ)](https://plugins.jetbrains.com/plugin/7861-envfile) aus der `.env` Datei geladen werden.
+   [Mögliche Lösung für Eclipse (nicht getestet).](https://help.eclipse.org/2020-09/index.jsp?topic=%2Forg.eclipse.cdt.doc.user%2Ftasks%2Fcdt_t_run_env.htm)
 
 
 > **_Hinweis:_**  Sollte der Keycloak-Container nicht korrekt starten und sich in einer endlosen Neustart-Schleife befinden müssen
