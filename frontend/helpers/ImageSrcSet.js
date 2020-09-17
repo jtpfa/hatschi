@@ -21,7 +21,7 @@ class ImageSrcSet {
         let result = ''
 
         sizes.forEach((size, index) => {
-            result += `${this.baseUrl}${productId}_${size}.png ${index + 1}x, `
+            result += `${this.getImageUrl(productId, size)} ${index + 1}x, `
         })
 
         // remove last colon and whitespace from result
@@ -31,10 +31,10 @@ class ImageSrcSet {
     /**
      * Get the product image for one resolution
      * @param {Number} productId - Product id of the requested image
-     * @param {Number} [size=512] - Width of the image
+     * @param {String} [size='512'] - Width of the image
      * @returns {String} Url of the image
      */
-    getImageUrl(productId, size = 512) {
+    getImageUrl(productId, size = '512') {
         return `${this.baseUrl}${productId}_${size}.png`
     }
 }
