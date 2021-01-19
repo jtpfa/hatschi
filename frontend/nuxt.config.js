@@ -1,13 +1,19 @@
+/**
+ * Nuxt.js configurations
+ *
+ * @author Jonas Pfannkuche
+ */
+
 export default {
     mode: 'universal',
-    /*
-     ** Headers of the page
+    /**
+     * Headers of the page
      */
     head: {
         htmlAttrs: {
             lang: 'de-DE',
         },
-        title: process.env.npm_package_name || '',
+        title: 'PC Masterrace – Dein Online-Shop für PC-Equipment',
         meta: [
             { charset: 'utf-8' },
             { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -19,24 +25,31 @@ export default {
         ],
         link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
     },
-    /*
-     ** Customize the progress-bar color
+    /**
+     * Customize the progress-bar
      */
-    loading: { color: '#fff' },
-    /*
-     ** Global CSS
+    loading: false,
+    /**
+     * Global CSS
      */
     css: ['~/assets/scss/main.scss'],
-    /*
-     ** Plugins to load before mounting the App
+    /**
+     * Plugins to load before mounting the App
      */
-    plugins: [{ src: '~/plugins/api.js' }],
-    /*
-     ** Nuxt.js dev-modules
+    plugins: [
+        { src: '~/plugins/api', ssr: true },
+        { src: '~/plugins/currency', ssr: true },
+        { src: '~/plugins/date-format', ssr: true },
+        { src: '~/plugins/image-src-set', ssr: true },
+        { src: '~/plugins/text-crop', ssr: true },
+        { src: '~/plugins/vuex-persist', ssr: false },
+    ],
+    /**
+     * Nuxt.js dev-modules
      */
     buildModules: [],
-    /*
-     ** Nuxt.js modules
+    /**
+     * Nuxt.js modules
      */
     modules: [
         // https://github.com/nuxt-community/style-resources-module
@@ -45,41 +58,84 @@ export default {
         'bootstrap-vue/nuxt',
         '@nuxtjs/axios',
         '@nuxtjs/auth',
+        [
+            'nuxt-cookie-control',
+            {
+                controlButton: false,
+                text: {
+                    barDescription:
+                        'Wir verwenden unsere eigenen Cookies, damit wir Ihnen diese Website zeigen können. Wenn Sie weiter surfen, gehen wir davon aus, dass Sie die Cookies akzeptiert haben.',
+                    optional: '',
+                },
+            },
+        ],
     ],
-    /*
-     ** Bootstrap Vue module configuration
+    /**
+     * Cookie Consent Manager configuration
+     */
+    cookies: {
+        necessary: [
+            {
+                name: 'Default Cookies',
+                description: 'für den Cookie Consent genutzt.',
+                cookies: ['cookie_control_consent', 'cookie_control_enabled_cookies'],
+            },
+            {
+                name: 'Authentifizierungscookies',
+                description: 'für den Login und geschützte Bereiche.',
+                cookies: ['auth.strategy', 'auth._token.keycloak', 'auth._refresh_token.keycloak'],
+            },
+        ],
+        optional: [],
+    },
+    /**
+     * Bootstrap Vue module configuration
      */
     bootstrapVue: {
-        bootstrapCSS: false, // Or `css: false`
-        bootstrapVueCSS: false, // Or `bvCSS: false`
+        bootstrapCSS: false,
+        bootstrapVueCSS: false,
     },
-    /*
-     ** Style Resources module configuration
+    /**
+     * Style Resources module configuration
      */
     styleResources: {
         scss: ['~assets/scss/settings/variables.scss'],
     },
-    /*
-     ** Build configuration
+    /**
+     * Build configuration
      */
     build: {
-        /*
-         ** You can extend webpack config here
-         */
         /* eslint-disable no-unused-vars */
         extend(config, ctx) {},
         /* eslint-enable no-unused-vars */
+
         transpile: ['@nuxtjs/auth'],
+
+        babel: {
+            plugins: ['@babel/plugin-proposal-throw-expressions'],
+            compact: true,
+        },
     },
+    /**
+     * Public (server and client) config object configuration
+     */
+    publicRuntimeConfig: {
+        baseURL: process.env.PCMR_BASE_URL_PROD || 'http://localhost:3000',
+        restApiBaseUrl: process.env.PCMR_REST_API_PROD || 'http://localhost:8090/api/',
+        mediaUrl: process.env.PCMR_MEDIA_API_PROD || 'http://localhost:8090/media/article/',
+        keycloakEndpoint: process.env.KEYCLOAK_ENDPOINT_PROD || 'http://auth.pcmr.de:8080/auth/realms/pcmr/',
+    },
+    /**
+     * nuxtjs/auth configuration
+     */
     auth: {
+        plugins: [{ src: '~/plugins/refresh', ssr: false }],
         strategies: {
             keycloak: {
                 _scheme: '~/schemes/keycloak',
-                access_token_endpoint: 'http://localhost:8090/auth/realms/pcmr/protocol/openid-connect/token',
-                token_type: 'Bearer',
                 token_key: 'access_token',
+                token_type: 'Bearer',
                 grant_type: 'password',
-                client_id: 'pcmr',
                 token: {
                     property: 'access_token',
                     maxAge: 300,
@@ -90,27 +146,14 @@ export default {
                 autoRefresh: {
                     enable: true,
                 },
-                endpoints: {
-                    login: {
-                        url: 'http://auth.pcmr.de:8080/auth/realms/pcmr/protocol/openid-connect/token',
-                        method: 'post',
-                        propertyName: 'access_token',
-                    },
-                    logout: { url: '/', method: 'post' },
-                    refresh: {
-                        url: 'http://auth.pcmr.de:8080/auth/realms/pcmr/protocol/openid-connect/token',
-                        method: 'post',
-                        propertyName: 'refresh_token',
-                    },
-                    user: { url: 'http://localhost:8090/api/customer', method: 'get' },
-                },
             },
         },
         redirect: {
             login: '/auth/login',
             logout: '/',
-            callback: '/auth/login',
             home: '/',
         },
+        resetOnError: true,
+        defaultStrategy: 'keycloak',
     },
 }

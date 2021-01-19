@@ -1,3 +1,9 @@
+/**
+ * Webpack configurations
+ *
+ * @author Jonas Pfannkuche
+ */
+
 const { resolve } = require('path')
 
 module.exports = {

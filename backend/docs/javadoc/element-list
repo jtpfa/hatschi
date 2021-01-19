@@ -1,0 +1,13 @@
+de.pcmr.shop
+de.pcmr.shop.api.controller
+de.pcmr.shop.api.handler
+de.pcmr.shop.api.mapper
+de.pcmr.shop.api.model
+de.pcmr.shop.config
+de.pcmr.shop.domain
+de.pcmr.shop.exception
+de.pcmr.shop.exception.keycloak
+de.pcmr.shop.repository
+de.pcmr.shop.service
+de.pcmr.shop.service.model
+de.pcmr.shop.util

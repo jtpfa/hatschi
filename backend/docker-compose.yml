@@ -7,8 +7,9 @@ services:
       dockerfile: ./Dockerfile
     restart: always
     ports:
-      - 8090:8080
+      - 8090:8090
     environment:
+      PCMR_SERVER_PORT: ${PCMR_SERVER_PORT}
       PCMR_MYSQL_HOST: ${PCMR_MYSQL_HOST_DOCKER}
       MYSQL_DB_PORT: ${MYSQL_DB_PORT}
       PCMR_MYSQL_DATABASE: ${PCMR_MYSQL_DATABASE}
@@ -19,11 +20,16 @@ services:
       PCMR_RESOURCE: ${PCMR_RESOURCE}
       PCMR_KEYCLOAK_REGISTRATION_USER: ${PCMR_KEYCLOAK_REGISTRATION_USER}
       PCMR_KEYCLOAK_REGISTRATION_PASSWORD: ${PCMR_KEYCLOAK_REGISTRATION_PASSWORD}
+      PCMR_CORS_ORIGINS: ${PCMR_CORS_ORIGINS}
+      PCMR_CORS_METHODS: ${PCMR_CORS_METHODS}
+      PCMR_CORS_HEADERS: ${PCMR_CORS_HEADERS}
     depends_on:
       - db
       - keycloak
     networks:
       - pcmr-net
+    volumes:
+    - ./media:/root/media
 
   db:
     image: mariadb
@@ -46,6 +52,7 @@ services:
   keycloak:
     image: jboss/keycloak
     restart: always
+    command: -Dkeycloak.profile.feature.account_api=enabled
     ports:
       - 8080:8080
     environment: 

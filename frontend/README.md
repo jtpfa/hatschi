@@ -2,21 +2,30 @@
 
 > PC Masterrace
 
-## Build Setup
+## Voraussetzung
+* Node Version 12.x installiert
+* NPM Version 6.x installiert
+
+## Frontend nutzen
 
 ``` bash
-# install dependencies
-$ npm run install
+# Wenn nvm als Node.js Manager (nvm) installiert ist
+$ nvm use
 
-# serve with hot reload at localhost:3000
-$ npm run dev
+# Ansonsten Node-Umgebungsvariable des Betriebssystems
+# an den Pfad zur Node12-Installation anpassen
 
-# build for production and launch server
+# Pakete installieren
+# Es kann zu Warnungen sowie Sicherheitsfehlern kommen...
+# Dies hängt davon ab, ob es neue Sicherheitslücken in Paketen gibt oder nicht
+# Warnungen zu fehlenden "Peer-dependencies" können ignoriert werden, da diese nicht genutzt werden
+# NPM zeigt diese nicht notwendigen Abhängigkeiten allerdings standardmäßig als "missing" an
+$ npm ci --prod
+
+# Applikation bauen and Node.js Server starten
 $ npm run build
 $ npm run start
 
-# generate static project
-$ npm run generate
+# Dokumentation erstellen
+$ npm run docs
 ```
-
-For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).

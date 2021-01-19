@@ -1,4 +1,8 @@
+// Sets the page background color
+//
+// @author Jonas Pfannkuche
+
 html,
 body {
-    background-color: #fbfbfb;
+    background-color: $page-background;
 }

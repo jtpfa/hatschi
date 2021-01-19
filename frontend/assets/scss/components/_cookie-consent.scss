@@ -1,0 +1,8 @@
+// It's not possible to remove the "decline all cookies" button from the plugin.
+// So we need to hide it.
+//
+// @author Jonas Pfannkuche
+
+.cookieControl__ModalButtons button:last-of-type {
+    display: none;
+}

@@ -1,8 +1,14 @@
+// Make form labels bigger
+// and change the color of the mandatary indicator (asterisk)
+//
+// @author Jonas Pfannkuche
+
 form {
     label {
         font-size: $font-size-lg;
     }
-    span.mandatory {
-        color: $danger;
-    }
+}
+
+label span.mandatory {
+    color: $danger;
 }

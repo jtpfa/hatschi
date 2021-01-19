@@ -2,6 +2,12 @@ package de.pcmr.shop.api.model;
 
 import javax.validation.constraints.NotNull;
 
+/**
+ * Data transfer object to register a new customer.
+ *
+ * @author Fynn Lohse
+ */
+
 public class CustomerRegistrationDTO {
     @NotNull(message = "Keine Email angegeben")
     private String email;

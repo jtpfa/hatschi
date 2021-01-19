@@ -3,6 +3,12 @@ package de.pcmr.shop.exception.keycloak;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+/**
+ * Exception is thrown if the keycloak admin user is not authorized (invalid configuration).
+ *
+ * @author Fynn Lohse
+ */
+
 @ResponseStatus(code = HttpStatus.INTERNAL_SERVER_ERROR, reason = KeycloakUserIsNotAuthorizedException.ERROR_MESSAGE)
 public class KeycloakUserIsNotAuthorizedException extends Exception {
     public static final String ERROR_MESSAGE = "Interner Server Error. Siehe Logs";

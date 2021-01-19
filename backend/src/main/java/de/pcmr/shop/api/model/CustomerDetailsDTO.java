@@ -1,8 +1,19 @@
 package de.pcmr.shop.api.model;
 
+import javax.validation.constraints.NotNull;
+
+/**
+ * Data transfer object to output customer data.
+ *
+ * @author Fynn Lohse
+ */
+
 public class CustomerDetailsDTO {
+    @NotNull
     private String email;
+    @NotNull
     private String firstName;
+    @NotNull
     private String lastName;
 
     public String getEmail() {

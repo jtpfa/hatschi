@@ -1,0 +1,7 @@
+// Hide the loading spinner when the image is loaded
+//
+// @author Jonas Pfannkuche
+
+img:not([width='1']):not([height='1']) + .orbit-spinner {
+    display: none;
+}

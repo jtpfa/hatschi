@@ -1,16 +1,23 @@
 <template>
-    <login-form :login-page="true" modal-id="modal-center" />
+    <login-form :login-page="true" />
 </template>
 
 <script>
-import LoginForm from '~/components/login/form'
+/**
+ * @component AuthLoginPage
+ * @desc Login page
+ * @author Jonas Pfannkuche
+ */
+
+import LoginForm from '~/components/general/login/form'
 
 export default {
-    name: 'AuthLogin',
     components: { LoginForm },
     layout: 'blank',
-    mounted() {
-        this.$bvModal.show('modal-center')
+    head() {
+        return {
+            title: 'PC Masterrace – Login',
+        }
     },
 }
 </script>

@@ -1,3 +1,8 @@
+// Main scss file to bundle all the other scss files
+// !!! PAY ATTENTION to the order !!!
+//
+// @author Jonas Pfannkuche
+
 // import fonts before variables to use fonts in variables
 @import 'settings/fonts';
 // import variables before bootstrap to override defaults
@@ -5,9 +10,12 @@
 
 // import bootstrap before other components to use bootstrap stuff in own components
 @import 'node_modules/bootstrap/scss/bootstrap';
-@import 'node_modules/bootstrap-vue/src/index.scss';
+@import 'node_modules/bootstrap-vue/src/index';
 
 @import 'utilities/typography';
 @import 'components/body';
 @import 'components/page-background';
 @import 'components/form';
+@import 'components/lazyload';
+@import 'components/header-nav';
+@import 'components/cookie-consent';

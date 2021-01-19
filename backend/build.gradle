@@ -1,10 +1,11 @@
 
 plugins {
-    id 'org.springframework.boot' version '2.3.1.RELEASE'
+    id 'org.springframework.boot' version '2.3.2.RELEASE'
     id 'io.spring.dependency-management' version '1.0.9.RELEASE'
     id 'java'
-    id "org.flywaydb.flyway" version "6.5.0"
+    id "org.flywaydb.flyway" version "6.5.3"
     id "co.uzzu.dotenv.gradle" version "1.1.0"
+    id "org.sonarqube" version "3.0"
 }
 
 group = 'de.pcmr'
@@ -29,8 +30,14 @@ dependencies {
     implementation 'org.keycloak:keycloak-spring-security-adapter:+'
     implementation 'org.keycloak:keycloak-admin-client:+'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
-    compile 'org.flywaydb:flyway-core:6.5.0'
+    compile 'org.flywaydb:flyway-core:6.5.3'
     compile 'org.apache.commons:commons-lang3:+'
+    compile 'org.apache.commons:commons-text:1.8'
+    compile 'com.googlecode.owasp-java-html-sanitizer:owasp-java-html-sanitizer:+'
+    compile 'org.modelmapper:modelmapper:2.+'
+    compile 'io.springfox:springfox-boot-starter:3.0.0'
+    compile 'io.springfox:springfox-swagger-ui:3.0.0'
+
 
     testImplementation('org.springframework.boot:spring-boot-starter-test') {
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'

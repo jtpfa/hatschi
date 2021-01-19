@@ -1,7 +1,9 @@
-// Variables
+// Global Variables
 //
 // These variables overwrite the bootstrap variables.
 // node_modules/bootstrap/scss/_variables.scss
+//
+// @author Jonas Pfannkuche
 
 // Breakpoints
 
@@ -68,13 +70,11 @@ $black: #000000;
 $light: $gray-100;
 $dark: $gray-600;
 
+$page-background: #fbfbfb;
+
 $primary: #2196f3;
-$primary-50: #688eaa;
 
 $secondary: $gray-600;
-
-// Create higher contrast for light backgrounds
-$yiq-text-dark: $black;
 
 $info: $dark;
 $warning: #fca808;
@@ -86,7 +86,6 @@ $theme-colors: ();
 $theme-colors: map-merge(
     (
         'primary': $primary,
-        'primary-50': $primary-50,
         'secondary': $secondary,
         'info': $info,
         'warning': $warning,
@@ -98,6 +97,9 @@ $theme-colors: map-merge(
     $theme-colors
 );
 
+// Create higher contrast for light backgrounds
+$yiq-text-dark: $black;
+
 // Fonts
 
 $font-family-sans-serif: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans',
@@ -105,8 +107,13 @@ $font-family-sans-serif: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 
 $font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
 $font-family-base: $font-family-sans-serif;
 
+// Borders
+
+$border-radius: 0.25rem;
+
 // Nav
 
+$navbar-brand-height: 3.4375rem; // 55px
 $navbar-light-color: $dark;
 $navbar-light-hover-color: $primary;
 $navbar-light-active-color: $primary;
@@ -116,5 +123,3 @@ $navbar-light-active-color: $primary;
 $enable-shadows: true;
 $enable-gradients: true;
 $enable-responsive-font-sizes: true;
-
-// Custom variables

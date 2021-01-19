@@ -18,10 +18,14 @@ spring:
             scripts:
               action: create
               create-target: ./build/schema/schema.sql
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
 server:
   error:
     include-message: always
-
+  port: ${PCMR_SERVER_PORT}
 keycloak:
   realm: ${PCMR_KEYCLOAK_REALM}
   auth-server-url: ${PCMR_AUTH_SERVER_URL}
@@ -29,8 +33,3 @@ keycloak:
   bearer-only: true
   principal-attribute: preferred_username
   cors: true
-
-
-
-
-
